@@ -9,6 +9,8 @@ $bg-color: #dfe1fc;
 
 $color-purple: #DBDFFF;
 
+$color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffffff 73.72%);
+
 //container
 @mixin container {
   margin: 0 auto;
@@ -84,4 +86,28 @@ $defaultFlexBoxJustify: center;
   @media only screen and (max-width: 474px) {
     @content;
   }
+}
+
+// typography
+.text-gradient {
+  display: inline-block;
+
+  // font-family: 'MD', sans-serif;
+
+  background: $color-gradient;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &::selection {
+    -webkit-text-fill-color: $color-light;
+  }
+
+  ::selection {
+    -webkit-text-fill-color: $color-light;
+  }
+}
+
+// gilroy
+@mixin gilroy {
+  font-family: 'Gilroy', sans-serif;
 }

@@ -1,0 +1,39 @@
+@import 'src/styles/helpers.scss';
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  &Btn {
+    @include flexbox(flex-start, center);
+    margin-top: 32px;
+  }
+  &Body {
+    @include flexbox(center, flex-start);
+    flex-direction: column;
+  }
+}
+
+.title {
+  font-size: 62px;
+  margin-top: 80px;
+  margin-bottom: 36px;
+  max-width: 852px;
+}
+
+.subtitle {
+  max-width: 475px;
+}
+
+.gradient {
+  font-size: 439.026px;
+  line-height: 517px;
+  letter-spacing: -0.07em;
+  position: absolute;
+  z-index: -1;
+  transform: translate(-212px, -30px);
+}
+
+.subtitle,
+.title {
+  text-align: center;
+}
