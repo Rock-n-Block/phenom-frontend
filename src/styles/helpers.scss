@@ -1,0 +1,87 @@
+// colors
+$color-dark: #151b4c;
+$color-dark-0: #1C1C28;
+
+$color-dark-4: #8f90a6;
+$color-light: #ffffff;
+
+$bg-color: #dfe1fc;
+
+$color-purple: #DBDFFF;
+
+//container
+@mixin container {
+  margin: 0 auto;
+  max-width: 1082px;
+  width: 100%;
+  padding: 0 88px;
+  @include m {
+    padding: 0 32px;
+  }
+  @include d {
+    padding: 0 32px;
+  }
+}
+
+//placeholder
+@mixin placeholder {
+  &::placeholder {
+    @content;
+  }
+}
+
+//border-radius
+$border-radius: 12px;
+
+//flexbox
+$defaultFlexBoxAlign: center;
+$defaultFlexBoxJustify: center;
+
+@mixin flexbox($align: $defaultFlexBoxAlign, $justify: $defaultFlexBoxJustify) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// media queries
+@mixin w {
+  @media only screen and (max-width: 1419px) {
+    @content;
+  }
+}
+
+@mixin x {
+  @media only screen and (max-width: 1339px) {
+    @content;
+  }
+}
+
+@mixin d {
+  @media only screen and (max-width: 1179px) {
+    @content;
+  }
+}
+
+@mixin t {
+  @media only screen and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin m {
+  @media only screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin a {
+  @media only screen and (max-width: 639px) {
+    @content;
+  }
+}
+
+@mixin s {
+  @media only screen and (max-width: 474px) {
+    @content;
+  }
+}

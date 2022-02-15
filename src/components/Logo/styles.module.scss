@@ -1,0 +1,16 @@
+@import '/src/styles/helpers.scss';
+
+.logo {
+}
+
+.dark {
+  path {
+    fill: $color-dark;
+  }
+}
+
+.light {
+  path {
+    fill: $color-light;
+  }
+}

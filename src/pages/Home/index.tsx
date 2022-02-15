@@ -1,16 +1,13 @@
 import { VFC } from 'react';
 
-import { Button } from 'components/index';
+import { Header } from 'components';
 
-import { Logo } from 'assets/img/index';
-
-import './Home.scss';
+import styles from './styles.module.scss';
 
 const Home: VFC = () => {
   return (
-    <div className="home">
-      <img src={Logo} alt="logo" style={{ width: '500px' }} />
-      <Button>Button</Button>
+    <div className={styles.home}>
+      <Header />
     </div>
   );
 };

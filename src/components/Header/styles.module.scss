@@ -1,0 +1,18 @@
+@import 'src/styles/helpers.scss';
+
+.link {
+  font-weight: 600;
+  font-size: 13px;
+  color: $color-dark-0;
+  text-decoration: none;
+}
+
+.header {
+  @include container;
+  @include flexbox;
+  justify-content: space-between;
+  &Links {
+    @include flexbox;
+    gap: 35px;
+  }
+}

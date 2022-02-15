@@ -1,10 +1,13 @@
 {
-  "name": "react-template",
+  "name": "phenom-metaverse",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "EXTEND_ESLINT=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "coverage": "jest --all --coverage",
     "lint": "npm-run-all lint:*",
     "lint-fix": "npm-run-all format lint-fix:*",
     "format": "prettier --write \"{src,types,scripts}/**/*.{json,{j,t}s{,x},scss,}\"",
@@ -17,11 +20,14 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/react-router-dom": "^5.3.2",
+    "@types/react-redux": "^7.1.16",
+    "@types/redux": "^3.6.0",
+    "@types/redux-logger": "^3.0.8",
+    "@types/redux-thunk": "^2.1.0",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
-    "axios": "^0.24.0",
-    "bignumber.js": "^9.0.1",
+    "babel-jest": "^27.5.1",
+    "classnames": "^2.3.1",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.11.0",
@@ -35,11 +41,18 @@
     "eslint-plugin-simple-import-sort": "^5.0.2",
     "node-sass": "^5.0.0",
     "npm-run-all": "^4.1.5",
+    "pre-commit": "^1.2.2",
     "prettier": "^2.2.1",
+    "rc-tooltip": "^5.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^6.0.2",
+    "react-outside-click-handler": "^1.3.0",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
@@ -48,8 +61,16 @@
     "typescript": "^4.1.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.20",
+    "@types/react-outside-click-handler": "^1.3.0",
+    "jest-html-reporter": "^3.3.0",
+    "jest-junit": "^12.0.0",
     "lint-staged": "^10.5.4",
-    "remark-preset-lint-recommended": "^5.0.0"
+    "remark-preset-lint-recommended": "^5.0.0",
+    "ts-jest": "^26.5.3"
   },
   "browserslist": {
     "production": [
@@ -62,5 +83,65 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "testRunner": "D:\\projects\\less-nft\\node_modules\\jest-circus\\runner.js",
+    "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [
+      "D:\\projects\\less-nft\\src"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
