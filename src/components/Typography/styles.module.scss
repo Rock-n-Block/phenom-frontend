@@ -1,9 +1,9 @@
 @import "styles/helpers.scss";
 
 .type_h1 {
-  font-size: 80px;
+  font-size: 40px;
   @include s {
-    font-size: 40px;
+    font-size: 28px;
   }
 }
 
@@ -169,6 +169,10 @@
 
 .color_red {
   // color: $color-state-error;
+}
+
+.color_blue {
+  color: $color-accent;
 }
 
 .color_inherit {

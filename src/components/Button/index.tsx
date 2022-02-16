@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import cx from 'classnames';
 // import { IconNames } from 'typings';
 
-
 import styles from './styles.module.scss';
 
 type Props = {
-  color?: 'purple' | 'outline' | 'transparent' | 'pink' | 'dark' | 'black' | 'blue';
-  padding?: 'large' | 'small' | string;
+  color?: 'outline' | 'dark' | 'light' | 'transparent' ;
+  padding?: 'small' | 'medium' | 'large' | 'extra-large' | string;
   size?: any;
   isFullWidth?: boolean;
   className?: string;
@@ -25,7 +24,7 @@ type Props = {
 };
 
 /**
- * 
+ *
  * @param {'large' | 'small' | 'custom'} [tag] - padding of the element {large}
  * custom values:
  * example: [value][units] = 10px
@@ -54,11 +53,11 @@ const Button: FC<PropsWithChildren<Props>> = ({
   color = 'dark',
   size = 'normal',
   isFullWidth = false,
-  onClick = () => { },
+  onClick = () => {},
   className,
   type = 'button',
   children,
-  padding = 'large',
+  padding = 'medium',
   disabled,
   icon,
   style,
@@ -66,17 +65,42 @@ const Button: FC<PropsWithChildren<Props>> = ({
   loading,
   btnRef,
   onMouseLeave,
-  onMouseOver = () => { },
+  onMouseOver = () => {},
 }) => {
   if (href)
     return (
       <Link
         to={href}
-        className={cx(styles.button, styles[size], styles[color], styles[`${padding.includes('large') || padding.includes('small') ? padding : ''}`], className, {
-          [styles.isFullWidth]: isFullWidth,
-          [styles.disabled]: disabled,
-        })}
-        style={!(padding.includes('large') || padding.includes('small')) ? { ...style, padding } : style}
+        className={cx(
+          styles.button,
+          styles[size],
+          styles[color],
+          styles[
+            `${
+              padding.includes('small') ||
+              padding.includes('medium') ||
+              padding.includes('large') ||
+              padding.includes('extra-large')
+                ? padding
+                : ''
+            }`
+          ],
+          className,
+          {
+            [styles.isFullWidth]: isFullWidth,
+            [styles.disabled]: disabled,
+          },
+        )}
+        style={
+          !(
+            padding.includes('small') ||
+            padding.includes('medium') ||
+            padding.includes('large') ||
+            padding.includes('extra-large')
+          )
+            ? { ...style, padding }
+            : style
+        }
       >
         {icon && <img src={icon} className={styles.icon} alt="" />}
         {children}
@@ -85,15 +109,40 @@ const Button: FC<PropsWithChildren<Props>> = ({
   return (
     <button
       ref={btnRef}
-       // eslint-disable-next-line react/button-has-type
+      // eslint-disable-next-line react/button-has-type
       type={type}
-      className={cx(styles.button, styles[size], styles[color], styles[`${padding.includes('large') || padding.includes('small') ? padding : ''}`], className, {
-        [styles.isFullWidth]: isFullWidth,
-        [styles.disabled]: disabled || loading,
-      })}
+      className={cx(
+        styles.button,
+        styles[size],
+        styles[color],
+        styles[
+          `${
+            padding.includes('small') ||
+            padding.includes('medium') ||
+            padding.includes('large') ||
+            padding.includes('extra-large')
+              ? padding
+              : ''
+          }`
+        ],
+        className,
+        {
+          [styles.isFullWidth]: isFullWidth,
+          [styles.disabled]: disabled || loading,
+        },
+      )}
       onClick={onClick}
       disabled={disabled || loading}
-      style={!(padding.includes('large') || padding.includes('small')) ? { ...style, padding } : style}
+      style={
+        !(
+          padding.includes('small') ||
+          padding.includes('medium') ||
+          padding.includes('large') ||
+          padding.includes('extra-large')
+        )
+          ? { ...style, padding }
+          : style
+      }
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseOver}
     >

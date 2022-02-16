@@ -1,0 +1,53 @@
+@import 'src/styles/helpers';
+
+.topCollections {
+  @include container;
+  margin-top: 88px;
+}
+
+.collections {
+  height: auto;
+  max-height: 0;
+  transition: $transition;
+  overflow: hidden;
+  margin-top: 20px;
+
+  &.open {
+    max-height: 1000px;
+  }
+}
+
+.title {
+  @include flexbox;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.goRankingBtn {
+  margin: 20px auto 0;
+  padding: 0 32px;
+  max-width: 180px;
+}
+
+.collectionsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 33.3%);
+
+  @include s {
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  grid-auto-flow: column;
+}
+
+.srcToRanking {
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.noItems {
+  margin: 0 auto;
+  text-align: center !important;
+  margin-top: 16px;
+}

@@ -1,15 +1,16 @@
 import { VFC } from 'react';
 
-import { Header } from 'components';
+import { Banner, Categories, TopCollections, Trending } from './components';
 
 import styles from './styles.module.scss';
-import { Banner } from './components';
 
 const Home: VFC = () => {
   return (
     <div className={styles.home}>
-      <Header />
       <Banner />
+      <Trending />
+      <Categories />
+      <TopCollections />
     </div>
   );
 };

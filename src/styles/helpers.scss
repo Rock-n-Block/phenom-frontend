@@ -1,22 +1,57 @@
 // colors
 $color-dark: #151b4c;
-$color-dark-0: #1C1C28;
+$color-accent: #223dff;
+$color-light: #dfe1fc;
+$color-bg: #dfe1fc;
 
-$color-dark-4: #8f90a6;
-$color-light: #ffffff;
+$color-dark-0: #1c1c28;
+$color-dark-1: #28293d;
+$color-dark-2: #555770;
+$color-dark-3: #8f90a6;
+$color-dark-4: #c7c9d9;
+$color-light-0: #e4e4eb;
+$color-light-1: #ebebf0;
+$color-light-2: #f2f2f5;
+$color-light-3: #fafafc;
+$color-light-4: #ffffff;
 
-$bg-color: #dfe1fc;
+$color-black: #1c1c28;
+$color-white: #ffffff;
 
-$color-purple: #DBDFFF;
+$color-purple: #dbdfff;
+$color-dark-blue: #1f276c;
+$color-light-blue: #2a3486;
+
+$color-orange-gradient: linear-gradient(180deg, #ffd233 0%, #ffba33 100%);
+$color-orange-1: #fdac42;
+$color-orange-2: #fccc75;
+$color-blue-gradient: linear-gradient(180deg, #586dff 0%, #223dff 100%);
+$color-blue-1: #0063f7;
+$color-blue-2: #5b8def;
+$color-green-gradient: linear-gradient(180deg, #00cdda 0%, #00e07f 100%);
+$color-green-1: #06c270;
+$color-green-2: #39d98a;
 
 $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffffff 73.72%);
+
+@mixin shadow-0 {
+  box-shadow: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
+}
+@mixin shadow-1 {
+  box-shadow: 0px 2px 8px rgba(40, 41, 61, 0.04), 0px 16px 24px rgba(96, 97, 112, 0.16);
+}
+@mixin shadow-2 {
+  box-shadow: 0px 2px 4px rgba(40, 41, 61, 0.04), 0px 8px 16px rgba(96, 97, 112, 0.16);
+}
+@mixin shadow-3 {
+  box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+}
 
 //container
 @mixin container {
   margin: 0 auto;
   max-width: 1082px;
   width: 100%;
-  padding: 0 88px;
   @include m {
     padding: 0 32px;
   }
@@ -32,8 +67,17 @@ $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffff
   }
 }
 
-//border-radius
+$transition: 0.4s ease;
+
 $border-radius: 12px;
+
+@mixin multiplyRowsEllipsis($rows: 3) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $rows;
+  -webkit-box-orient: vertical;
+}
 
 //flexbox
 $defaultFlexBoxAlign: center;
@@ -99,11 +143,11 @@ $defaultFlexBoxJustify: center;
   -webkit-text-fill-color: transparent;
 
   &::selection {
-    -webkit-text-fill-color: $color-light;
+    -webkit-text-fill-color: $color-white;
   }
 
   ::selection {
-    -webkit-text-fill-color: $color-light;
+    -webkit-text-fill-color: $color-white;
   }
 }
 

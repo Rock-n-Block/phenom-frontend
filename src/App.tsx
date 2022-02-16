@@ -1,14 +1,16 @@
 import { FC } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-import { HomePage } from 'pages/index';
+import { RoutesPage } from 'containers';
+
+import { Header } from 'components';
 
 export const App: FC = () => {
   return (
-    <div className="">
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </div>
+    <>
+      <ToastContainer limit={3} pauseOnFocusLoss={false} />
+      <Header />
+      <RoutesPage />
+    </>
   );
 };
