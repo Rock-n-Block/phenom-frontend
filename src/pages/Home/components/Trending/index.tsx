@@ -123,7 +123,11 @@ const Trending: FC<Props> = ({ className }) => {
                     // Delay execution for the refs to be defined
                     setTimeout(() => {
                       // Override prevEl & nextEl now that refs are defined
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
                       swiper.params.navigation.prevEl = prevRef.current;
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
                       swiper.params.navigation.nextEl = nextRef.current;
 
                       // Re-init navigation
