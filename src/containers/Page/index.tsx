@@ -1,5 +1,6 @@
-// import { Footer } from 'containers';
 import { FC, ReactElement } from 'react';
+
+import { Footer } from 'containers';
 
 interface IProps {
   component: ReactElement<any, any>;
@@ -7,11 +8,10 @@ interface IProps {
 }
 
 const Page: FC<IProps> = ({ component, needFooter = true }) => {
-  console.log(needFooter)
   return (
     <>
       {component}
-      {/* {needFooter && <Footer />} */}
+      {needFooter && <Footer />}
     </>
   );
 };

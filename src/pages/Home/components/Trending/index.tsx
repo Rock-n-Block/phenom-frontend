@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
@@ -10,6 +10,7 @@ import { ArtCard, H1, Text } from 'components';
 
 import avatar from '../../../../components/Header/components/User/mockAvatar.png';
 import { TitleDropdown } from './components';
+import { iconArrowDown } from 'assets/img';
 
 import { useWindowSize } from 'hooks';
 
@@ -38,6 +39,8 @@ const Trending: FC<Props> = ({ className }) => {
   const [nfts, setNfts] = useState<any[]>([]);
   const [numberOfSlide, setNumberOfSlide] = useState(3);
   const { width } = useWindowSize();
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
   const slidesToShow = (widthValue: number) => {
     if (widthValue < 1050) {
       return 1;
@@ -103,35 +106,55 @@ const Trending: FC<Props> = ({ className }) => {
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 2 })}>
             {nfts.length > 2 ? (
-              <Swiper
-                spaceBetween={30}
-                centeredSlides
-                navigation
-                pagination
-                slidesPerView={numberOfSlide}
-                loop
-                className={styles.swiper}
-              >
-                {nfts.map((nft) => {
-                  const { artId, name, price, img, asset, author, authorAvatar, authorId } = nft;
-                  return (
-                    <SwiperSlide key={nft.id}>
-                      <Link to="/" className={styles.drop}>
-                        <ArtCard
-                          artId={artId}
-                          name={name}
-                          price={price}
-                          imageMain={img}
-                          asset={asset}
-                          author={author}
-                          authorAvatar={authorAvatar}
-                          authorId={authorId}
-                        />
-                      </Link>
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+              <>
+                <div ref={prevRef} className="swiper-button-prev" />
+                <div ref={nextRef} className="swiper-button-next" />
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides
+                  navigation={{
+                    prevEl: prevRef.current,
+                    nextEl: nextRef.current,
+                  }}
+                  pagination
+                  slidesPerView={numberOfSlide}
+                  loop
+                  className={styles.swiper}
+                  onSwiper={(swiper) => {
+                    // Delay execution for the refs to be defined
+                    setTimeout(() => {
+                      // Override prevEl & nextEl now that refs are defined
+                      swiper.params.navigation.prevEl = prevRef.current;
+                      swiper.params.navigation.nextEl = nextRef.current;
+
+                      // Re-init navigation
+                      swiper.navigation.destroy();
+                      swiper.navigation.init();
+                      swiper.navigation.update();
+                    });
+                  }}
+                >
+                  {nfts.map((nft) => {
+                    const { artId, name, price, img, asset, author, authorAvatar, authorId } = nft;
+                    return (
+                      <SwiperSlide key={nft.id}>
+                        <Link to="/" className={styles.drop}>
+                          <ArtCard
+                            artId={artId}
+                            name={name}
+                            price={price}
+                            imageMain={img}
+                            asset={asset}
+                            author={author}
+                            authorAvatar={authorAvatar}
+                            authorId={authorId}
+                          />
+                        </Link>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </>
             ) : (
               nfts.map((nft) => {
                 const { artId, name, price, img, asset, author, authorAvatar, authorId } = nft;

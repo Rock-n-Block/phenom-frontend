@@ -37,7 +37,7 @@ const TopCollections: FC<Props> = ({ className }) => {
         Top collections
       </H1>
       {collections.length ? (
-        <div className={`${styles.collections} ${collections.length !== 0 && styles.open}`}>
+        <div className={styles.collections}>
           <ol
             className={styles.collectionsWrapper}
             style={{

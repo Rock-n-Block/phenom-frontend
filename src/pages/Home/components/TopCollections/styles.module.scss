@@ -3,18 +3,14 @@
 .topCollections {
   @include container;
   margin-top: 88px;
+  margin-bottom: 161px;
 }
 
 .collections {
   height: auto;
-  max-height: 0;
   transition: $transition;
   overflow: hidden;
   margin-top: 20px;
-
-  &.open {
-    max-height: 1000px;
-  }
 }
 
 .title {
@@ -31,14 +27,14 @@
 
 .collectionsWrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 33.3%);
-
-  @include s {
-    grid-template-columns: repeat(auto-fit, 100%);
-  }
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   grid-auto-flow: column;
+
+  @include d {
+    @include flexbox;
+    flex-direction: column;
+  }
 }
 
 .srcToRanking {

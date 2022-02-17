@@ -19,7 +19,9 @@
 .drops {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin: 40px auto 0;
+  max-width: 1240px;
+  position: relative;
 }
 
 .row {
@@ -46,7 +48,7 @@
 }
 
 .swiper {
-  height: 500px;
+  height: 550px;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1082px;
 }
