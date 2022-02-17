@@ -8,7 +8,7 @@ import { LogoIcon } from 'assets/img';
 import styles from './styles.module.scss';
 
 type Props = {
-  color?: string;
+  color?: 'dark' | 'light';
   className?: string;
 };
 

@@ -1,0 +1,123 @@
+@import 'src/styles/helpers';
+@import 'src/styles/mixins/media.scss';
+
+.footer {
+  background: $color-dark;
+  padding: 60px 0 42px;
+  color: $color-light-4;
+}
+
+.footerContent {
+  margin: 0 auto;
+  padding-bottom: 22px;
+  // border-top: 1px solid $color-neutral-30;
+}
+
+.linksAndControls {
+  @include flexbox(flex-start, space-between);
+  @include container;
+  margin-top: 24px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid;
+  border-color: rgba($color-light-4, 0.2);
+}
+
+.footerLogo {
+  flex-basis: 25%;
+  @include flexbox(flex-start, flex-start);
+  flex-direction: column;
+}
+
+.logo {
+  margin-bottom: 15px;
+  * {
+    // color: $color-neutral-0 !important;
+  }
+}
+
+.footerLinks {
+  flex-basis: 50%;
+  @include flexbox(flex-start, center);
+
+  & > .linkBlock {
+    &:not(:last-child) {
+      margin-right: 100px;
+    }
+  }
+}
+
+.links {
+  @include flexbox(flex-start, space-evenly);
+  width: 33.33%;
+}
+
+.linkBlock {
+  @include flexbox(flex-start, flex-start);
+  flex-direction: column;
+
+  .button {
+    padding-left: 0;
+  }
+
+  & > * {
+    margin-bottom: 20px;
+  }
+}
+
+.footerActions {
+  flex-basis: 25%;
+
+  margin-bottom: 24px;
+
+  & > * {
+    margin-bottom: 20px;
+  }
+
+  @include s {
+    p {
+      text-align: center;
+    }
+  }
+}
+
+.copyrightBlock {
+  padding-top: 32px;
+  @include flexbox(flex-start, space-between);
+  @include container;
+  // border-top: 1px solid $color-neutral-30;
+}
+
+.privacy{
+  @include flexbox;
+  gap: 50px;
+}
+
+.footerIconLinks {
+  margin-top: 30px;
+}
+
+@include s {
+  .footerContent {
+    padding: 30px;
+  }
+
+  .footerLogo,
+  .linkBlock {
+    align-items: center;
+  }
+  .linksAndControls {
+    flex-direction: column;
+    & > * {
+      &:not(:last-child) {
+        width: 100%;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        // border-bottom: 1px solid $color-neutral-80;
+      }
+    }
+  }
+}
+
+.docs{
+  text-decoration: underline;
+}

@@ -1,8 +1,9 @@
 // common styles
 body {
+  @include gilroy;
   font-size: 14px;
 
-  background: $bg-color;
+  background: $color-bg;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -82,6 +83,6 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
-iframe{
+iframe {
   display: none;
 }

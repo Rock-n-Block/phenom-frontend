@@ -9,7 +9,9 @@ enum Values {
   secondary,
   primary,
   inherit,
-  purple
+  purple,
+  blue,
+  green
 }
 
 enum SizeValues {

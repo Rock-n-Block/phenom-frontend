@@ -1,0 +1,75 @@
+@import 'src/styles/helpers';
+
+.categories {
+  margin-top: 100px;
+  margin-bottom: 46px;
+  position: relative;
+}
+
+.gradient {
+  font-size: 439.026px;
+  line-height: 517px;
+  letter-spacing: -0.07em;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+  overflow: hidden;
+  .ellipse{
+    transform: translateY(-32%) scale(-1, 1);
+  }
+}
+
+.box {
+  @include container;
+  margin-top: 64px;
+  gap: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+  @include s {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.tag {
+  // border: 1px solid $color-neutral-9;
+  border-radius: $border-radius;
+  cursor: pointer;
+  .text {
+    margin: 30px auto 32px;
+    text-align: center;
+  }
+}
+
+.resourcesBlock {
+  .resourcesImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $border-radius;
+  }
+  .resourcesImageWrapper {
+    max-width: 312px;
+    max-height: 312px;
+    aspect-ratio: 1/1;
+    width: 100%;
+    // border: 1px solid $color-neutral-9;
+    border-radius: $border-radius;
+  }
+  .resourcesText {
+    padding: 30px 25px 39px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.image {
+  width: 100%;
+}

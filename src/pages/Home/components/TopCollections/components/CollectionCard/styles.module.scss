@@ -1,0 +1,32 @@
+@import 'src/styles/helpers';
+
+.collectionCard {
+  @include flexbox(center, flex-start);
+  padding: 18px 24px;
+  background-color: rgba($color-light-4, 0.5);
+  max-width: 340px;
+  width: 100%;
+  max-height: 170px;
+  border-radius: 20px;
+}
+
+.avatar {
+  margin: 0 16px 0 29px;
+}
+.info{
+  overflow: hidden;
+}
+.price{
+  @include flexbox(center,flex-start);
+  gap: 3px;
+  // color: $color-actions-light-purple;
+}
+
+.profitIncrease{
+  &Wrapper{
+    margin-left: auto;
+  }
+  &Value{
+    // color: $color-primary;
+  }
+}

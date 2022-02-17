@@ -1,17 +1,17 @@
 @import "styles/helpers.scss";
 
 .type_h1 {
-  font-size: 80px;
+  font-size: 40px;
   @include s {
-    font-size: 40px;
+    font-size: 28px;
   }
 }
 
 .type_h2 {
-  font-size: 40px;
+  font-size: 62px;
   line-height: 120%;
   @include s {
-    font-size: 28px;
+    font-size: 40px;
   }
 }
 
@@ -23,9 +23,9 @@
 }
 
 .type_h4 {
-  font-size: 28px;
+  font-size: 24px;
   @include s {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -43,14 +43,11 @@
 }
 
 .type_h1,
-.type_h2{
-  // @include monument-extended;
-}
+.type_h2,
 .type_h3,
 .type_h4,
 .type_h5,
 .type_h6 {
-  // @include epilogue;
 }
 
 .align_center {
@@ -132,7 +129,7 @@
 }
 
 .color_white {
-  // color: $color-neutral-0;
+  color: $color-light-4;
 }
 
 .color_black {
@@ -159,8 +156,8 @@
   // color: $color-secondary;
 }
 
-.color_primary {
-  // color: $color-primary;
+.color_green {
+  color: $color-green-3;
 }
 
 .color_purple {
@@ -169,6 +166,10 @@
 
 .color_red {
   // color: $color-state-error;
+}
+
+.color_blue {
+  color: $color-accent;
 }
 
 .color_inherit {

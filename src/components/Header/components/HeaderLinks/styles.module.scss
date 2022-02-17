@@ -1,7 +1,7 @@
 @import 'src/styles/helpers';
 
 .headerNavigation {
-  @include flexbox;
+  @include flexbox(flex-start, flex-start);
   margin-left: auto;
   gap: 30px;
   height: 100%;
@@ -14,15 +14,14 @@
   position: relative;
   border-radius: 0;
   &.active {
-    color: $color-actions-dark-purple;
+    color: rgba($color-dark, 0.5);
   }
 }
 
 .dropdownLink {
-  @include flexbox(center, flex-start);
+  @include flexbox(flex-start, flex-start);
   width: 100%;
   border-radius: 0;
-  border-bottom: 1px solid $color-neutral-10;
   padding-bottom: 16px;
 
   &:first-of-type {

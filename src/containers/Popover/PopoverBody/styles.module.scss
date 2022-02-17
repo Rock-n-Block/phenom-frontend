@@ -7,12 +7,12 @@
 
   z-index: 999;
   padding: 16px;
-  // background: $color-neutral-0;
+  background: $color-light-3;
   opacity: 0;
   /* Pop Up */
   // box-shadow: $color-box-shadow;
   animation: showUser 0.4s forwards;
-  // border-radius: $border-radius;
+  border-radius: $border-radius;
 
 
 
@@ -21,7 +21,7 @@
     width: 0px;
     height: 0px;
     border: 16px solid transparent;
-    // border-bottom: 16px solid $color-neutral-0;
+    border-bottom: 16px solid $color-light-3;
     top: -24px;
   }
 

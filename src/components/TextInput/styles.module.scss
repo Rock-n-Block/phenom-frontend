@@ -7,7 +7,7 @@
 .input {
   border-radius: $border-radius;
   padding: 12px 16px;
-  background-color: rgba($color-light, 0.5);
+  background-color: rgba($color-white, 0.5);
 
   @include placeholder {
     color: $color-dark-4;
