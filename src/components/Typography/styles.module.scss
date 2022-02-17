@@ -23,9 +23,9 @@
 }
 
 .type_h4 {
-  font-size: 28px;
+  font-size: 24px;
   @include s {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -43,14 +43,11 @@
 }
 
 .type_h1,
-.type_h2{
-  // @include monument-extended;
-}
+.type_h2,
 .type_h3,
 .type_h4,
 .type_h5,
 .type_h6 {
-  // @include epilogue;
 }
 
 .align_center {

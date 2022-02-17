@@ -53,11 +53,12 @@ $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffff
   margin: 0 auto;
   max-width: 1082px;
   width: 100%;
-  @include m {
-    padding: 0 32px;
-  }
+  // @include m {
+  //   padding: 0 32px;
+  // }
   @include d {
-    padding: 0 32px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
 

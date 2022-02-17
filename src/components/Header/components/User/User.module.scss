@@ -1,2 +1,51 @@
 @import 'src/styles/helpers';
 
+.title {
+  margin: 0 auto 16px;
+  text-align: center;
+}
+
+.head {
+  background: $color-light-1;
+  padding: 15px 12px;
+  border-radius: 10px;
+}
+
+.top {
+  @include flexbox(center, space-between);
+  margin-bottom: 12px;
+}
+
+.avatar,
+.edit {
+  @include flexbox;
+  gap: 16px;
+}
+
+.address {
+  margin-top: 10px;
+  background: $color-light-4;
+  border-radius: 12px;
+  padding: 6px 10px;
+
+  @include flexbox(center, space-between);
+}
+
+.menu {
+  margin-top: 8px;
+}
+
+.item {
+  background: $color-light-1;
+  padding: 15px 12px;
+  border-radius: 10px;
+  width: 100%;
+
+  & + & {
+    margin-top: 8px;
+  }
+}
+
+.popoverBody {
+  width: 350px;
+}

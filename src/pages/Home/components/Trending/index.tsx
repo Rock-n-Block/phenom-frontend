@@ -10,7 +10,6 @@ import { ArtCard, H1, Text } from 'components';
 
 import avatar from '../../../../components/Header/components/User/mockAvatar.png';
 import { TitleDropdown } from './components';
-import { iconArrowDown } from 'assets/img';
 
 import { useWindowSize } from 'hooks';
 

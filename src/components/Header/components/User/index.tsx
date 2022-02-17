@@ -5,13 +5,16 @@ import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { Popover } from 'containers';
 
-import { Text } from 'components';
+import { H4, Text } from 'components';
 
 import { usePopover } from 'hooks';
 
 import avatar from './mockAvatar.png';
 
+import { iconCopy, iconEdit, iconExit } from 'assets/img';
+
 import styles from './User.module.scss';
+import { sliceString } from 'utils';
 
 interface IUserProps {
   className?: string;
@@ -24,68 +27,101 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
   const dropdownOptions = useMemo(
     () => [
       {
-        title: 'Public profile',
+        title: 'Owned',
         url: '/',
       },
       {
-        title: 'My collections',
+        title: 'For sale',
         url: '/',
       },
       {
-        title: 'Favorites',
+        title: 'Sale',
         url: '/',
       },
       {
-        title: 'Settings',
+        title: ' Favorites',
         url: '/',
       },
       {
-        title: 'Disconnect',
-        url: '',
+        title: 'Bided',
+        url: '/',
+      },
+      {
+        title: 'Collections',
+        url: '/',
+      },
+      {
+        title: 'Exit',
+        url: '/',
+        icon: iconExit,
       },
     ],
     [],
   );
 
+  const address = '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4';
+
   const { closePopover } = usePopover();
   return (
-    <ul className={styles.menu}>
-      {dropdownOptions.map((option, index) => {
-        if (option.url?.startsWith('http')) {
-          return (
-            <a className={styles.item} href={option.url} rel="noopener noreferrer" key={index}>
-              <div className={styles.text}>{option.title}</div>
-            </a>
-          );
-        }
-        return option.url !== '' ? (
-          <Link
-            className={styles.item}
-            to={`${option.url}`}
-            onClick={() => closePopover()}
-            key={index}
-            replace
-          >
-            <Text className={styles.text} weight="medium" size="m">
-              {option.title}
-            </Text>
-          </Link>
-        ) : (
-          <div
-            tabIndex={0}
-            className={styles.item}
-            key={index}
-            onClick={() => {}}
-            role="button"
-            onKeyDown={() => {}}
-          >
-            <Text className={styles.text} weight="medium" size="m">
-              {option.title}
-            </Text>
+    <>
+      <div className={styles.title}>
+        <H4 align="center" weight="bold">
+          Profile
+        </H4>
+      </div>
+      <div className={styles.head}>
+        <div className={styles.top}>
+          <div className={styles.avatar}>
+            <img src={avatar} alt="avatar" />
+            <Text>Username</Text>
           </div>
-        );
-      })}
-    </ul>
+          <div className={styles.edit}>
+            <img src={iconEdit} alt="edit" />
+            <Text>EDIT</Text>
+          </div>
+        </div>
+        <div className={styles.balance}>
+          <Text color="blue">0.00 PHETA</Text>
+        </div>
+        <div className={styles.address}>
+          <Text>{sliceString(address, 28, 0)}</Text>
+          <img src={iconCopy} alt="copy" className={styles.copy} />
+        </div>
+      </div>
+      <ul className={styles.menu}>
+        {dropdownOptions.map((option, index) => {
+          // if (option.url?.startsWith('http')) {
+          //   return (
+          //     <a className={styles.item} href={option.url} rel="noopener noreferrer" key={index}>
+          //       <div className={styles.text}>{option.title}</div>
+          //     </a>
+          //   );
+          // }
+          return option.url !== '' ? (
+            <div className={styles.item} key={index}>
+              <Link to={`${option.url}`} onClick={() => closePopover()} replace>
+                <Text className={styles.text} weight="bold" size="m" align="center">
+                  {option.title}
+                </Text>
+              </Link>
+            </div>
+          ) : (
+            <div
+              tabIndex={0}
+              className={styles.item}
+              key={index}
+              onClick={() => {}}
+              role="button"
+              onKeyDown={() => {}}
+            >
+              <Text className={styles.text} weight="medium" size="m">
+                {option.title}
+              </Text>
+            </div>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 

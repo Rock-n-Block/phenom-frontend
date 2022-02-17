@@ -7,12 +7,30 @@
   text-decoration: none;
 }
 
+.searchDesktop {
+  margin-left: 40px;
+}
+
 .header {
   @include container;
   @include flexbox;
+  padding-top: 28px;
   justify-content: space-between;
   &Links {
     @include flexbox;
     gap: 35px;
+  }
+  &Search {
+    margin-left: 40px;
+
+    width: 300px;
+  }
+}
+
+@include t {
+  .searchDesktop,
+  .headerLinks,
+  .headerSearch {
+    display: none;
   }
 }
