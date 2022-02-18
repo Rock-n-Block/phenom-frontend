@@ -25,7 +25,9 @@ type Props = {
   // allArtNumber?: string | number;
   name: string;
   price: string | number;
+  USD_price: string | number;
   asset: string;
+  isAuction?: boolean;
   inStockNumber?: number | string;
   author: string;
   authorAvatar: string;
@@ -48,7 +50,9 @@ const ArtCard: FC<Props> = ({
   // allArtNumber = '25',
   name,
   price,
+  USD_price,
   asset,
+  isAuction,
   inStockNumber,
   author,
   authorId,
@@ -131,38 +135,37 @@ const ArtCard: FC<Props> = ({
         <Text weight="bold" color="lightGray">
           Id: {artId}
         </Text>
-        <div className={styles.flexContainer}>
-          {!isCollection && price && !!inStockNumber && (
-            <Text className={styles.artCardPrice} size="m">
-              {`${toFixed(price, 3)} ${asset}`}{' '}
-              {bids?.length ? <span className={styles.bidText}>(Highest Bid)</span> : null}
+        <div className={cx(styles.flexContainer, styles.column)}>
+          {!isAuction && (
+            <Text weight="bold" color="lightGray" className={styles.price}>
+              Price
             </Text>
           )}
-          {!bids?.length && (
-            <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
-          )}
+          {isAuction &&
+            (bids?.length ? (
+              <Text weight="bold" color="yellow" className={styles.current}>
+                Current bid
+              </Text>
+            ) : (
+              <Text weight="bold" color="green" className={styles.minimal}>
+                Minimal bid
+              </Text>
+            ))}
+          <Text className={styles.artCardPrice} size="xl" color="blue" weight="semibold">
+            {`${toFixed(price, 3)} ${asset}`}{' '}
+          </Text>
+          <div className={styles.bottom}>
+            <Text>$ {USD_price}</Text>
+            {!bids?.length ? (
+              <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className={cx(styles.flexContainer, styles.artCardAuthorContainer)}>
           <div className={styles.flexContainer}>
-            {bids?.length ? (
-              <>
-                <div className={styles.bidder_avatars}>
-                  {bids.map((bidder: any, index: number) => {
-                    return index < 3 ? (
-                      <img
-                        key={bidder.id}
-                        className={styles.bidder_avatar}
-                        src={bidder.bidder_avatar}
-                        alt=""
-                      />
-                    ) : null;
-                  })}
-                </div>
-                <Text className={styles.artCardAuthor}>{bids.length} people have bidded</Text>
-              </>
-            ) : (
-              authorId && <ArtCardAuthor id={authorId} avatar={authorAvatar} name={author} />
-            )}
+            {authorId && <ArtCardAuthor id={authorId} avatar={authorAvatar} name={author} />}
           </div>
           {likeAction && (
             <div className={cx(styles.flexContainer, styles.artCardSmallLikes)}>

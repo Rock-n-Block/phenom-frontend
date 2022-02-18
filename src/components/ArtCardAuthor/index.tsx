@@ -1,7 +1,11 @@
-import styles from './styles.module.scss';
-import { Text, Avatar } from 'components';
 import { FC } from 'react';
+
+import { Avatar,Text } from 'components';
+import { sliceString } from 'utils';
+
 import { TextColor } from 'types';
+
+import styles from './styles.module.scss';
 
 interface IProps {
   id: number | string;
@@ -15,7 +19,7 @@ const ArtCardAuthor: FC<IProps> = ({ id, avatar, name, authorTextColor = 'black'
     <div className={styles.artCardAuthor}>
       <Avatar avatar={avatar} id={id} size={24} />
       <Text className={styles.name} color={authorTextColor}>
-        {name}
+        {sliceString(name, 10, 5)}
       </Text>
     </div>
   );

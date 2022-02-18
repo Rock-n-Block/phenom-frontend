@@ -1,10 +1,13 @@
 import { FC, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
-import { iconArrowDown } from 'assets/img';
+
 import cn from 'classnames';
 
+import { H1, Text } from 'components';
+
+import { iconArrowDown } from 'assets/img';
+
 import styles from './styles.module.scss';
-import { H1 } from 'components';
 
 type OptionType = {
   title: string;
@@ -61,7 +64,9 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
                       }}
                       className={styles.option}
                     >
-                      {option.title}
+                      <Text weight="semibold" size="xl">
+                        {option.title}
+                      </Text>
                     </div>
                   </li>
                 ))}

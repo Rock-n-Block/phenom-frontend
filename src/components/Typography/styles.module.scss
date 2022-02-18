@@ -141,7 +141,7 @@
 }
 
 .color_gray {
-  // color: $color-neutral-60;
+  color: $color-gray-1;
 }
 
 .color_middleGray {
@@ -160,8 +160,8 @@
   color: $color-green-3;
 }
 
-.color_purple {
-  // color: $color-purple;
+.color_yellow {
+  color: $color-yellow-1;
 }
 
 .color_red {
@@ -182,6 +182,10 @@
 
 .weight_medium {
   font-weight: 500;
+}
+
+.weight_semibold {
+  font-weight: 600;
 }
 
 .weight_bold {

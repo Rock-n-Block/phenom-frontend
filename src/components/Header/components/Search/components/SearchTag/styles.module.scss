@@ -1,7 +1,8 @@
 @import 'src/styles/helpers';
 
 .searchTag {
-  //padding: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $color-gray-0;
 }
 
 .searchTagImg {
@@ -9,6 +10,8 @@
   height: 48px;
   margin-right: 16px;
   object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid $color-light-4;
 }
 
 .searchTag {

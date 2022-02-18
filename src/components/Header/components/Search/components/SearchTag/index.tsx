@@ -17,7 +17,7 @@ const SearchTag: VFC<Props> = ({ image, title, className }) => (
     <div className={styles.searchTagFlexContainer}>
       <img className={styles.searchTagImg} src={image} alt="art" />
       <div>
-        <Text size="m" weight="medium">
+        <Text weight="bold" color="gray">
           {title}
         </Text>
       </div>
