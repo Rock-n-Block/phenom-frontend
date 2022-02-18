@@ -2,12 +2,15 @@
 import { FC, useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { routes } from 'appConstants';
+
 // import { PinkHeart } from 'assets/img';
 import cx from 'classnames';
-import { ArtCardAuthor, Button, Text } from 'components';
+
+import { ArtCardAuthor, Button, H4, Text } from 'components';
 // import { IBidder } from 'typings';
 import { numberFormatter, sliceString, toFixed } from 'utils';
+
+import { routes } from 'appConstants';
 
 import styles from './styles.module.scss';
 
@@ -119,12 +122,15 @@ const ArtCard: FC<Props> = ({
         className={styles.imageWrapper}
         onMouseOver={onMouseOver}
         onFocus={() => {}}
-        // innerRef={wrapRef}
+        ref={wrapRef}
       >
         <img ref={imgRef} className={cx(styles.mainImage, styles[type])} src={imageMain} alt="" />
       </Link>
       <div className={styles.artCardInfo}>
-        <Text size="xl">{sliceString(name, 20, 0)}</Text>
+        <H4>{sliceString(name, 20, 0)}</H4>
+        <Text weight="bold" color="lightGray">
+          Id: {artId}
+        </Text>
         <div className={styles.flexContainer}>
           {!isCollection && price && !!inStockNumber && (
             <Text className={styles.artCardPrice} size="m">
