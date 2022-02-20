@@ -11,7 +11,8 @@ enum Values {
   inherit,
   purple,
   blue,
-  green
+  green,
+  yellow
 }
 
 enum SizeValues {
@@ -31,6 +32,7 @@ enum SizeValues {
 enum WeightValues {
   normal,
   medium,
+  semibold,
   bold,
   inherit,
 }

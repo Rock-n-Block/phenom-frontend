@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+
 import cn from 'classnames';
+
 import { usePopover } from 'hooks';
 
 import styles from './styles.module.scss';

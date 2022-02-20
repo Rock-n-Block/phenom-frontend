@@ -47,7 +47,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
         {links?.length !== 0 &&
           links?.map(({ label, link }) => (
             <Link className={styles.dropdownLink} key={label} to={link as string}>
-              <Text color="black" size="m" weight="bold">
+              <Text color="black" size="xl" weight="semibold">
                 {label}
               </Text>
             </Link>
@@ -124,7 +124,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
                   {title}
                 </Text>
               </Popover.Button>
-              <Popover.Body>
+              <Popover.Body className={styles.popoverBody}>
                 <HeaderNestedBody
                   links={internalLinks}
                   // isLinks={isLinks}

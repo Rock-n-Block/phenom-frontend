@@ -59,17 +59,13 @@
 }
 
 .body {
-  padding: 20px;
-  li:first-child {
-    padding-bottom: 12px;
-  }
-  li:not(:first-child) {
-    padding-top: 16px;
-    padding-bottom: 12px;
-    // border-top: 1px solid $color-neutral-60;
-  }
-  li:last-child {
-    padding-bottom: 0;
+  padding: 20px 0 28px;
+  background-color: $color-light-3;
+  li {
+    padding: 8px 16px;
+    &:hover {
+      background-color: $color-purple;
+    }
   }
 }
 

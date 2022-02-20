@@ -2,12 +2,15 @@
 import { FC, useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { routes } from 'appConstants';
+
 // import { PinkHeart } from 'assets/img';
 import cx from 'classnames';
-import { ArtCardAuthor, Button, Text } from 'components';
+
+import { ArtCardAuthor, Button, H4, Text } from 'components';
 // import { IBidder } from 'typings';
 import { numberFormatter, sliceString, toFixed } from 'utils';
+
+import { routes } from 'appConstants';
 
 import styles from './styles.module.scss';
 
@@ -22,7 +25,9 @@ type Props = {
   // allArtNumber?: string | number;
   name: string;
   price: string | number;
+  USD_price: string | number;
   asset: string;
+  isAuction?: boolean;
   inStockNumber?: number | string;
   author: string;
   authorAvatar: string;
@@ -45,7 +50,9 @@ const ArtCard: FC<Props> = ({
   // allArtNumber = '25',
   name,
   price,
+  USD_price,
   asset,
+  isAuction,
   inStockNumber,
   author,
   authorId,
@@ -119,44 +126,46 @@ const ArtCard: FC<Props> = ({
         className={styles.imageWrapper}
         onMouseOver={onMouseOver}
         onFocus={() => {}}
-        // innerRef={wrapRef}
+        ref={wrapRef}
       >
         <img ref={imgRef} className={cx(styles.mainImage, styles[type])} src={imageMain} alt="" />
       </Link>
       <div className={styles.artCardInfo}>
-        <Text size="xl">{sliceString(name, 20, 0)}</Text>
-        <div className={styles.flexContainer}>
-          {!isCollection && price && !!inStockNumber && (
-            <Text className={styles.artCardPrice} size="m">
-              {`${toFixed(price, 3)} ${asset}`}{' '}
-              {bids?.length ? <span className={styles.bidText}>(Highest Bid)</span> : null}
+        <H4>{sliceString(name, 20, 0)}</H4>
+        <Text weight="bold" color="lightGray">
+          Id: {artId}
+        </Text>
+        <div className={cx(styles.flexContainer, styles.column)}>
+          {!isAuction && (
+            <Text weight="bold" color="lightGray" className={styles.price}>
+              Price
             </Text>
           )}
-          {!bids?.length && (
-            <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
-          )}
+          {isAuction &&
+            (bids?.length ? (
+              <Text weight="bold" color="yellow" className={styles.current}>
+                Current bid
+              </Text>
+            ) : (
+              <Text weight="bold" color="green" className={styles.minimal}>
+                Minimal bid
+              </Text>
+            ))}
+          <Text className={styles.artCardPrice} size="xl" color="blue" weight="semibold">
+            {`${toFixed(price, 3)} ${asset}`}{' '}
+          </Text>
+          <div className={styles.bottom}>
+            <Text>$ {USD_price}</Text>
+            {!bids?.length ? (
+              <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className={cx(styles.flexContainer, styles.artCardAuthorContainer)}>
           <div className={styles.flexContainer}>
-            {bids?.length ? (
-              <>
-                <div className={styles.bidder_avatars}>
-                  {bids.map((bidder: any, index: number) => {
-                    return index < 3 ? (
-                      <img
-                        key={bidder.id}
-                        className={styles.bidder_avatar}
-                        src={bidder.bidder_avatar}
-                        alt=""
-                      />
-                    ) : null;
-                  })}
-                </div>
-                <Text className={styles.artCardAuthor}>{bids.length} people have bidded</Text>
-              </>
-            ) : (
-              authorId && <ArtCardAuthor id={authorId} avatar={authorAvatar} name={author} />
-            )}
+            {authorId && <ArtCardAuthor id={authorId} avatar={authorAvatar} name={author} />}
           </div>
           {likeAction && (
             <div className={cx(styles.flexContainer, styles.artCardSmallLikes)}>

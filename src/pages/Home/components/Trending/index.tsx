@@ -64,6 +64,9 @@ const Trending: FC<Props> = ({ className }) => {
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
         authorAvatar: avatar,
         authorId: 1,
+        bids: [1],
+        isAuction: true,
+        USD_price: 22.03,
       },
       {
         artId: '0342348',
@@ -74,6 +77,8 @@ const Trending: FC<Props> = ({ className }) => {
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
         authorAvatar: avatar,
         authorId: 1,
+        isAuction: false,
+        USD_price: 22.03,
       },
       {
         artId: '0342348',
@@ -84,6 +89,9 @@ const Trending: FC<Props> = ({ className }) => {
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
         authorAvatar: avatar,
         authorId: 1,
+        bids: [],
+        isAuction: true,
+        USD_price: 22.03,
       },
     ]);
     // storeApi
@@ -138,7 +146,19 @@ const Trending: FC<Props> = ({ className }) => {
                   }}
                 >
                   {nfts.map((nft) => {
-                    const { artId, name, price, img, asset, author, authorAvatar, authorId } = nft;
+                    const {
+                      artId,
+                      name,
+                      price,
+                      img,
+                      asset,
+                      author,
+                      authorAvatar,
+                      authorId,
+                      bids,
+                      isAuction,
+                      USD_price,
+                    } = nft;
                     return (
                       <SwiperSlide key={nft.id}>
                         <Link to="/" className={styles.drop}>
@@ -151,6 +171,9 @@ const Trending: FC<Props> = ({ className }) => {
                             author={author}
                             authorAvatar={authorAvatar}
                             authorId={authorId}
+                            bids={bids}
+                            isAuction={isAuction}
+                            USD_price={USD_price}
                           />
                         </Link>
                       </SwiperSlide>
@@ -160,7 +183,19 @@ const Trending: FC<Props> = ({ className }) => {
               </>
             ) : (
               nfts.map((nft) => {
-                const { artId, name, price, img, asset, author, authorAvatar, authorId } = nft;
+                const {
+                  artId,
+                  name,
+                  price,
+                  img,
+                  asset,
+                  author,
+                  authorAvatar,
+                  authorId,
+                  bids,
+                  isAuction,
+                  USD_price,
+                } = nft;
                 return (
                   <Link key={nft.id} to="/" className={cx(styles.drop, styles.dropDouble)}>
                     <ArtCard
@@ -172,6 +207,9 @@ const Trending: FC<Props> = ({ className }) => {
                       author={author}
                       authorAvatar={authorAvatar}
                       authorId={authorId}
+                      bids={bids}
+                      isAuction={isAuction}
+                      USD_price={USD_price}
                     />
                   </Link>
                 );

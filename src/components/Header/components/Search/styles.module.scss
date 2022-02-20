@@ -2,16 +2,16 @@
 
 .search {
   position: relative;
-  width: 100%;
+  // width: 100%;
 
-  &.desktop {
-    max-width: 650px;
-  }
+  // &.desktop {
+  // }
 
   &Input {
     input {
       // background: $color-neutral-3;
       // border: 2px solid $color-actions-dark-grey;
+      width: 342px;
     }
   }
 }
@@ -21,16 +21,16 @@
   box-sizing: border-box;
   top: 100%;
   position: absolute;
-  background: $color-bg;
+  background: $color-light-4;
   // box-shadow: $color-box-shadow;
   height: 0;
   transition: 200ms;
   z-index: 10;
-  border-radius: 0 0 $border-radius $border-radius;
+  border-radius: 15px;
 
-  &.desktop {
-    width: 500px;
-  }
+  // &.desktop {
+  width: 342px;
+  // }
 
   &.isVisible {
     padding: 24px;
