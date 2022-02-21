@@ -9,6 +9,10 @@
   padding: 0 30px;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .linkBtn {
   height: 100%;
   position: relative;
@@ -33,6 +37,6 @@
   }
 }
 
-.popoverBody{
+.popoverBody {
   padding: 8px 0 16px;
 }

@@ -65,7 +65,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
             color="transparent"
             onClick={() => handleTagClick(tag.title as string)}
           >
-            <Text color="black" size="m" weight="bold">
+            <Text color="black" size="m" weight="bold" className={styles.linktext}>
               {tag.title}
             </Text>
           </Button>
@@ -116,7 +116,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
             <Popover position="center" key={title}>
               <Popover.Button className={`${styles.linkBtn} ${active && styles.active}`}>
                 <Text
-                  className={styles.linkTitle}
+                  className={cx(styles.linkTitle, styles.uppercase)}
                   size="m"
                   weight="bold"
                   color={active ? 'purple' : 'black'}
@@ -143,7 +143,12 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
               onClick={() => handleMenuItemClick(url)}
               className={`${styles.linkBtn} ${active && styles.active}`}
             >
-              <Text weight="bold" size="m" color={active ? 'purple' : 'black'}>
+              <Text
+                weight="bold"
+                size="m"
+                color={active ? 'purple' : 'black'}
+                className={styles.uppercase}
+              >
                 {title}
               </Text>
             </Button>
