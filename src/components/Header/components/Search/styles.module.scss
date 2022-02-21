@@ -9,10 +9,26 @@
 
   &Input {
     input {
-      // background: $color-neutral-3;
-      // border: 2px solid $color-actions-dark-grey;
       width: 342px;
+      @include m {
+        max-width: 282px;
+        width: 100%;
+      }
     }
+  }
+
+  &Btn {
+    position: absolute;
+    padding: 0 0 0 18px;
+  }
+}
+
+.closed {
+  input {
+    // background: $color-neutral-3;
+    // border: 2px solid $color-actions-dark-grey;
+    width: 58px;
+    padding-left: 42px;
   }
 }
 
@@ -35,6 +51,11 @@
   &.isVisible {
     padding: 24px;
     height: unset;
+  }
+
+  @include m {
+    max-width: 342px;
+    width: 100%;
   }
 }
 

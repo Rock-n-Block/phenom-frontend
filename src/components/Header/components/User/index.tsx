@@ -4,17 +4,16 @@ import { Link } from 'react-router-dom';
 
 import cn from 'classnames';
 import { Popover } from 'containers';
+import mock from 'mock'
 
 import { H4, Text } from 'components';
+import { sliceString } from 'utils';
 
 import { usePopover } from 'hooks';
-
-import avatar from './mockAvatar.png';
 
 import { iconCopy, iconEdit, iconExit } from 'assets/img';
 
 import styles from './User.module.scss';
-import { sliceString } from 'utils';
 
 interface IUserProps {
   className?: string;
@@ -72,7 +71,7 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
       <div className={styles.head}>
         <div className={styles.top}>
           <div className={styles.avatar}>
-            <img src={avatar} alt="avatar" />
+            <img src={mock.user} alt="avatar" />
             <Text>Username</Text>
           </div>
           <div className={styles.edit}>
@@ -129,7 +128,7 @@ const User: FC<IUserProps> = ({ className }) => {
   return (
     <Popover className={cn(styles.user, className)}>
       <Popover.Button className={styles.popoverBtn}>
-        <img src={avatar} alt="Avatar" />
+        <img src={mock.user} alt="Avatar" />
       </Popover.Button>
       <Popover.Body className={styles.popoverBody}>
         <UserBody user={{ id: 0 }} />

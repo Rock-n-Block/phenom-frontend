@@ -4,8 +4,9 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
+import mock from 'mock';
 
-import { H5, TextInput } from 'components';
+import { Button, H5, TextInput } from 'components';
 
 // import Loader from 'components/Loader';
 // import { useFetchNft } from 'hooks';
@@ -14,8 +15,6 @@ import { SearchTag } from './components';
 
 import { routes } from 'appConstants';
 
-import img from './mockImg.png';
-
 import { iconSearch } from 'assets/img';
 
 import styles from './styles.module.scss';
@@ -23,10 +22,12 @@ import styles from './styles.module.scss';
 type Props = {
   className?: string;
   classNameDropdown?: string;
-  isDesktop?: boolean;
+  isOpen: boolean;
+  handleSetIsOpen: (value: boolean) => void;
+  width: number;
 };
 
-const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) => {
+const Search: VFC<Props> = ({ className, classNameDropdown, isOpen, handleSetIsOpen, width }) => {
   const [inputValue, setInputValue] = useState('');
   // TODO: check if pagination needed, if not delete
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,11 +37,11 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
 
   const isLoading = false;
   const nftCards: any = [
-    { id: 0, media: img, name: 'Ba' },
-    { id: 0, media: img, name: 'Bananas' },
-    { id: 0, media: img, name: 'Bali' },
-    { id: 0, media: img, name: 'Bar' },
-    { id: 0, media: img, name: 'Basketball' },
+    { id: 0, media: mock.search, name: 'Ba' },
+    { id: 0, media: mock.search, name: 'Bananas' },
+    { id: 0, media: mock.search, name: 'Bali' },
+    { id: 0, media: mock.search, name: 'Bar' },
+    { id: 0, media: mock.search, name: 'Basketball' },
   ];
   const totalItems = nftCards.length;
 
@@ -65,26 +66,37 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
   const isShowResults = totalItems > 0 && inputValue !== '';
   const isNoResults = totalItems === 0 && inputValue !== '' && !isLoading;
 
+  const iconBtn = (
+    <Button
+      color="transparent"
+      className={styles.searchBtn}
+      onClick={() => handleSetIsOpen(true)}
+      icon={iconSearch}
+    />
+  );
+
   return (
-    <div className={cx(styles.search, { [styles.desktop]: isDesktop }, className)}>
+    <div className={cx(styles.search, className)}>
       <OutsideClickHandler onOutsideClick={clearInput}>
         <TextInput
           onChange={handleInput}
           value={inputValue}
           placeholder="NFT Name, username"
           // type="text"
-          className={styles.searchInput}
-          icon={iconSearch}
+          className={cx(styles.searchInput, { [styles.closed]: !isOpen })}
+          icon={width > 768 ? iconSearch : iconBtn}
+          isButton={width < 768 && isOpen}
+          onButtonClick={() => handleSetIsOpen(false)}
         />
         {isLoading && <></>}
         <div
           className={cx(
             styles.searchDropdown,
-            { [styles.isVisible]: isShowResults || isNoResults },
+            { [styles.isVisible]: ((isOpen || width > 768) && isShowResults) || isNoResults },
             classNameDropdown,
           )}
         >
-          {isShowResults && (
+          {isShowResults && (isOpen || width > 768) && (
             <>
               <ul className={styles.searchResults}>
                 {nftCards.slice(0, 5).map((nft: any, index: number) => {
@@ -100,7 +112,7 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
               </ul>
             </>
           )}
-          {isNoResults && <H5>No search results</H5>}
+          {isNoResults && (isOpen || width > 768) && <H5>No search results</H5>}
         </div>
       </OutsideClickHandler>
     </div>

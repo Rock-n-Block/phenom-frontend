@@ -50,6 +50,11 @@
   }
 }
 
+.popoverBtn{
+  border: 2px solid $color-light-4;
+  border-radius: 50%;
+}
+
 .popoverBody {
   width: 350px;
 }

@@ -63,6 +63,10 @@ $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffff
     padding-left: 32px;
     padding-right: 32px;
   }
+  @include m {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 //placeholder
@@ -156,7 +160,11 @@ $defaultFlexBoxJustify: center;
   }
 }
 
-// gilroy
+// fonts
 @mixin gilroy {
   font-family: 'Gilroy', sans-serif;
+}
+
+@mixin redressed {
+  font-family: 'Redressed', sans-serif;
 }

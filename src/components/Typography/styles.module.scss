@@ -48,6 +48,7 @@
 .type_h4,
 .type_h5,
 .type_h6 {
+  @include gilroy;
 }
 
 .align_center {
