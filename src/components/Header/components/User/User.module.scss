@@ -151,6 +151,16 @@
   animation: showUser 0.4s forwards;
   border-radius: $border-radius;
   right: 0;
+
+  .foot{
+    margin-top: 24px;
+    @include flexbox(center, flex-start);
+    flex-direction: column;
+
+    .docs{
+      text-decoration: underline;
+    }
+  }
 }
 
 .dropdown {

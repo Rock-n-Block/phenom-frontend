@@ -225,6 +225,17 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
         </Text>
         <img src={iconExit} alt="exit" className={styles.exitIcon} />
       </Button>
+
+      <div className={styles.foot}>
+        <Text className={styles.footPhenom}>PhenomMetaverse©{new Date().getFullYear()}</Text>
+        <Link to="/">
+          <Button padding="0" color="transparent">
+            <Text color="blue" className={styles.docs}>
+              Documents
+            </Text>
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

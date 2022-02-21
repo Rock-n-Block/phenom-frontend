@@ -60,7 +60,7 @@ const Footers: React.FC = () => {
           </div>
         </div>
         <div className={styles.copyrightBlock}>
-          <Text color="white">PhenomMetaverse©{new Date().getFullYear()}</Text>
+          <Text className={styles.copyrightBlockItem} color="white">PhenomMetaverse©{new Date().getFullYear()}</Text>
           <div className={styles.privacy}>
             <Link to="/">
               <Button padding="0" className={styles.button} color="transparent">
