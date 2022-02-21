@@ -1,13 +1,9 @@
 import { FC } from 'react';
 
 import cx from 'classnames';
+import mock from 'mock'
 
 import { H1, Text } from 'components';
-
-import mockImg1 from './mockImg1.png';
-import mockImg2 from './mockImg2.png';
-import mockImg3 from './mockImg3.png';
-import mockImg4 from './mockImg4.png';
 
 import { categories, ellipse } from 'assets/img';
 
@@ -19,10 +15,10 @@ type Props = {
 };
 
 const tags = [
-  { title: 'Rooms', image: mockImg1 },
-  { title: 'Area', image: mockImg2 },
-  { title: 'Buildings ', image: mockImg3 },
-  { title: 'Skins', image: mockImg4 },
+  { title: 'Rooms', image: mock.categories.img1 },
+  { title: 'Area', image: mock.categories.img2 },
+  { title: 'Buildings ', image: mock.categories.img3 },
+  { title: 'Skins', image: mock.categories.img4 },
 ];
 
 const Categories: FC<Props> = ({ className }) => {

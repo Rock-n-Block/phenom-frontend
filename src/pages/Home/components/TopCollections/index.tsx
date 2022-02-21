@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import BigNumber from 'bignumber.js';
 import cx from 'classnames';
+import mock from 'mock';
 
 import { H1, Text } from 'components';
 
@@ -11,22 +12,20 @@ import { CollectionCard } from './components';
 // import { useFetchTopCollections } from 'hooks';
 import styles from './styles.module.scss';
 
-import mockAvatar from './mockAvatar.png';
-
 type Props = {
   className?: string;
 };
 
 const collections = [
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mockAvatar, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
+  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
 ];
 
 const TopCollections: FC<Props> = ({ className }) => {

@@ -4,6 +4,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
+import mock from 'mock';
 
 import { H5, TextInput } from 'components';
 
@@ -13,8 +14,6 @@ import { H5, TextInput } from 'components';
 import { SearchTag } from './components';
 
 import { routes } from 'appConstants';
-
-import img from './mockImg.png';
 
 import { iconSearch } from 'assets/img';
 
@@ -36,11 +35,11 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
 
   const isLoading = false;
   const nftCards: any = [
-    { id: 0, media: img, name: 'Ba' },
-    { id: 0, media: img, name: 'Bananas' },
-    { id: 0, media: img, name: 'Bali' },
-    { id: 0, media: img, name: 'Bar' },
-    { id: 0, media: img, name: 'Basketball' },
+    { id: 0, media: mock.search, name: 'Ba' },
+    { id: 0, media: mock.search, name: 'Bananas' },
+    { id: 0, media: mock.search, name: 'Bali' },
+    { id: 0, media: mock.search, name: 'Bar' },
+    { id: 0, media: mock.search, name: 'Basketball' },
   ];
   const totalItems = nftCards.length;
 

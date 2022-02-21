@@ -8,13 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 
 import { ArtCard, H1, Text } from 'components';
 
-import avatar from '../../../../components/Header/components/User/mockAvatar.png';
 import { TitleDropdown } from './components';
 
 import { useWindowSize } from 'hooks';
 
 import 'swiper/swiper.less';
-import mockNft1 from './mockNft1.png';
+import mock from 'mock';
 
 import 'swiper/swiper.scss';
 import 'swiper/swiper-bundle.css';
@@ -59,10 +58,10 @@ const Trending: FC<Props> = ({ className }) => {
         artId: '0342348',
         name: 'Nft name',
         price: '54266.7',
-        img: mockNft1,
+        img: mock.trending,
         asset: 'PHETA',
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: avatar,
+        authorAvatar: mock.user,
         authorId: 1,
         bids: [1],
         isAuction: true,
@@ -72,10 +71,10 @@ const Trending: FC<Props> = ({ className }) => {
         artId: '0342348',
         name: 'Nft name',
         price: '54266.7',
-        img: mockNft1,
+        img: mock.trending,
         asset: 'PHETA',
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: avatar,
+        authorAvatar: mock.user,
         authorId: 1,
         isAuction: false,
         USD_price: 22.03,
@@ -84,10 +83,10 @@ const Trending: FC<Props> = ({ className }) => {
         artId: '0342348',
         name: 'Nft name',
         price: '54266.7',
-        img: mockNft1,
+        img: mock.trending,
         asset: 'PHETA',
         author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: avatar,
+        authorAvatar: mock.user,
         authorId: 1,
         bids: [],
         isAuction: true,
