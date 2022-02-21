@@ -45,7 +45,7 @@ const Headers: FC = () => {
           </>
         )}
         <HeaderLinks className={styles.headerLinks} />
-        <User />
+        <User isDesktop={width > 768} />
       </header>
     </>
   );
