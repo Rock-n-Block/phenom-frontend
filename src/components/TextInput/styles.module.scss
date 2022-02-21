@@ -12,12 +12,19 @@
   @include placeholder {
     color: $color-dark-4;
   }
+
+  &Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+  }
 }
 
 .icon {
   position: absolute;
   top: 50%;
-  left: 19px;
+  left: 18px;
   z-index: 1;
 
   transform: translateY(-50%);
@@ -27,7 +34,7 @@
   }
 }
 
-.withIcon{
+.withIcon {
   padding-left: 50px;
 }
 // input:-webkit-autofill,

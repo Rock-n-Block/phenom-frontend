@@ -28,9 +28,20 @@
 }
 
 @include t {
-  .searchDesktop,
   .headerLinks,
   .headerSearch {
     display: none;
+  }
+}
+
+@include m {
+  .header {
+    padding-top: 14px;
+  }
+  .searchDesktop {
+    margin-left: 0;
+  }
+  .open {
+    width: 282px;
   }
 }

@@ -1,6 +1,11 @@
 @import './mixins/media';
 
-@include font-face('Gilroy', '../../assets/fonts/Gilroy/Gilroy-Regular');
-@include font-face('Gilroy', '../../assets/fonts/Gilroy/Gilroy-Medium', 500, normal, 'ttf');
-@include font-face('Gilroy', '../../assets/fonts/Gilroy/Gilroy-SemiBold', 600, normal, 'ttf');
-@include font-face('Gilroy', '../../assets/fonts/Gilroy/Gilroy-Bold', 700, normal, 'ttf');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Regular', normal, 'woff');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Medium', 500, 'woff');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-SemiBold', 600, 'woff');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Bold', 700, 'woff');
+
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Regular', normal, 'ttf');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Medium', 500, 'ttf');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-SemiBold', 600, 'ttf');
+@include font-face('Gilroy', '../assets/fonts/Gilroy/Gilroy-Bold', 700, 'ttf');
