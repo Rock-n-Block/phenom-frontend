@@ -40,7 +40,7 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
           className={styles.selected}
         >
           <H2 weight="bold" color="blue" className={styles.blueValue}>
-            {value.title.toLowerCase() === 'all nft' ? 'all categories' : value.title}
+            {value.title.toLowerCase() === 'all categories' ? 'all categories' : value.title}
           </H2>
           <div className={styles.dropdownContainer}>
             <img

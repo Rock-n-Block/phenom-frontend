@@ -127,7 +127,7 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
         title: 'Explore',
       },
       {
-        title: 'All NFT',
+        title: 'All categories',
         url: '/',
       },
       {
@@ -186,7 +186,7 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
                 onKeyDown={() => {}}
                 tabIndex={0}
                 role="button"
-                className={styles.option}
+                className={cx(styles.option, { [styles.borderTop]: index === 1 })}
                 // onClick={() => handleClick(option.symbol.toUpperCase())}
                 key={`dropdown_option_${option.title}`}
               >

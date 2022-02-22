@@ -152,12 +152,12 @@
   border-radius: $border-radius;
   right: 0;
 
-  .foot{
+  .foot {
     margin-top: 24px;
     @include flexbox(center, flex-start);
     flex-direction: column;
 
-    .docs{
+    .docs {
       text-decoration: underline;
     }
   }
@@ -173,7 +173,11 @@
       border-radius: 10px 10px 0 0;
       .arrow {
         transition: $transition;
-        transform: rotate(0deg);
+        transform: rotate(-180deg);
+      }
+
+      .text {
+        font-weight: bold;
       }
     }
 
@@ -183,6 +187,10 @@
       opacity: 1;
 
       transform: translateY(0);
+
+      .borderTop {
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+      }
     }
   }
 
@@ -206,7 +214,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotate(-180deg);
+    transform: rotate(0deg);
     transition: $transition;
   }
 
