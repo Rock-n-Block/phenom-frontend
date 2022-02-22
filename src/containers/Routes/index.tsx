@@ -3,6 +3,7 @@ import { routes } from 'appConstants';
 // import { GuardedRoute } from 'components';
 // import { observer } from 'mobx-react-lite';
 import {
+  Explore,
   // Activity,
   // CollectionPage,
   // ComingSoon,
@@ -37,6 +38,7 @@ const RoutesPage = () => {
       <Route path={routes.profile.root} render={() => <Page component={<Profile />} />} /> */}
 
       <Route path={routes.home.root} element={<Page component={<Home />} />} />
+      <Route path={routes.explore.root} element={<Page component={<Explore />} />} />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />
       <Route
         path={routes.collection.root}
