@@ -152,12 +152,12 @@
   border-radius: $border-radius;
   right: 0;
 
-  .foot{
+  .foot {
     margin-top: 24px;
     @include flexbox(center, flex-start);
     flex-direction: column;
 
-    .docs{
+    .docs {
       text-decoration: underline;
     }
   }
@@ -183,6 +183,10 @@
       opacity: 1;
 
       transform: translateY(0);
+
+      .borderTop {
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+      }
     }
   }
 

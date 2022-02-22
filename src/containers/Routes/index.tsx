@@ -9,6 +9,7 @@ import { useLanguage } from 'context';
 // import { observer } from 'mobx-react-lite';
 import {
   Create,
+  Explore,
   // Activity,
   // CollectionPage,
   // ComingSoon,
@@ -64,6 +65,12 @@ const RoutesPage = () => {
       <Route
         path={routes.create.root}
         element={<Page classes={['gradient-body-2']} component={<Create />} />}
+      />
+      <Route
+        path={routes.explore.root}
+        element={
+          <Page classes={['with-left-detail', 'with-right-detail']} component={<Explore />} />
+        }
       />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />
       <Route

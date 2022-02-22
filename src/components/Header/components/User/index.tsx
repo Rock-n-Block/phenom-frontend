@@ -11,7 +11,7 @@ import { sliceString } from 'utils';
 
 import { usePopover } from 'hooks';
 
-import { CrossIcon, iconArrowDown, iconCopy, iconCreate, iconEdit, iconExit } from 'assets/img';
+import { CrossIcon, iconArrowDownBlue, iconCopy, iconCreate, iconEdit, iconExit } from 'assets/img';
 
 import styles from './User.module.scss';
 
@@ -127,7 +127,7 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
         title: 'Explore',
       },
       {
-        title: 'All NFT',
+        title: 'All categories',
         url: '/',
       },
       {
@@ -175,7 +175,7 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
             <Text className={styles.text} tag="span">
               {dropdownOptions[0].title}
             </Text>
-            <img alt="arrow" className={styles.arrow} src={iconArrowDown} />
+            <img alt="arrow" className={styles.arrow} src={iconArrowDownBlue} />
           </>
         </div>
 
@@ -186,7 +186,7 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
                 onKeyDown={() => {}}
                 tabIndex={0}
                 role="button"
-                className={styles.option}
+                className={cx(styles.option, { [styles.borderTop]: index === 1 })}
                 // onClick={() => handleClick(option.symbol.toUpperCase())}
                 key={`dropdown_option_${option.title}`}
               >

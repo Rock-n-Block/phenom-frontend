@@ -1,0 +1,12 @@
+@import 'src/styles/helpers.scss';
+
+.filters{
+  padding: 24px;
+  background-color: rgba($color-light-4, 0.4);
+  border-radius: 20px;
+  @include flexbox(center, space-between);
+
+  &Left{
+    @include flexbox(flex-start, flex-start);
+  }
+}

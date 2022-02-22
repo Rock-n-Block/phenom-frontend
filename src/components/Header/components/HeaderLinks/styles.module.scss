@@ -31,10 +31,6 @@
   &:hover {
     background-color: $color-purple;
   }
-
-  &:not(:first-of-type) {
-    padding-top: 15px;
-  }
 }
 
 .popoverBody {

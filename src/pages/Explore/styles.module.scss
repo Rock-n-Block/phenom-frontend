@@ -1,0 +1,20 @@
+@import 'src/styles/helpers.scss';
+
+.explore {
+  @include container;
+  @include t {
+    padding: 0;
+  }
+}
+
+.title {
+  margin-top: 92px;
+  margin-bottom: 88px;
+}
+
+.categories {
+  @include flexbox(flex-start, center);
+  .category + .category {
+    margin-left: 16px;
+  }
+}

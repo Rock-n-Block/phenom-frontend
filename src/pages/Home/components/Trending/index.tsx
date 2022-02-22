@@ -6,7 +6,7 @@ import cx from 'classnames';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 
-import { ArtCard, H1, Text } from 'components';
+import { ArtCard, H2, Text } from 'components';
 
 import { TitleDropdown } from './components';
 
@@ -22,7 +22,7 @@ import styles from './styles.module.scss';
 // import { routes } from 'appConstants';
 
 const nftTags = [
-  { title: 'All NFT' },
+  { title: 'All categories' },
   { title: 'Rooms' },
   { title: 'Area' },
   { title: 'Buildings ' },
@@ -33,7 +33,7 @@ type Props = {
   className?: string;
 };
 const Trending: FC<Props> = ({ className }) => {
-  const [title, setTitle] = useState<any>({ title: 'All NFT' });
+  const [title, setTitle] = useState<any>({ title: 'All categories' });
   const [nfts, setNfts] = useState<any[]>([]);
   const [numberOfSlide, setNumberOfSlide] = useState(3);
   const { width } = useWindowSize();
@@ -105,10 +105,10 @@ const Trending: FC<Props> = ({ className }) => {
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
-        <H1 weight="bold" className={styles.title} align="center">
+        <H2 weight="bold" className={styles.title} align="center">
           Trending in{' '}
           {nftTags.length && <TitleDropdown value={title} setValue={setTitle} options={nftTags} />}
-        </H1>
+        </H2>
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 2 })}>
             {nfts.length > 2 ? (
@@ -173,6 +173,9 @@ const Trending: FC<Props> = ({ className }) => {
                             bids={bids}
                             isAuction={isAuction}
                             USD_price={USD_price}
+                            likeAction={(id: any) => {
+                              return id;
+                            }}
                           />
                         </Link>
                       </SwiperSlide>
