@@ -41,20 +41,9 @@ const Explore: VFC = () => {
       <H1 align="center" className={styles.title}>
         Skins
       </H1>
-      {/* <div className={styles.categories}>
-        {categories.map((category: any) => (
-          <Button
-            color={category.value === checkedCategory ? 'dark' : 'light'}
-            onClick={() => handleClickCategory(category.value)}
-            className={styles.category}
-          >
-            {category.label}
-          </Button>
-        ))}
-      </div> */}
       <TabLookingComponent
         tabs={categories}
-        className={styles.categories}
+        wrapClassName={styles.categories}
         action={(value) => handleClickCategory(value)}
         activeTab={checkedCategory}
         tabClassName={styles.category}

@@ -29,8 +29,10 @@ const Filters: FC = () => {
       </div>
       <div className={styles.filtersRight}>
         <Text>Price</Text>
-        <div className={styles.box}>Min PHETA</div>
-        <div className={styles.box}>Max PHETA</div>
+        <div className={styles.prices}>
+          <div className={styles.box}>Min PHETA</div>
+          <div className={styles.box}>Max PHETA</div>
+        </div>
         <Button className={styles.apply}>Apply</Button>
       </div>
     </div>

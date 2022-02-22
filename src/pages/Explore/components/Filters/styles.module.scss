@@ -20,6 +20,11 @@
   margin-right: 16px;
 }
 
+.prices {
+  @include flexbox(center, flex-start);
+  margin-left: 12px;
+}
+
 .box {
   border: 1px solid $color-dark-3;
   border-radius: 10px;
@@ -31,6 +36,54 @@
   }
 }
 
-.apply{
+.apply {
   margin-left: 32px;
+}
+
+@include d {
+  .filters {
+    flex-direction: column;
+    &Left {
+      margin-bottom: 16px;
+    }
+    &Left,
+    &Right {
+      justify-content: center;
+    }
+  }
+}
+
+@include a {
+  .filters {
+    &Left,
+    &Right {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &Left {
+      div:nth-child(n) {
+        width: 100%;
+      }
+    }
+  }
+
+  .dropdown {
+    margin-bottom: 16px;
+  }
+
+  .prices {
+    margin-left: 0;
+    margin-top: 8px;
+    width: 100%;
+    .box {
+      width: 100%;
+    }
+  }
+
+  .apply {
+    margin-left: 0;
+    margin-top: 16px;
+    width: 100%;
+  }
 }
