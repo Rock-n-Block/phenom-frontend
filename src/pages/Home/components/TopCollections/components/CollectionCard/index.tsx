@@ -24,7 +24,7 @@ const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncr
             {name}
           </Text>
         </EllipsisText>
-        <Text size="xs" weight="bold" className={styles.price}>
+        <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
           Floor price:{' '}
           <Text size="xs" color="blue" weight="bold" className={styles.price}>
             {price} PHETA
