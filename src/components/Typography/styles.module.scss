@@ -1,17 +1,17 @@
-@import "styles/helpers.scss";
+@import 'styles/helpers.scss';
 
 .type_h1 {
-  font-size: 40px;
-  @include s {
-    font-size: 28px;
-  }
-}
-
-.type_h2 {
   font-size: 62px;
   line-height: 120%;
   @include s {
     font-size: 40px;
+  }
+}
+
+.type_h2 {
+  font-size: 40px;
+  @include s {
+    font-size: 28px;
   }
 }
 

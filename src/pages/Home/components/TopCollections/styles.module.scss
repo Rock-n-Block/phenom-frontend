@@ -8,9 +8,9 @@
 
 .collections {
   height: auto;
-  transition: $transition;
   overflow: hidden;
   margin-top: 20px;
+  @include transition;
 }
 
 .title {

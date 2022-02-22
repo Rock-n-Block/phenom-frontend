@@ -8,6 +8,7 @@ import { useLanguage } from 'context';
 // import { GuardedRoute } from 'components';
 // import { observer } from 'mobx-react-lite';
 import {
+  Create,
   // Activity,
   // CollectionPage,
   // ComingSoon,
@@ -56,7 +57,14 @@ const RoutesPage = () => {
       <Route exact path={routes.profile.edit} render={() => <Page component={<ProfileEdit />} />} />
       <Route path={routes.profile.root} render={() => <Page component={<Profile />} />} /> */}
 
-      <Route path={routes.home.root} element={<Page component={<Home />} />} />
+      <Route
+        path={routes.home.root}
+        element={<Page classes={['with-left-detail', 'with-right-detail']} component={<Home />} />}
+      />
+      <Route
+        path={routes.create.root}
+        element={<Page classes={['gradient-body-2']} component={<Create />} />}
+      />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />
       <Route
         path={routes.collection.root}

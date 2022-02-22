@@ -1,0 +1,8 @@
+{
+    "createOptions":{
+        "Create": "Create",
+        "SingleNft": "Single Nft",
+        "MultipleNft": "Multiple Nft",
+        "CreateACollection": "Create a collection"
+    }
+}

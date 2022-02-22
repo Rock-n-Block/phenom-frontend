@@ -1,0 +1,7 @@
+@import '/src/styles/helpers.scss';
+
+.create-page__wrapper{
+    min-height: 582px;
+    @include flexbox(center, flex-start, column);
+    @include container;
+}

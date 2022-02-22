@@ -2,14 +2,16 @@
 @import 'src/styles/mixins/media.scss';
 
 .footer {
+  margin-top: auto;
   background: $color-dark;
-  padding: 60px 0 42px;
+  padding: 50px 0 42px;
   color: $color-light-4;
+  flex: 0 0 273px;
+  width: 100%;
 }
 
 .footerContent {
   margin: 0 auto;
-  padding-bottom: 22px;
   // border-top: 1px solid $color-neutral-30;
 }
 

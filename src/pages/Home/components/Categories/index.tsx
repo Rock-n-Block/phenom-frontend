@@ -5,7 +5,7 @@ import mock from 'mock'
 
 import { H1, Text } from 'components';
 
-import { categories, ellipse } from 'assets/img';
+import { categories } from 'assets/img';
 
 // import { routes } from 'appConstants';
 import styles from './styles.module.scss';
@@ -29,8 +29,7 @@ const Categories: FC<Props> = ({ className }) => {
   return (
     <div className={cx(styles.categories, className)}>
       <div className={styles.gradient}>
-        <img src={categories} alt="categories" />
-        <img src={ellipse} alt="ellipse" className={styles.ellipse} />
+        <img src={categories} className={styles.metaverse} alt="categories" />
       </div>
       <div className={styles.title}>
         <H1 weight="bold" align="center">

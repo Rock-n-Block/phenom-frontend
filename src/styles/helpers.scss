@@ -37,6 +37,7 @@ $color-gray-0: #d9d9d9;
 $color-gray-1: #333333;
 
 $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffffff 73.72%);
+$color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
 
 @mixin shadow-0 {
   box-shadow: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
@@ -76,8 +77,6 @@ $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffff
   }
 }
 
-$transition: 0.4s ease;
-
 $border-radius: 12px;
 
 @mixin multiplyRowsEllipsis($rows: 3) {
@@ -88,14 +87,39 @@ $border-radius: 12px;
   -webkit-box-orient: vertical;
 }
 
+@mixin autoGrid($min: 250px, $max: 1fr, $gap: 0) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min, $max));
+  gap: $gap;
+}
+
 //flexbox
 $defaultFlexBoxAlign: center;
 $defaultFlexBoxJustify: center;
+$defaultFlexDirection: row;
 
-@mixin flexbox($align: $defaultFlexBoxAlign, $justify: $defaultFlexBoxJustify) {
+@mixin flexbox(
+  $align: $defaultFlexBoxAlign,
+  $justify: $defaultFlexBoxJustify,
+  $direction: $defaultFlexDirection
+) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
+  flex-direction: $direction;
+}
+
+$transition-duration: 0.3s;
+$transition-timing-function: ease;
+$transition-delay: 0s;
+
+@mixin transition(
+  $duration: $transition-duration,
+  $function: $transition-timing-function,
+  $delay: $transition-delay,
+  $property: all
+) {
+  transition: $property $duration $function $delay;
 }
 
 // media queries
@@ -158,6 +182,46 @@ $defaultFlexBoxJustify: center;
   ::selection {
     -webkit-text-fill-color: $color-white;
   }
+}
+
+.gradient-body{
+  background: $color-gradient;
+  &-2{
+    background: $color-gradient-2;
+  }
+}
+
+.with-left-detail{
+  position: relative;
+  overflow: hidden;
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1500px;
+    height: 1100px;
+    content: '';
+    background: left / contain no-repeat url('/assets/img/left-detail.png');
+  }
+}
+
+.with-right-detail{
+  position: relative;
+  overflow: hidden;
+  &:after{
+    position: absolute;
+    top: 1500px;
+    right: 0;
+    width: 1500px;
+    height: 1100px;
+    content: '';
+    background: right / contain no-repeat url('/assets/img/right-detail.png');
+    z-index: -1;
+  }
+}
+
+.with-transition{
+  @include transition;
 }
 
 // fonts
