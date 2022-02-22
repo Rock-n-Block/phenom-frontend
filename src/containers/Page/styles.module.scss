@@ -1,6 +1,11 @@
 @import "src/styles/helpers";
 
-.ellipse{
+.wrapper{
+  min-height: 100vh;
+  @include flexbox(center, flex-start, column);
+}
+
+.body {
   position: absolute;
   width: 100%;
 

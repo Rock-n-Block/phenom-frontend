@@ -19,7 +19,7 @@ const Banner: FC = () => {
   return (
     <div className={styles.banner}>
       <div className={styles.gradient}>
-        <img src={metaverse} alt="metaverse" />
+        <img className={styles.metaverse} src={metaverse} alt="metaverse" />
       </div>
       <div className={styles.bannerBody}>
         <Text weight="bold" className={styles.title}>

@@ -1,25 +1,25 @@
 import { FC, ReactElement } from 'react';
 
-import cx from 'classnames';
 import { Footer } from 'containers';
 
-import { ellipse } from 'assets/img';
+import { useClasses } from 'hooks';
 
 import styles from './styles.module.scss';
 
+type classes = 'gradient-body' | 'gradient-body-2' | 'with-left-detail' | 'with-right-detail';
 interface IProps {
   component: ReactElement<any, any>;
   needFooter?: boolean;
+  classes?: classes[];
 }
 
-const Page: FC<IProps> = ({ component, needFooter = true }) => {
+const Page: FC<IProps> = ({ component, classes = [], needFooter = true }) => {
+  useClasses('#root', classes);
   return (
-    <>
-      <img src={ellipse} alt="ellipse" className={styles.ellipse} />
-      <img src={ellipse} alt="ellipse" className={cx(styles.ellipse, styles.ellipseReverted)} />
+    <section className={styles.wrapper}>
       {component}
       {needFooter && <Footer />}
-    </>
+    </section>
   );
 };
 

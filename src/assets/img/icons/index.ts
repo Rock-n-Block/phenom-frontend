@@ -9,3 +9,4 @@ export { default as iconCopy } from './copy.svg';
 export { default as iconExit } from './exit.svg';
 export { default as iconCreate } from './create.svg';
 export { default as NullAvatarSrc } from './Profile.svg';
+export * from './Create';

@@ -1,5 +1,6 @@
-import { useLanguage } from 'context';
 import { VFC } from 'react';
+
+import { useLanguage } from 'context';
 
 import { Banner, Categories, TopCollections, Trending } from './components';
 
