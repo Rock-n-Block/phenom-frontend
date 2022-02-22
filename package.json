@@ -43,14 +43,19 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-simple-import-sort": "^5.0.2",
+    "i18next": "^21.6.11",
+    "i18next-browser-languagedetector": "^6.1.3",
+    "i18next-chained-backend": "^3.0.2",
+    "i18next-localstorage-backend": "^3.1.3",
+    "i18next-xhr-backend": "^3.2.2",
     "lodash": "^4.17.21",
     "node-sass": "^5.0.0",
     "npm-run-all": "^4.1.5",
-    "pre-commit": "^1.2.2",
     "prettier": "^2.2.1",
     "rc-tooltip": "^5.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^11.15.4",
     "react-outside-click-handler": "^1.3.0",
     "react-redux": "^7.2.2",
     "react-router-dom": "^6.2.1",
@@ -93,58 +98,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "testEnvironment": "jsdom",
-    "testRunner": "D:\\projects\\less-nft\\node_modules\\jest-circus\\runner.js",
-    "transform": {
-      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "modulePaths": [
-      "D:\\projects\\less-nft\\src"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ],
-    "resetMocks": true
   },
   "babel": {
     "presets": [
