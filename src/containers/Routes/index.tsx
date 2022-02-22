@@ -1,5 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
-import { routes } from 'appConstants';
+import { useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+
+// import { useMst } from 'store';
+import { Page } from 'containers';
+import { useLanguage } from 'context';
+
 // import { GuardedRoute } from 'components';
 // import { observer } from 'mobx-react-lite';
 import {
@@ -18,12 +23,27 @@ import {
   // TopNfts,
   // CreateCollection,
 } from 'pages';
-// import { useMst } from 'store';
-import { Page } from 'containers';
+
+import { routes } from 'appConstants';
 
 const RoutesPage = () => {
-  // const { user } = useMst();
+  const { loadNamespaces } = useLanguage();
+  const location = useLocation();
 
+  useEffect(() => {
+    switch (location.pathname) {
+      case '/': {
+        loadNamespaces('Home');
+        break;
+      }
+      case '/create': {
+        loadNamespaces('Create');
+        break;
+      }
+      default:
+        break;
+    }
+  }, [loadNamespaces, location.pathname]);
   return (
     <Routes>
       {/* <Route path={routes.nft.root}>

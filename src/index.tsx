@@ -1,15 +1,22 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { LanguageProvider } from 'context';
+
+import { combineProviders } from 'utils';
+
 import { App } from './App';
+import i18n from './i18n';
 
 import 'styles/index.scss';
 
+const CombinedProviders = combineProviders([Router, [LanguageProvider, { i18nProvider: i18n }]]);
+
 const root = document.getElementById('root');
 const app = (
-  <Router>
+  <CombinedProviders>
     <App />
-  </Router>
+  </CombinedProviders>
 );
 
 ReactDOM.render(app, root);
