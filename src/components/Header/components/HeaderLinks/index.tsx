@@ -27,7 +27,7 @@ interface IHeaderNestedBodyProps {
 }
 
 const tags = [
-  { title: 'All NFT', label: 'All NFT', link: '/' },
+  { title: 'All categories', label: 'All categories', link: '/' },
   { title: 'Rooms', label: 'Rooms', link: '/' },
   { title: 'Area', label: 'Area', link: '/' },
   { title: 'Buildings', label: 'Buildings', link: '/' },
