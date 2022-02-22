@@ -10,6 +10,7 @@
   &Input {
     input {
       width: 342px;
+      transition: $transition;
       @include m {
         max-width: 282px;
         width: 100%;
@@ -29,6 +30,7 @@
     // border: 2px solid $color-actions-dark-grey;
     width: 58px;
     padding-left: 42px;
+    transition: $transition;
   }
 }
 

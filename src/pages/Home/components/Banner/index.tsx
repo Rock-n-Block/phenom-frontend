@@ -23,7 +23,7 @@ const Banner: FC = () => {
           and also earn rewards for their activity.
         </Text>
         <div className={styles.bannerBtn}>
-          <Button>Explore</Button>
+          <Button padding="extra-large">Explore</Button>
         </div>
       </div>
     </div>
