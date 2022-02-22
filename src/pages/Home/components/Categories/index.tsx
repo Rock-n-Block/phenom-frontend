@@ -3,9 +3,9 @@ import { FC } from 'react';
 import cx from 'classnames';
 import mock from 'mock'
 
-import { H1, Text } from 'components';
+import { H2, Text } from 'components';
 
-import { categories, ellipse } from 'assets/img';
+import { categories } from 'assets/img';
 
 // import { routes } from 'appConstants';
 import styles from './styles.module.scss';
@@ -30,12 +30,11 @@ const Categories: FC<Props> = ({ className }) => {
     <div className={cx(styles.categories, className)}>
       <div className={styles.gradient}>
         <img src={categories} alt="categories" />
-        <img src={ellipse} alt="ellipse" className={styles.ellipse} />
       </div>
       <div className={styles.title}>
-        <H1 weight="bold" align="center">
+        <H2 weight="bold" align="center">
           Categories
-        </H1>
+        </H2>
       </div>
       <div className={styles.box}>
         {tags.length ? (

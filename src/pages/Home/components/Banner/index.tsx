@@ -3,7 +3,7 @@ import { FC } from 'react';
 // import cx from 'classnames';
 import { Button, Text } from 'components';
 
-import { ellipse, metaverse } from 'assets/img';
+import { metaverse } from 'assets/img';
 
 import styles from './styles.module.scss';
 
@@ -12,7 +12,6 @@ const Banner: FC = () => {
     <div className={styles.banner}>
       <div className={styles.gradient}>
         <img src={metaverse} alt="metaverse" />
-        <img src={ellipse} alt="ellipse" className={styles.ellipse} />
       </div>
       <div className={styles.bannerBody}>
         <Text weight="bold" className={styles.title}>
