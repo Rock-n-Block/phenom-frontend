@@ -1,12 +1,36 @@
 @import 'src/styles/helpers.scss';
 
-.filters{
+.filters {
   padding: 24px;
   background-color: rgba($color-light-4, 0.4);
   border-radius: 20px;
+  margin-top: 32px;
   @include flexbox(center, space-between);
 
-  &Left{
-    @include flexbox(flex-start, flex-start);
+  &Left,
+  &Right {
+    width: 100%;
+    @include flexbox(center, flex-start);
   }
+}
+
+.dropdown {
+  width: 200px;
+
+  margin-right: 16px;
+}
+
+.box {
+  border: 1px solid $color-dark-3;
+  border-radius: 10px;
+  width: 160px;
+  height: 40px;
+  @include flexbox(center, flex-start);
+  & + & {
+    margin-left: 16px;
+  }
+}
+
+.apply{
+  margin-left: 32px;
 }

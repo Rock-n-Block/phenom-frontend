@@ -3,7 +3,7 @@
 .ellipse{
   position: absolute;
   width: 100%;
-
+  z-index: -1;
   &Reverted{
     position: absolute;
     transform: translateY(100%) scale(-1, 1);

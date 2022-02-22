@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { Dropdown, Text } from 'components';
+import { Button, Dropdown, Text } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -14,11 +14,24 @@ const Filters: FC = () => {
   return (
     <div className={styles.filters}>
       <div className={styles.filtersLeft}>
-        <Dropdown value={collection} setValue={setCollection} options={collections} />
-        <Dropdown value={type} setValue={setType} options={types} />
+        <Dropdown
+          className={styles.dropdown}
+          value={collection}
+          setValue={setCollection}
+          options={collections}
+        />
+        <Dropdown
+          className={styles.dropdownSmall}
+          value={type}
+          setValue={setType}
+          options={types}
+        />
       </div>
       <div className={styles.filtersRight}>
         <Text>Price</Text>
+        <div className={styles.box}>Min PHETA</div>
+        <div className={styles.box}>Max PHETA</div>
+        <Button className={styles.apply}>Apply</Button>
       </div>
     </div>
   );
