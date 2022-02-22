@@ -6,6 +6,7 @@
   position: relative;
   white-space: nowrap;
   @include shadow-3;
+  @include gilroy;
   box-sizing: border-box;
   &:focus {
     outline: none;

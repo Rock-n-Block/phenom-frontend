@@ -3,9 +3,9 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'classnames';
 
-import { H1, Text } from 'components';
+import { H2, Text } from 'components';
 
-import { iconArrowDown } from 'assets/img';
+import { iconArrowDownBlue } from 'assets/img';
 
 import styles from './styles.module.scss';
 
@@ -39,12 +39,12 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
           onClick={() => setIsOpen((prevState) => !prevState)}
           className={styles.selected}
         >
-          <H1 weight="bold" className={styles.blueValue}>
-            {value.title.toLowerCase() === 'all nfts' ? 'all NFTs' : value.title}
-          </H1>
+          <H2 weight="bold" color="blue" className={styles.blueValue}>
+            {value.title.toLowerCase() === 'all nft' ? 'all categories' : value.title}
+          </H2>
           <div className={styles.dropdownContainer}>
             <img
-              src={iconArrowDown}
+              src={iconArrowDownBlue}
               alt=""
               className={cn(styles.selectedImg, { [styles.selectedImgOpen]: isOpen })}
             />

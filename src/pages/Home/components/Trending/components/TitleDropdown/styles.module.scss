@@ -15,8 +15,6 @@
   outline: none;
 
   &Img {
-    margin-left: 12px;
-    padding: 16px 14px;
     // border: 1px solid $color-neutral-10;
     border-radius: 100%;
     transition: transform 0.3s ease-in-out;
@@ -47,15 +45,20 @@
 .selectionWrapper {
   position: absolute;
   z-index: 999;
-  top: 60px;
+  top: 44px;
   // background: $color-bg;
   border-radius: 2px;
   left: 50%;
   opacity: 0;
   transform: translate(-47.5%, 0);
   pointer-events: none;
+  max-width: 154px;
   // color: $color-neutral-80;
   // @include box-shadow($y: 16px);
+
+  @include d {
+    left: -10%;
+  }
 }
 
 .body {

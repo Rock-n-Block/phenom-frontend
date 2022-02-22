@@ -20,13 +20,13 @@ const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncr
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
         <EllipsisText>
-          <Text weight="bold" size="m">
+          <Text weight="semibold" size="m">
             {name}
           </Text>
         </EllipsisText>
-        <Text size="m" className={styles.price}>
+        <Text size="xs" weight="bold" className={styles.price}>
           Floor price:{' '}
-          <Text size="m" color='blue' className={styles.price}>
+          <Text size="xs" color="blue" weight="bold" className={styles.price}>
             {price} PHETA
           </Text>
         </Text>

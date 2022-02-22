@@ -1,17 +1,17 @@
 @import "styles/helpers.scss";
 
 .type_h1 {
-  font-size: 40px;
+  font-size: 62px;
   @include s {
-    font-size: 28px;
+    font-size: 50px;
   }
 }
 
 .type_h2 {
-  font-size: 62px;
+  font-size: 40px;
   line-height: 120%;
   @include s {
-    font-size: 40px;
+    font-size: 36px;
   }
 }
 
@@ -146,7 +146,7 @@
 }
 
 .color_middleGray {
-  // color: $color-neutral-40;
+  color: $color-dark-2;
 }
 
 .color_lightGray {

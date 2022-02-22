@@ -13,6 +13,7 @@ import { numberFormatter, sliceString, toFixed } from 'utils';
 import { routes } from 'appConstants';
 
 import styles from './styles.module.scss';
+import { iconHeart } from 'assets/img';
 
 type Props = {
   type?: 'Padded' | 'Contained' | 'Covered';
@@ -155,9 +156,13 @@ const ArtCard: FC<Props> = ({
             {`${toFixed(price, 3)} ${asset}`}{' '}
           </Text>
           <div className={styles.bottom}>
-            <Text>$ {USD_price}</Text>
+            <Text weight="bold" color="lightGray">
+              $ {USD_price}
+            </Text>
             {!bids?.length ? (
-              <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
+              <Text color="middleGray" weight="semibold" size="m">
+                {inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}
+              </Text>
             ) : (
               <></>
             )}
@@ -172,10 +177,10 @@ const ArtCard: FC<Props> = ({
               <Button
                 className={cx(styles.artCardHeart, { [styles.artCardHeartActive]: isLike })}
                 onClick={handleLike}
-              >
-                Like
-              </Button>
-              <Text>{numberFormatter(likesCount, 3)}</Text>
+                icon={iconHeart}
+                color="transparent"
+              />
+              <Text weight="bold">{numberFormatter(likesCount, 3)}</Text>
             </div>
           )}
         </div>
