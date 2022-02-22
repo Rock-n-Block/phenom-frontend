@@ -41,7 +41,7 @@ const Headers: FC = () => {
               width={width}
               className={cx(styles.searchDesktop, { [styles.open]: isOpen })}
             />
-            {isOpen ? <></> : <Logo className={styles.headerLogo} />}
+            <Logo className={cx(styles.headerLogo, { [styles.closed]: isOpen })} />
           </>
         )}
         <HeaderLinks className={styles.headerLinks} />
