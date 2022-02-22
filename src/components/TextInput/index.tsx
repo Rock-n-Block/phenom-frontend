@@ -2,7 +2,7 @@ import cx from 'classnames';
 
 import { Button } from 'components';
 
-import { iconCross } from 'assets/img';
+import { CrossIcon } from 'assets/img';
 
 import styles from './styles.module.scss';
 
@@ -42,7 +42,7 @@ const TextInput: React.FC<Props> = ({
           className={styles.inputButton}
           color="transparent"
         >
-          <img src={iconCross} alt="" />
+          <CrossIcon />
         </Button>
       )}
     </div>

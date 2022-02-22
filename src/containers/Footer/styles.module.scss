@@ -87,7 +87,7 @@
   // border-top: 1px solid $color-neutral-30;
 }
 
-.privacy{
+.privacy {
   @include flexbox;
   gap: 50px;
 }
@@ -96,15 +96,7 @@
   margin-top: 30px;
 }
 
-@include s {
-  .footerContent {
-    padding: 30px;
-  }
-
-  .footerLogo,
-  .linkBlock {
-    align-items: center;
-  }
+@include a {
   .linksAndControls {
     flex-direction: column;
     & > * {
@@ -116,8 +108,30 @@
       }
     }
   }
+  .links{
+    width: 100%;
+    justify-content: space-between;
+  }
+  .copyrightBlock{
+    flex-direction: column;
+
+    &Item + .privacy {
+      margin-top: 24px;
+    }
+  }
 }
 
-.docs{
+@include s {
+  .footerContent {
+    padding: 0;
+  }
+
+  .footerLogo,
+  .linkBlock {
+    align-items: flex-start;
+  }
+}
+
+.docs {
   text-decoration: underline;
 }

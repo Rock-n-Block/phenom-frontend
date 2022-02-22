@@ -16,6 +16,13 @@
   margin-bottom: 12px;
 }
 
+.avatar {
+  img {
+    border-radius: 50%;
+    border: 2px solid $color-light-4;
+  }
+}
+
 .avatar,
 .edit {
   @include flexbox;
@@ -48,14 +55,189 @@
   &:hover {
     background-color: $color-purple;
   }
+
+  &Mobile {
+    height: 48px;
+    @include flexbox(center, flex-start);
+    background-color: $color-light-1;
+  }
 }
 
-.popoverBtn {
+.exit {
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 8px;
+  justify-content: center;
+  &Icon {
+    margin-left: 10px;
+  }
+}
+
+.user {
+  position: relative;
+
+  &Buttons {
+    @include flexbox(flex-start, flex-start);
+    margin-top: 8px;
+  }
+
+  &Item {
+    background-color: $color-light-1;
+    border-radius: 10px;
+    padding: 15px 12px;
+    width: 100%;
+    height: 94px;
+
+    .balance {
+      margin-top: 8px;
+    }
+
+    & + & {
+      margin-left: 8px;
+    }
+  }
+}
+
+.createWrapper {
+  @include flexbox(center, center);
+  flex-direction: column;
+  .imageWrapper {
+    border-radius: 50%;
+    background-color: $color-light-4;
+    @include shadow-3;
+    @include flexbox(center, center);
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.popoverBtn,
+.userBtn {
   border: 2px solid $color-light-4;
   border-radius: 50%;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04)) drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.32));
+  width: 33px;
+  height: 33px;
+  background-color: $color-light-4;
+}
+
+.userBtn {
+  padding: 0;
+
+  svg {
+    path {
+      width: 12px;
+      height: 12px;
+      fill: $color-accent;
+    }
+  }
 }
 
 .popoverBody {
   width: 350px;
+}
+
+.mobileBody {
+  position: absolute;
+  top: 100%;
+  min-width: 200px;
+
+  z-index: 999;
+  padding: 16px;
+  background: $color-light-3;
+  opacity: 0;
+  /* Pop Up */
+  // box-shadow: $color-box-shadow;
+  animation: showUser 0.4s forwards;
+  border-radius: $border-radius;
+  right: 0;
+
+  .foot{
+    margin-top: 24px;
+    @include flexbox(center, flex-start);
+    flex-direction: column;
+
+    .docs{
+      text-decoration: underline;
+    }
+  }
+}
+
+.dropdown {
+  position: relative;
+  z-index: 3;
+  &.active {
+    z-index: 10;
+
+    .dropdownHead {
+      border-radius: 10px 10px 0 0;
+      .arrow {
+        transition: $transition;
+        transform: rotate(0deg);
+      }
+    }
+
+    .dropdownBody {
+      display: block;
+
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+  }
+
+  &Head {
+    position: relative;
+    background: $color-light-1;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: border-radius 0.5s;
+    margin-top: 8px;
+    // @include dark {
+  }
+
+  .arrow {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-180deg);
+    transition: $transition;
+  }
+
+  &Body {
+    padding: 0 16px;
+
+    display: none;
+
+    background: $color-light-1;
+    opacity: 0;
+    // border: 2px solid $color-neutral-10;
+    border-radius: 0 0 10px 10px;
+
+    transition: all 0.2s;
+    transform: translateY(-10px);
+    width: 100%;
+    // }
+  }
+
+  .option {
+    padding: 8px 0;
+    height: 40px;
+  }
+}
+
+@keyframes showUser {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

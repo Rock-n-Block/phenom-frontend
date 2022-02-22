@@ -20,7 +20,7 @@ const PopoverBody: FC<IPopoverBody> = ({ className, children }) => {
   return (
     <div className={cn(styles.body, className, styles[position || 'right'])}>
       <OutsideClickHandler onOutsideClick={closePopover}>
-        <div className={styles.triangle} />
+        {/* <div className={styles.triangle} /> */}
         {children}
       </OutsideClickHandler>
     </div>
