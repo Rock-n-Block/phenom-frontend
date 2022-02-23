@@ -51,6 +51,9 @@ $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
 @mixin shadow-3 {
   box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
 }
+@mixin dynamic-shadow($offset-x: 0px, $offset-y: 0px, $blur-radius: 5px, $spread-radius: 0px, $color: rgba(40, 41, 61, 0.08)){
+  box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+}
 
 //container
 @mixin container {
@@ -60,11 +63,11 @@ $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
   // @include m {
   //   padding: 0 32px;
   // }
-  @include d {
+  @include default-screen {
     padding-left: 32px;
     padding-right: 32px;
   }
-  @include m {
+  @include middle-tablet {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -123,44 +126,56 @@ $transition-delay: 0s;
 }
 
 // media queries
-@mixin w {
+@mixin large-screen {
   @media only screen and (max-width: 1419px) {
     @content;
   }
 }
 
-@mixin x {
+@mixin middle-screen {
   @media only screen and (max-width: 1339px) {
     @content;
   }
 }
 
-@mixin d {
+@mixin default-screen {
   @media only screen and (max-width: 1179px) {
     @content;
   }
 }
 
-@mixin t {
+@mixin large-tablet {
   @media only screen and (max-width: 1023px) {
     @content;
   }
 }
 
-@mixin m {
+@mixin middle-tablet {
   @media only screen and (max-width: 767px) {
     @content;
   }
 }
 
-@mixin a {
+@mixin small-tablet {
   @media only screen and (max-width: 639px) {
     @content;
   }
 }
 
-@mixin s {
+@mixin large-mobile {
+  @media screen and (max-width: 541px) {
+    @content;
+  }
+}
+
+@mixin middle-mobile {
   @media only screen and (max-width: 474px) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media screen and (max-width: 376px) {
     @content;
   }
 }
@@ -201,6 +216,7 @@ $transition-delay: 0s;
     width: 1500px;
     height: 1100px;
     content: '';
+    pointer-events: none;
     background: left / contain no-repeat url('/assets/img/left-detail.png');
   }
 }
@@ -215,8 +231,8 @@ $transition-delay: 0s;
     width: 1500px;
     height: 1100px;
     content: '';
+    pointer-events: none;
     background: right / contain no-repeat url('/assets/img/right-detail.png');
-    z-index: -1;
   }
 }
 

@@ -11,7 +11,7 @@
     input {
       width: 342px;
       @include transition;
-      @include m {
+      @include middle-mobile {
         max-width: 282px;
         width: 100%;
       }
@@ -55,7 +55,7 @@
     height: unset;
   }
 
-  @include m {
+  @include middle-mobile {
     max-width: 342px;
     width: 100%;
   }

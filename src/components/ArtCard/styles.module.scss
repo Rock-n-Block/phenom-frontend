@@ -176,7 +176,7 @@
   }
 }
 
-@include s {
+@include large-mobile {
   .artCard {
     &Medium {
       width: unset;

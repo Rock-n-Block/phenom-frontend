@@ -1,10 +1,13 @@
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
-import { routes } from 'appConstants';
+
 import cx from 'classnames';
-import { Button, Text } from 'components';
 import { Popover } from 'containers';
+
+import { Button, Text } from 'components';
+
+import { routes } from 'appConstants';
 import { usePopover, useWindowSize } from 'hooks';
 
 import styles from './styles.module.scss';

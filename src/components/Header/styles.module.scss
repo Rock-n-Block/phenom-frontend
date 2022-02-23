@@ -27,14 +27,14 @@
   }
 }
 
-@include t {
+@include large-tablet {
   .headerLinks,
   .headerSearch {
     display: none;
   }
 }
 
-@include m {
+@include middle-tablet {
   .header {
     padding-top: 14px;
   }

@@ -2,6 +2,8 @@
 
 .wrapper{
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
   @include flexbox(center, flex-start, column);
 }
 

@@ -1,8 +1,18 @@
 {
-    "createOptions":{
-        "Create": "Создать",
-        "SingleNft": "Single Nft на русском",
-        "MultipleNft": "Multiple Nft на русском",
-        "CreateACollection": "Create a collection на русском"
+  "createOptions": {
+    "Create": "Создать",
+    "SingleNft": "Single Nft на русском",
+    "MultipleNft": "Multiple Nft на русском",
+    "CreateACollection": "Create a collection на русском"
+  },
+  "createPage": {
+    "UploadPreview": "<span class={{class}}>Upload</span> preview\n Drag or choose your file to upload",
+    "UploadExtensions": "{{extensions}}. Mаксимум {{size}} {{unit}}.",
+    "UploadUnits": {
+      "b": "байт",
+      "Kb": "КБ",
+      "Mb": "МБ",
+      "Gb": "ГБ"
     }
+  }
 }

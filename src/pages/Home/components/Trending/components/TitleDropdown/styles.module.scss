@@ -56,7 +56,7 @@
   // color: $color-neutral-80;
   // @include box-shadow($y: 16px);
 
-  @include d {
+  @include default-screen {
     left: -10%;
   }
 }

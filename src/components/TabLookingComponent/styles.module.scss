@@ -24,7 +24,7 @@
 .tabWrapper {
   width: max-content;
   @include flexbox(center, space-around);
-  @include s {
+  @include large-mobile  {
     // border-bottom: 1px solid $color-neutral-10;
   }
 

@@ -1,56 +1,5 @@
 @import 'styles/helpers.scss';
 
-.type_h1 {
-  font-size: 62px;
-  line-height: 120%;
-  @include s {
-    font-size: 36px;
-  }
-}
-
-.type_h2 {
-  font-size: 40px;
-  @include s {
-    font-size: 28px;
-  }
-}
-
-.type_h3 {
-  font-size: 36px;
-  @include s {
-    font-size: 28px;
-  }
-}
-
-.type_h4 {
-  font-size: 24px;
-  @include s {
-    font-size: 16px;
-  }
-}
-
-.type_h5 {
-  font-size: 20px;
-  @include s {
-    font-size: 16px;
-  }
-}
-.type_h6 {
-  font-size: 16px;
-  @include s {
-    font-size: 14px;
-  }
-}
-
-.type_h1,
-.type_h2,
-.type_h3,
-.type_h4,
-.type_h5,
-.type_h6 {
-  @include gilroy;
-}
-
 .align_center {
   text-align: center;
 }
@@ -89,35 +38,23 @@
 
 .size_l {
   font-size: 18px;
-  @include s {
-    font-size: 16px;
-  }
 }
 
 .size_xl {
   font-size: 20px;
-  @include s {
-    font-size: 18px;
-  }
 }
 
 .size_xxl {
   font-size: 24px;
-  @include s {
-    font-size: 20px;
-  }
 }
 
 .size_xxxl {
   font-size: 32px;
-  @include s {
-    font-size: 24px;
-  }
 }
 
 .size_xxxxl {
   font-size: 48px;
-  @include s {
+  @include large-mobile {
     font-size: 32px;
   }
 }
@@ -202,6 +139,48 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.type_h1 {
+  font-size: 62px;
+  line-height: 120%;
+  @include large-mobile  {
+    font-size: 40px;
+  }
+}
+
+.type_h2 {
+  font-size: 40px;
+  @include large-mobile  {
+    font-size: 28px;
+  }
+}
+
+.type_h3 {
+  font-size: 36px;
+}
+
+.type_h4 {
+  font-size: 24px;
+}
+
+.type_h5 {
+  font-size: 20px;
+}
+.type_h6 {
+  font-size: 16px;
+  @include large-mobile  {
+    font-size: 14px;
+  }
+}
+
+.type_h1,
+.type_h2,
+.type_h3,
+.type_h4,
+.type_h5,
+.type_h6 {
+  @include gilroy;
 }
 
 .tooltip {
