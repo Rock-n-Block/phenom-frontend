@@ -43,6 +43,10 @@
     &:focus {
       border: 2px solid $color-accent;
       color: $color-dark;
+
+      &:hover {
+        color: $color-light-4;
+      }
     }
 
     &.disabled {

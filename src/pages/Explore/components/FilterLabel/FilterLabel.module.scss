@@ -1,0 +1,20 @@
+@import '/src/styles/helpers.scss';
+
+.label {
+  padding: 4px 8px 4px 20px;
+  background: rgba($color-light-4, 0.7);
+  border-radius: 29px;
+
+  @include flexbox(center, space-between);
+}
+
+.cross {
+  margin-left: 8px;
+  svg {
+    width: 14px;
+    height: 14px;
+    path {
+      fill: $color-dark-0;
+    }
+  }
+}

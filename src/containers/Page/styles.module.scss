@@ -1,4 +1,4 @@
-@import "src/styles/helpers";
+@import 'src/styles/helpers';
 
 .wrapper{
   min-height: 100vh;
@@ -10,8 +10,8 @@
 .body {
   position: absolute;
   width: 100%;
-
-  &Reverted{
+  z-index: -1;
+  &Reverted {
     position: absolute;
     transform: translateY(100%) scale(-1, 1);
   }

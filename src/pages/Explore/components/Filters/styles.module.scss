@@ -1,12 +1,85 @@
 @import 'src/styles/helpers.scss';
 
-.filters{
+.filters {
   padding: 24px;
   background-color: rgba($color-light-4, 0.4);
   border-radius: 20px;
+  margin-top: 32px;
   @include flexbox(center, space-between);
 
-  &Left{
-    @include flexbox(flex-start, flex-start);
+  &Left,
+  &Right {
+    width: 100%;
+    @include flexbox(center, flex-start);
+  }
+}
+
+.dropdown {
+  width: 200px;
+
+  margin-right: 16px;
+}
+
+.prices {
+  @include flexbox(center, flex-start);
+  margin-left: 12px;
+}
+
+.apply {
+  margin-left: 32px;
+}
+
+@include default-screen {
+  .filters {
+    flex-direction: column;
+    &Left {
+      margin-bottom: 16px;
+      justify-content: center;
+
+      div:nth-child(n) {
+        width: 100%;
+      }
+      div:nth-child(1) {
+        width: 100%;
+        &:first-of-type {
+          margin-right: 16px;
+        }
+      }
+    }
+    &Right {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .prices {
+    margin-left: 0;
+    margin-top: 8px;
+    width: 100%;
+    div:nth-child(n) {
+      width: 100%;
+    }
+  }
+
+  .apply {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+}
+
+@include small-tablet {
+  .filters {
+    &Left {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .dropdown {
+    margin-bottom: 16px;
+  }
+
+  .apply {
+    width: 100%;
   }
 }

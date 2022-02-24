@@ -1,25 +1,66 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
-import { Dropdown, Text } from 'components';
+import { Button, Dropdown } from 'components';
+
+import { PriceFilter } from './components';
 
 import styles from './styles.module.scss';
 
-const collections = ['Collection1', 'Collection2', 'Collection3', 'Collection4', 'Collection5'];
-const types = ['Single NFT', 'Multiple NFT'];
+type Props = {
+  collection: string;
+  setCollection: (value: string) => void;
+  collections: Array<any>;
+  type: string;
+  setType: (value: string) => void;
+  types: Array<any>;
+  minPrice: string;
+  setMinPrice: (value: string) => void;
+  maxPrice: string;
+  setMaxPrice: (value: string) => void;
+  // isApplied: boolean;
+  setIsApplied: (value: boolean) => void;
+};
 
-const Filters: FC = () => {
-  const [collection, setCollection] = useState(collections[0]);
-  const [type, setType] = useState(types[0]);
-
+const Filters: FC<Props> = ({
+  collection,
+  setCollection,
+  collections,
+  type,
+  setType,
+  types,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  // isApplied,
+  setIsApplied,
+}) => {
   return (
     <div className={styles.filters}>
       <div className={styles.filtersLeft}>
-        <Dropdown value={collection} setValue={setCollection} options={collections} />
-        <Dropdown value={type} setValue={setType} options={types} />
+        <Dropdown
+          className={styles.dropdown}
+          value={collection}
+          setValue={setCollection}
+          options={collections}
+        />
+        <Dropdown
+          className={styles.dropdownSmall}
+          value={type}
+          setValue={setType}
+          options={types}
+        />
       </div>
-      <div className={styles.filtersRight}>
-        <Text>Price</Text>
-      </div>
+      <PriceFilter
+        className={styles.filtersRight}
+        minPrice={minPrice}
+        setMinPrice={setMinPrice}
+        maxPrice={maxPrice}
+        setMaxPrice={setMaxPrice}
+      />
+      <Button onClick={() => setIsApplied(true)} className={styles.apply}>
+        Apply
+      </Button>
     </div>
   );
 };

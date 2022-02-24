@@ -10,6 +10,7 @@ export { default as iconEdit } from './edit.svg';
 export { default as iconCopy } from './copy.svg';
 export { default as iconExit } from './exit.svg';
 export { default as iconCreate } from './create.svg';
+export { default as iconCheck } from './check.svg';
 export { default as NullAvatarSrc } from './Profile.svg';
 export * from './Create';
 export * from './CreateNFT';
