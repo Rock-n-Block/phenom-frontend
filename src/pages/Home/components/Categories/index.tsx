@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import cx from 'classnames';
-import mock from 'mock'
+import mock from 'mock';
 
-import { H2, Text } from 'components';
+import { Text } from 'components';
 
 import { categories } from 'assets/img';
 
@@ -32,9 +32,9 @@ const Categories: FC<Props> = ({ className }) => {
         <img src={categories} className={styles.metaverse} alt="categories" />
       </div>
       <div className={styles.title}>
-        <H2 weight="bold" align="center">
+        <Text tag="h2" weight="bold" align="center" id="Categories">
           Categories
-        </H2>
+        </Text>
       </div>
       <div className={styles.box}>
         {tags.length ? (
