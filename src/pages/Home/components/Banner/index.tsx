@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { useLanguage } from 'context';
 
@@ -11,7 +10,6 @@ import { metaverse } from 'assets/img';
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
-  const { t } = useTranslation(undefined, { keyPrefix: 'Banner' });
   const { setEntityPreferredLocale } = useLanguage();
   useEffect(() => {
     setTimeout(() => setEntityPreferredLocale('rus'), 2000);
@@ -22,8 +20,8 @@ const Banner: FC = () => {
         <img className={styles.metaverse} src={metaverse} alt="metaverse" />
       </div>
       <div className={styles.bannerBody}>
-        <Text weight="bold" className={styles.title}>
-          {t('PhenomMetaverseMarketplace')}
+        <Text weight="bold" className={styles.title} id="PhenomMetaverseMarketplace">
+          Phenom Metaverse Marketplace
         </Text>
         <Text size="m" className={styles.subtitle}>
           This is a revolutionary virtual universe in which users and their digital avatars can
