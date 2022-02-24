@@ -9,6 +9,7 @@ import { useLanguage } from 'context';
 // import { observer } from 'mobx-react-lite';
 import {
   Create,
+  CreateNFT,
   Explore,
   // Activity,
   // CollectionPage,
@@ -33,17 +34,11 @@ const RoutesPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    switch (location.pathname) {
-      case '/': {
-        loadNamespaces('Home');
-        break;
-      }
-      case '/create': {
-        loadNamespaces('Create');
-        break;
-      }
-      default:
-        break;
+    if (location.pathname === routes.home.root) {
+      loadNamespaces('Home');
+    }
+    if (location.pathname.includes(routes.create.root)) {
+      loadNamespaces('Create');
     }
   }, [loadNamespaces, location.pathname]);
   return (
@@ -64,7 +59,21 @@ const RoutesPage = () => {
       />
       <Route
         path={routes.create.root}
-        element={<Page classes={['gradient-body-2']} component={<Create />} />}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<Create />}
+          />
+        }
+      />
+      <Route
+        path={routes.create.single}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<CreateNFT type="Single" />}
+          />
+        }
       />
       <Route
         path={routes.explore.root}

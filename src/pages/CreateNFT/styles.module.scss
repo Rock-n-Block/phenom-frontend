@@ -1,0 +1,29 @@
+@import '/src/styles/helpers.scss';
+
+.create-nft__wrapper{
+    width: 100%;
+    &__body{
+        margin: 0 auto;
+        width: clamp(320px, 100%, 528px);
+        &-title{
+            margin: 95px 0 85px;
+            @include transition;
+        }
+    }
+}
+
+@include middle-tablet{
+    .create-nft__wrapper{
+        padding: 0 22px;
+    }
+}
+
+@include large-mobile{
+    .create-nft__wrapper{
+        &__body{
+            &-title{
+                margin: 25px 0 40px;
+            }
+        }
+    }
+}

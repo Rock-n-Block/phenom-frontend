@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
+
 import cx from 'classnames';
+
 import { HeadingType, TextAlign as Align, TextColor as Color, TextWeight as Weight } from 'types';
 
 import styles from './styles.module.scss';

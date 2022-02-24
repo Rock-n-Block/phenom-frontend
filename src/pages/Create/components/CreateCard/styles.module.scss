@@ -1,15 +1,11 @@
 @import '/src/styles/helpers.scss';
 
-$space-between: 25px;
-
 .create-card__wrapper {
   background: rgba($color-light-4, 0.5);
   border-radius: 20px;
   padding: 44px 20px;
+  margin: 11.5px;
   @include flexbox(center, flex-start, column);
-  &:not(:last-child){
-    margin-right: $space-between;
-  }
   &-icon {
     width: 54px;
     height: 54px;
@@ -24,5 +20,14 @@ $space-between: 25px;
     color: $color-gray-1;
     margin: auto 0;
     @include gilroy;
+  }
+
+  &.with-animation{
+    @include dynamic-shadow($color: transparent);
+    @include transition;
+    &:hover{
+      @include dynamic-shadow($offset-y: 10px, $color: rgba(40, 41, 61, 0.1));
+      transform: translateY(-10px) scale(1.025);
+    }
   }
 }

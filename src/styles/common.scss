@@ -19,7 +19,7 @@ img {
 
 .desktop {
   &-hide {
-    @include d {
+    @include default-screen {
       display: none !important;
     }
   }
@@ -27,13 +27,13 @@ img {
   &-show {
     display: none !important;
 
-    @include d {
+    @include default-screen {
       display: block !important;
     }
   }
 
   &-text-right {
-    @include d {
+    @include default-screen {
       text-align: right;
     }
   }
@@ -41,7 +41,7 @@ img {
 
 .tablet {
   &-hide {
-    @include t {
+    @include large-tablet {
       display: none !important;
     }
   }
@@ -49,7 +49,7 @@ img {
   &-show {
     display: none !important;
 
-    @include t {
+    @include large-tablet {
       display: block !important;
     }
   }
@@ -57,7 +57,7 @@ img {
 
 .mobile {
   &-hide {
-    @include m {
+    @include large-mobile {
       display: none !important;
     }
   }
@@ -65,7 +65,7 @@ img {
   &-show {
     display: none !important;
 
-    @include m {
+    @include large-mobile {
       display: block !important;
     }
   }

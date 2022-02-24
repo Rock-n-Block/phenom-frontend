@@ -21,7 +21,7 @@
     content: '';
   }
 
-  @include d{
+  @include default-screen{
     top: 100%;
     bottom: 0;
   }
