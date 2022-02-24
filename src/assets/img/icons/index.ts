@@ -1,5 +1,7 @@
 export { ReactComponent as LogoIcon } from './logo.svg';
 export { ReactComponent as CrossIcon } from './cross.svg';
+export { ReactComponent as AddSVG } from './add.svg';
+export { ReactComponent as RemoveSVG } from './remove.svg';
 export { default as iconHeart } from './heart.svg';
 export { default as iconSearch } from './search.svg';
 export { default as iconArrowDownGray } from './arrow-down-gray.svg';
@@ -9,3 +11,5 @@ export { default as iconCopy } from './copy.svg';
 export { default as iconExit } from './exit.svg';
 export { default as iconCreate } from './create.svg';
 export { default as NullAvatarSrc } from './Profile.svg';
+export * from './Create';
+export * from './CreateNFT';

@@ -1,0 +1,62 @@
+@import '/src/styles/helpers.scss';
+
+$min-card-size: 300px;
+$preferred-card-size: 33.333%;
+$max-card-size: 345px;
+
+.create-page__wrapper {
+  min-height: 582px;
+  @include flexbox(center, flex-start, column);
+  @include container;
+
+  .create-menu {
+    &__wrapper {
+      margin: auto 0;
+      width: 100%;
+      &__title {
+        margin: 92px 0 152px;
+        @include transition;
+      }
+      &__body {
+        flex-wrap: wrap;
+        @include flexbox(center, center);
+        margin: 0 -23px;
+        margin-bottom: 222px;
+        @include transition;
+        &-card{
+            flex: 0 0 clamp($min-card-size, $preferred-card-size, $max-card-size);
+        }
+      }
+    }
+  }
+}
+
+@include middle-tablet{
+    .create-page__wrapper{
+        .create-menu{
+            &__wrapper{
+                &__title{
+                    margin: 72px 0 122px;
+                }
+                &__body{
+                    margin-bottom: 160px;
+                }
+            }
+        }
+    }
+}
+
+@include large-mobile{
+    .create-page__wrapper{
+        .create-menu{
+            &__wrapper{
+                &__title{
+                    margin: 35px 0;
+                }
+                &__body{
+                    margin-bottom: 60px;
+                }
+            }
+        }
+    }
+}

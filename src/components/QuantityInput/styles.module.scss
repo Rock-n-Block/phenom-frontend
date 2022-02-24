@@ -1,0 +1,17 @@
+@import '/src/styles/helpers.scss';
+
+.buttons-wrapper {
+  padding-right: 14px;
+  @include flexbox(center, flex-start);
+}
+
+.add-remove-button {
+  &:not(:last-child) {
+    margin-right: 11px;
+  }
+  &:hover {
+    * #add-white {
+      fill: $color-dark-svg;
+    }
+  }
+}

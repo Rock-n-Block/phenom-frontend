@@ -1,6 +1,13 @@
 @import 'src/styles/helpers';
 
-.ellipse {
+.wrapper{
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  @include flexbox(center, flex-start, column);
+}
+
+.body {
   position: absolute;
   width: 100%;
   z-index: -1;

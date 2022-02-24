@@ -1,0 +1,79 @@
+@import '/src/styles/helpers.scss';
+
+.text-area__body {
+  font-weight: 400;
+  @include transition;
+  &-label {
+    font-size: 0;
+    line-height: 24px;
+    margin-bottom: 16px;
+    display: inline-block;
+    @include transition;
+    &.show-label {
+      font-size: 14px;
+    }
+  }
+  &-area {
+    padding: 14px;
+    width: 100%;
+    background: transparent;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 12px;
+    color: $color-dark;
+    border: 1px solid $color-dark;
+    resize: none;
+    @include transition;
+    &::placeholder{
+        opacity: 0.32;
+        @include transition;
+    }
+    &:hover {
+      border: 2px solid $color-dark;
+      &::placeholder{
+          opacity: 1;
+      }
+    }
+    &:focus {
+      caret-color: $color-accent;
+      border: 2px solid $color-accent;
+    }
+  }
+
+  &-counter {
+    font-size: 0px;
+    line-height: 20px;
+    margin-top: 8px;
+    @include transition;
+    &.counter-active {
+      font-size: 14px;
+    }
+  }
+
+  &-error {
+    font-size: 0;
+    @include transition;
+  }
+
+  &.invalid-field {
+    .text-area__body {
+      &-label {
+        color: $color-error;
+      }
+      &-area {
+        caret-color: $color-error;
+        &-container {
+          border: 2px solid $color-error;
+        }
+      }
+      &-counter {
+          color: $color-error;
+      }
+      &-error {
+        color: $color-error;
+        font-size: 14px;
+        line-height: 24px;
+      }
+    }
+  }
+}

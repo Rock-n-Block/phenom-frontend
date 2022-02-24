@@ -2,7 +2,7 @@
 
 .explore {
   @include container;
-  @include t {
+  @include large-tablet {
     padding: 0;
   }
 }

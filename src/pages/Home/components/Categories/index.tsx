@@ -29,7 +29,7 @@ const Categories: FC<Props> = ({ className }) => {
   return (
     <div className={cx(styles.categories, className)}>
       <div className={styles.gradient}>
-        <img src={categories} alt="categories" />
+        <img src={categories} className={styles.metaverse} alt="categories" />
       </div>
       <div className={styles.title}>
         <H2 weight="bold" align="center">

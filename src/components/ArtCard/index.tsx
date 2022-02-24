@@ -12,8 +12,9 @@ import { numberFormatter, sliceString, toFixed } from 'utils';
 
 import { routes } from 'appConstants';
 
-import styles from './styles.module.scss';
 import { iconHeart } from 'assets/img';
+
+import styles from './styles.module.scss';
 
 type Props = {
   type?: 'Padded' | 'Contained' | 'Covered';

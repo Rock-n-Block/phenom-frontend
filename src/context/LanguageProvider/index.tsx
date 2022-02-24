@@ -15,6 +15,8 @@ interface ILanguageContext {
   currentLanguage: TAvailableLanguages;
   isReady: boolean;
   locales: TLocalList[];
+  currentNS: string;
+  i18nProvider: i18n;
   setReady: (state: boolean) => void;
   loadNamespaces: (ns: string) => void;
   changeLanguage: (lang: TAvailableLanguages) => Promise<boolean>;
@@ -30,6 +32,7 @@ interface ILanguageProvider {
 
 const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => {
   const [currentLanguage, setCurrentLanguage] = useState<TAvailableLanguages>('en');
+  const [currentNS, setCurrentNS] = useState<string>(i18nProvider.options.defaultNS || '');
   const [isReady, setIsReady] = useState<boolean>(false);
   const [locales] = useState<TLocalList[]>([
     {
@@ -57,6 +60,8 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
       setReady(false);
       i18nProvider.loadNamespaces(ns).then(() => {
         i18nProvider.setDefaultNamespace(ns);
+        setCurrentNS(ns);
+        console.log(`set default namespace: ${i18nProvider.options.defaultNS}`);
         setReady(true);
       });
     },
@@ -114,16 +119,20 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
       changeLanguage,
       hasNamespaceLoaded,
       setEntityPreferredLocale,
+      currentNS,
+      i18nProvider,
     }),
     [
       changeLanguage,
       currentLanguage,
+      currentNS,
       hasNamespaceLoaded,
       isReady,
       loadNamespaces,
       locales,
       setEntityPreferredLocale,
       setReady,
+      i18nProvider,
     ],
   );
 
@@ -131,8 +140,8 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
 };
 
 /**
- * 
- * @description 
+ *
+ * @description
  * * currentLanguage: TAvailableLanguages;
  * * isReady: boolean;
  * * locales: TLocalList[];

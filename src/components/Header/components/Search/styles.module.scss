@@ -10,8 +10,8 @@
   &Input {
     input {
       width: 342px;
-      transition: $transition;
-      @include m {
+      @include transition;
+      @include middle-mobile {
         max-width: 282px;
         width: 100%;
       }
@@ -30,7 +30,7 @@
     // border: 2px solid $color-actions-dark-grey;
     width: 58px;
     padding-left: 42px;
-    transition: $transition;
+    @include transition;
   }
 }
 
@@ -55,7 +55,7 @@
     height: unset;
   }
 
-  @include m {
+  @include middle-mobile {
     max-width: 342px;
     width: 100%;
   }
