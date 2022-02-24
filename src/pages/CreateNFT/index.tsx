@@ -1,6 +1,6 @@
 import { useCallback, useState, VFC } from 'react';
 
-import { DefaultInput, LoadFile, Text, TextArea } from 'components';
+import { DefaultInput, LoadFile, QuantityInput, Text, TextArea } from 'components';
 import { TLoadError } from 'components/LoadFile';
 
 import styles from './styles.module.scss';
@@ -14,6 +14,7 @@ interface ICreateNFT {
 const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
   const [value, setValue] = useState('');
   const [area, setArea] = useState('');
+  const [q, setQ] = useState('0');
   const onError = useCallback((error: TLoadError) => {
     console.log(error.msg);
   }, []);
@@ -45,6 +46,7 @@ const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
           name="area"
           label="area"
         />
+        <QuantityInput value={q} setValue={setQ} name="q" />
       </div>
     </section>
   );

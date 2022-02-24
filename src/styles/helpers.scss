@@ -4,6 +4,7 @@ $color-accent: #223dff;
 $color-light: #dfe1fc;
 $color-bg: #dfe1fc;
 
+$color-dark-svg: #222b45;
 $color-dark-0: #1c1c28;
 $color-dark-1: #28293d;
 $color-dark-2: #555770;
@@ -53,7 +54,13 @@ $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
 @mixin shadow-3 {
   box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
 }
-@mixin dynamic-shadow($offset-x: 0px, $offset-y: 0px, $blur-radius: 5px, $spread-radius: 0px, $color: rgba(40, 41, 61, 0.08)){
+@mixin dynamic-shadow(
+  $offset-x: 0px,
+  $offset-y: 0px,
+  $blur-radius: 5px,
+  $spread-radius: 0px,
+  $color: rgba(40, 41, 61, 0.08)
+) {
   box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
 }
 
@@ -201,17 +208,17 @@ $transition-delay: 0s;
   }
 }
 
-.gradient-body{
+.gradient-body {
   background: $color-gradient;
-  &-2{
+  &-2 {
     background: $color-gradient-2;
   }
 }
 
-.with-left-detail{
+.with-left-detail {
   position: relative;
   overflow: hidden;
-  &:before{
+  &:before {
     position: absolute;
     top: 0;
     left: 0;
@@ -223,10 +230,10 @@ $transition-delay: 0s;
   }
 }
 
-.with-right-detail{
+.with-right-detail {
   position: relative;
   overflow: hidden;
-  &:after{
+  &:after {
     position: absolute;
     top: 1100px;
     right: 0;
@@ -238,7 +245,7 @@ $transition-delay: 0s;
   }
 }
 
-.with-transition{
+.with-transition {
   @include transition;
 }
 
@@ -249,4 +256,12 @@ $transition-delay: 0s;
 
 @mixin redressed {
   font-family: 'Redressed', sans-serif;
+}
+
+#add-white {
+  fill: $color-light-4;
+}
+
+#add-black {
+  fill: $color-dark-svg;
 }

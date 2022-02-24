@@ -9,6 +9,7 @@ interface IDefaultInput {
   value: string;
   setValue: (value: string) => void;
   subInfo?: string | ReactElement;
+  maxSubInfoWidth?: string | ReactElement;
   placeholder?: string;
   error?: string;
   label?: string | ReactElement;
@@ -21,6 +22,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
   label,
   placeholder,
   subInfo,
+  maxSubInfoWidth = '150px',
   error,
 }) => {
   const [isActive, setIsActive] = useState(false);
@@ -70,6 +72,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
           className={cn(styles['default-input__body-input__sub-info'], {
             [styles['sub-info-active']]: subInfo,
           })}
+          style={{ maxWidth: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
         >
           {subInfo}
         </div>

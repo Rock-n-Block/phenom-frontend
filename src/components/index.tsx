@@ -4,6 +4,7 @@ export { default as Logo } from './Logo';
 export { default as TextInput } from './TextInput';
 export { default as DefaultInput } from './DefaultInput';
 export { default as TextArea } from './TextArea';
+export { default as QuantityInput } from './QuantityInput';
 export { default as ArtCardAuthor } from './ArtCardAuthor';
 export { default as Avatar } from './Avatar';
 export { default as Skeleton } from './Skeletons';
