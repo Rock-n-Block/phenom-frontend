@@ -1,16 +1,21 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
-import { Button, Dropdown, Text } from 'components';
+import { Button, Dropdown } from 'components';
+
+import { PriceFilter } from './components';
 
 import styles from './styles.module.scss';
 
-const collections = ['Collection1', 'Collection2', 'Collection3', 'Collection4', 'Collection5'];
-const types = ['Single NFT', 'Multiple NFT'];
+type Props = {
+  collection: string;
+  setCollection: (value: string) => void;
+  collections: Array<any>;
+  type: string;
+  setType: (value: string) => void;
+  types: Array<any>;
+};
 
-const Filters: FC = () => {
-  const [collection, setCollection] = useState(collections[0]);
-  const [type, setType] = useState(types[0]);
-
+const Filters: FC<Props> = ({ collection, setCollection, collections, type, setType, types }) => {
   return (
     <div className={styles.filters}>
       <div className={styles.filtersLeft}>
@@ -27,14 +32,8 @@ const Filters: FC = () => {
           options={types}
         />
       </div>
-      <div className={styles.filtersRight}>
-        <Text>Price</Text>
-        <div className={styles.prices}>
-          <div className={styles.box}>Min PHETA</div>
-          <div className={styles.box}>Max PHETA</div>
-        </div>
-        <Button className={styles.apply}>Apply</Button>
-      </div>
+      <PriceFilter className={styles.filtersRight} />
+      <Button className={styles.apply}>Apply</Button>
     </div>
   );
 };

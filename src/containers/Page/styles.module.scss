@@ -1,10 +1,10 @@
-@import "src/styles/helpers";
+@import 'src/styles/helpers';
 
-.ellipse{
+.ellipse {
   position: absolute;
   width: 100%;
   z-index: -1;
-  &Reverted{
+  &Reverted {
     position: absolute;
     transform: translateY(100%) scale(-1, 1);
   }

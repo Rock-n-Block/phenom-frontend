@@ -28,9 +28,13 @@ const categories = [
     key: 'category_5',
   },
 ];
+const collections = ['Collection1', 'Collection2', 'Collection3', 'Collection4', 'Collection5'];
+const types = ['Single NFT', 'Multiple NFT'];
 
 const Explore: VFC = () => {
   const [checkedCategory, setCheckedCategory] = useState(categories[0].key);
+  const [collection, setCollection] = useState(collections[0]);
+  const [type, setType] = useState(types[0]);
 
   const handleClickCategory = useCallback((value: string) => {
     setCheckedCategory(value);
@@ -48,7 +52,17 @@ const Explore: VFC = () => {
         activeTab={checkedCategory}
         tabClassName={styles.category}
       />
-      <Filters />
+      <Filters
+        collection={collection}
+        setCollection={setCollection}
+        collections={collections}
+        type={type}
+        setType={setType}
+        types={types}
+      />
+      <div className={styles.filters}>
+        {/*  */}
+      </div>
     </div>
   );
 };
