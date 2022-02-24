@@ -1,0 +1,51 @@
+@import '/src/styles/helpers.scss';
+
+.load-file__wrapper {
+  width: 100%;
+  padding: 106.5px 15px 54px;
+  background: rgba($color-light-3, 0.53);
+  border-radius: 20px;
+  border: 1px dashed $color-dark-4;
+  @include transition;
+  &.failed-load {
+    background: rgba($color-error, 0.2);
+    border: 1px solid $color-error;
+  }
+  &.over-active {
+    background: rgba($color-light-3, 0.53);
+    border: 1px solid $color-dark-4;
+  }
+  &__body {
+    @include flexbox(center, flex-start, column);
+    &__hidden-input {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+    &-icon {
+      margin-bottom: 20.75px;
+    }
+    &-title {
+      max-width: 180px;
+      margin-bottom: 15px;
+      @include flexbox(center, flex-start, column);
+      &-element {
+        line-height: 22px;
+      }
+    }
+    &-extensions {
+      line-height: 20px;
+      max-width: 290px;
+    }
+  }
+}
+
+@include large-mobile{
+  .load-file__wrapper{
+    padding: 65px 15px 54px;
+  }
+}

@@ -15,7 +15,7 @@ export const availableExtensions = [
 ] as const;
 export type TAvailableExtensions = typeof availableExtensions[number];
 
-export const maxSizeUnit = ['b', 'Kb', 'Mb', 'Gb'] as const;
+export const maxSizeUnit = ['bits', 'bytes', 'Kb', 'Mb', 'Gb'] as const;
 export type TMaxSizeUnit = typeof maxSizeUnit[number];
 
 export type TMaxSize = {

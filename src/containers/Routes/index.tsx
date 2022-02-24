@@ -71,7 +71,7 @@ const RoutesPage = () => {
         element={
           <Page
             classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<CreateNFT type="single" />}
+            component={<CreateNFT type="Single" />}
           />
         }
       />

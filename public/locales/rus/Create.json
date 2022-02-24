@@ -6,10 +6,13 @@
     "CreateACollection": "Create a collection на русском"
   },
   "createPage": {
-    "UploadPreview": "<span class={{class}}>Upload</span> preview\n Drag or choose your file to upload",
+    "UploadPreview": "Upload preview",
+    "UploadDrag": "Drag or choose your file to upload",
+    "UploadDrop": "Drop files",
     "UploadExtensions": "{{extensions}}. Mаксимум {{size}} {{unit}}.",
     "UploadUnits": {
-      "b": "байт",
+      "bits": "бит",
+      "bytes": "байт",
       "Kb": "КБ",
       "Mb": "МБ",
       "Gb": "ГБ"

@@ -4,7 +4,7 @@ const formatBytes = (bytes: number, decimals = 2): TMaxSize => {
   if (bytes === 0)
     return {
       size: 0,
-      unit: 'b',
+      unit: 'bits',
     };
 
   const k = 1024;

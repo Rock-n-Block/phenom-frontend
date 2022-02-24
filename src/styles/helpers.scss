@@ -36,6 +36,8 @@ $color-yellow-1: #ffcc00;
 $color-gray-0: #d9d9d9;
 $color-gray-1: #333333;
 
+$color-error: #ff5c5c;
+
 $color-gradient: linear-gradient(26.94deg, #dee1ff 18.04%, #f3e6fe 46.94%, #ffffff 73.72%);
 $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
 
@@ -112,8 +114,8 @@ $defaultFlexDirection: row;
   flex-direction: $direction;
 }
 
-$transition-duration: 0.3s;
-$transition-timing-function: ease;
+$transition-duration: 0.4s;
+$transition-timing-function: ease-in-out;
 $transition-delay: 0s;
 
 @mixin transition(

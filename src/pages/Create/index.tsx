@@ -29,7 +29,7 @@ const CreatePage: VFC = () => {
       {
         icon: <SingleAddSVG />,
         title: (
-          <Text tag="h4" color="gray" align="center" id="createOptions.SingleNft">
+          <Text tag="h4" color="gray" align="center" id="createOptions.Single">
             Single NFT
           </Text>
         ),
@@ -38,7 +38,7 @@ const CreatePage: VFC = () => {
       {
         icon: <MultipleAddSVG />,
         title: (
-          <Text tag="h4" color="gray" align="center" id="createOptions.MultipleNft">
+          <Text tag="h4" color="gray" align="center" id="createOptions.Multiple">
             Multiple NFT
           </Text>
         ),
