@@ -13,6 +13,7 @@ interface IDefaultInput {
   placeholder?: string;
   error?: string;
   label?: string | ReactElement;
+  className?: string;
 }
 
 const DefaultInput: VFC<IDefaultInput> = ({
@@ -24,6 +25,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
   subInfo,
   maxSubInfoWidth = '150px',
   error,
+  className,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -46,13 +48,17 @@ const DefaultInput: VFC<IDefaultInput> = ({
   );
 
   return (
-    <div className={cn(styles['default-input__body'], { [styles['invalid-field']]: error })}>
-      <label
-        htmlFor={`default_input_${name}`}
-        className={cn(styles['default-input__body-label'], { [styles['show-label']]: label })}
-      >
-        {label}
-      </label>
+    <div
+      className={cn(styles['default-input__body'], { [styles['invalid-field']]: error }, className)}
+    >
+      {label && (
+        <label
+          htmlFor={`default_input_${name}`}
+          className={cn(styles['default-input__body-label'], { [styles['show-label']]: label })}
+        >
+          {label}
+        </label>
+      )}
       <div
         className={cn(styles['default-input__body-input-container'], {
           [styles['input-focus']]: isActive,
@@ -68,16 +74,18 @@ const DefaultInput: VFC<IDefaultInput> = ({
           type="text"
           id={`default_input_${name}`}
         />
-        <div
-          className={cn(styles['default-input__body-input__sub-info'], {
-            [styles['sub-info-active']]: subInfo,
-          })}
-          style={{ maxWidth: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
-        >
-          {subInfo}
-        </div>
+        {subInfo && (
+          <div
+            className={cn(styles['default-input__body-input__sub-info'], {
+              [styles['sub-info-active']]: subInfo,
+            })}
+            style={{ maxWidth: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
+          >
+            {subInfo}
+          </div>
+        )}
       </div>
-      <p className={styles['default-input__body-error']}>{error}</p>
+      {error && <p className={styles['default-input__body-error']}>{error}</p>}
     </div>
   );
 };

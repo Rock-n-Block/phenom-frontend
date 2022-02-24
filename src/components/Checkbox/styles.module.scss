@@ -1,0 +1,84 @@
+@import 'src/styles/helpers';
+
+.checkbox {
+  position: relative;
+
+  display: inline-block;
+
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.input {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  opacity: 0;
+
+  &:checked + .inner .tick {
+    background: $color-accent;
+    border-color: transparent;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    .tick {
+      // border-color: $color-gradient;
+    }
+    .text {
+      // color: $color-primary;
+    }
+  }
+}
+
+.tick {
+  position: relative;
+
+  margin-right: 12px;
+
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid $color-dark-3;
+  border-radius: 3px;
+
+  transition: all 0.2s;
+  flex-shrink: 0;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 8px;
+    height: 8px;
+
+    background: url('../../assets/img/icons/check.svg')
+      no-repeat 50% 50% / 100% auto;
+    opacity: 0;
+
+    transition: opacity 0.2s;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.text {
+  font-weight: 500;
+  line-height: (24 / 14);
+
+  // color: $color-neutral-100;
+
+  transition: 0.4s ease;
+}

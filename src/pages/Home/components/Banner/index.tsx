@@ -16,7 +16,7 @@ const Banner: FC = () => {
         <img className={styles.metaverse} src={metaverse} alt="metaverse" />
       </div>
       <div className={styles.bannerBody}>
-        <Text weight="bold" className={styles.title} id="Banner.PhenomMetaverseMarketplace">
+        <Text weight="bold" className={styles.title} id="PhenomMetaverseMarketplace">
           Phenom Metaverse Marketplace
         </Text>
         <Text size="m" className={styles.subtitle} id="Banner.Subtitle">

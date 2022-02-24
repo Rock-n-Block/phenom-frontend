@@ -21,6 +21,15 @@
   // }
 }
 
+.auction {
+  background: linear-gradient(180deg, #586dff 0%, #223dff 100%);
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  border-radius: 38px;
+  padding: 4px 16px;
+}
+
 .tagContainer {
   position: absolute;
 
@@ -134,12 +143,12 @@
   }
 }
 
-.column{
+.column {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.bottom{
+.bottom {
   @include flexbox(flex-start, space-between);
   width: 100%;
 }
