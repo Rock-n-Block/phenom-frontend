@@ -123,6 +123,11 @@ const ArtCard: FC<Props> = ({
 
   return (
     <div className={cx(styles.artCard, className)}>
+      {isAuction && (
+        <div className={styles.auction}>
+          <Text color="white">Auction</Text>
+        </div>
+      )}
       <Link
         to={isCollection ? routes.collection.link(artId) : routes.nft.link(artId)}
         className={styles.imageWrapper}

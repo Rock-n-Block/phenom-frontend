@@ -13,9 +13,28 @@ type Props = {
   type: string;
   setType: (value: string) => void;
   types: Array<any>;
+  minPrice: string;
+  setMinPrice: (value: string) => void;
+  maxPrice: string;
+  setMaxPrice: (value: string) => void;
+  // isApplied: boolean;
+  setIsApplied: (value: boolean) => void;
 };
 
-const Filters: FC<Props> = ({ collection, setCollection, collections, type, setType, types }) => {
+const Filters: FC<Props> = ({
+  collection,
+  setCollection,
+  collections,
+  type,
+  setType,
+  types,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  // isApplied,
+  setIsApplied,
+}) => {
   return (
     <div className={styles.filters}>
       <div className={styles.filtersLeft}>
@@ -32,8 +51,16 @@ const Filters: FC<Props> = ({ collection, setCollection, collections, type, setT
           options={types}
         />
       </div>
-      <PriceFilter className={styles.filtersRight} />
-      <Button className={styles.apply}>Apply</Button>
+      <PriceFilter
+        className={styles.filtersRight}
+        minPrice={minPrice}
+        setMinPrice={setMinPrice}
+        maxPrice={maxPrice}
+        setMaxPrice={setMaxPrice}
+      />
+      <Button onClick={() => setIsApplied(true)} className={styles.apply}>
+        Apply
+      </Button>
     </div>
   );
 };
