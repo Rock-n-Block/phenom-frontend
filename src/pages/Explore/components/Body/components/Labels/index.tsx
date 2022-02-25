@@ -11,32 +11,20 @@ import s from './Labels.module.scss';
 interface IProps {
   // filters: any;
   setDefaultFilters?: any;
-  minPrice?: any;
-  maxPrice?: any;
-  setMaxPrice?: any;
-  setMinPrice?: any;
-  setTextSearch?: any;
-  textSearch?: any;
-  activeCollection?: any;
-  setActiveCollection?: any;
-  type?: any;
-  setType?: any;
+  filters: any;
+  changeFilter: any;
 }
 
 const Labels: VFC<IProps> = ({
-  // filters: {
   setDefaultFilters,
-  minPrice,
-  maxPrice,
-  setMaxPrice,
-  setMinPrice,
-  setTextSearch,
-  textSearch,
-  activeCollection,
-  setActiveCollection,
-  type,
-  setType,
-  // },
+  filters: {
+    collection,
+    type,
+    minPrice,
+    maxPrice,
+
+  },
+  changeFilter
 }) => {
   const minMaxLabel = useMemo(() => {
     if (minPrice && maxPrice) return `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
@@ -47,19 +35,19 @@ const Labels: VFC<IProps> = ({
 
   const clearMinMax = useCallback(() => {
     if (maxPrice) {
-      setMaxPrice('');
+      changeFilter('maxPrice', '');
     }
     if (minPrice) {
-      setMinPrice('');
+      changeFilter('minPrice', '');
     }
-  }, [maxPrice, minPrice, setMaxPrice, setMinPrice]);
+  }, [changeFilter, maxPrice, minPrice]);
 
   return (
     <div className={s.labels}>
-      {activeCollection && (
-        <FilterLabel title={activeCollection} onClick={() => setActiveCollection('')} />
+      {collection && (
+        <FilterLabel title={collection} onClick={() => changeFilter('collection', '')} />
       )}
-      {type && <FilterLabel title={type} onClick={() => setType('')} />}
+      {type && <FilterLabel title={type} onClick={() => changeFilter('type', '')} />}
       {(minPrice || maxPrice) && (
         <FilterLabel
           // icon={iconChange}
@@ -67,9 +55,9 @@ const Labels: VFC<IProps> = ({
           onClick={clearMinMax}
         />
       )}
-      {textSearch && (
+      {/* {textSearch && (
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
-      )}
+      )} */}
       <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
         Clear
       </Button>
