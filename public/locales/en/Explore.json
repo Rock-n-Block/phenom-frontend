@@ -1,6 +1,8 @@
 {
   "Skins": "Skins",
   "Filters": {
-    "Auction": "Auction"
+    "Auction": "Auction",
+    "LoadMore": "Load More",
+    "Apply": "Apply"
   }
 }
