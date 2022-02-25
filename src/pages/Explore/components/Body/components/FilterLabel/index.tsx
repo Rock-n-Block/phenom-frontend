@@ -4,7 +4,7 @@ import { Text } from 'components';
 
 import { CrossIcon } from 'assets/img';
 
-import s from './FilterLabel.module.scss';
+import s from './styles.module.scss';
 
 interface IProps {
   title: string;
