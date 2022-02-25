@@ -1,0 +1,26 @@
+@import '/src/styles/helpers.scss';
+
+.container {
+  @include container;
+}
+
+.categories {
+  @include flexbox(flex-start, center);
+  .category + .category {
+    margin-left: 16px;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(344px, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 48px;
+}
+
+.load{
+  @include flexbox(center, center);
+  margin-bottom: 80px;
+}
