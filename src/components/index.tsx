@@ -15,3 +15,4 @@ export { default as Dropdown } from './Dropdown';
 export { default as LoadFile } from './LoadFile';
 export { default as Checkbox } from './Checkbox';
 export * from './Typography';
+export * from './Preview';

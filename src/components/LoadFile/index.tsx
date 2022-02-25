@@ -22,9 +22,14 @@ export type TLoadError = {
   type: ErrorList;
 };
 
+/* type TProgress = {
+  loaded: number;
+  total: number;
+}; */
+
 interface ILoadFile {
   onLoadStarts?: (...args: any) => void;
-  onLoadEnd?: (files: File[]) => void;
+  onLoadEnd?: (files: string[]) => void;
   onLoadError?: (error: TLoadError) => void;
   extensions?: TAvailableExtensions[];
   reqMaxSize?: TMaxSize;
@@ -40,12 +45,13 @@ const LoadFile: VFC<ILoadFile> = ({
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
   const [failed, setFailed] = useState<boolean>(false);
-  const [fileList, setFileList] = useState<File[]>([]);
+  const [fileList, setFileList] = useState<string[]>([]);
+  // const [progress, setProgress] = useState<TProgress>({ loaded: 0, total: 0 });
   const areaRef = useRef<HTMLLabelElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const filesWorker = useCallback(
-    (files?: File[]) => {
+    async (files?: File[]) => {
       const nullFunc = () => {};
       const onError = onLoadError || nullFunc;
       const onStart = onLoadStarts || nullFunc;
@@ -54,8 +60,14 @@ const LoadFile: VFC<ILoadFile> = ({
       if (files?.length) {
         const allSize = files.reduce((a, f) => a + f.size, 0) * 8;
         if (allSize <= byteSize(reqMaxSize)) {
-          onEnd(files);
-          setFileList(files);
+          const reader = new FileReader();
+          const filesURLs: string[] = []
+          reader.onload = function () {
+            const readResult = reader.result as string;
+            console.log(readResult);
+          };
+          onEnd(fileList);
+          setFileList((prev) => [...prev, ...filesURLs]);
           setFailed(false);
         } else {
           onError({
@@ -76,7 +88,7 @@ const LoadFile: VFC<ILoadFile> = ({
         setFailed(true);
       }
     },
-    [onLoadEnd, onLoadError, onLoadStarts, reqMaxSize],
+    [fileList, onLoadEnd, onLoadError, onLoadStarts, reqMaxSize],
   );
 
   useEffect(() => {
@@ -164,7 +176,7 @@ const LoadFile: VFC<ILoadFile> = ({
         <div className={styles['load-file__wrapper__body-title']}>
           {fileList.length > 0 ? (
             <Text color="black" size="m" align="center" weight="semibold">
-              {fileList.map((f) => f.name).join(', ')}
+              { /* fileList.map((f) => f.name).join(', ') */}
             </Text>
           ) : (
             <>

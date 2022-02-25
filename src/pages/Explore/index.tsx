@@ -1,6 +1,7 @@
 import { useCallback, useState, VFC } from 'react';
 
 import cx from 'classnames';
+import mock from 'mock';
 
 import {
   ArtCard,
@@ -15,7 +16,6 @@ import {
 import { Filters, Labels } from './components';
 
 import styles from './styles.module.scss';
-import mock from 'mock';
 
 const categories = [
   {
