@@ -40,6 +40,9 @@ const RoutesPage = () => {
     if (location.pathname.includes(routes.create.root)) {
       loadNamespaces('Create');
     }
+    if (location.pathname.includes(routes.explore.root)) {
+      loadNamespaces('Explore');
+    }
   }, [loadNamespaces, location.pathname]);
   return (
     <Routes>
