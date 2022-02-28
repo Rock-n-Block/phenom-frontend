@@ -1,0 +1,40 @@
+@import 'src/styles/helpers.scss';
+
+.nameAndLike {
+  .top {
+    margin-bottom: 24px;
+    @include flexbox(flex-start, space-between);
+  }
+  .bottom{
+    @include flexbox(flex-start, flex-start);
+    &Item{
+        margin-right: 64px;
+    }
+  }
+}
+
+.likeButton {
+  @include flexbox(center, center);
+  padding: 0 10px;
+  min-width: 75px !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border-radius: 10px;
+  border: none !important;
+
+  &:hover {
+    color: $color-dark !important;
+    svg {
+      path {
+        fill: $color-accent;
+      }
+    }
+  }
+  svg {
+    margin-right: 5px;
+  }
+  & p {
+    line-height: 1;
+    position: relative;
+    top: 2px;
+  }
+}

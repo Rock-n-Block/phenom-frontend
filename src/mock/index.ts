@@ -22,6 +22,9 @@ const mock = {
   trending: trendingAvatar,
   topCollection: topCollectionAvatar,
   nftCard: {
+    name: 'Nft name',
+    id: 342348,
+    inStockNumber: 2,
     img: nftCard,
     properties: [
       { label: 'Color', value: 'Blue' },
@@ -29,6 +32,10 @@ const mock = {
     ],
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    likeCount: 3,
+    standart: 'ERC1155',
+    price: 54266.7,
+    USD_price: 22.03
   },
 };
 

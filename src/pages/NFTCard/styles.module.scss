@@ -1,5 +1,14 @@
 @import 'src/styles/helpers.scss';
 
-.nftCard{
+.nftCard {
   @include container;
+  @include flexbox(flex-start, space-between);
+  margin-top: 96px;
+  margin-bottom: 52px;
+}
+
+.left,
+.right {
+  max-width: 436px;
+  width: 100%;
 }

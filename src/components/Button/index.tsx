@@ -6,7 +6,7 @@ import cx from 'classnames';
 import styles from './styles.module.scss';
 
 type Props = {
-  color?: 'outline' | 'dark' | 'light' | 'transparent' ;
+  color?: 'outline' | 'dark' | 'light' | 'transparent';
   padding?: 'small' | 'medium' | 'large' | 'extra-large' | string;
   size?: any;
   isFullWidth?: boolean;
@@ -15,6 +15,7 @@ type Props = {
   type?: 'button' | 'submit';
   disabled?: boolean;
   icon?: string;
+  suffixIcon?: string;
   loading?: boolean;
   onMouseLeave?: (event: any) => void;
   onMouseOver?: (event: SyntheticEvent) => void;
@@ -60,6 +61,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
   padding = 'medium',
   disabled,
   icon,
+  suffixIcon,
   style,
   href,
   loading,
@@ -104,6 +106,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
       >
         {icon && <img src={icon} className={styles.icon} alt="" />}
         {children}
+        {suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />}
       </Link>
     );
   return (
@@ -148,7 +151,11 @@ const Button: FC<PropsWithChildren<Props>> = ({
     >
       {icon && <img src={icon} className={styles.icon} alt="" />}
       {children}
-      {loading ? <></> : ''}
+      {loading ? (
+        <></>
+      ) : (
+        suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />
+      )}
     </button>
   );
 };

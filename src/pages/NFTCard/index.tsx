@@ -1,38 +1,39 @@
 import { VFC } from 'react';
 
-import { Text } from 'components';
+import mock from 'mock';
+
+import moment from 'moment';
+
+import { NameAndLike, Payment, PropsAndDescr } from './components';
 
 import styles from './styles.module.scss';
-import mock from 'mock';
 
 const NFTCard: VFC = () => {
   return (
     <div className={styles.nftCard}>
       <div className={styles.left}>
-        <div className={styles.nftCardImgWrapper}>
-          <img src={mock.nftCard.img} alt="nftCard" className={styles.nftCardImg} />
-        </div>
-        <div className={styles.properties}>
-          <Text size="xl" weight="semibold" className={styles.propertiesTitle}>
-            Properties
-          </Text>
-          {mock.nftCard.properties.map(({ label, value }) => (
-            <div className={styles.propertiesItem}>
-              <Text color="blue" className={styles.label}>
-                {label}
-              </Text>
-              <Text className={styles.value}>{value}</Text>
-            </div>
-          ))}
-        </div>
-        <div className={styles.description}>
-          <Text size="xl" weight="semibold" color="gray" className={styles.propertiesTitle}>
-            Description
-          </Text>
-          <Text size="m" color="darkenBlack">
-            {mock.nftCard.description}
-          </Text>
-        </div>
+        <PropsAndDescr
+          media={mock.nftCard.img}
+          properties={mock.nftCard.properties}
+          description={mock.nftCard.description}
+        />
+      </div>
+      <div className={styles.right}>
+        <NameAndLike
+          name={mock.nftCard.name}
+          likeCount={mock.nftCard.likeCount}
+          artId={mock.nftCard.id}
+          inStockNumber={mock.nftCard.inStockNumber}
+        />
+        <Payment
+          standart='ERC721'
+          availableAmount={mock.nftCard.inStockNumber}
+          price={mock.nftCard.price}
+          USD_price={mock.nftCard.USD_price}
+          isTimedAuction
+          end_auction={moment.now()/1000}
+
+        />
       </div>
     </div>
   );
