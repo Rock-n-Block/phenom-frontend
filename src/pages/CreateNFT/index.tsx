@@ -1,12 +1,11 @@
 import { useCallback, useMemo, useState, VFC } from 'react';
 
-import { DefaultInput, getPreviewer, LoadFile, Text, TextArea } from 'components';
+import { getPreviewer, LoadFile, Text } from 'components';
 import { TLoadError } from 'components/LoadFile';
 import { IAudioPreview } from 'components/Preview/AudioPreview';
-import ImagePreview, { IImagePreview } from 'components/Preview/ImagePreview';
+import { IImagePreview } from 'components/Preview/ImagePreview';
 import { IThreePreview } from 'components/Preview/ThreePreview';
 import { IVideoPreview } from 'components/Preview/VideoPreview';
-import { metaverse } from 'assets/img';
 
 import {
   audioFormats,
@@ -25,44 +24,67 @@ interface ICreateNFT {
 }
 
 const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
-  const [value, setValue] = useState('');
-  const [area, setArea] = useState('');
-  const [files, setFiles] = useState<any[]>([]);
+  const [fileList, setFileList] = useState<File[]>([]);
+  const [filesURLs, setFilesURLs] = useState<string[]>([]);
   const onError = useCallback((error: TLoadError) => {
     console.log(error.msg);
   }, []);
-  const onLoad = useCallback((f: string[]) => {
-    setFiles(f);
+  const onLoad = useCallback((fURLs: string[], fList: File[]) => {
+    setFileList(fList);
+    setFilesURLs(fURLs);
   }, []);
 
   const reqFile = useMemo(() => {
     let rFile = '';
-    const extensions = files.map((file) => getExtension(file.name));
-    extensions.forEach((extension, key) => {
-      if (extension in audioFormats || extension in videosFormats) {
-        rFile = files[key].name;
-      } else if (!(extension in audioFormats && extension in videosFormats)) {
-        rFile = files[key].name;
+    fileList.forEach((f) => {
+      const extension = getExtension(f.name);
+      if (audioFormats.includes(extension as any) || videosFormats.includes(extension as any)) {
+        rFile = f.name;
+      } else if (
+        !(audioFormats.includes(extension as any) && videosFormats.includes(extension as any))
+      ) {
+        rFile = f.name;
       }
     });
     return rFile;
-  }, [files]);
+  }, [fileList]);
 
   const props = useMemo(() => {
     const AudioProps: IAudioPreview = {
-      src: files.find((f) => audioFormats.includes(getExtension(f) as any)) || '',
-      previewSrc: files.find((f) => imagesFormats.includes(getExtension(f) as any)) || '',
+      src:
+        filesURLs[fileList.findIndex((f) => audioFormats.includes(getExtension(f.name) as any))] ||
+        '',
+      previewSrc:
+        filesURLs[fileList.findIndex((f) => imagesFormats.includes(getExtension(f.name) as any))] ||
+        '',
+      audioType: getExtension(
+        fileList.find((f) => audioFormats.includes(getExtension(f.name) as any))?.name || 'mp3',
+      ) as any,
     };
     const VideoProps: IVideoPreview = {
-      src: files.find((f) => videosFormats.includes(getExtension(f) as any)) || '',
-      previewSrc: files.find((f) => imagesFormats.includes(getExtension(f) as any)) || '',
+      src:
+        filesURLs[fileList.findIndex((f) => videosFormats.includes(getExtension(f.name) as any))] ||
+        '',
+      previewSrc:
+        filesURLs[fileList.findIndex((f) => imagesFormats.includes(getExtension(f.name) as any))] ||
+        '',
+      videoType: getExtension(
+        fileList.find((f) => videosFormats.includes(getExtension(f.name) as any))?.name || 'mp4',
+      ) as any,
     };
     const ImageProps: IImagePreview = {
-      src: files.find((f) => videosFormats.includes(getExtension(f) as any)) || '',
+      src:
+        filesURLs[fileList.findIndex((f) => imagesFormats.includes(getExtension(f.name) as any))] ||
+        '',
     };
     const IThreeProps: IThreePreview = {
-      src: files.find((f) => threeDFormats.includes(getExtension(f) as any)) || '',
-      name: files.find((f) => threeDFormats.includes(getExtension(f) as any)) || 'three',
+      src:
+        filesURLs[fileList.findIndex((f) => threeDFormats.includes(getExtension(f.name) as any))] ||
+        '',
+      name: 'three-preview',
+      threeType: getExtension(
+        fileList.find((f) => threeDFormats.includes(getExtension(f.name) as any))?.name || 'glb',
+      ) as any,
     };
     return {
       audio: AudioProps,
@@ -70,7 +92,7 @@ const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
       image: ImageProps,
       threeD: IThreeProps,
     };
-  }, [files]);
+  }, [fileList, filesURLs]);
 
   const PreviewComponent = useMemo(() => getPreviewer(reqFile, props), [props, reqFile]);
 
@@ -86,23 +108,13 @@ const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
         >
           {type}
         </Text>
-        <LoadFile onLoadError={onError} onLoadEnd={onLoad} />
+        <LoadFile
+          onLoadError={onError}
+          onLoadEnd={onLoad}
+          fileList={fileList}
+          filesURLs={filesURLs}
+        />
         {PreviewComponent}
-        <DefaultInput
-          value={value}
-          label="label"
-          setValue={setValue}
-          subInfo="PHETA"
-          name="value"
-        />
-        <TextArea
-          value={area}
-          setValue={setArea}
-          placeholder="area holder"
-          name="area"
-          label="area"
-        />
-        <ImagePreview src={metaverse}/>
       </div>
     </section>
   );

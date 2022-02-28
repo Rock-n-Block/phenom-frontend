@@ -14,5 +14,6 @@ export { default as TabLookingComponent } from './TabLookingComponent';
 export { default as Dropdown } from './Dropdown';
 export { default as LoadFile } from './LoadFile';
 export { default as Checkbox } from './Checkbox';
+export { default as Loading } from './Loading';
 export * from './Typography';
 export * from './Preview';

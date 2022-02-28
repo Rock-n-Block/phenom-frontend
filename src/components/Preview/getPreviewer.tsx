@@ -16,7 +16,6 @@ export type TProps = {
 const getPreviewer = (src: string, props: TProps) => {
   const extension = getExtension(src) as TAvailableExtensions;
   const previewType = getFileGroup(extension);
-  console.log(previewType);
   if (previewType) {
     switch (previewType) {
       case 'audio':

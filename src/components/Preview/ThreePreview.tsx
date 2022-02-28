@@ -5,15 +5,13 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
+import { Loading } from 'components';
+
 import { threeDFormats } from 'appConstants';
 
 import styles from './styles.module.scss';
 
 type TThreeTypes = typeof threeDFormats[number];
-
-const getThreeType = (name: string) => {
-  return name.slice(name.lastIndexOf('.') + 1) as TThreeTypes;
-};
 
 type TThreeOptions = {
   fov?: number;
@@ -25,37 +23,47 @@ type TThreeOptions = {
 export interface IThreePreview {
   src: string;
   name: string;
-  threeType?: TThreeTypes;
+  threeType: TThreeTypes;
   options?: TThreeOptions;
   className?: string;
+  freeMove?: boolean;
 }
+
+type SingleModel = {
+  model: THREE.Group;
+  id: string;
+  verbose: string;
+};
 
 const defaultOptions = {
   fov: 75,
   aspect: 1,
   near: 0.1,
-  far: 1000,
+  far: 100,
 };
 
-const normalizeSrc = (src: string) => {
-  return `id${src.replaceAll('-', '').replaceAll('.', '')}`;
-};
-
-const ThreePreview: VFC<IThreePreview> = ({ src, name, threeType, options = defaultOptions }) => {
+const ThreePreview: VFC<IThreePreview> = ({
+  src,
+  name,
+  threeType,
+  options = defaultOptions,
+  freeMove = true,
+}) => {
   const [modelSrc] = useState<string>(src);
-  const [id] = useState(normalizeSrc(src) || name);
+  const [id] = useState(name);
   const wrapRef = useRef<HTMLElement | null>(null);
   const [scene] = useState(new THREE.Scene());
   const [camera, setCamera] = useState<THREE.PerspectiveCamera | null>(null);
   const [renderer, setRenderer] = useState<THREE.WebGL1Renderer | null>(null);
-
+  const [controls, setControls] = useState<OrbitControls | null>(null);
+  const [models, setModels] = useState<SingleModel[]>([]);
+  const [loading, setLoading] = useState(false);
+  console.log(models);
   const GLLoader = useCallback(async (modelSource: string) => {
     const loader = new GLTFLoader();
-    const model = await loader.loadAsync(modelSource);
-    model.scene.traverse((object: any) => {
-      object.castShadow = true;
-    });
-    return model.scene;
+    setLoading(true);
+    const modelLoader = loader.loadAsync(modelSource).finally(() => setLoading(false));
+    return modelLoader;
   }, []);
 
   useEffect(() => {
@@ -68,23 +76,48 @@ const ThreePreview: VFC<IThreePreview> = ({ src, name, threeType, options = defa
       sceneWidth = wrapRef.current.clientWidth;
       sceneHeight = wrapRef.current.clientWidth;
     }
-
-    setCamera(new THREE.PerspectiveCamera(fov, sceneWidth / sceneHeight, near, far));
+    const newCamera = new THREE.PerspectiveCamera(fov, sceneWidth / sceneHeight, near, far);
+    setCamera(newCamera);
   }, [options]);
+
+  const OrbitKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (camera) {
+        console.log(e.key);
+      }
+    },
+    [camera],
+  );
+
+  useEffect(() => {
+    if (freeMove) {
+      window.addEventListener('keypress', OrbitKeyPress);
+    } else {
+      window.removeEventListener('keypress', OrbitKeyPress);
+    }
+
+    return () => {
+      window.removeEventListener('keypress', OrbitKeyPress);
+    };
+  }, [OrbitKeyPress, freeMove]);
 
   useEffect(() => {
     const sceneWidth = window.innerWidth;
     const sceneHeight = window.innerHeight;
-    setRenderer(
-      new THREE.WebGL1Renderer({
-        canvas: document.querySelector(`#${id}`) || undefined,
-      }),
-    );
-    if (renderer) {
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(sceneWidth, sceneHeight);
+    const newRenderer = new THREE.WebGL1Renderer({
+      canvas: document.querySelector(`#${id}`) || undefined,
+    });
+    newRenderer.setPixelRatio(window.devicePixelRatio);
+    newRenderer.setSize(sceneWidth, sceneHeight);
+    setRenderer(newRenderer);
+  }, [id]);
+
+  useEffect(() => {
+    if (camera && renderer) {
+      const newControls = new OrbitControls(camera, renderer.domElement);
+      setControls(newControls);
     }
-  }, [id, renderer]);
+  }, [camera, renderer]);
 
   const onWindowResize = useCallback(() => {
     let sceneWidth = window.innerWidth;
@@ -108,53 +141,104 @@ const ThreePreview: VFC<IThreePreview> = ({ src, name, threeType, options = defa
     };
   }, [onWindowResize]);
 
+  /* const removeModelFromScene = useCallback(
+    (n: string) => {
+      if (scene) {
+        const rModel = scene.getObjectByName(n);
+        if (rModel) {
+          scene.remove(rModel);
+          const nModelList = models;
+          nModelList.splice(
+            nModelList.findIndex((m) => m.id === rModel.uuid),
+            1,
+          );
+          setModels(nModelList);
+        }
+      }
+    },
+    [models, scene],
+  ); */
+
+  /* const removeAllModelsFromScene = useCallback(() => {
+    if (models.length) {
+      models.forEach((m) => {
+        removeModelFromScene(m.verbose);
+      });
+    }
+  }, [models, removeModelFromScene]); */
+
+  /* const addModelsToScene = useCallback(() => {
+    if (scene && models.length) {
+      models.forEach((model) => {
+        scene.add(model.model);
+      });
+    }
+  }, [models, scene]); */
+
+  const animate = useCallback(() => {
+    if (controls && renderer && scene && camera) {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+  }, [camera, controls, renderer, scene]);
+
   useEffect(() => {
     if (camera && renderer) {
-      camera.position.set(0.3, 0.2, 0.3);
+      camera.position.set(10, 10, 10);
 
-      const pointLight = new THREE.PointLight(0xffffff);
-      const pointLight_2 = new THREE.PointLight(0xffff00);
-      pointLight.position.set(100, 100, 100);
-      pointLight_2.position.set(-100, 100, 100);
+      const ambient = new THREE.AmbientLight(0xffffcc, 0.95);
+      const backLight = new THREE.DirectionalLight(0xffffff, 0.25);
+      const frontLight = new THREE.DirectionalLight(0xffffff, 0.25);
+      backLight.position.set(3, 10, 10);
+      frontLight.position.set(-3, 10, -10);
+      scene.add(ambient, backLight, frontLight);
 
-      const ambientLight = new THREE.AmbientLight(0xffffff);
-      scene.add(pointLight, ambientLight);
+      const gridHelper = new THREE.GridHelper(200, 50);
+      scene.add(gridHelper);
 
-      const controls = new OrbitControls(camera, renderer.domElement);
-      const background = new THREE.Color('#FF6701');
+      const background = new THREE.Color('#d3d3d3');
       scene.background = background;
-
-      let model = null;
-
-      switch (threeType || getThreeType(src)) {
+      switch (threeType) {
         case 'glf':
         case 'glb': {
           GLLoader(src).then((newModel) => {
-            model = newModel;
+            newModel.scene.traverse((obj: THREE.Object3D<THREE.Event>) => {
+              obj.castShadow = true;
+            });
+            newModel.scene.translateZ(-10);
+            const nModel: SingleModel = {
+              model: newModel.scene,
+              id: newModel.scene.uuid,
+              verbose: newModel.scene.name,
+            };
+            setModels((prev) => [...prev, nModel]);
           });
+          renderer.outputEncoding = THREE.sRGBEncoding;
           break;
         }
         default:
           break;
       }
-
-      if (model) {
-        scene.add(model);
-      }
-
-      const animate = () => {
-        requestAnimationFrame(animate);
-        controls.update();
-
-        renderer.render(scene, camera);
-      };
-
       animate();
     }
-  }, [scene, modelSrc, threeType, src, GLLoader, camera, renderer]);
+  }, [scene, modelSrc, threeType, src, GLLoader, camera, renderer, animate]);
+
+  useEffect(() => {
+    onWindowResize();
+    // eslint-disable-next-line prettier/prettier
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={cn(styles['three-preview__wrapper'])}>
+      <div
+        className={cn(styles['three-preview__wrapper-loader'], {
+          [styles['loading-active']]: loading,
+        })}
+      >
+        <Loading />
+      </div>
       <canvas className={styles['three-preview__wrapper-field']} id={id} />
     </div>
   );
