@@ -23,8 +23,17 @@
 .load{
   @include flexbox(center, center);
   margin-bottom: 80px;
+  text-transform: uppercase;
 }
 
-// .category{
-//   padding: 22px 30px;
-// }
+@include large-tablet{
+  .categories {
+    @include container;
+  }
+}
+
+@include small-mobile{
+  .cards{
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+}

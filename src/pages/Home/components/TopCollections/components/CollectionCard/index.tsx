@@ -1,6 +1,9 @@
 import { FC } from 'react';
-import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
+
 import { Avatar, EllipsisText, Text } from 'components';
+
+import styles from './styles.module.scss';
 
 interface IProps {
   index?: number;
@@ -12,6 +15,7 @@ interface IProps {
 }
 
 const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncrease }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'TopCollections' });
   return (
     <li className={styles.collectionCard}>
       <Text color="secondary" weight="bold" size="m">
@@ -25,8 +29,9 @@ const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncr
           </Text>
         </EllipsisText>
         <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
-          Floor price:{' '}
+          {t('FloorPrice')}:
           <Text size="xs" color="blue" weight="bold" className={styles.price}>
+            {' '}
             {price} PHETA
           </Text>
         </Text>

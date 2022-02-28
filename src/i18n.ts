@@ -18,7 +18,7 @@ i18n
   .use(initReactI18next)
   .init({
     // @ts-ignore
-    ns: ['common', 'Home'],
+    ns: ['common', 'Home', 'Explore'],
     defaultNS: 'Home',
     fallbackLng: 'en',
     debug: true,

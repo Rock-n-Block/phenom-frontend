@@ -18,6 +18,7 @@ import mock from 'mock';
 import 'swiper/swiper.scss';
 import 'swiper/swiper-bundle.css';
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 // import { storeApi } from 'services';
 // import { routes } from 'appConstants';
 
@@ -33,6 +34,7 @@ type Props = {
   className?: string;
 };
 const Trending: FC<Props> = ({ className }) => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'Trending' });
   const [title, setTitle] = useState<any>({ title: 'All categories' });
   const [nfts, setNfts] = useState<any[]>([]);
   const [numberOfSlide, setNumberOfSlide] = useState(3);
@@ -106,7 +108,7 @@ const Trending: FC<Props> = ({ className }) => {
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
         <H2 weight="bold" className={styles.title} align="center">
-          Trending in{' '}
+          {t('TrendingIn')}{' '}
           {nftTags.length && <TitleDropdown value={title} setValue={setTitle} options={nftTags} />}
         </H2>
         {nfts.length ? (

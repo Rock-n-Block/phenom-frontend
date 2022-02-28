@@ -7,6 +7,7 @@ import { PriceFilter } from './components';
 import Labels from '../Labels';
 
 import styles from './styles.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const collections = ['Collection1', 'Collection2', 'Collection3', 'Collection4', 'Collection5'];
 const types = ['Single NFT', 'Multiple NFT'];
@@ -19,6 +20,7 @@ type Props = {
 
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory, onFiltersChange);
+  const { t } = useTranslation(undefined, { keyPrefix: 'Filters' });
 
   const [appliedFilters, setAppliedFilters] = useState<any>({});
   const [isAuctionOnly, setIsAuctionOnly] = useState(false);
@@ -63,8 +65,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
           maxPrice={appliedFilters.maxPrice || ''}
           setMaxPrice={(value: string) => handleFilterClick('maxPrice', value)}
         />
-        <Button onClick={() => setIsApplied(true)} className={styles.apply} padding="small">
-          APPLY
+        <Button onClick={() => setIsApplied(true)} className={styles.apply}>
+          {t('Apply')}
         </Button>
       </div>
       <div className={styles.filtersLabels}>
