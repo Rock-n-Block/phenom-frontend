@@ -22,7 +22,7 @@ export type TMaxSize = {
 };
 
 export const maxSize: TMaxSize = {
-  size: 10,
+  size: 15,
   unit: 'Mb',
 };
 
