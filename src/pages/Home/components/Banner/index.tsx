@@ -4,12 +4,14 @@ import { useTranslation } from 'react-i18next';
 // import cx from 'classnames';
 import { Button, Text } from 'components';
 
+import { routes } from 'appConstants';
+
 import { metaverse } from 'assets/img';
 
 import styles from './styles.module.scss';
 
 const Banner: FC = () => {
-  const { t } = useTranslation(undefined, { keyPrefix: 'Banner' });
+  const { t } = useTranslation('Home');
   return (
     <div className={styles.banner}>
       <div className={styles.gradient}>
@@ -25,7 +27,9 @@ const Banner: FC = () => {
           and also earn rewards for their activity.
         </Text>
         <div className={styles.bannerBtn}>
-          <Button padding="extra-large">{t('Explore')}</Button>
+          <Button href={routes.explore.root} padding="extra-large">
+            {t('Banner.Explore')}
+          </Button>
         </div>
       </div>
     </div>

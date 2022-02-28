@@ -48,7 +48,9 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
     },
   ]);
 
-  const t = useCallback(() => i18nProvider.t, [i18nProvider.t]);
+  const t = useCallback(() => {
+    return i18nProvider.t
+  }, [i18nProvider.t]);
 
   const setReady = useCallback((state: boolean) => {
     setIsReady(state);

@@ -20,7 +20,7 @@ type Props = {
 
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory, onFiltersChange);
-  const { t } = useTranslation(undefined, { keyPrefix: 'Filters' });
+  const { t } = useTranslation('Explore');
 
   const [appliedFilters, setAppliedFilters] = useState<any>({});
   const [isAuctionOnly, setIsAuctionOnly] = useState(false);
@@ -66,7 +66,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
           setMaxPrice={(value: string) => handleFilterClick('maxPrice', value)}
         />
         <Button onClick={() => setIsApplied(true)} className={styles.apply}>
-          {t('Apply')}
+          {t('Filters.Apply')}
         </Button>
       </div>
       <div className={styles.filtersLabels}>

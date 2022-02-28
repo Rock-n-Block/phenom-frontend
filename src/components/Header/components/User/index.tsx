@@ -14,6 +14,7 @@ import { usePopover } from 'hooks';
 import { CrossIcon, iconArrowDownBlue, iconCopy, iconCreate, iconEdit, iconExit } from 'assets/img';
 
 import styles from './User.module.scss';
+import { routes } from 'appConstants';
 
 interface IUserProps {
   className?: string;
@@ -120,31 +121,28 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
   );
 };
 
-const UserMobile: FC<{ user: any }> = ({ user }) => {
+const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
   const dropdownOptions = useMemo(
     () => [
       {
-        title: 'Explore',
-      },
-      {
         title: 'All categories',
-        url: '/',
+        url: routes.explore.filter('all categories'),
       },
       {
         title: 'Rooms',
-        url: '/',
+        url: routes.explore.filter('rooms'),
       },
       {
         title: ' Area',
-        url: '/',
+        url: routes.explore.filter('area'),
       },
       {
         title: 'Buildings',
-        url: '/',
+        url: routes.explore.filter('buildings'),
       },
       {
         title: 'Skins',
-        url: '/',
+        url: routes.explore.filter('skins'),
       },
     ],
     [],
@@ -172,8 +170,8 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
           onClick={() => setIsLinksOpen(!isLinksOpen)}
         >
           <>
-            <Text className={styles.text} tag="span">
-              {dropdownOptions[0].title}
+            <Text className={styles.text} tag="span" weight="bold">
+              Explore
             </Text>
             <img alt="arrow" className={styles.arrow} src={iconArrowDownBlue} />
           </>
@@ -181,12 +179,20 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
 
         <div className={styles.dropdownBody}>
           {dropdownOptions.map((option: any, index: number) => {
-            return index !== 0 ? (
+            return option.url !== '' ? (
+              <div className={cx(styles.option, { [styles.borderTop]: index === 0 })} key={index}>
+                <Link to={`${option.url}`} onClick={() => close()} replace>
+                  <Text className={styles.text} tag="span">
+                    {option.title}
+                  </Text>
+                </Link>
+              </div>
+            ) : (
               <div
                 onKeyDown={() => {}}
                 tabIndex={0}
                 role="button"
-                className={cx(styles.option, { [styles.borderTop]: index === 1 })}
+                className={cx(styles.option, { [styles.borderTop]: index === 0 })}
                 // onClick={() => handleClick(option.symbol.toUpperCase())}
                 key={`dropdown_option_${option.title}`}
               >
@@ -194,8 +200,6 @@ const UserMobile: FC<{ user: any }> = ({ user }) => {
                   {option.title}
                 </Text>
               </div>
-            ) : (
-              <></>
             );
           })}
         </div>
@@ -266,7 +270,10 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
         {isBodyOpen ? <CrossIcon /> : <img src={mock.user} alt="Avatar" />}
       </Button>
       {isBodyOpen ? (
-        <UserMobile user={{ id: 0, address: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4' }} />
+        <UserMobile
+          user={{ id: 0, address: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4' }}
+          close={() => setIsBodyOpen(false)}
+        />
       ) : (
         <></>
       )}
