@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 export interface IImagePreview {
   src: string;
   alt?: string;
+  className?: string;
 }
 
 const ImagePreview: VFC<IImagePreview> = ({ src, alt }) => {
