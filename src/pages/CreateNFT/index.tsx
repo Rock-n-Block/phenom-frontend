@@ -30,22 +30,20 @@ const CreateNFT: VFC<ICreateNFT> = ({ type }) => {
     console.log(error.msg);
   }, []);
   const onLoad = useCallback((fURLs: string[], fList: File[]) => {
-    setFileList(fList);
-    setFilesURLs(fURLs);
+    setFileList((prev) => [...prev, ...fList]);
+    setFilesURLs((prev) => [...prev, ...fURLs]);
   }, []);
 
   const reqFile = useMemo(() => {
     let rFile = '';
-    fileList.forEach((f) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const f of fileList) {
       const extension = getExtension(f.name);
       if (audioFormats.includes(extension as any) || videosFormats.includes(extension as any)) {
-        rFile = f.name;
-      } else if (
-        !(audioFormats.includes(extension as any) && videosFormats.includes(extension as any))
-      ) {
-        rFile = f.name;
+        return f.name;
       }
-    });
+      rFile = f.name;
+    }
     return rFile;
   }, [fileList]);
 
