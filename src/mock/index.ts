@@ -7,6 +7,7 @@ import {
   topCollectionAvatar,
   trendingAvatar,
   userAvatar,
+  nftCard,
 } from './img';
 
 const mock = {
@@ -20,6 +21,15 @@ const mock = {
   user: userAvatar,
   trending: trendingAvatar,
   topCollection: topCollectionAvatar,
+  nftCard: {
+    img: nftCard,
+    properties: [
+      { label: 'Color', value: 'Blue' },
+      { label: 'Type', value: 'humanoid' },
+    ],
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  },
 };
 
 export default mock;
