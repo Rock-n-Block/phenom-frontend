@@ -11,7 +11,8 @@
     "FloorPrice": "Floor price"
   },
   "Trending": {
-    "TrendingIn": "Trending in"
+    "TrendingIn": "Trending in",
+    "NoItmes": "There are no trending nfts yet"
   }
 
 }

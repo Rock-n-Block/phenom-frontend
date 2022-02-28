@@ -33,7 +33,7 @@ const categories = [
   },
 ];
 const Body: VFC = () => {
-  const { t } = useTranslation(undefined, { keyPrefix: 'Filters' });
+  const { t } = useTranslation('Explore');
   const [checkedCategory, setCheckedCategory] = useState(categories[0].key);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
@@ -164,7 +164,9 @@ const Body: VFC = () => {
           </div>
         </div>
         <div className={styles.load}>
-          <Button color="outline">{t('LoadMore')}</Button>
+          <Button color="outline" className={styles.loadBtn}>
+            {t('Filters.LoadMore')}
+          </Button>
         </div>
       </div>
     </>
