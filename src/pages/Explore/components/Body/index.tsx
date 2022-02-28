@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import cx from 'classnames';
 import mock from 'mock';
@@ -32,6 +33,7 @@ const categories = [
   },
 ];
 const Body: VFC = () => {
+  const { t } = useTranslation(undefined, { keyPrefix: 'Filters' });
   const [checkedCategory, setCheckedCategory] = useState(categories[0].key);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
@@ -162,7 +164,7 @@ const Body: VFC = () => {
           </div>
         </div>
         <div className={styles.load}>
-          <Button color="outline">Load More</Button>
+          <Button color="outline">{t('LoadMore')}</Button>
         </div>
       </div>
     </>

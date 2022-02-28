@@ -1,5 +1,17 @@
 {
   "Banner": {
-    "PhenomMetaverseMarketplace": "Phenom Metaverse Marketplace"
+    "PhenomMetaverseMarketplace": "Phenom Metaverse Marketplace",
+    "Subtitle": "This is a revolutionary virtual universe in which users and their digital avatars can simultaneously interact in a 3D space: work, increase ratings, play, study, attend events, and also earn rewards for their activity.",
+    "Explore": "Explore"
+  },
+  "Categories": "Categories",
+  "TopCollections": {
+    "TopCollections": "Top collections",
+    "NoCollections": "There are no collections",
+    "FloorPrice": "Floor price"
+  },
+  "Trending": {
+    "TrendingIn": "Trending in"
   }
+
 }
