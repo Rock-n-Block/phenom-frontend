@@ -63,8 +63,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
           maxPrice={appliedFilters.maxPrice || ''}
           setMaxPrice={(value: string) => handleFilterClick('maxPrice', value)}
         />
-        <Button onClick={() => setIsApplied(true)} className={styles.apply}>
-          Apply
+        <Button onClick={() => setIsApplied(true)} className={styles.apply} padding="small">
+          APPLY
         </Button>
       </div>
       <div className={styles.filtersLabels}>

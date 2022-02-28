@@ -26,6 +26,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, setMinPrice, maxPrice, se
           setValue={setMinPrice}
           placeholder="Min"
           subInfo={<Text color="blue">PHETA</Text>}
+          type="number"
         />
         <DefaultInput
           className={styles.price}
@@ -34,6 +35,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, setMinPrice, maxPrice, se
           setValue={setMaxPrice}
           placeholder="Max"
           subInfo={<Text color="blue">PHETA</Text>}
+          type="number"
         />
       </div>
     </div>

@@ -3,6 +3,7 @@ import { FormEvent, ReactElement, useCallback, useState, VFC } from 'react';
 import cn from 'classnames';
 
 import styles from './styles.module.scss';
+import { validateOnlyNumbers } from 'utils';
 
 interface IDefaultInput {
   name: string;
@@ -14,6 +15,7 @@ interface IDefaultInput {
   error?: string;
   label?: string | ReactElement;
   className?: string;
+  type?: 'text' | 'number';
 }
 
 const DefaultInput: VFC<IDefaultInput> = ({
@@ -26,6 +28,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
   maxSubInfoWidth = '150px',
   error,
   className,
+  type = 'text',
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -41,10 +44,16 @@ const DefaultInput: VFC<IDefaultInput> = ({
     (e: FormEvent<HTMLInputElement>) => {
       e.preventDefault();
       const currentValue = e.currentTarget.value;
+      if (type === 'number') {
+        if (!validateOnlyNumbers(currentValue)) {
+          e.stopPropagation();
+          return;
+        }
+      }
       setValue(currentValue);
       e.stopPropagation();
     },
-    [setValue],
+    [setValue, type],
   );
 
   return (

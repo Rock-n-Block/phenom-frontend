@@ -8,6 +8,7 @@ import { Button, Text } from 'components';
 import { metaverse } from 'assets/img';
 
 import styles from './styles.module.scss';
+import { routes } from 'appConstants';
 
 const Banner: FC = () => {
   const { setEntityPreferredLocale } = useLanguage();
@@ -29,7 +30,9 @@ const Banner: FC = () => {
           and also earn rewards for their activity.
         </Text>
         <div className={styles.bannerBtn}>
-          <Button padding="extra-large">Explore</Button>
+          <Button href={routes.explore.root} padding="extra-large">
+            Explore
+          </Button>
         </div>
       </div>
     </div>

@@ -172,7 +172,7 @@
     .dropdownHead {
       border-radius: 10px 10px 0 0;
       .arrow {
-        transform: rotate(0deg);
+        transform: rotate(-180deg);
         @include transition;
       }
     }
@@ -210,7 +210,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotate(-180deg);
+    transform: rotate(0deg);
     @include transition;
   }
 

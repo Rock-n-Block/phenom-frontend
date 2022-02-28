@@ -59,7 +59,7 @@ const Labels: VFC<IProps> = ({
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
       )} */}
       <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
-        Clear
+        CLEAR
       </Button>
     </div>
   );

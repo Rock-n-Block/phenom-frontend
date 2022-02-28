@@ -162,7 +162,7 @@ const Body: VFC = () => {
           </div>
         </div>
         <div className={styles.load}>
-          <Button color="outline">Load More</Button>
+          <Button color="outline">LOAD MORE</Button>
         </div>
       </div>
     </>
