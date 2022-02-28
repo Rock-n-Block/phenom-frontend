@@ -1,0 +1,17 @@
+@import '/src/styles/helpers.scss';
+
+.delete-button__wrapper {
+  @include flexbox(center, center);
+  &-icon {
+    fill: $color-dark-3;
+    margin-right: 11.6px;
+    @include transition;
+  }
+  &:hover {
+    .delete-button__wrapper {
+      &-icon {
+        fill: $color-accent;
+      }
+    }
+  }
+}
