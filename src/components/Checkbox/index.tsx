@@ -6,9 +6,9 @@ import styles from './styles.module.scss';
 
 interface ICheckboxProps {
   className?: string;
-  content: string;
+  content?: string;
   value: boolean;
-  onChange: () => void;
+  onChange?: any;
   id?: string;
 }
 
