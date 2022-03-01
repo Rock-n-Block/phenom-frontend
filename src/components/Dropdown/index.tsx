@@ -10,7 +10,7 @@ import { Text } from 'components';
 interface IDropdownProps {
   className?: string;
   value: string;
-  setValue: (str: string) => void;
+  setValue: (str: any) => void;
   options: Array<any>;
   isWithImage?: boolean;
   isWritable?: boolean;
@@ -18,6 +18,8 @@ interface IDropdownProps {
   suffix?: string;
   headClassName?: string;
   bodyClassName?: string;
+  returnBy?: string;
+  drawBy?: string;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -31,6 +33,8 @@ const Dropdown: FC<IDropdownProps> = ({
   suffix = '',
   headClassName,
   bodyClassName,
+  returnBy = 'symbol',
+  drawBy = 'symbol',
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -114,12 +118,12 @@ const Dropdown: FC<IDropdownProps> = ({
                   },
                   option.symbol === value ? 'text-gradient' : '',
                 )}
-                onClick={() => handleClick(option.symbol.toUpperCase())}
+                onClick={() => handleClick(option[returnBy]?.toUpperCase())}
                 key={`dropdown_option_${option.symbol}`}
               >
                 <img alt="" className={styles.image} src={option.image} />
                 <Text className={styles.text} tag="span">
-                  {option.symbol.toUpperCase()}
+                  {option[drawBy]?.toUpperCase()}
                 </Text>
               </div>
             ))}

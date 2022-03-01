@@ -1,0 +1,60 @@
+@import '/src/styles/helpers.scss';
+
+.default-switch__body{
+    &-area{
+        width: 100%;
+        height: 100%;
+        @include transition;
+        @include flexbox(center, flex-start);
+        &__input{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+        &__track{
+            width: 48px;
+            height: 24px;
+            border-radius: 12px;
+            position: relative;
+            background: $color-dark-4;
+            cursor: pointer;
+            @include transition;
+        }
+        &__thumb{
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            height: calc(100% - 4px);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: $color-light-4;
+            @include switch-active-shadow;
+            @include transition;
+        }
+        &__inactive{
+            margin-right: 8px;
+        }
+        &__active{
+            margin-left: 8px;
+        }
+    }
+}
+
+.switch-active{
+    .default-switch__body{
+        &-area{
+            &__track{
+                background: $color-accent;
+            }
+            &__thumb{
+                transform: translateX(calc(100% + 4px));
+                @include dynamic-shadow($color: transparent);
+            }
+        }
+    }          
+}

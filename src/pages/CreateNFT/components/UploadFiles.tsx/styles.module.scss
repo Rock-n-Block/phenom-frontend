@@ -1,6 +1,6 @@
 @import '/src/styles/helpers.scss';
 
-.create-nft__wrapper{
+.upload-nft__wrapper{
     width: 100%;
     &__body{
         margin: 0 auto;
@@ -9,17 +9,26 @@
             margin: 95px 0 85px;
             @include transition;
         }
+        &-switch{
+            margin-bottom: 10px;
+        }
+        &-preview{
+            &__delete{
+                margin-top: 25px;
+                @include flexbox(center, center)
+            }
+        }
     }
 }
 
 @include middle-tablet{
-    .create-nft__wrapper{
+    .upload-nft__wrapper{
         padding: 0 22px;
     }
 }
 
 @include large-mobile{
-    .create-nft__wrapper{
+    .upload-nft__wrapper{
         &__body{
             &-title{
                 margin: 25px 0 40px;

@@ -14,6 +14,8 @@ interface IDefaultInput {
   error?: string;
   label?: string | ReactElement;
   className?: string;
+  onFocus?: (...args: any) => void;
+  onBlur?: (...args: any) => void;
 }
 
 const DefaultInput: VFC<IDefaultInput> = ({
@@ -26,16 +28,30 @@ const DefaultInput: VFC<IDefaultInput> = ({
   maxSubInfoWidth = '150px',
   error,
   className,
+  onBlur,
+  onFocus,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
-  const onFocusHandler = useCallback(() => {
-    setIsActive(true);
-  }, []);
+  const onFocusHandler = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsActive(true);
+      onFocus?.();
+    },
+    [onFocus],
+  );
 
-  const onBlurHandler = useCallback(() => {
-    setIsActive(false);
-  }, []);
+  const onBlurHandler = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsActive(false);
+      onBlur?.();
+    },
+    [onBlur],
+  );
 
   const onFieldChange = useCallback(
     (e: FormEvent<HTMLInputElement>) => {

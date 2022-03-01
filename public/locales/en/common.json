@@ -1,3 +1,6 @@
 {
-    "audioPreviewAlt": "Image for audio file"
+    "audioPreviewAlt": "Image for audio file",
+    "imagePreviewAlt": "Image for image file",
+    "videoPreviewAlt": "Image for video file",
+    "threeDPreviewAlt": "Image for 3D file"
 }

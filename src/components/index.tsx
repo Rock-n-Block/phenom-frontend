@@ -15,5 +15,7 @@ export { default as Dropdown } from './Dropdown';
 export { default as LoadFile } from './LoadFile';
 export { default as Checkbox } from './Checkbox';
 export { default as Loading } from './Loading';
+export { default as DeletePreview } from './DeletePreview';
+export { default as Switch } from './Switch';
 export * from './Typography';
 export * from './Preview';
