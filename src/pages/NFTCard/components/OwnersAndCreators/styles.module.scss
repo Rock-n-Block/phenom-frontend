@@ -1,0 +1,33 @@
+@import 'src/styles/helpers.scss';
+
+.ownersAndCreators {
+  margin-top: 32px;
+  @include flexbox(flex-start, flex-start);
+}
+
+.creator,
+.owner {
+  @include flexbox(center, flex-start);
+  margin-top: 8px;
+  &Wrapper {
+    @include flexbox(flex-start, flex-start);
+    flex-direction: column;
+    width: 40%;
+  }
+
+  .avatar{
+    margin-right: 16px; 
+  }
+}
+
+.collection{
+  margin-top: 24px;
+
+  &Card{
+    margin-top: 8px;
+
+    a{
+      margin: 0 12px 0 0;
+    }
+  }
+}

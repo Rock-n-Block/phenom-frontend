@@ -6,3 +6,4 @@ export { default as searchAvatar } from './searchAvatar.png';
 export { default as userAvatar } from './userAvatar.png';
 export { default as trendingAvatar } from './trendingAvatar.png';
 export { default as topCollectionAvatar } from './topCollectionAvatar.png';
+export { default as nftCard } from './nftCard.png';

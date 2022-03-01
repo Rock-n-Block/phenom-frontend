@@ -1,4 +1,6 @@
 import { FC } from 'react';
+
+import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar, EllipsisText, Text } from 'components';
@@ -12,15 +14,26 @@ interface IProps {
   name: string;
   price: string;
   profitIncrease?: string | number;
+  className?: string;
 }
 
-const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncrease }) => {
+const CollectionCard: FC<IProps> = ({
+  index,
+  avatar,
+  id,
+  name,
+  price,
+  profitIncrease,
+  className,
+}) => {
   const { t } = useTranslation('Home');
   return (
-    <li className={styles.collectionCard}>
-      <Text color="secondary" weight="bold" size="m">
-        {index}
-      </Text>
+    <li className={cx(styles.collectionCard, className)}>
+      {index && (
+        <Text color="secondary" weight="bold" size="m">
+          {index}
+        </Text>
+      )}
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
         <EllipsisText>

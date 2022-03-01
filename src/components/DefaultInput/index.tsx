@@ -16,6 +16,7 @@ interface IDefaultInput {
   error?: string;
   label?: string | ReactElement;
   className?: string;
+  disabled?: boolean;
   type?: 'text' | 'number';
   min?: string | number;
   max?: string | number;
@@ -31,6 +32,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
   maxSubInfoWidth = '150px',
   error,
   className,
+  disabled = false,
   type = 'text',
   min,
   max,
@@ -90,6 +92,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
           placeholder={placeholder}
           type="text"
           id={`default_input_${name}`}
+          disabled={disabled}
         />
         {subInfo && (
           <div

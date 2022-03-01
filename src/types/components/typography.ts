@@ -1,6 +1,7 @@
 enum Values {
   white,
   red,
+  darkenBlack,
   black,
   darkenGray,
   gray,

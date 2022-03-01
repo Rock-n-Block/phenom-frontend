@@ -18,6 +18,7 @@ import {
   // CreateToken,
   // Discover,
   Home,
+  NFTCard,
   // LostPage404,
   // Nft,
   // Profile,
@@ -46,10 +47,7 @@ const RoutesPage = () => {
   }, [loadNamespaces, pathname]);
   return (
     <Routes>
-      {/* <Route path={routes.nft.root}>
-        <Page component={<Nft />} />{' '}
-      </Route>
-      <Route
+      {/* <Route
         path={routes.discover.root}
         render={() => <Page needFooter={false} component={<Discover />} />}
       />
@@ -82,6 +80,15 @@ const RoutesPage = () => {
         path={routes.explore.root}
         element={
           <Page classes={['with-left-detail', 'with-right-detail']} component={<Explore />} />
+        }
+      />
+      <Route
+        path={routes.nft.root}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<NFTCard />}
+          />
         }
       />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />

@@ -93,7 +93,7 @@ interface IText extends Props {
  * * xl - 20px
  * * xxl - 24px
  * * xxxl - 32px
- * * xxxxl - 48px
+ * * xxxxl - 40px
  * * inherit - inherit
  * @param {Color} [color] - color of text {black}
  * @param {Align} [align] - align of text {left}
