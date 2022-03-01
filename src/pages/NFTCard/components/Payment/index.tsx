@@ -2,9 +2,9 @@ import { useEffect, useState, VFC } from 'react';
 
 import moment from 'moment';
 
-import { Button, DefaultInput, QuantityInput, Text } from 'components';
+import { Avatar, Button, DefaultInput, QuantityInput, Text } from 'components';
 
-import { iconPlaceBid, PlaceBidIcon } from 'assets/img';
+import { iconArrowUpGreen, iconPlaceBid, PlaceBidIcon } from 'assets/img';
 
 import styles from './styles.module.scss';
 
@@ -18,6 +18,7 @@ type IPayment = {
   availableAmount?: number;
   start_auction?: number;
   end_auction?: number;
+  highest_bidder?: any;
 };
 
 const Payment: VFC<IPayment> = ({
@@ -28,6 +29,7 @@ const Payment: VFC<IPayment> = ({
   standart,
   availableAmount,
   end_auction,
+  highest_bidder,
 }) => {
   const [quantity, setQuantity] = useState('1');
   const [bid, setBid] = useState('');
@@ -85,15 +87,15 @@ const Payment: VFC<IPayment> = ({
           </div>
         </div>
       )}
-      {isAuction ? (
+      {isAuction || isTimedAuction ? (
         <div>
-          {isTimedAuction ? (
-            <Text size="m" weight="semibold" color="green">
-              Minimum bid
-            </Text>
-          ) : (
+          {highest_bidder ? (
             <Text color="yellow" size="m" weight="semibold">
               Current bid
+            </Text>
+          ) : (
+            <Text size="m" weight="semibold" color="green">
+              Minimum bid
             </Text>
           )}
         </div>
@@ -112,7 +114,15 @@ const Payment: VFC<IPayment> = ({
           ${USD_price}
         </Text>
       )}
-
+      {highest_bidder && (
+        <div className={styles.highest}>
+          <Avatar id={highest_bidder.id} avatar={highest_bidder.avatar} />
+          <Text>
+            {highest_bidder.name}{' '}
+            <img alt="arrow" src={iconArrowUpGreen} className={styles.arrow} />{' '}
+          </Text>
+        </div>
+      )}
       {standart === 'ERC1155' && <Text className={styles.quantity}>Quantity</Text>}
       {(isAuction || isTimedAuction) && <Text className={styles.quantity}>Bid</Text>}
       <div className={styles.priceBids}>

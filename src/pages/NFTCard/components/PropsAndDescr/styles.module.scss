@@ -2,7 +2,8 @@
 
 .properties {
   &List {
-    @include flexbox;
+    @include flexbox(flex-start, flex-start);
+    flex-wrap: wrap;
   }
 
   &Item {
@@ -12,10 +13,8 @@
     @include flexbox(flex-start, flex-start);
     flex-direction: column;
     min-width: 150px;
-
-    & + & {
-      margin-left: 16px;
-    }
+    margin-right: 16px;
+    margin-bottom: 16px;
   }
 }
 

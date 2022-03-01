@@ -1,39 +1,50 @@
-import { VFC } from 'react';
+import { useEffect, useState, VFC } from 'react';
+import { useParams } from 'react-router-dom';
 
 import mock from 'mock';
-
 import moment from 'moment';
 
-import { NameAndLike, Payment, PropsAndDescr } from './components';
+import { NameAndLike, OwnersAndCreators, Payment, PropsAndDescr } from './components';
 
 import styles from './styles.module.scss';
 
 const NFTCard: VFC = () => {
+  const { id = 1 } = useParams();
+  const [nft, setNft] = useState<any>({});
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setNft(mock.nftCard[id]);
+  }, [id]);
   return (
     <div className={styles.nftCard}>
       <div className={styles.left}>
-        <PropsAndDescr
-          media={mock.nftCard.img}
-          properties={mock.nftCard.properties}
-          description={mock.nftCard.description}
-        />
+        <PropsAndDescr media={nft.img} properties={nft.properties} description={nft.description} />
       </div>
       <div className={styles.right}>
         <NameAndLike
-          name={mock.nftCard.name}
-          likeCount={mock.nftCard.likeCount}
-          artId={mock.nftCard.id}
-          inStockNumber={mock.nftCard.inStockNumber}
+          name={nft.name}
+          likeCount={nft.likeCount}
+          artId={nft.id}
+          inStockNumber={nft.inStockNumber}
         />
         <Payment
-          standart='ERC721'
-          availableAmount={mock.nftCard.inStockNumber}
-          price={mock.nftCard.price}
-          USD_price={mock.nftCard.USD_price}
-          isTimedAuction
-          end_auction={moment.now()/1000}
-
+          standart="ERC721"
+          availableAmount={nft.inStockNumber}
+          price={nft.price}
+          USD_price={nft.USD_price}
+          isTimedAuction={nft.isTimedAuction}
+          isAuction={nft.isAuction}
+          end_auction={nft.isTimedAuction && moment.now() / 1000}
         />
+        {nft.creator && nft.owners && (
+          <OwnersAndCreators
+            creator={nft.creator}
+            owners={nft.owners}
+            collection={nft.collection}
+          />
+        )}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ export { default as iconMinus } from './minus.svg';
 export { default as iconSearch } from './search.svg';
 export { default as iconArrowDownGray } from './arrow-down-gray.svg';
 export { default as iconArrowDownBlue } from './arrow-down-blue.svg';
+export { default as iconArrowUpGreen } from './arrow-up-green.svg';
 export { default as iconEdit } from './edit.svg';
 export { default as iconCopy } from './copy.svg';
 export { default as iconExit } from './exit.svg';
