@@ -61,18 +61,23 @@ const Dropdown: FC<IDropdownProps> = ({
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>
         <div className={cn(styles.body, bodyClassName)}>
-          {options.map(({ name, media }: any) => (
+          {options.map(({ name, media }: any, key: number) => (
             <div
               onKeyDown={() => {}}
               tabIndex={0}
               role="button"
               className={cn(styles.option)}
-              onClick={() => handleClickOption(name)}
+              onClick={(e: FormEvent<HTMLDivElement>) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleClickOption(name);
+              }}
               key={`dropdown_option_${name}`}
             >
               <Checkbox
                 value={checkedFilters?.[name]}
                 onChange={(e: FormEvent<HTMLInputElement>) => handleClickCheckbox(e, name)}
+                id={key.toString()}
               />
               {media && <img src={media} alt="media" />}
               <Text className={styles.text} tag="span">
