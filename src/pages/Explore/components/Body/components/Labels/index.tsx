@@ -17,14 +17,8 @@ interface IProps {
 
 const Labels: VFC<IProps> = ({
   setDefaultFilters,
-  filters: {
-    collection,
-    type,
-    minPrice,
-    maxPrice,
-
-  },
-  changeFilter
+  filters: { collection, type, minPrice, maxPrice },
+  changeFilter,
 }) => {
   const minMaxLabel = useMemo(() => {
     if (minPrice && maxPrice) return `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
@@ -58,9 +52,11 @@ const Labels: VFC<IProps> = ({
       {/* {textSearch && (
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
       )} */}
-      <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
-        CLEAR
-      </Button>
+      {(collection || type || minPrice || maxPrice) && (
+        <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
+          CLEAR
+        </Button>
+      )}
     </div>
   );
 };
