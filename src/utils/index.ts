@@ -5,4 +5,7 @@ export { default as byteSize } from './byteFileSize';
 export { default as byteToUnit } from './bytesToUnit';
 export * from './i18n.utils';
 export * from './bnToFixed';
+export * from './degrees';
 export * from './numberFormatter';
+export * from './validateOnlyNumbers';
+export * from './checkMinMax';

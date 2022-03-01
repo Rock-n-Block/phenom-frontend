@@ -1,6 +1,6 @@
 import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { i18n } from 'i18next';
+import { i18n, TFunction } from 'i18next';
 
 export const availableLanguages = ['en', 'rus'] as const;
 export type TAvailableLanguages = typeof availableLanguages[number];
@@ -22,6 +22,7 @@ interface ILanguageContext {
   changeLanguage: (lang: TAvailableLanguages) => Promise<boolean>;
   hasNamespaceLoaded: (ns: string) => boolean;
   setEntityPreferredLocale: (locale: TAvailableLanguages) => void;
+  t: TFunction;
 }
 
 const LanguageContext = createContext<ILanguageContext>({} as ILanguageContext);
@@ -46,6 +47,10 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
       locale: 'rus',
     },
   ]);
+
+  const t = useCallback(() => {
+    return i18nProvider.t
+  }, [i18nProvider.t]);
 
   const setReady = useCallback((state: boolean) => {
     setIsReady(state);
@@ -119,6 +124,7 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
       changeLanguage,
       hasNamespaceLoaded,
       setEntityPreferredLocale,
+      t,
       currentNS,
       i18nProvider,
     }),
@@ -132,6 +138,7 @@ const LanguageProvider: FC<ILanguageProvider> = ({ children, i18nProvider }) => 
       locales,
       setEntityPreferredLocale,
       setReady,
+      t,
       i18nProvider,
     ],
   );

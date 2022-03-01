@@ -82,3 +82,9 @@
 
   transition: 0.4s ease;
 }
+
+@include small-mobile{
+  .tick{
+    margin-right: 6px;
+  }  
+}

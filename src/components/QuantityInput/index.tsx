@@ -64,7 +64,7 @@ const QuantityInput: VFC<IQuantityInput> = ({
         if (val <= maxAmount && val >= minAmount) {
           return true;
         }
-      } else if (val >= 0) {
+      } else if (val >= minAmount) {
         return true;
       }
       return false;

@@ -2,6 +2,8 @@ import { FormEvent, ReactElement, useCallback, useState, VFC } from 'react';
 
 import cn from 'classnames';
 
+import { checkMinMax, validateOnlyNumbers } from 'utils';
+
 import styles from './styles.module.scss';
 
 interface IDefaultInput {
@@ -15,6 +17,9 @@ interface IDefaultInput {
   label?: string | ReactElement;
   className?: string;
   disabled?: boolean;
+  type?: 'text' | 'number';
+  min?: string | number;
+  max?: string | number;
 }
 
 const DefaultInput: VFC<IDefaultInput> = ({
@@ -28,6 +33,9 @@ const DefaultInput: VFC<IDefaultInput> = ({
   error,
   className,
   disabled = false,
+  type = 'text',
+  min,
+  max,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -39,15 +47,24 @@ const DefaultInput: VFC<IDefaultInput> = ({
     setIsActive(false);
   }, []);
 
-  const onFieldChange = useCallback(
-    (e: FormEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      const currentValue = e.currentTarget.value;
-      setValue(currentValue);
-      e.stopPropagation();
-    },
-    [setValue],
-  );
+  const onFieldChange = (e: FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const currentValue = e.currentTarget.value;
+    if (type === 'number') {
+      if (!validateOnlyNumbers(currentValue)) {
+        e.stopPropagation();
+        return;
+      }
+      if (min || max) {
+        if (!checkMinMax(currentValue, min, max)) {
+          e.stopPropagation();
+          return;
+        }
+      }
+    }
+    setValue(currentValue);
+    e.stopPropagation();
+  };
 
   return (
     <div

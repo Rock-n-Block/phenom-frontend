@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import cx from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { Avatar, EllipsisText, Text } from 'components';
 
@@ -25,6 +26,7 @@ const CollectionCard: FC<IProps> = ({
   profitIncrease,
   className,
 }) => {
+  const { t } = useTranslation('Home');
   return (
     <li className={cx(styles.collectionCard, className)}>
       {index && (
@@ -40,8 +42,9 @@ const CollectionCard: FC<IProps> = ({
           </Text>
         </EllipsisText>
         <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
-          Floor price:{' '}
+          {t('TopCollections.FloorPrice')}:
           <Text size="xs" color="blue" weight="bold" className={styles.price}>
+            {' '}
             {price} PHETA
           </Text>
         </Text>

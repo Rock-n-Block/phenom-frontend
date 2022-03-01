@@ -2,6 +2,7 @@
 
 .filtersLabels {
   padding: 16px 0 24px;
+  height: 64px;
 }
 
 .sorting {
@@ -27,12 +28,12 @@
 }
 
 .dropdown {
-  min-width: 150px;
+  width: 220px;
 
   margin-right: 16px;
 
   &Small{
-    min-width: 150px;
+    width: 170px;
   }
 }
 
@@ -43,6 +44,7 @@
 
 .apply {
   margin-left: 32px;
+  text-transform: uppercase;
 }
 
 @include default-screen {

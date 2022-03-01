@@ -3,7 +3,7 @@
 import { initReactI18next } from 'react-i18next';
 
 import i18n from 'i18next';
-import detector from 'i18next-browser-languagedetector';
+// import detector from 'i18next-browser-languagedetector';
 import backend from 'i18next-xhr-backend';
 
 import { backEndOptions, backEnds, isDevelopmentEnv } from './utils';
@@ -14,11 +14,11 @@ if (isDevelopmentEnv) {
 
 i18n
   .use(backend)
-  .use(detector)
+  // .use(detector)
   .use(initReactI18next)
   .init({
     // @ts-ignore
-    ns: ['common', 'Home'],
+    ns: ['common', 'Home', 'Explore'],
     defaultNS: 'Home',
     fallbackLng: 'en',
     debug: true,

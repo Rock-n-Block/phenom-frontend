@@ -32,16 +32,19 @@ import { routes } from 'appConstants';
 
 const RoutesPage = () => {
   const { loadNamespaces } = useLanguage();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (location.pathname === routes.home.root) {
+    if (pathname === routes.home.root) {
       loadNamespaces('Home');
     }
-    if (location.pathname.includes(routes.create.root)) {
+    if (pathname.includes(routes.create.root)) {
       loadNamespaces('Create');
     }
-  }, [loadNamespaces, location.pathname]);
+    if (pathname.includes(routes.explore.root)) {
+      loadNamespaces('Explore');
+    }
+  }, [loadNamespaces, pathname]);
   return (
     <Routes>
       {/* <Route

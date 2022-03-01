@@ -5,6 +5,7 @@ export { ReactComponent as RemoveSVG } from './remove.svg';
 export { ReactComponent as HeartIcon } from './heart.svg';
 export { ReactComponent as HeartFilledIcon } from './heart-filled.svg';
 export { ReactComponent as PlaceBidIcon } from './place-bid.svg';
+export { ReactComponent as DeleteSVG } from './delete.svg';
 export { default as iconHeart } from './heart.svg';
 export { default as iconPlus } from './plus.svg';
 export { default as iconMinus } from './minus.svg';

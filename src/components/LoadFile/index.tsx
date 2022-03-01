@@ -22,15 +22,22 @@ export type TLoadError = {
   type: ErrorList;
 };
 
+type TProgress = {
+  loaded: number;
+  total: number;
+};
 interface ILoadFile {
+  fileList: File[];
+  filesURLs: string[];
   onLoadStarts?: (...args: any) => void;
-  onLoadEnd?: (files: File[]) => void;
+  onLoadEnd?: (filesUrls: string[], files: File[]) => void;
   onLoadError?: (error: TLoadError) => void;
   extensions?: TAvailableExtensions[];
   reqMaxSize?: TMaxSize;
 }
 
 const LoadFile: VFC<ILoadFile> = ({
+  fileList,
   onLoadStarts,
   onLoadEnd,
   onLoadError,
@@ -40,12 +47,29 @@ const LoadFile: VFC<ILoadFile> = ({
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
   const [failed, setFailed] = useState<boolean>(false);
-  const [fileList, setFileList] = useState<File[]>([]);
+  const [progress, setProgress] = useState<TProgress>({ loaded: 0, total: 0 });
   const areaRef = useRef<HTMLLabelElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const readFileAsUrl = useCallback((file: File) => {
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const readResult = reader.result as string;
+        resolve(readResult);
+      };
+      reader.onprogress = function (e: ProgressEvent<FileReader>) {
+        setProgress((prev) => ({ ...prev, loaded: prev.loaded + e.loaded }));
+      };
+      reader.onerror = function () {
+        resolve('null');
+      };
+      reader.readAsDataURL(file);
+    });
+  }, []);
+
   const filesWorker = useCallback(
-    (files?: File[]) => {
+    async (files?: File[]) => {
       const nullFunc = () => {};
       const onError = onLoadError || nullFunc;
       const onStart = onLoadStarts || nullFunc;
@@ -54,16 +78,29 @@ const LoadFile: VFC<ILoadFile> = ({
       if (files?.length) {
         const allSize = files.reduce((a, f) => a + f.size, 0) * 8;
         if (allSize <= byteSize(reqMaxSize)) {
-          onEnd(files);
-          setFileList(files);
+          setProgress((prev) => ({ ...prev, total: allSize / 8 }));
+          const urlsResult = await Promise.allSettled(
+            files.map(async (f) => {
+              const fileAsUrl = await readFileAsUrl(f);
+              return fileAsUrl;
+            }),
+          );
+          const newFilesAsUrl = urlsResult
+            .filter((f) => f.status === 'fulfilled')
+            .map((f) => {
+              if (f.status === 'fulfilled') {
+                return f.value;
+              }
+              return '';
+            });
           setFailed(false);
+          onEnd(newFilesAsUrl, files);
         } else {
           onError({
             msg: `size of file is ${allSize} bits. Required ${byteSize(reqMaxSize)} bits!`,
             numbers: [allSize, byteSize(reqMaxSize)],
             type: ErrorList.largeFile,
           });
-          setFileList([]);
           setFailed(true);
         }
       } else {
@@ -72,11 +109,10 @@ const LoadFile: VFC<ILoadFile> = ({
           numbers: [],
           type: ErrorList.emptyLoad,
         });
-        setFileList([]);
         setFailed(true);
       }
     },
-    [onLoadEnd, onLoadError, onLoadStarts, reqMaxSize],
+    [onLoadEnd, onLoadError, onLoadStarts, readFileAsUrl, reqMaxSize],
   );
 
   useEffect(() => {
@@ -133,10 +169,10 @@ const LoadFile: VFC<ILoadFile> = ({
   }, [filesWorker]);
 
   const onDragOrSelect = useCallback(
-    (e: FormEvent<HTMLInputElement>) => {
+    async (e: FormEvent<HTMLInputElement>) => {
       e.preventDefault();
       const files = Array.from(e.currentTarget.files || []);
-      filesWorker(files);
+      await filesWorker(files);
     },
     [filesWorker],
   );
@@ -206,6 +242,7 @@ const LoadFile: VFC<ILoadFile> = ({
         >
           PNG, GIF, WEBP, MP4, JPEG, SVG, WEBM, WAV, OGG, GLB, GLF or MP3. Max 5 Mb.
         </Text>
+        {progress.loaded} / {progress.total}
       </label>
     </section>
   );
