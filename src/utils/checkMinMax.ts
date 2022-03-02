@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js';
 
 export const checkMin = (comparingValue: string, min: string | number) => {
-  console.log('comparingValue', comparingValue, 'min', min)
   const arrayedComparingValue = Array.from(String(comparingValue), Number);
   const arrayedMin = Array.from(String(min), Number);
   if (new BigNumber(min ?? 0).isLessThanOrEqualTo(comparingValue)) return true;

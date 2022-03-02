@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 
-import { Text } from 'components';
+import { EllipsisText, Text } from 'components';
 
 import { CrossIcon } from 'assets/img';
 
@@ -16,9 +16,9 @@ const FilterLabel: VFC<IProps> = ({ title, onClick, icon }) => {
   return (
     <button className={s.label} onClick={onClick} type="button">
       {icon && <img className={s.icon} src={icon} alt="icon" />}
-      <Text tag="span">
-        {title}
-      </Text>
+      <EllipsisText>
+        <Text tag="span">{title}</Text>
+      </EllipsisText>
       <div className={s.cross}>
         <CrossIcon />
       </div>
