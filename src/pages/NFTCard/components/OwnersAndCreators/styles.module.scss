@@ -3,6 +3,10 @@
 .ownersAndCreators {
   margin-top: 32px;
   @include flexbox(flex-start, flex-start);
+
+  &Wrapper {
+    width: 100%;
+  }
 }
 
 .creator,
@@ -15,19 +19,29 @@
     width: 40%;
   }
 
-  .avatar{
-    margin-right: 16px; 
+  .avatar {
+    margin-right: 16px;
   }
 }
 
-.collection{
+.collection {
   margin-top: 24px;
 
-  &Card{
+  &Card {
     margin-top: 8px;
 
-    a{
+    a {
       margin: 0 12px 0 0;
     }
+  }
+}
+
+@include large-tablet {
+  .ownersAndCreators {
+    justify-content: space-between;
+  }
+
+  .collectionCard {
+    max-width: 436px;
   }
 }

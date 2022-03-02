@@ -24,7 +24,10 @@ const Labels: VFC<IProps> = ({
   maxPrice,
 }) => {
   const minMaxLabel = useMemo(() => {
-    if (minPrice && maxPrice) return `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
+    if (minPrice && maxPrice)
+      return (+minPrice).toFixed(2) === (+maxPrice).toFixed(2)
+        ? `${(+minPrice).toFixed(2)}`
+        : `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
     if (!minPrice && maxPrice) return `< ${(+maxPrice).toFixed(2)}`;
     if (minPrice && !maxPrice) return `> ${(+minPrice).toFixed(2)}`;
     return '';
