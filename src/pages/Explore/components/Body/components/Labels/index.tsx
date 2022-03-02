@@ -14,6 +14,7 @@ interface IProps {
   changeFilter: any;
   minPrice: string;
   maxPrice: string;
+  clearMinMax: any
 }
 
 const Labels: VFC<IProps> = ({
@@ -22,6 +23,7 @@ const Labels: VFC<IProps> = ({
   changeFilter,
   minPrice,
   maxPrice,
+  clearMinMax
 }) => {
   const minMaxLabel = useMemo(() => {
     if (minPrice && maxPrice)
@@ -33,15 +35,6 @@ const Labels: VFC<IProps> = ({
     return '';
   }, [minPrice, maxPrice]);
 
-  const clearMinMax = useCallback(() => {
-    if (maxPrice) {
-      changeFilter('maxPrice', '');
-    }
-    if (minPrice) {
-      changeFilter('minPrice', '');
-    }
-  }, [changeFilter, maxPrice, minPrice]);
-
   return (
     <div className={s.labels}>
       {renderFilters.map((filter: any) => {
@@ -50,14 +43,7 @@ const Labels: VFC<IProps> = ({
         }
         return null;
       })}
-      {/* {type && <FilterLabel title={type} onClick={() => changeFilter('type', '')} />} */}
-      {(minPrice || maxPrice) && (
-        <FilterLabel
-          // icon={iconChange}
-          title={minMaxLabel}
-          onClick={clearMinMax}
-        />
-      )}
+      {(minPrice || maxPrice) && <FilterLabel title={minMaxLabel} onClick={clearMinMax} />}
       {/* {textSearch && (
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
       )} */}

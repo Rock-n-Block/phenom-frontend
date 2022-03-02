@@ -64,14 +64,14 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   );
 
   const handleMinMaxPrice = useCallback(
-    (filterName, filterValue) => {
-      setCheckedFilters({ ...checkedFilters, [filterName]: filterValue });
-      if (!filterValue) {
-        setAppliedFilters({ ...appliedFilters, [filterName]: filterValue });
+    (minPrice, maxPrice) => {
+      setCheckedFilters({ ...checkedFilters, minPrice, maxPrice });
+      if (!minPrice && !maxPrice) {
+        setAppliedFilters(omit({ ...appliedFilters }, ['minPrice', 'maxPrice']));
       }
       if (isApplied) {
-        setAppliedFilters({ ...appliedFilters, [filterName]: filterValue });
-        setCheckedFilters({ ...checkedFilters, [filterName]: filterValue });
+        setAppliedFilters({ ...appliedFilters, minPrice, maxPrice });
+        setCheckedFilters({ ...checkedFilters, minPrice, maxPrice });
       }
     },
     [appliedFilters, checkedFilters, isApplied],
@@ -111,11 +111,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <PriceFilter
           className={styles.filtersRight}
           minPrice={checkedFilters.minPrice || ''}
-          setMinPrice={(value: string) => handleMinMaxPrice('minPrice', value)}
-          // setMinPrice={() => {}}
           maxPrice={checkedFilters.maxPrice || ''}
-          setMaxPrice={(value: string) => handleMinMaxPrice('maxPrice', value)}
-          // setMaxPrice={() => {}}
+          changePrice={handleMinMaxPrice}
         />
         <Button
           onClick={handleApplyFilters}
@@ -139,6 +136,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             minPrice={appliedFilters.minPrice}
             maxPrice={appliedFilters.maxPrice}
             changeFilter={handleFilterClick}
+            clearMinMax={() => handleMinMaxPrice('', '')}
           />
         )}
       </div>
