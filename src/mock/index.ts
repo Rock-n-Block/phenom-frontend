@@ -26,7 +26,7 @@ const mock = {
       name: 'Nft NftNftNft name1',
       id: 1,
       creator: { id: 1, name: 'Alena', avatar: userAvatar },
-      // inStockNumber: 2,
+      // in_stock_number: 2,
       img: nftCard,
       properties: [
         { label: 'Color', value: 'Yellow' },
@@ -35,11 +35,11 @@ const mock = {
       ],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      likeCount: 1000,
+      likes_count: 1000,
       standart: 'ERC721',
       price: 5412266.7,
       USD_price: 2332.03,
-      isTimedAuction: true,
+      is_timed_auction: true,
       owners: [
         {
           id: 1,
@@ -49,6 +49,7 @@ const mock = {
         },
       ],
       collection: { avatar: topCollectionAvatar, id: 1, name: 'Collection Name1', price: '22343' },
+      is_selling: true,
     },
     2: {
       name: 'Nft name2',
@@ -58,11 +59,11 @@ const mock = {
       properties: [{ label: 'Color', value: 'Red' }],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      likeCount: 3123123,
+      likes_count: 3123123,
       standart: 'ERC721',
       price: 26623123.7,
       USD_price: 21232.03,
-      isAuction: true,
+      is_auction: true,
       owners: [
         {
           id: 1,
@@ -77,12 +78,13 @@ const mock = {
         name: 'Collection NameCollection NameCollection Name2',
         price: '23',
       },
+      is_selling: true,
     },
     3: {
       name: 'Nft name3',
       id: 3,
       creator: { id: 3, name: 'Y', avatar: userAvatar },
-      inStockNumber: 22,
+      in_stock_number: 22,
       img: nftCard,
       properties: [
         { label: 'Color', value: 'Blue' },
@@ -90,7 +92,7 @@ const mock = {
       ],
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      likeCount: 3,
+      likes_count: 3,
       standart: 'ERC1155',
       price: 54266.7,
       USD_price: 22.03,
@@ -114,6 +116,7 @@ const mock = {
         name: 'Collec3',
         price: '0.3',
       },
+      is_selling: false,
     },
   },
 };

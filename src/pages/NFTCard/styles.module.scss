@@ -23,9 +23,14 @@
   padding: 4px 16px;
 }
 
-.left,
-.right {
+.left {
   max-width: 436px;
+  width: 100%;
+  margin-right: 100px;
+}
+
+.right {
+  max-width: 536px;
   width: 100%;
 }
 
