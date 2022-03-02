@@ -9,12 +9,11 @@ import styles from './styles.module.scss';
 type Props = {
   className?: string;
   minPrice: string;
-  setMinPrice: (value: string) => void;
   maxPrice: string;
-  setMaxPrice: (value: string) => void;
+  changePrice: (minPrice: any, maxPrice: any) => void;
 };
 
-const PriceFilter: FC<Props> = ({ className, minPrice, setMinPrice, maxPrice, setMaxPrice }) => {
+const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) => {
   return (
     <div className={cx(styles.priceFilter, className)}>
       <Text>Price</Text>
@@ -23,7 +22,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, setMinPrice, maxPrice, se
           className={styles.price}
           name="minPrice"
           value={minPrice}
-          setValue={setMinPrice}
+          setValue={(value) => changePrice(value, maxPrice)}
           placeholder="Min"
           subInfo={<Text color="blue">PHETA</Text>}
           type="number"
@@ -33,7 +32,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, setMinPrice, maxPrice, se
           className={styles.price}
           name="maxPrice"
           value={maxPrice}
-          setValue={setMaxPrice}
+          setValue={(value) => changePrice(minPrice, value)}
           placeholder="Max"
           subInfo={<Text color="blue">PHETA</Text>}
           type="number"

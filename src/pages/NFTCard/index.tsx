@@ -1,4 +1,4 @@
-import { useEffect, useState, VFC } from 'react';
+import { useEffect, useMemo, useState, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import mock from 'mock';
@@ -16,7 +16,8 @@ const NFTCard: VFC = () => {
   const { id = 1 } = useParams();
   const [nft, setNft] = useState<any>({});
   const { width } = useWindowSize();
-  const [isDesktop, setIsDesktop] = useState(true);
+
+  const isDesktop = useMemo(() => +width >= 1023, [width]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -24,15 +25,6 @@ const NFTCard: VFC = () => {
     setNft(mock.nftCard[id]);
   }, [id]);
 
-  useEffect(() => {
-    if (width < 1023) {
-      setIsDesktop(false);
-    }
-
-    if (width >= 1023) {
-      setIsDesktop(true);
-    }
-  }, [width]);
   return (
     <div className={styles.nftCard}>
       {isDesktop ? (
