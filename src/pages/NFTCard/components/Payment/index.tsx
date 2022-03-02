@@ -110,7 +110,7 @@ const Payment: VFC<IPayment> = ({
         </Text>
       )}
       {USD_price && (
-        <Text color="middleGray" size="m" weight="semibold" className={styles.usdPrice}>
+        <Text color="middleGray" size="m" className={styles.usdPrice}>
           ${USD_price}
         </Text>
       )}
@@ -144,6 +144,7 @@ const Payment: VFC<IPayment> = ({
             setValue={setBid}
             className={styles.priceInput}
             placeholder="0.00"
+            type='number'
           />
         )}
         <Button

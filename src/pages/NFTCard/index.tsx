@@ -20,7 +20,13 @@ const NFTCard: VFC = () => {
   return (
     <div className={styles.nftCard}>
       <div className={styles.left}>
-        <PropsAndDescr media={nft.img} properties={nft.properties} description={nft.description} />
+        <PropsAndDescr
+          media={nft.img}
+          properties={nft.properties}
+          description={nft.description}
+          isTimedAuction={nft.isTimedAuction}
+          isAuction={nft.isAuction}
+        />
       </div>
       <div className={styles.right}>
         <NameAndLike
@@ -30,7 +36,7 @@ const NFTCard: VFC = () => {
           inStockNumber={nft.inStockNumber}
         />
         <Payment
-          standart="ERC721"
+          standart={nft.standart}
           availableAmount={nft.inStockNumber}
           price={nft.price}
           USD_price={nft.USD_price}

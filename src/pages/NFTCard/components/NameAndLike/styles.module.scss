@@ -15,7 +15,7 @@
 
 .likeButton {
   @include flexbox(center, center);
-  padding: 0 10px;
+  padding: 8px 16px;
   min-width: 75px !important;
   background-color: rgba(255, 255, 255, 0.5) !important;
   border-radius: 10px;

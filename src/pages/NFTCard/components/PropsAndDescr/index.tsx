@@ -8,12 +8,25 @@ type IPropsAndDescr = {
   media: any;
   properties?: Array<any>;
   description?: string;
+  isAuction?: boolean;
+  isTimedAuction?: boolean;
 };
 
-const PropsAndDescr: VFC<IPropsAndDescr> = ({ media, properties, description }) => {
+const PropsAndDescr: VFC<IPropsAndDescr> = ({
+  media,
+  properties,
+  description,
+  isAuction,
+  isTimedAuction,
+}) => {
   return (
     <div className={styles.propsAndDescr}>
       <div className={styles.nftCardImgWrapper}>
+        {(isAuction || isTimedAuction) && (
+          <div className={styles.auction}>
+            <Text color="white">Auction</Text>
+          </div>
+        )}
         <img src={media} alt="nftCard" className={styles.nftCardImg} />
       </div>
       {properties && (
