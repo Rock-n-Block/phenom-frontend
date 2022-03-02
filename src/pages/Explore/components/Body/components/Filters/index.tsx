@@ -15,7 +15,11 @@ import styles from './styles.module.scss';
 
 const collections: any = [
   { id: 0, media: mock.search, name: 'Ba' },
-  { id: 0, media: mock.search, name: 'Bananas' },
+  {
+    id: 0,
+    media: mock.search,
+    name: 'BananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananas',
+  },
   { id: 0, media: mock.search, name: 'Bali' },
   { id: 0, media: mock.search, name: 'Bar' },
   { id: 0, media: mock.search, name: 'Basketball' },

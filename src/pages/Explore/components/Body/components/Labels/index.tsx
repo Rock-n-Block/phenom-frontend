@@ -1,5 +1,5 @@
 import { Button } from 'components';
-import { useCallback, useMemo, VFC } from 'react';
+import { useMemo, VFC } from 'react';
 
 import FilterLabel from '../FilterLabel';
 // import { useNewFilters } from 'hooks';

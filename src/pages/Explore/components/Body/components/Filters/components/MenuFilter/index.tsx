@@ -3,7 +3,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'classnames';
 
-import { Checkbox, Text } from 'components';
+import { Checkbox, EllipsisText, Text } from 'components';
 
 import { iconArrowDownGray } from 'assets/img';
 
@@ -80,9 +80,9 @@ const Dropdown: FC<IDropdownProps> = ({
                 id={key.toString()}
               />
               {media && <img src={media} alt="media" />}
-              <Text className={styles.text} tag="span">
-                {name}
-              </Text>
+              <EllipsisText className={styles.text}>
+                <Text tag="span">{name}</Text>
+              </EllipsisText>
             </div>
           ))}
         </div>

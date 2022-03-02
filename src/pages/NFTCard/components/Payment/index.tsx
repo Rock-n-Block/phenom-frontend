@@ -62,7 +62,10 @@ const Payment: VFC<IPayment> = ({
           <div className={styles.timedAucTitle}>
             <PlaceBidIcon className={styles.timedAucIcon} />
             <Text size="m" weight="semibold">
-              Sale ends at {moment(end_auction, 'X').format('MMMM Do YYYY, h:mm a')}
+              Sale ends at {moment(end_auction, 'X').format('MMMM Do YYYY')},{' '}
+              <Text tag='span' size="m" weight="semibold">
+                {moment(end_auction, 'X').format('h:mm a')}
+              </Text>
             </Text>
           </div>
           <div className={styles.time}>
@@ -144,7 +147,7 @@ const Payment: VFC<IPayment> = ({
             setValue={setBid}
             className={styles.priceInput}
             placeholder="0.00"
-            type='number'
+            type="number"
           />
         )}
         <Button
