@@ -1,18 +1,5 @@
 @import 'src/styles/helpers.scss';
 
-.nftCardImgWrapper{
-  position: relative;
-}
-
-.auction {
-  background: $color-blue-gradient;
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  border-radius: 38px;
-  padding: 4px 16px;
-}
-
 .properties {
   &List {
     @include flexbox(flex-start, flex-start);
