@@ -1,21 +1,22 @@
 @import 'src/styles/helpers.scss';
 
 .nameAndLike {
+  width: 100%;
   .top {
     margin-bottom: 24px;
     @include flexbox(flex-start, space-between);
   }
-  .bottom{
+  .bottom {
     @include flexbox(flex-start, flex-start);
-    &Item{
-        margin-right: 64px;
+    &Item {
+      margin-right: 64px;
     }
   }
 }
 
 .likeButton {
   @include flexbox(center, center);
-  padding: 0 10px;
+  padding: 8px 16px;
   min-width: 75px !important;
   background-color: rgba(255, 255, 255, 0.5) !important;
   border-radius: 10px;
@@ -36,5 +37,11 @@
     line-height: 1;
     position: relative;
     top: 2px;
+  }
+}
+
+@include large-tablet {
+  .nameAndLike {
+    margin-bottom: 24px;
   }
 }

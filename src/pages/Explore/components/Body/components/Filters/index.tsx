@@ -15,13 +15,22 @@ import styles from './styles.module.scss';
 
 const collections: any = [
   { id: 0, media: mock.search, name: 'Ba' },
-  { id: 0, media: mock.search, name: 'Bananas' },
+  {
+    id: 0,
+    media: mock.search,
+    name: 'BananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananas',
+  },
   { id: 0, media: mock.search, name: 'Bali' },
   { id: 0, media: mock.search, name: 'Bar' },
   { id: 0, media: mock.search, name: 'Basketball' },
 ];
 const types = [{ name: 'Single NFT' }, { name: 'Multiple NFT' }];
-const sortings = ['Price: Low to High', 'Price: High to Low ', 'Date: Last', 'Date: New'];
+const sortings = [
+  { value: 'Price: Low to High' },
+  { value: 'Price: High to Low ' },
+  { value: 'Date: Last' },
+  { value: 'Date: New' },
+];
 
 type Props = {
   filterCategory: any;
@@ -64,14 +73,14 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   );
 
   const handleMinMaxPrice = useCallback(
-    (filterName, filterValue) => {
-      setCheckedFilters({ ...checkedFilters, [filterName]: filterValue });
-      if (!filterValue) {
-        setAppliedFilters({ ...appliedFilters, [filterName]: filterValue });
+    (minPrice, maxPrice) => {
+      setCheckedFilters({ ...checkedFilters, minPrice, maxPrice });
+      if (!minPrice && !maxPrice) {
+        setAppliedFilters(omit({ ...appliedFilters }, ['minPrice', 'maxPrice']));
       }
       if (isApplied) {
-        setAppliedFilters({ ...appliedFilters, [filterName]: filterValue });
-        setCheckedFilters({ ...checkedFilters, [filterName]: filterValue });
+        setAppliedFilters({ ...appliedFilters, minPrice, maxPrice });
+        setCheckedFilters({ ...checkedFilters, minPrice, maxPrice });
       }
     },
     [appliedFilters, checkedFilters, isApplied],
@@ -111,11 +120,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <PriceFilter
           className={styles.filtersRight}
           minPrice={checkedFilters.minPrice || ''}
-          setMinPrice={(value: string) => handleMinMaxPrice('minPrice', value)}
-          // setMinPrice={() => {}}
           maxPrice={checkedFilters.maxPrice || ''}
-          setMaxPrice={(value: string) => handleMinMaxPrice('maxPrice', value)}
-          // setMaxPrice={() => {}}
+          changePrice={handleMinMaxPrice}
         />
         <Button
           onClick={handleApplyFilters}
@@ -139,6 +145,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             minPrice={appliedFilters.minPrice}
             maxPrice={appliedFilters.maxPrice}
             changeFilter={handleFilterClick}
+            clearMinMax={() => handleMinMaxPrice('', '')}
           />
         )}
       </div>
@@ -147,7 +154,9 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <Dropdown
           className={styles.sortingDropdown}
           options={sortings}
-          value={sortBy || 'Sort by'}
+          value={sortBy || { value: 'Sort by' }}
+          drawBy="value"
+          returnBy="value"
           setValue={(value: string) => setSortBy(value)}
         />
       </div>

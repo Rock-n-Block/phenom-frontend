@@ -1,5 +1,5 @@
 import { Button } from 'components';
-import { useCallback, useMemo, VFC } from 'react';
+import { useMemo, VFC } from 'react';
 
 import FilterLabel from '../FilterLabel';
 // import { useNewFilters } from 'hooks';
@@ -14,6 +14,7 @@ interface IProps {
   changeFilter: any;
   minPrice: string;
   maxPrice: string;
+  clearMinMax: any
 }
 
 const Labels: VFC<IProps> = ({
@@ -22,22 +23,17 @@ const Labels: VFC<IProps> = ({
   changeFilter,
   minPrice,
   maxPrice,
+  clearMinMax
 }) => {
   const minMaxLabel = useMemo(() => {
-    if (minPrice && maxPrice) return `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
+    if (minPrice && maxPrice)
+      return (+minPrice).toFixed(2) === (+maxPrice).toFixed(2)
+        ? `${(+minPrice).toFixed(2)}`
+        : `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
     if (!minPrice && maxPrice) return `< ${(+maxPrice).toFixed(2)}`;
     if (minPrice && !maxPrice) return `> ${(+minPrice).toFixed(2)}`;
     return '';
   }, [minPrice, maxPrice]);
-
-  const clearMinMax = useCallback(() => {
-    if (maxPrice) {
-      changeFilter('maxPrice', '');
-    }
-    if (minPrice) {
-      changeFilter('minPrice', '');
-    }
-  }, [changeFilter, maxPrice, minPrice]);
 
   return (
     <div className={s.labels}>
@@ -47,14 +43,7 @@ const Labels: VFC<IProps> = ({
         }
         return null;
       })}
-      {/* {type && <FilterLabel title={type} onClick={() => changeFilter('type', '')} />} */}
-      {(minPrice || maxPrice) && (
-        <FilterLabel
-          // icon={iconChange}
-          title={minMaxLabel}
-          onClick={clearMinMax}
-        />
-      )}
+      {(minPrice || maxPrice) && <FilterLabel title={minMaxLabel} onClick={clearMinMax} />}
       {/* {textSearch && (
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
       )} */}

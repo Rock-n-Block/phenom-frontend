@@ -4,6 +4,8 @@
   padding: 4px 8px 4px 20px;
   background: rgba($color-light-4, 0.7);
   border-radius: 29px;
+  height: 45px;
+  max-width: 100%;
 
   @include flexbox(center, space-between);
 }

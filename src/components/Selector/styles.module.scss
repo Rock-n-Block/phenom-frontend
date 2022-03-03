@@ -1,0 +1,48 @@
+@import 'src/styles/helpers';
+
+.switch {
+  position: relative;
+  background-color: $color-light-4;
+  border-radius: 21px;
+  @include flexbox;
+}
+
+.left,
+.right {
+  width: 50%;
+  @include flexbox;
+  margin: 8px auto;
+  cursor: pointer;
+}
+
+.option {
+  z-index: 1;
+  transition: all 0.4s ease-in-out;
+
+  color: $color-dark;
+
+  &Active {
+    z-index: 1;
+    transition: all 0.4s ease-in-out;
+    color: $color-light-4 !important;
+  }
+}
+
+.toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $color-dark;
+  border-radius: 21px;
+  width: 50%;
+  transition: all 0.4s ease-in-out;
+  height: 100%;
+  z-index: 0;
+  transform: translateX(100%);
+
+  &Active {
+    left: 0;
+    transition: all 0.4s ease-in-out;
+    transform: translateX(0);
+  }
+}

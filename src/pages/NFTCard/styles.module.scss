@@ -5,10 +5,39 @@
   @include flexbox(flex-start, space-between);
   margin-top: 96px;
   margin-bottom: 52px;
+  &Img {
+    width: 100%;
+    &Wrapper {
+      position: relative;
+      max-width: 436px;
+    }
+  }
 }
 
-.left,
-.right {
+.auction {
+  background: $color-blue-gradient;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  border-radius: 38px;
+  padding: 4px 16px;
+}
+
+.left {
   max-width: 436px;
   width: 100%;
+  margin-right: 100px;
+}
+
+.right {
+  max-width: 536px;
+  width: 100%;
+}
+
+.column {
+  max-width: 436px;
+  width: 100%;
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+  margin: 0 auto;
 }

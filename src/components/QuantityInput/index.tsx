@@ -27,8 +27,8 @@ interface IQuantityButtons {
 const QuantityButtons: VFC<IQuantityButtons> = ({ onAdd, onRemove }) => {
   return (
     <div className={styles['buttons-wrapper']}>
-      <QuantityOption type="add" onClick={onAdd} />
       <QuantityOption type="remove" onClick={onRemove} />
+      <QuantityOption type="add" onClick={onAdd} />
     </div>
   );
 };

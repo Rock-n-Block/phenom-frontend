@@ -71,7 +71,7 @@ const Dropdown: FC<IDropdownProps> = ({
           onClick={() => setVisible(!visible)}
         >
           {isWritable ? (
-            <input value={value} className={styles.input} />
+            <input value={value[drawBy]} className={styles.input} />
           ) : (
             <div className={styles.selection}>{value[drawBy]}</div>
           )}
@@ -89,7 +89,7 @@ const Dropdown: FC<IDropdownProps> = ({
                     className={cn(
                       styles.option,
                       {
-                        [styles.selectioned]: option === value[returnBy],
+                        [styles.selectioned]: option === value,
                       },
                       option === value ? 'selected' : '',
                     )}

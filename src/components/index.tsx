@@ -18,5 +18,6 @@ export { default as Loading } from './Loading';
 export { default as DeletePreview } from './DeletePreview';
 export { default as Switch } from './Switch';
 export { default as CollectionCard } from './CollectionCard';
+export { default as Selector } from './Selector';
 export * from './Typography';
 export * from './Preview';

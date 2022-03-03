@@ -64,5 +64,4 @@ const Switch: VFC<ISwitch> = ({
     </div>
   );
 };
-
 export default Switch;
