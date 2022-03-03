@@ -1,1 +1,219 @@
 @import 'src/styles/helpers.scss';
+
+.choose {
+  margin-top: 32px;
+  margin-bottom: 44px;
+  @include flexbox(flex-start, space-between);
+
+  &Inside {
+    margin-bottom: 0;
+  }
+}
+
+.button {
+  text-transform: uppercase;
+  img {
+    width: 15px;
+    height: 15px;
+  }
+  & > svg {
+    fill: $color-accent;
+  } 
+}
+
+.sellType {
+  margin-top: 16px;
+  margin-bottom: 20px;
+  @include flexbox(flex-start, space-between);
+}
+
+.icon {
+  width: 100%;
+  path {
+    fill: $color-dark-0;
+    transition: all 0.4s ease-in-out;
+  }
+
+  &Wrapper {
+    width: 32px;
+    height: 32px;
+    background: $color-dark-4;
+    @include flexbox;
+    border-radius: 50%;
+    transition: all 0.4s ease-in-out;
+  }
+}
+
+.type {
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+  padding: 16px;
+  background: rgba($color-light-4, 0.51);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  max-width: 250px;
+  width: 100%;
+
+  &Active {
+    background: $color-dark;
+    transition: all 0.4s ease-in-out;
+
+    .icon {
+      path {
+        fill: $color-light-4;
+        transition: all 0.4s ease-in-out;
+      }
+      &Wrapper {
+        background: $color-dark-2;
+        transition: all 0.4s ease-in-out;
+      }
+    }
+  }
+
+  & + & {
+    margin-left: 24px;
+  }
+}
+
+.createLot {
+  background: rgba($color-light-4, 0.4);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+
+  &Price {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 60%;
+    font-size: 16px;
+
+    line-height: 24px;
+  }
+
+  &Btn {
+    text-transform: uppercase;
+    margin-top: 24px;
+  }
+}
+
+.switch {
+  margin-top: 16px;
+  width: 80%;
+}
+
+.hours {
+  margin-top: 24px;
+  width: 80%;
+  @include flexbox(flex-start, space-between);
+}
+
+.hour {
+  padding: 8px 20px;
+  background: $color-light-4;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  max-width: 80px;
+  width: 100%;
+  line-height: 22px;
+
+  &Active {
+    background: $color-accent;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &Label {
+    color: $color-dark;
+    transition: all 0.2s ease-in-out;
+
+    &Active {
+      color: $color-light-4;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+}
+
+.userBuy {
+  background: rgba($color-light-4, 0.4);
+  border-radius: 20px;
+  margin-top: 24px;
+  padding: 24px 28px 28px 24px;
+  width: 100%;
+
+  .price {
+    font-size: 28px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    &Bids {
+      @include flexbox(center, space-between);
+    }
+
+    &Input {
+      margin-right: 16px;
+      input {
+        padding: 16px;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+.timedAuc {
+  &Title {
+    @include flexbox(flex-start, flex-start);
+  }
+  &Icon {
+    margin-right: 16px;
+    path {
+      fill: $color-accent;
+    }
+  }
+}
+
+.time {
+  @include flexbox(flex-start, flex-start);
+
+  &Item {
+    @include flexbox(center, center);
+    @include shadow-1;
+    padding: 8px;
+    background: $color-light-4;
+    border-radius: 10px;
+    flex-direction: column;
+    width: 92px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+
+    & + & {
+      margin-left: 16px;
+    }
+  }
+}
+
+.usdPrice {
+  margin-bottom: 16px;
+}
+
+.quantity {
+  line-height: 24px;
+  margin-bottom: 4px;
+
+  &Input {
+    width: 50%;
+    margin-right: 20px;
+    input {
+      width: 50%;
+      font-size: 16px;
+      line-height: 24px;
+      padding: 16px;
+    }
+  }
+}
+
+.buy {
+  width: 50%;
+  text-transform: uppercase;
+}

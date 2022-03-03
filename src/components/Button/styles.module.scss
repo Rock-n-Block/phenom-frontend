@@ -28,12 +28,15 @@
     border: 2px solid $color-dark;
 
     & > svg {
-      // fill: $color-neutral-0;
+      fill: $color-dark;
     }
 
     &:hover {
       background: $color-dark-blue;
       color: $color-light-4;
+      & > svg {
+        fill: $color-light-4;
+      }
     }
 
     &:active {
@@ -54,7 +57,7 @@
       opacity: 0.5;
 
       & > svg {
-        // fill: $color-neutral-20;
+        opacity: 0.5;
       }
     }
   }
@@ -65,9 +68,9 @@
     color: $color-light-4;
     background: $color-dark;
 
-    // & > svg {
-    //   fill: $color-light-4;
-    // }
+    & > svg {
+      fill: $color-light-4;
+    }
 
     &:hover {
       background: $color-dark-blue;
@@ -90,9 +93,10 @@
       background: $color-dark;
       opacity: 0.5;
 
-      //   & > svg {
-      //     fill: $color-neutral-20;
-      //   }
+      & > svg {
+        fill: $color-light-4;
+        opacity: 0.5;
+      }
     }
   }
 
@@ -102,13 +106,16 @@
     color: $color-dark;
     background: $color-light-4;
 
-    // & > svg {
-    //   fill: $color-light-4;
-    // }
+    & > svg {
+      fill: $color-dark;
+    }
 
     &:hover {
       background: $color-light-3;
       color: $color-accent;
+      & > svg {
+        fill: $color-accent;
+      }
     }
 
     &:active {
@@ -127,9 +134,10 @@
       background: $color-light-4;
       opacity: 0.5;
 
-      //   & > svg {
-      //     fill: $color-neutral-20;
-      //   }
+      & > svg {
+        opacity: 0.5;
+        fill: $color-dark;
+      }
     }
   }
 }
@@ -177,7 +185,7 @@
 
 .suffixIcon {
   margin-left: 10px;
-  
+
   height: unset;
 }
 
