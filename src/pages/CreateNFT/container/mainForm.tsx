@@ -32,6 +32,12 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
     handleReset();
   }, [handleReset]);
 
+  const handleSetFieldValue = useCallback(
+    (fieldName: string) => (value: any) => {
+      setFieldValue(fieldName, value);
+    },
+    [setFieldValue],
+  );
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field
@@ -40,8 +46,8 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <UploadFiles
             type={type}
-            setMediaFile={() => (value: File) => setFieldValue('media', value)}
-            setPreviewFile={() => (value: File) => setFieldValue('preview', value)}
+            setMediaFile={handleSetFieldValue('media')}
+            setPreviewFile={handleSetFieldValue('preview')}
           />
         )}
       />
