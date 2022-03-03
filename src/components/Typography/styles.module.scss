@@ -53,7 +53,7 @@
 }
 
 .size_xxxxl {
-  font-size: 48px;
+  font-size: 40px;
   @include large-mobile {
     font-size: 32px;
   }
@@ -66,8 +66,16 @@
   // color: $color-state-error;
 }
 
+.color_dark {
+  color: $color-dark;
+}
+
 .color_white {
   color: $color-light-4;
+}
+
+.color_darkenBlack {
+  color: $color-dark-black;
 }
 
 .color_black {
@@ -144,7 +152,7 @@
 .type_h1 {
   font-size: 62px;
   line-height: 120%;
-  @include large-mobile  {
+  @include large-mobile {
     font-size: 40px;
     line-height: 54px;
   }
@@ -152,7 +160,7 @@
 
 .type_h2 {
   font-size: 40px;
-  @include large-mobile  {
+  @include large-mobile {
     font-size: 28px;
   }
 }
@@ -170,7 +178,7 @@
 }
 .type_h6 {
   font-size: 16px;
-  @include large-mobile  {
+  @include large-mobile {
     font-size: 14px;
   }
 }

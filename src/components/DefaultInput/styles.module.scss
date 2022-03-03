@@ -8,6 +8,7 @@
     line-height: 24px;
     margin-bottom: 8px;
     display: inline-block;
+    font-weight: 500;
     @include transition;
     &.show-label {
       font-size: 14px;
@@ -23,16 +24,16 @@
     &-container {
       border-radius: 12px;
       color: $color-dark;
-      border: 1px solid $color-dark;
       box-sizing: border-box;
+      @include border-like-shadow;
       @include flexbox(center);
       @include transition;
       &:hover {
-        border: 1px solid $color-dark;
+        @include border-like-shadow($width: 2px);
       }
       &.input-focus {
         caret-color: $color-accent;
-        border: 1px solid $color-accent;
+        @include border-like-shadow(2px, $color-accent);
       }
     }
     &__sub-info {
@@ -61,7 +62,7 @@
       &-input {
         caret-color: $color-error;
         &-container {
-          border: 2px solid $color-error;
+          @include border-like-shadow(2px, $color-error);
         }
       }
       &-error {
@@ -69,6 +70,14 @@
         font-size: 14px;
         line-height: 24px;
       }
+    }
+  }
+}
+
+@include large-mobile{
+  .default-input__body{
+    &-input{
+      padding: 14px;
     }
   }
 }

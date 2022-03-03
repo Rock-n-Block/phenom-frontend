@@ -1,26 +1,28 @@
-import { NullAvatarSrc } from "assets/img";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from 'react';
+
+import { NullAvatarSrc } from 'assets/img';
+
 import styles from './styles.module.scss';
 
 interface IProps {
-    src: string;
-    errorSrc?: string;
-    className?: string;
-    withSkeleton?: boolean;
-    skeletonStyles?: string;
-    alt?: string;
-    width?: number | string,
-    height?: number | string,
+  src: string;
+  errorSrc?: string;
+  className?: string;
+  withSkeleton?: boolean;
+  skeletonStyles?: string;
+  alt?: string;
+  width?: number | string;
+  height?: number | string;
 }
 
 enum ImageState {
-    loading,
-    error,
-    success
+  loading,
+  error,
+  success,
 }
 
 /**
- * 
+ *
  * @param {string} src - source link of the image
  * @param {string} [errorSrc] - source link of the spare image {NullAvatar}
  * @param {string} [className] - additional classes {undefined}
@@ -32,33 +34,53 @@ enum ImageState {
  * @returns Wrapped component with fallback src
  */
 
+const FallbackImage: FC<IProps> = ({
+  src,
+  errorSrc = NullAvatarSrc,
+  withSkeleton = true,
+  className,
+  skeletonStyles = 'skeleton',
+  alt = '',
+  width = 16,
+  height = 16,
+}) => {
+  const [imgState, setImgState] = useState<ImageState>(ImageState.loading);
+  const [imgSrc, setImageSrc] = useState<string>(!src ? errorSrc : src);
 
-const FallbackImage: FC<IProps> = ({ src, errorSrc = NullAvatarSrc, withSkeleton = true, className, skeletonStyles = 'skeleton', alt = '', width = 16, height = 16 }) => {
+  const errorHandler = useCallback(() => {
+    setImgState(ImageState.error);
+    setImageSrc(errorSrc);
+  }, [errorSrc]);
 
-    const [imgState, setImgState] = useState<ImageState>(ImageState.loading);
-    const [imgSrc, setImageSrc] = useState<string>(!src ? errorSrc : src);
+  const successHandler = useCallback(() => {
+    setImgState(ImageState.success);
+  }, []);
 
-    const errorHandler = useCallback(() => {
-        setImgState(ImageState.error);
-        setImageSrc(errorSrc);
-    }, [errorSrc])
+  useEffect(() => {
+    setImageSrc(!src ? errorSrc : src);
+    setImgState(ImageState.loading);
+  }, [src, errorSrc]);
 
-    const successHandler = useCallback(() => {
-        setImgState(ImageState.success);
-    }, [])
-
-    useEffect(() => {
-        setImageSrc(!src ? errorSrc : src);
-        setImgState(ImageState.loading);
-    }, [src, errorSrc])
-
-    return (
-        <div className={`${className} ${styles.wrapper}`} style={{ width: `${width}px`, height: `${height}px` }}>
-            {(imgState === ImageState.loading && withSkeleton) && <div className={styles[skeletonStyles]} style={{ width: `${width}px`, height: `${height}px` }} />}
-            <img alt={alt} src={imgSrc} className={`${className} ${styles.image}`} onError={errorHandler} onLoad={successHandler} />
-        </div>
-
-    )
-}
+  return (
+    <div
+      className={`${className} ${styles.wrapper}`}
+      style={{ width: `${width}px`, height: `${height}px` }}
+    >
+      {imgState === ImageState.loading && withSkeleton && (
+        <div
+          className={styles[skeletonStyles]}
+          style={{ width: `${width}px`, height: `${height}px` }}
+        />
+      )}
+      <img
+        alt={alt}
+        src={imgSrc}
+        className={`${className} ${styles.image}`}
+        onError={errorHandler}
+        onLoad={successHandler}
+      />
+    </div>
+  );
+};
 
 export default FallbackImage;

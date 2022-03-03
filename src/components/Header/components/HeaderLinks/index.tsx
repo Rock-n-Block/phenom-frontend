@@ -99,7 +99,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
         title: 'Create',
         isNested: false,
       },
-      { title: '0x76F2a6e3...Cb92d63b5', url: '/' },
+      { title: '0x76F2a6e3...Cb92d63b5', url: '/', isUnderlined: true },
     ],
     [location.pathname, width],
   );
@@ -113,7 +113,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
 
   return (
     <div className={cx(styles.headerNavigation, className)}>
-      {nav.map(({ url, title, active, disabled, isNested, internalLinks }) => {
+      {nav.map(({ url, title, active, disabled, isNested, internalLinks, isUnderlined }) => {
         if (isNested && !disabled) {
           return (
             <Popover position="center" key={title}>
@@ -144,7 +144,11 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
               key={title}
               color="transparent"
               onClick={() => handleMenuItemClick(url)}
-              className={`${styles.linkBtn} ${active && styles.active}`}
+              className={cx(
+                styles.linkBtn,
+                { [styles.active]: active },
+                { [styles.underline]: isUnderlined },
+              )}
             >
               <Text
                 weight="bold"

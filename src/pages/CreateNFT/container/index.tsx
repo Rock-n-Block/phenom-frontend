@@ -1,9 +1,12 @@
 import { useMemo, VFC } from 'react';
 
 import { withFormik } from 'formik';
-
 import * as Yup from 'yup';
+
 import { createValidator } from 'appConstants';
+import { TSingleCollection } from 'types';
+
+import MainForm from './mainForm';
 
 type TProperty = {
   name: string;
@@ -11,18 +14,24 @@ type TProperty = {
   id: number;
 };
 
+type TCategory = {
+  id: number;
+  category: string;
+}
+
 export type TCreateNFT = 'Single' | 'Multiple';
 
 export interface ICreateForm {
   type: TCreateNFT;
   name: string;
   description: string;
-  category: number | null;
-  subcategory: number | null;
+  category: TCategory | null;
+  subcategory: TCategory | null;
   properties: TProperty[];
-  collections: number[];
+  collections: TSingleCollection[];
   media: File[] | null;
   preview: File[] | null;
+  quantity?: string;
 }
 
 interface ICreateFormContainer {
@@ -37,10 +46,11 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       description: '',
       category: null,
       subcategory: null,
-      properties: [],
+      properties: [{ id: 0, name: '', type: '' }],
       collections: [],
       media: null,
       preview: null,
+      quantity: '',
     }),
     [type],
   );
@@ -52,11 +62,13 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         .min(createValidator.name.min, 'Too short!')
         .max(createValidator.name.max, 'Too long!'),
     }),
-    handleSubmit: (values, { setFieldValue }) => {
+    handleSubmit: (values) => {
       console.log(values);
     },
-    displayName: '124',
-  })();
+    validateOnChange: true,
+    displayName: 'create-nft',
+  })(MainForm);
+  return <FormWithFormik type={type}/>;
 };
 
 export default CreateFormContainer;

@@ -1,0 +1,39 @@
+@import '/src/styles/helpers.scss';
+
+.create-nft-form___wrapper {
+  width: clamp(320px, 100%, 534px);
+  padding-bottom: 42px;
+  .field-selector {
+    margin-top: 32px;
+  }
+  .field-data {
+    margin-top: 32px;
+  }
+  .field-prop {
+    margin-top: 38px;
+  }
+  .btns-section {
+    margin-top: 54px;
+    @include flexbox(flex-start, flex-start);
+    .submit-btn {
+      margin-right: 15px;
+    }
+  }
+}
+
+@include middle-tablet {
+  .create-nft-form___wrapper {
+    padding: 0 22px;
+    padding-bottom: 42px;
+    .btns-section {
+        @include flexbox(center, flex-start, column);
+        .submit-btn {
+          margin-right: 0;
+          margin-bottom: 14px;
+        }
+        button {
+          width: 100%;
+        }
+      }
+  }
+}

@@ -1,0 +1,71 @@
+@import '/src/styles/helpers.scss';
+
+.collection-section__wrapper {
+  margin-bottom: 54px;
+  &__title {
+    margin-bottom: 14px;
+    @include flexbox(center, space-between);
+    .fetching-button {
+      @include transition;
+      &:hover {
+        transform: rotate(360deg);
+      }
+      &:disabled {
+        filter: hue-rotate(90deg);
+        opacity: 0.5;
+        animation: fetching 2s ease-in-out forwards infinite;
+      }
+    }
+  }
+  &__add {
+    &-body {
+      border-radius: 20px;
+      width: 100%;
+      padding: 18px 24px;
+      background: rgba($color-light-4, 0.5);
+      @include flexbox(center, center);
+      &__detail {
+        margin-left: 26px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: $color-light-0;
+        font-size: 24px;
+        font-weight: normal;
+        @include flexbox(center, center);
+      }
+    }
+    &:hover {
+      .collection-section__wrapper {
+        &__add {
+          &-body {
+            &__detail {
+              animation: adding 1s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fetching {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes adding {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}

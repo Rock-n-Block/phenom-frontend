@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import cx from 'classnames';
 import mock from 'mock';
 
-import { H2, Text } from 'components';
+import { Text } from 'components';
 
 import { CollectionCard } from './components';
 
@@ -32,9 +32,15 @@ const TopCollections: FC<Props> = ({ className }) => {
   // const { collections } = useFetchTopCollections(period);
   return (
     <div className={cx(styles.topCollections, className)}>
-      <H2 weight="bold" className={styles.title} align="center">
+      <Text
+        tag="h2"
+        id="TopCollections.TopCollections"
+        weight="bold"
+        className={styles.title}
+        align="center"
+      >
         Top collections
-      </H2>
+      </Text>
       {collections.length ? (
         <div className={styles.collections}>
           <ol
@@ -56,7 +62,7 @@ const TopCollections: FC<Props> = ({ className }) => {
           </ol>
         </div>
       ) : (
-        <Text size="xl" className={styles.noItems}>
+        <Text id="TopCollections.NoCollections" size="xl" className={styles.noItems}>
           There are no collections
         </Text>
       )}

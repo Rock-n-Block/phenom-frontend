@@ -12,6 +12,7 @@
     fill: transparent;
     @include transition;
   }
+  &:focus,
   &:hover {
     .delete-button__wrapper{
       &-icon{

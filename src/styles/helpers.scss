@@ -4,6 +4,7 @@ $color-accent: #223dff;
 $color-light: #dfe1fc;
 $color-bg: #dfe1fc;
 
+$color-dark-black: #000000;
 $color-dark-svg: #222b45;
 $color-dark-0: #1c1c28;
 $color-dark-1: #28293d;
@@ -65,6 +66,16 @@ $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
   $color: rgba(40, 41, 61, 0.08)
 ) {
   box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+}
+
+@mixin border-like-shadow($width: 1px, $color: $color-dark, $extra: false){
+  border: 0px solid transparent;
+  @if $extra {
+    box-shadow: 0px 0px 0px $width $color, $extra;
+  } @else {
+    box-shadow: 0px 0px 0px $width $color;
+  }
+
 }
 
 //container

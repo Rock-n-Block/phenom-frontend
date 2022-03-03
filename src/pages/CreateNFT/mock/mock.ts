@@ -10,7 +10,7 @@ export const SubCategoryOptions = [
   { id: 3, category: 's3' },
 ];
 
-export const Collections = [
+export const CollectionsList = [
   {
     id: 1,
     name: 'Collection name',

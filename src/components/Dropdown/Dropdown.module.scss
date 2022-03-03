@@ -3,7 +3,6 @@
 .dropdown {
   position: relative;
   z-index: 3;
-
   // color: $color-neutral-100;
 
   &.active {
@@ -25,30 +24,50 @@
       transform: translateY(0);
     }
   }
+  &.invalid {
+    .head {
+      border: 1px solid $color-error;
+    }
+
+    & + .label {
+      color: $color-error;
+    }
+  }
+}
+
+.error{
+  color: $color-error;
+}
+
+.label {
+  margin-bottom: 8px;
+  line-height: 24px;
+  color: $color-black;
 }
 
 .head {
   position: relative;
-
-  padding: 8px 48px 8px 16px;
+  min-height: 56px;
+  padding: 16px 46px 16px 14px;
   border-radius: $border-radius;
 
-  height: 42px;
   font-size: 16px;
   line-height: 160%;
 
   cursor: pointer;
 
   // @include dark {
-  border: 1px solid $color-dark-3;
-
-  transition: box-shadow 0.2s;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @include border-like-shadow;
+  @include transition;
   // }
 
   &:hover {
     // border-color: $color-actions-light-blue;
-    box-shadow: 0 1px 6px rgba(119, 126, 144, 0.48);
+    @include border-like-shadow(2px, $color-dark, 0 1px 6px rgba(119, 126, 144, 0.48));
+  }
+  &:focus{
+    @include border-like-shadow(2px, $color-accent);
   }
 }
 

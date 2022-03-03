@@ -5,3 +5,9 @@ export type TSingleCollection = {
   currency: string;
   icon: string;
 };
+
+export type TSingleProp = {
+  id: number;
+  name: string;
+  type: string;
+};

@@ -9,22 +9,19 @@ import s from './Labels.module.scss';
 // import { iconChange } from 'assets/img';
 
 interface IProps {
-  // filters: any;
   setDefaultFilters?: any;
-  filters: any;
+  renderFilters: any;
   changeFilter: any;
+  minPrice: string;
+  maxPrice: string;
 }
 
 const Labels: VFC<IProps> = ({
   setDefaultFilters,
-  filters: {
-    collection,
-    type,
-    minPrice,
-    maxPrice,
-
-  },
-  changeFilter
+  renderFilters,
+  changeFilter,
+  minPrice,
+  maxPrice,
 }) => {
   const minMaxLabel = useMemo(() => {
     if (minPrice && maxPrice) return `${(+minPrice).toFixed(2)} - ${(+maxPrice).toFixed(2)}`;
@@ -44,10 +41,13 @@ const Labels: VFC<IProps> = ({
 
   return (
     <div className={s.labels}>
-      {collection && (
-        <FilterLabel title={collection} onClick={() => changeFilter('collection', '')} />
-      )}
-      {type && <FilterLabel title={type} onClick={() => changeFilter('type', '')} />}
+      {renderFilters.map((filter: any) => {
+        if (filter !== 'minPrice' && filter !== 'maxPrice') {
+          return <FilterLabel title={filter} onClick={() => changeFilter(filter)} />;
+        }
+        return null;
+      })}
+      {/* {type && <FilterLabel title={type} onClick={() => changeFilter('type', '')} />} */}
       {(minPrice || maxPrice) && (
         <FilterLabel
           // icon={iconChange}
@@ -58,9 +58,11 @@ const Labels: VFC<IProps> = ({
       {/* {textSearch && (
         <FilterLabel title={`Text: ${textSearch}`} onClick={() => setTextSearch('')} />
       )} */}
-      <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
-        Clear
-      </Button>
+      {(renderFilters.length || minPrice || maxPrice) && (
+        <Button padding="small" color="outline" className={s.button} onClick={setDefaultFilters}>
+          CLEAR
+        </Button>
+      )}
     </div>
   );
 };

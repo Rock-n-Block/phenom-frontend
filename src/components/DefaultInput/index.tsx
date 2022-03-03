@@ -2,6 +2,8 @@ import { FormEvent, ReactElement, useCallback, useState, VFC } from 'react';
 
 import cn from 'classnames';
 
+import { checkMinMax, validateOnlyNumbers } from 'utils';
+
 import styles from './styles.module.scss';
 
 interface IDefaultInput {
@@ -14,8 +16,13 @@ interface IDefaultInput {
   error?: string;
   label?: string | ReactElement;
   className?: string;
+  labelClassName?: string;
   onFocus?: (...args: any) => void;
   onBlur?: (...args: any) => void;
+  disabled?: boolean;
+  type?: 'text' | 'number';
+  min?: string | number;
+  max?: string | number;
 }
 
 const DefaultInput: VFC<IDefaultInput> = ({
@@ -23,6 +30,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
   value,
   setValue,
   label,
+  labelClassName,
   placeholder,
   subInfo,
   maxSubInfoWidth = '150px',
@@ -30,6 +38,10 @@ const DefaultInput: VFC<IDefaultInput> = ({
   className,
   onBlur,
   onFocus,
+  disabled = false,
+  type = 'text',
+  min,
+  max,
 }) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -53,15 +65,24 @@ const DefaultInput: VFC<IDefaultInput> = ({
     [onBlur],
   );
 
-  const onFieldChange = useCallback(
-    (e: FormEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      const currentValue = e.currentTarget.value;
-      setValue(currentValue);
-      e.stopPropagation();
-    },
-    [setValue],
-  );
+  const onFieldChange = (e: FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const currentValue = e.currentTarget.value;
+    if (type === 'number') {
+      if (!validateOnlyNumbers(currentValue)) {
+        e.stopPropagation();
+        return;
+      }
+      if (min || max) {
+        if (!checkMinMax(currentValue, min, max)) {
+          e.stopPropagation();
+          return;
+        }
+      }
+    }
+    setValue(currentValue);
+    e.stopPropagation();
+  };
 
   return (
     <div
@@ -70,7 +91,9 @@ const DefaultInput: VFC<IDefaultInput> = ({
       {label && (
         <label
           htmlFor={`default_input_${name}`}
-          className={cn(styles['default-input__body-label'], { [styles['show-label']]: label })}
+          className={cn(styles['default-input__body-label'], labelClassName, {
+            [styles['show-label']]: label,
+          })}
         >
           {label}
         </label>
@@ -89,13 +112,14 @@ const DefaultInput: VFC<IDefaultInput> = ({
           placeholder={placeholder}
           type="text"
           id={`default_input_${name}`}
+          disabled={disabled}
         />
         {subInfo && (
           <div
             className={cn(styles['default-input__body-input__sub-info'], {
               [styles['sub-info-active']]: subInfo,
             })}
-            style={{ maxWidth: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
+            style={{ width: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
           >
             {subInfo}
           </div>

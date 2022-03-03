@@ -1,0 +1,33 @@
+@import 'src/styles/helpers.scss';
+
+.properties {
+  &List {
+    @include flexbox(flex-start, flex-start);
+    flex-wrap: wrap;
+  }
+
+  &Item {
+    background-color: $color-light-4;
+    border-radius: 14px;
+    padding: 13px 20px;
+    @include flexbox(flex-start, flex-start);
+    flex-direction: column;
+    min-width: 150px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+.properties,
+.description {
+  @include flexbox(flex-start, flex-start);
+  flex-direction: column;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  margin-top: 24px;
+
+  &Title {
+    margin-bottom: 8px;
+  }
+}

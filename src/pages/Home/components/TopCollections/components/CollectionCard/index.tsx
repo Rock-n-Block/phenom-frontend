@@ -1,6 +1,11 @@
 import { FC } from 'react';
-import styles from './styles.module.scss';
+
+import cx from 'classnames';
+import { useTranslation } from 'react-i18next';
+
 import { Avatar, EllipsisText, Text } from 'components';
+
+import styles from './styles.module.scss';
 
 interface IProps {
   index?: number;
@@ -9,14 +14,26 @@ interface IProps {
   name: string;
   price: string;
   profitIncrease?: string | number;
+  className?: string;
 }
 
-const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncrease }) => {
+const CollectionCard: FC<IProps> = ({
+  index,
+  avatar,
+  id,
+  name,
+  price,
+  profitIncrease,
+  className,
+}) => {
+  const { t } = useTranslation('Home');
   return (
-    <li className={styles.collectionCard}>
-      <Text color="secondary" weight="bold" size="m">
-        {index}
-      </Text>
+    <li className={cx(styles.collectionCard, className)}>
+      {index && (
+        <Text color="secondary" weight="bold" size="m">
+          {index}
+        </Text>
+      )}
       <Avatar avatar={avatar} id={id} isCollection size={56} className={styles.avatar} />
       <div className={styles.info}>
         <EllipsisText>
@@ -25,8 +42,9 @@ const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, profitIncr
           </Text>
         </EllipsisText>
         <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
-          Floor price:{' '}
+          {t('TopCollections.FloorPrice')}:
           <Text size="xs" color="blue" weight="bold" className={styles.price}>
+            {' '}
             {price} PHETA
           </Text>
         </Text>

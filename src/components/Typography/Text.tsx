@@ -35,6 +35,8 @@ type Props = {
   description?: string;
 };
 
+const isDebug = true;
+
 const TextGenerator: FC<PropsWithChildren<Props>> = ({
   tag = 'p',
   children,
@@ -93,7 +95,7 @@ interface IText extends Props {
  * * xl - 20px
  * * xxl - 24px
  * * xxxl - 32px
- * * xxxxl - 48px
+ * * xxxxl - 40px
  * * inherit - inherit
  * @param {Color} [color] - color of text {black}
  * @param {Align} [align] - align of text {left}
@@ -128,7 +130,7 @@ export const Text: FC<IText> = (props) => {
         setTranslate(trans);
       }
       setFailed(false);
-    } else {
+    } else if (isDebug) {
       console.error(
         `✔️ id of translate is not valid. Try to load "${id}". Fallback: "${props.children}"`,
       );

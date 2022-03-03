@@ -1,15 +1,17 @@
 import { FC, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+
 import cn from 'classnames';
+
+import { Text } from 'components';
 
 import { iconArrowDownGray } from 'assets/img';
 
 import styles from './Dropdown.module.scss';
-import { Text } from 'components';
 
 interface IDropdownProps {
   className?: string;
-  value: string;
+  value: any;
   setValue: (str: any) => void;
   options: Array<any>;
   isWithImage?: boolean;
@@ -20,6 +22,8 @@ interface IDropdownProps {
   bodyClassName?: string;
   returnBy?: string;
   drawBy?: string;
+  label?: string;
+  error?: string;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -35,17 +39,30 @@ const Dropdown: FC<IDropdownProps> = ({
   bodyClassName,
   returnBy = 'symbol',
   drawBy = 'symbol',
+  label,
+  error,
 }) => {
   const [visible, setVisible] = useState(false);
 
-  const handleClick = (str: string) => {
+  const handleClick = (str: any) => {
     setValue(str);
     setVisible(false);
   };
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
-      <div className={cn(styles.dropdown, className, { [styles.active]: visible })} id={name}>
+      {label && (
+        <Text size="s" weight="medium" className={cn(styles.label, className)}>
+          {label}
+        </Text>
+      )}
+      <div
+        className={cn(styles.dropdown, {
+          [styles.active]: visible,
+          [styles.invalid]: error,
+        })}
+        id={name}
+      >
         <div
           onKeyDown={() => {}}
           tabIndex={0}
@@ -56,10 +73,11 @@ const Dropdown: FC<IDropdownProps> = ({
           {isWritable ? (
             <input value={value} className={styles.input} />
           ) : (
-            <div className={styles.selection}>{value}</div>
+            <div className={styles.selection}>{value[drawBy]}</div>
           )}
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>
+        {error && <Text className={styles.error}>{error}</Text>}
         {!isWithImage ? (
           <div className={cn(styles.body, bodyClassName)}>
             {typeof options[0] === 'string'
@@ -71,7 +89,7 @@ const Dropdown: FC<IDropdownProps> = ({
                     className={cn(
                       styles.option,
                       {
-                        [styles.selectioned]: option === value,
+                        [styles.selectioned]: option === value[returnBy],
                       },
                       option === value ? 'selected' : '',
                     )}
@@ -87,19 +105,15 @@ const Dropdown: FC<IDropdownProps> = ({
                     onKeyDown={() => {}}
                     tabIndex={0}
                     role="button"
-                    className={cn(
-                      styles.option,
-                      {
-                        [styles.selectioned]: option.text === value,
-                      },
-                      option.text === value ? 'text-gradient' : '',
-                    )}
-                    onClick={() => handleClick(option.text)}
-                    key={`dropdown_option_${option.text}`}
+                    className={cn(styles.option, {
+                      [styles.selectioned]: option[drawBy] === value[returnBy],
+                    })}
+                    onClick={() => handleClick(option)}
+                    key={`dropdown_option_${option[returnBy]}`}
                   >
                     {option.icon}
                     <Text className={styles.text} tag="span">
-                      {option.text}
+                      {option[drawBy]}
                     </Text>
                   </div>
                 ))}
@@ -119,7 +133,7 @@ const Dropdown: FC<IDropdownProps> = ({
                   option.symbol === value ? 'text-gradient' : '',
                 )}
                 onClick={() => handleClick(option[returnBy]?.toUpperCase())}
-                key={`dropdown_option_${option.symbol}`}
+                key={`dropdown_option_${option[returnBy]}`}
               >
                 <img alt="" className={styles.image} src={option.image} />
                 <Text className={styles.text} tag="span">

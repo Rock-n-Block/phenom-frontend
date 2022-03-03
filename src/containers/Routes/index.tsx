@@ -18,6 +18,7 @@ import {
   // CreateToken,
   // Discover,
   Home,
+  NFTCard,
   // LostPage404,
   // Nft,
   // Profile,
@@ -31,22 +32,22 @@ import { routes } from 'appConstants';
 
 const RoutesPage = () => {
   const { loadNamespaces } = useLanguage();
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (location.pathname === routes.home.root) {
+    if (pathname === routes.home.root) {
       loadNamespaces('Home');
     }
-    if (location.pathname.includes(routes.create.root)) {
+    if (pathname.includes(routes.create.root)) {
       loadNamespaces('Create');
     }
-  }, [loadNamespaces, location.pathname]);
+    if (pathname.includes(routes.explore.root)) {
+      loadNamespaces('Explore');
+    }
+  }, [loadNamespaces, pathname]);
   return (
     <Routes>
-      {/* <Route path={routes.nft.root}>
-        <Page component={<Nft />} />{' '}
-      </Route>
-      <Route
+      {/* <Route
         path={routes.discover.root}
         render={() => <Page needFooter={false} component={<Discover />} />}
       />
@@ -76,9 +77,27 @@ const RoutesPage = () => {
         }
       />
       <Route
+        path={routes.create.multiple}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<CreateNFT type="Multiple" />}
+          />
+        }
+      />
+      <Route
         path={routes.explore.root}
         element={
           <Page classes={['with-left-detail', 'with-right-detail']} component={<Explore />} />
+        }
+      />
+      <Route
+        path={routes.nft.root}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<NFTCard />}
+          />
         }
       />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />

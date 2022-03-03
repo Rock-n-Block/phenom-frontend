@@ -1,10 +1,18 @@
-import { VFC } from 'react';
-import { FormikProps, Form, Field } from 'formik';
-import { ICreateForm } from '.';
-import { UploadFiles } from '../components';
-import { DefaultInput, Dropdown, TextArea } from 'components';
+import { useCallback, VFC } from 'react';
+
+import { Field, Form, FormikProps } from 'formik';
+
+import { Button, DefaultInput, Dropdown, TextArea } from 'components';
+
+import { Collections, Properties, Stock, UploadFiles } from '../components';
+
 import { createValidator } from 'appConstants';
-import { CategoryOptions, Collections, SubCategoryOptions } from '../mock/mock';
+import { TSingleCollection, TSingleProp } from 'types';
+
+import { CategoryOptions, CollectionsList, SubCategoryOptions } from '../mock/mock';
+import { ICreateForm } from '.';
+
+import styles from './styles.module.scss';
 
 const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
   setFieldValue,
@@ -12,12 +20,20 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
   touched,
   errors,
   handleBlur,
-  handleChange,
   handleSubmit,
-  type = 'Single',
+  handleReset,
+  type,
 }) => {
+  const onSubmitClick = useCallback(() => {
+    handleSubmit();
+  }, [handleSubmit]);
+
+  const onCancelClick = useCallback(() => {
+    handleReset();
+  }, [handleReset]);
+
   return (
-    <Form>
+    <Form className={styles['create-nft-form___wrapper']}>
       <Field
         name="media"
         required
@@ -41,6 +57,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             placeholder="NFT name"
             onBlur={handleBlur}
             error={touched.name && errors.name ? errors.name : undefined}
+            className={styles['field-data']}
           />
         )}
       />
@@ -55,6 +72,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             placeholder="Description"
             error={touched.description && errors.description ? errors.description : undefined}
             maxElements={createValidator.description.max}
+            className={styles['field-data']}
           />
         )}
       />
@@ -62,11 +80,16 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         name="category"
         render={() => (
           <Dropdown
-            value={values.category ? CategoryOptions[values.category].category : ''}
-            setValue={(value: number) => setFieldValue('category', value)}
+            key="category"
+            value={values.category || ''}
+            setValue={(value: any) => setFieldValue('category', value)}
             returnBy="id"
             drawBy="category"
+            name="category"
+            label="Category"
             options={CategoryOptions}
+            error={errors.category}
+            className={styles['field-selector']}
           />
         )}
       />
@@ -74,14 +97,65 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         name="subcategory"
         render={() => (
           <Dropdown
-            value={values.category ? SubCategoryOptions[values.category].category : ''}
-            setValue={(value: number) => setFieldValue('subcategory', value)}
+            key="subcategory"
+            name="subcategory"
+            value={values.subcategory || ''}
+            setValue={(value: any) => setFieldValue('subcategory', value)}
             returnBy="id"
             drawBy="category"
+            label="Subcategory"
             options={SubCategoryOptions}
+            error={errors.subcategory}
+            className={styles['field-selector']}
           />
         )}
       />
+      <Field
+        name="properties"
+        render={() => (
+          <Properties
+            initProps={values.properties}
+            setProps={() => {
+              // eslint-disable-next-line no-unused-expressions
+              (value: TSingleProp[]) => setFieldValue('properties', value);
+            }}
+            className={styles['field-prop']}
+          />
+        )}
+      />
+      <Field
+        name="collections"
+        render={() => (
+          <Collections
+            initCollections={CollectionsList}
+            onRefresh={() => {}}
+            setSelectedCollection={() => {
+              // eslint-disable-next-line no-unused-expressions
+              (value: TSingleCollection[]) => setFieldValue('collections',value);
+            }}
+          />
+        )}
+      />
+      {type === 'Multiple' && (
+        <Field
+          name="quantity"
+          render={() => (
+            <Stock
+              count={values.quantity || '0'}
+              setCount={(value: string) => setFieldValue('quantity', value)}
+              className={styles['field-quantity']}
+            />
+          )}
+        />
+      )}
+      <div className={styles['btns-section']}>
+        <Button className={styles['submit-btn']} onClick={onSubmitClick}>
+          Create Item
+        </Button>
+        <Button color="outline" onClick={onCancelClick}>
+          Cancel
+        </Button>
+      </div>
     </Form>
   );
 };

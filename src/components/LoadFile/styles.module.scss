@@ -47,6 +47,7 @@
 
 @include large-mobile {
   .load-file__wrapper {
+    min-height: 0;
     &__body {
       padding: 65px 15px 54px;
     }
