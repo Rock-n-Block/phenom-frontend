@@ -39,6 +39,7 @@
   height: 100%;
   z-index: 0;
   transform: translateX(100%);
+  @include shadow-2;
 
   &Active {
     left: 0;

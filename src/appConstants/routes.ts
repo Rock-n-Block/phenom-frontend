@@ -19,10 +19,7 @@ export const routes = {
     root: '/create',
     single: '/create/single',
     multiple: '/create/multiple',
-    collection: {
-      single: '/create/collection/single',
-      multiple: '/create/collection/multiple',
-    },
+    collection: '/create/collection',
   },
   profile: {
     link: (

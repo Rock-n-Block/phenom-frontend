@@ -16,6 +16,8 @@
   @include flexbox;
   padding-top: 28px;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
   &Links {
     @include flexbox;
     gap: 35px;

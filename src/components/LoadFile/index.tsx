@@ -24,7 +24,6 @@ export type TLoadError = {
 interface ILoadFile {
   fileList: File[];
   filesURLs: string[];
-  avatar?: boolean;
   onLoadStarts?: (...args: any) => void;
   onLoadEnd?: (filesUrls: string[], files: File[]) => void;
   onLoadError?: (error: TLoadError) => void;
@@ -41,15 +40,12 @@ const LoadFile: VFC<ILoadFile> = ({
   extensions = availableExtensions,
   reqMaxSize = maxSize,
   multiple = false,
-  avatar = false,
 }) => {
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
   const [failed, setFailed] = useState<boolean>(false);
   const areaRef = useRef<HTMLLabelElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  console.log(avatar);
 
   const readFileAsUrl = useCallback((file: File) => {
     return new Promise<string>((resolve) => {
@@ -183,7 +179,7 @@ const LoadFile: VFC<ILoadFile> = ({
       <label ref={areaRef} htmlFor={idx} className={styles['load-file__wrapper__body']}>
         <input
           type="file"
-          accept={extensions.join(',')}
+          accept={extensions.map((e) => `.${e}`).join(',')}
           onChange={onDragOrSelect}
           id={idx}
           multiple={multiple}

@@ -10,23 +10,25 @@ import MainForm from './mainForm';
 export type TCreateNFT = 'Single' | 'Multiple';
 
 export interface ICreateCollection {
-  type: TCreateNFT;
+  isSingle: boolean;
+  avatarFile: File | null;
+  avatarURL: string | null;
   name: string;
   description: string;
 }
 
-interface ICreateFormContainer {
-  type: TCreateNFT;
-}
+export type CreateCollectionFields = keyof ICreateCollection;
 
-const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
+const CreateFormContainer: VFC = () => {
   const properties = useMemo<ICreateCollection>(
     () => ({
-      type,
+      isSingle: true,
+      avatarFile: null,
+      avatarURL: null,
       name: '',
       description: '',
     }),
-    [type],
+    [],
   );
   const FormWithFormik = withFormik<any, ICreateCollection>({
     enableReinitialize: true,
@@ -40,9 +42,9 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       console.log(values);
     },
     validateOnChange: true,
-    displayName: 'create-nft',
+    displayName: 'collection-nft',
   })(MainForm);
-  return <FormWithFormik type={type} />;
+  return <FormWithFormik />;
 };
 
 export default CreateFormContainer;
