@@ -147,7 +147,8 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
       setMediaFile(reqFile);
       setPreviewFile(fileList.filter((f) => f.name !== reqFile.name)[0]);
     }
-  }, [props, previewType, setMediaFile, setPreviewFile, reqFile, fileList]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props, previewType, reqFile, fileList]);
 
   const currentExtension = useMemo(
     () => getAvailableExtensions(previewType, fileList.length),

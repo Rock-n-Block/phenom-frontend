@@ -32,6 +32,12 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
     handleReset();
   }, [handleReset]);
 
+  const handleSetFieldValue = useCallback(
+    (fieldName: string) => (value: any) => {
+      setFieldValue(fieldName, value);
+    },
+    [setFieldValue],
+  );
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field
@@ -40,8 +46,8 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <UploadFiles
             type={type}
-            setMediaFile={() => (value: File) => setFieldValue('media', value)}
-            setPreviewFile={() => (value: File) => setFieldValue('preview', value)}
+            setMediaFile={handleSetFieldValue('media')}
+            setPreviewFile={handleSetFieldValue('preview')}
           />
         )}
       />
@@ -52,7 +58,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           <DefaultInput
             name="createNFT_name"
             value={values.name}
-            setValue={() => (value: string) => setFieldValue('name', value)}
+            setValue={(value: string) => setFieldValue('name', value)}
             label="Name"
             placeholder="NFT name"
             onBlur={handleBlur}
@@ -131,7 +137,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             onRefresh={() => {}}
             setSelectedCollection={() => {
               // eslint-disable-next-line no-unused-expressions
-              (value: TSingleCollection[]) => setFieldValue('collections',value);
+              (value: TSingleCollection[]) => setFieldValue('collections', value);
             }}
           />
         )}
