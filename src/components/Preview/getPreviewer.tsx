@@ -19,18 +19,30 @@ const getPreviewer = (src: string, props: TProps) => {
   if (previewType) {
     switch (previewType) {
       case 'audio':
-        return <AudioPreview {...props[previewType]} />;
+        return {
+          PreviewComponent: <AudioPreview {...props[previewType]} />,
+          previewType,
+        };
       case 'image':
-        return <ImagePreview {...props[previewType]} />;
+        return {
+          PreviewComponent: <ImagePreview {...props[previewType]} />,
+          previewType,
+        };
       case 'threeD':
-        return <ThreePreview {...props[previewType]} />;
+        return {
+          PreviewComponent: <ThreePreview {...props[previewType]} />,
+          previewType,
+        };
       case 'video':
-        return <VideoPreview {...props[previewType]} />;
+        return {
+          PreviewComponent: <VideoPreview {...props[previewType]} />,
+          previewType,
+        };
       default:
-        return null;
+        return { PreviewComponent: null, previewType: null };
     }
   }
-  return null;
+  return { PreviewComponent: null, previewType: null };
 };
 
 export default getPreviewer;

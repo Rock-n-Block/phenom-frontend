@@ -12,6 +12,7 @@ interface ITextArea {
   error?: string;
   placeholder?: string;
   label?: string | ReactElement;
+  className?: string;
 }
 
 const TextArea: VFC<ITextArea> = ({
@@ -22,6 +23,7 @@ const TextArea: VFC<ITextArea> = ({
   error,
   placeholder,
   maxElements = 'infinity',
+  className,
 }) => {
   const [symbCount, setSymbCount] = useState(0);
 
@@ -37,7 +39,7 @@ const TextArea: VFC<ITextArea> = ({
   );
 
   return (
-    <div className={cn(styles['text-area__body'], { [styles['invalid-field']]: error })}>
+    <div className={cn(styles['text-area__body'], className, { [styles['invalid-field']]: error })}>
       <label
         className={cn(styles['text-area__body-label'], { [styles['show-label']]: label })}
         htmlFor={`text_area_${name}`}

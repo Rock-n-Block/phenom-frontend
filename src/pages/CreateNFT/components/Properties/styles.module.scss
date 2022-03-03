@@ -1,0 +1,44 @@
+@import '/src/styles/helpers.scss';
+
+.properties-wrapper {
+    margin-bottom: 60px;
+  &__title {
+    line-height: 32px;
+    margin-bottom: 17px;
+  }
+  &__body {
+    margin-bottom: 16px;
+    @include flexbox(center, flex-start, column);
+  }
+  &__add {
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 4px 16px;
+  }
+}
+
+.single-prop__body {
+  padding: 24px 32px;
+  background: rgba($color-light-4, 0.5);
+  border-radius: 20px;
+  width: 100%;
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+  &-inputs {
+    margin-bottom: 16px;
+    @include flexbox(flex-start, space-between);
+    &__input {
+      flex: 0 0 48%;
+    }
+  }
+}
+
+
+@include large-mobile{
+  .single-prop__body{
+    padding: 24px 21px;
+  }
+}

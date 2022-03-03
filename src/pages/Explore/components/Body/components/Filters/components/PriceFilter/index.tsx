@@ -24,7 +24,11 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
           value={minPrice}
           setValue={(value) => changePrice(value, maxPrice)}
           placeholder="Min"
-          subInfo={<Text color="blue">PHETA</Text>}
+          subInfo={
+            <Text color="blue" align="right">
+              PHETA
+            </Text>
+          }
           type="number"
           max={maxPrice}
         />
@@ -34,7 +38,11 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
           value={maxPrice}
           setValue={(value) => changePrice(minPrice, value)}
           placeholder="Max"
-          subInfo={<Text color="blue">PHETA</Text>}
+          subInfo={
+            <Text color="blue" align="right">
+              PHETA
+            </Text>
+          }
           type="number"
           min={minPrice}
         />

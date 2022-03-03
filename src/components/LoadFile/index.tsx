@@ -21,19 +21,16 @@ export type TLoadError = {
   numbers: number[];
   type: ErrorList;
 };
-
-type TProgress = {
-  loaded: number;
-  total: number;
-};
 interface ILoadFile {
   fileList: File[];
   filesURLs: string[];
+  avatar?: boolean;
   onLoadStarts?: (...args: any) => void;
   onLoadEnd?: (filesUrls: string[], files: File[]) => void;
   onLoadError?: (error: TLoadError) => void;
   extensions?: TAvailableExtensions[];
   reqMaxSize?: TMaxSize;
+  multiple?: boolean;
 }
 
 const LoadFile: VFC<ILoadFile> = ({
@@ -43,13 +40,16 @@ const LoadFile: VFC<ILoadFile> = ({
   onLoadError,
   extensions = availableExtensions,
   reqMaxSize = maxSize,
+  multiple = false,
+  avatar = false,
 }) => {
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
   const [failed, setFailed] = useState<boolean>(false);
-  const [progress, setProgress] = useState<TProgress>({ loaded: 0, total: 0 });
   const areaRef = useRef<HTMLLabelElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  console.log(avatar);
 
   const readFileAsUrl = useCallback((file: File) => {
     return new Promise<string>((resolve) => {
@@ -57,9 +57,6 @@ const LoadFile: VFC<ILoadFile> = ({
       reader.onload = function () {
         const readResult = reader.result as string;
         resolve(readResult);
-      };
-      reader.onprogress = function (e: ProgressEvent<FileReader>) {
-        setProgress((prev) => ({ ...prev, loaded: prev.loaded + e.loaded }));
       };
       reader.onerror = function () {
         resolve('null');
@@ -78,7 +75,6 @@ const LoadFile: VFC<ILoadFile> = ({
       if (files?.length) {
         const allSize = files.reduce((a, f) => a + f.size, 0) * 8;
         if (allSize <= byteSize(reqMaxSize)) {
-          setProgress((prev) => ({ ...prev, total: allSize / 8 }));
           const urlsResult = await Promise.allSettled(
             files.map(async (f) => {
               const fileAsUrl = await readFileAsUrl(f);
@@ -190,7 +186,7 @@ const LoadFile: VFC<ILoadFile> = ({
           accept={extensions.join(',')}
           onChange={onDragOrSelect}
           id={idx}
-          multiple
+          multiple={multiple}
           className={styles['load-file__wrapper__body__hidden-input']}
           ref={inputRef}
         />
@@ -199,7 +195,13 @@ const LoadFile: VFC<ILoadFile> = ({
         </div>
         <div className={styles['load-file__wrapper__body-title']}>
           {fileList.length > 0 ? (
-            <Text color="black" size="m" align="center" weight="semibold">
+            <Text
+              color="black"
+              size="m"
+              align="center"
+              weight="semibold"
+              id="createPage.UploadPreview"
+            >
               {fileList.map((f) => f.name).join(', ')}
             </Text>
           ) : (
@@ -209,10 +211,10 @@ const LoadFile: VFC<ILoadFile> = ({
                 size="m"
                 align="center"
                 weight="semibold"
-                id="createPage.UploadPreview"
+                id="createPage.UploadFile"
                 className={styles['load-file__wrapper__body-title-element']}
               >
-                Upload preview
+                Upload file
               </Text>
               <Text
                 color="black"
@@ -242,7 +244,6 @@ const LoadFile: VFC<ILoadFile> = ({
         >
           PNG, GIF, WEBP, MP4, JPEG, SVG, WEBM, WAV, OGG, GLB, GLF or MP3. Max 5 Mb.
         </Text>
-        {progress.loaded} / {progress.total}
       </label>
     </section>
   );

@@ -1,0 +1,18 @@
+@import '/src/styles/helpers.scss';
+.nft-quantity__wrapper {
+  &__title {
+    line-height: 32px;
+    margin: 40px 0 24px;
+  }
+  &__input {
+    max-width: 204px;
+  }
+}
+
+@include large-mobile{
+    .nft-quantity__wrapper{
+        &__input{
+            max-width: 100%;
+        }
+    }
+}

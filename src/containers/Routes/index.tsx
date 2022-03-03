@@ -77,6 +77,15 @@ const RoutesPage = () => {
         }
       />
       <Route
+        path={routes.create.multiple}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<CreateNFT type="Multiple" />}
+          />
+        }
+      />
+      <Route
         path={routes.explore.root}
         element={
           <Page classes={['with-left-detail', 'with-right-detail']} component={<Explore />} />

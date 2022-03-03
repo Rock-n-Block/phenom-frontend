@@ -16,6 +16,9 @@ interface IDefaultInput {
   error?: string;
   label?: string | ReactElement;
   className?: string;
+  labelClassName?: string;
+  onFocus?: (...args: any) => void;
+  onBlur?: (...args: any) => void;
   disabled?: boolean;
   type?: 'text' | 'number';
   min?: string | number;
@@ -27,11 +30,14 @@ const DefaultInput: VFC<IDefaultInput> = ({
   value,
   setValue,
   label,
+  labelClassName,
   placeholder,
   subInfo,
   maxSubInfoWidth = '150px',
   error,
   className,
+  onBlur,
+  onFocus,
   disabled = false,
   type = 'text',
   min,
@@ -39,13 +45,25 @@ const DefaultInput: VFC<IDefaultInput> = ({
 }) => {
   const [isActive, setIsActive] = useState(false);
 
-  const onFocusHandler = useCallback(() => {
-    setIsActive(true);
-  }, []);
+  const onFocusHandler = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsActive(true);
+      onFocus?.();
+    },
+    [onFocus],
+  );
 
-  const onBlurHandler = useCallback(() => {
-    setIsActive(false);
-  }, []);
+  const onBlurHandler = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsActive(false);
+      onBlur?.();
+    },
+    [onBlur],
+  );
 
   const onFieldChange = (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -73,7 +91,9 @@ const DefaultInput: VFC<IDefaultInput> = ({
       {label && (
         <label
           htmlFor={`default_input_${name}`}
-          className={cn(styles['default-input__body-label'], { [styles['show-label']]: label })}
+          className={cn(styles['default-input__body-label'], labelClassName, {
+            [styles['show-label']]: label,
+          })}
         >
           {label}
         </label>
@@ -99,7 +119,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
             className={cn(styles['default-input__body-input__sub-info'], {
               [styles['sub-info-active']]: subInfo,
             })}
-            style={{ maxWidth: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
+            style={{ width: subInfo ? `clamp(30px, 100%, ${maxSubInfoWidth})` : '0' }}
           >
             {subInfo}
           </div>

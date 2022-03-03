@@ -74,7 +74,8 @@
     "stylelint-prettier": "^1.1.2",
     "swiper": "^8.0.6",
     "three": "^0.138.0",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",

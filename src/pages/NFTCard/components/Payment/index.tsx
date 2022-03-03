@@ -4,7 +4,7 @@ import cx from 'classnames';
 // import { OwnerList, UserBuy } from './components';
 import moment from 'moment';
 
-import { Avatar, Button, DefaultInput, QuantityInput, Switch, Text } from 'components';
+import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
 
 import { INft, TNullable } from 'types';
 
@@ -301,7 +301,7 @@ const Payment: VFC<IPayment> = ({
                 </Text>
                 {!isFixedPrice && (
                   <>
-                    <Switch
+                    <Selector
                       value={isTimedAuction}
                       setValue={setIsTimedAuction}
                       optionLeft="Timed auction"

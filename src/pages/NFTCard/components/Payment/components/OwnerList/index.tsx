@@ -2,7 +2,7 @@ import { useCallback, useState, VFC } from 'react';
 
 import cx from 'classnames';
 
-import { Button, DefaultInput, Switch, Text } from 'components';
+import { Button, DefaultInput, Selector, Text } from 'components';
 
 import { INft, TNullable } from 'types';
 
@@ -94,7 +94,7 @@ const OwnerList: VFC<IOwnerList> = ({ nft }) => {
             </Text>
             {!isFixedPrice && (
               <>
-                <Switch
+                <Selector
                   value={isTimedAuction}
                   setValue={setIsTimedAuction}
                   optionLeft="Timed auction"

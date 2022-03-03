@@ -33,7 +33,7 @@ const NFTCard: VFC = () => {
     // @ts-ignore
     setNft(mock.nftCard[id]);
   }, [id]);
-
+  console.log(nft)
   return (
     <div className={styles.nftCard}>
       {isDesktop ? (

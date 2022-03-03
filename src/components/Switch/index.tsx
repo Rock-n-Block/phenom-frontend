@@ -1,65 +1,67 @@
-import cx from 'classnames';
+import { Dispatch, FormEvent, ReactElement, SetStateAction, useCallback, VFC } from 'react';
 
-import { Text } from 'components';
+import cn from 'classnames';
 
-import styles from './Switch.module.scss';
+import styles from './styles.module.scss';
 
-interface ISwitchProps {
-  className?: string;
-  value: boolean;
-  setValue: (foo: boolean) => void;
-  name?: string;
-  optionLeft?: string;
-  optionRight?: string;
-}
-
-const Switch: React.FC<ISwitchProps> = ({
-  className,
-  value,
-  setValue,
-  name,
-  optionLeft,
-  optionRight,
-}) => {
-  return (
-    <label htmlFor={name || 'toogle'} className={cx(styles.switch, className)}>
-      <div
-        className={styles.left}
-        onClick={() => setValue(!value)}
-        onKeyDown={() => {}}
-        tabIndex={0}
-        role="button"
-      >
-        {optionLeft && (
-          <Text
-            size="m"
-            weight="semibold"
-            className={cx(styles.option, { [styles.optionActive]: value })}
-          >
-            {optionLeft}
-          </Text>
-        )}
-      </div>
-      <span className={cx(styles.toggle, { [styles.toggleActive]: value })} />
-      <div
-        className={styles.right}
-        onClick={() => setValue(!value)}
-        onKeyDown={() => {}}
-        tabIndex={0}
-        role="button"
-      >
-        {optionRight && (
-          <Text
-            size="m"
-            weight="semibold"
-            className={cx(styles.option, { [styles.optionActive]: !value })}
-          >
-            {optionRight}
-          </Text>
-        )}
-      </div>
-    </label>
-  );
+type TLabels = {
+  inactive?: ReactElement | string;
+  active?: ReactElement | string;
 };
 
+interface ISwitch {
+  name: string;
+  checked: boolean;
+  setChecked: Dispatch<SetStateAction<boolean>>;
+  labels?: TLabels;
+  trackClassName?: string;
+  thumbClassName?: string;
+}
+
+const Switch: VFC<ISwitch> = ({
+  checked,
+  setChecked,
+  name,
+  labels,
+  thumbClassName,
+  trackClassName,
+}) => {
+  const onCheckClick = useCallback(
+    (e: FormEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setChecked(!checked);
+    },
+    [checked, setChecked],
+  );
+  return (
+    <div className={cn(styles['default-switch__body'])}>
+      <label
+        className={cn(styles['default-switch__body-area'], {
+          [styles['switch-active']]: checked,
+        })}
+        htmlFor={`default_switch_${name}`}
+      >
+        <input
+          className={cn(styles['default-switch__body-area__input'])}
+          onClick={onCheckClick}
+          checked={checked}
+          onChange={() => {}}
+          type="checkbox"
+          id={`default_switch_${name}`}
+        />
+        <div className={cn({ [styles['default-switch__body-area__inactive']]: labels?.inactive })}>
+          {labels?.inactive}
+        </div>
+
+        <span className={cn(thumbClassName, styles['default-switch__body-area__track'])}>
+          <span className={cn(trackClassName, styles['default-switch__body-area__thumb'])} />
+        </span>
+        <div className={cn({ [styles['default-switch__body-area__active']]: labels?.active })}>
+          {labels?.active}
+        </div>
+      </label>
+    </div>
+  );
+};
 export default Switch;

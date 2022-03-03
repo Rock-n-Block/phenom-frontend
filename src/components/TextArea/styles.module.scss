@@ -8,6 +8,7 @@
     line-height: 24px;
     margin-bottom: 16px;
     display: inline-block;
+    font-weight: 500;
     @include transition;
     &.show-label {
       font-size: 14px;
@@ -21,22 +22,22 @@
     line-height: 24px;
     border-radius: 12px;
     color: $color-dark;
-    border: 1px solid $color-dark;
     resize: none;
+    @include border-like-shadow;
     @include transition;
-    &::placeholder{
-        opacity: 0.32;
-        @include transition;
+    &::placeholder {
+      opacity: 0.32;
+      @include transition;
     }
     &:hover {
-      border: 2px solid $color-dark;
-      &::placeholder{
-          opacity: 1;
+      @include border-like-shadow($width: 2px);
+      &::placeholder {
+        opacity: 1;
       }
     }
     &:focus {
       caret-color: $color-accent;
-      border: 2px solid $color-accent;
+      @include border-like-shadow(2px, $color-accent);
     }
   }
 
@@ -63,11 +64,11 @@
       &-area {
         caret-color: $color-error;
         &-container {
-          border: 2px solid $color-error;
+          @include border-like-shadow(2px, $color-error);
         }
       }
       &-counter {
-          color: $color-error;
+        color: $color-error;
       }
       &-error {
         color: $color-error;

@@ -24,7 +24,12 @@ const DeletePreview: VFC<IDeletePreview> = ({ onClick }) => {
       <span className={styles['delete-button__wrapper-icon']}>
         <DeleteSVG />
       </span>
-      <Text tag="span" className={styles['delete-button__wrapper-text']} id="Delete">
+      <Text
+        tag="span"
+        className={styles['delete-button__wrapper-text']}
+        color="inherit"
+        id="Delete"
+      >
         Delete
       </Text>
     </button>

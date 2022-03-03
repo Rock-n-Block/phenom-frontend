@@ -1,12 +1,13 @@
 {
   "createOptions": {
     "Create": "Создать",
-    "SingleNft": "Single Nft на русском",
-    "MultipleNft": "Multiple Nft на русском",
-    "CreateACollection": "Create a collection на русском"
+    "Single": "Single Nft",
+    "Multiple": "Multiple Nft",
+    "CreateACollection": "Create a collection"
   },
   "createPage": {
     "UploadPreview": "Upload preview",
+    "UploadFile": "Upload file",
     "UploadDrag": "Drag or choose your file to upload",
     "UploadDrop": "Drop files",
     "UploadExtensions": "{{extensions}}. Mаксимум {{size}} {{unit}}.",

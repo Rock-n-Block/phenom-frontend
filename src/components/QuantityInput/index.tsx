@@ -43,7 +43,8 @@ interface IQuantityInput {
   error?: string;
   writeable?: boolean;
   placeholder?: string;
-  inputClassName?: string
+  inputClassName?: string;
+  maxCounterWidth?: string;
 }
 
 const QuantityInput: VFC<IQuantityInput> = ({
@@ -56,7 +57,8 @@ const QuantityInput: VFC<IQuantityInput> = ({
   writeable = true,
   maxAmount = 'infinity',
   minAmount = 0,
-  inputClassName
+  inputClassName,
+  maxCounterWidth = '50%',
 }) => {
   const checkRange = useCallback(
     (val: number) => {
@@ -108,7 +110,7 @@ const QuantityInput: VFC<IQuantityInput> = ({
       placeholder={placeholder}
       name={name}
       subInfo={<QuantityButtons onAdd={onAddHandler} onRemove={onRemoveHandler} />}
-      maxSubInfoWidth="50%"
+      maxSubInfoWidth={maxCounterWidth}
       disabled={!writeable}
       className={inputClassName}
     />

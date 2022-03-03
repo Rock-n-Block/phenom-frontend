@@ -21,7 +21,7 @@ const VideoPreview: VFC<IAudioPreview> = ({ src, previewSrc, audioType, previewA
   const { t } = useLanguage();
   return (
     <div className={styles['audio-preview__wrapper']}>
-      <ImagePreview src={previewSrc} alt={previewAlt || t('Common:audioPreviewAlt')} />
+      <ImagePreview src={previewSrc} alt={previewAlt || t('common:audioPreviewAlt')} />
       <audio className={styles['audio-preview__wrapper-audio']} controls>
         <source src={src} type={`audio/${audioType}`} />
         <track kind="captions" />

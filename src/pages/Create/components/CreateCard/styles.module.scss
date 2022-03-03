@@ -12,6 +12,8 @@
     background: $color-light-0;
     border-radius: 50%;
     margin-bottom: 25px;
+    @include dynamic-shadow($color: transparent);
+    @include transition;
     @include flexbox;
   }
   &-title {
@@ -23,11 +25,16 @@
   }
 
   &.with-animation{
-    @include dynamic-shadow($color: transparent);
     @include transition;
     &:hover{
-      @include dynamic-shadow($offset-y: 10px, $color: rgba(40, 41, 61, 0.1));
-      transform: translateY(-10px) scale(1.025);
+      background: $color-light-1;
+      .create-card__wrapper{
+        &-icon{
+          background: $color-light-4;
+          transform: translateY(-5px) scale(1.05);
+          @include shadow-3;
+        }
+      }
     }
   }
 }

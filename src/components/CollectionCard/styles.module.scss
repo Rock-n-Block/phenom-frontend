@@ -1,0 +1,32 @@
+@import '/src/styles/helpers.scss';
+
+.collection-card__wrapper {
+  margin-bottom: 16px;
+  border-radius: 20px;
+  width: 100%;
+  padding: 18px 24px;
+  background: rgba($color-light-4, 0.5);
+  cursor: pointer;
+  @include flexbox(center, flex-start);
+  @include border-like-shadow(2px, transparent);
+  @include transition;
+  &__checkbox {
+    margin-right: 10px;
+  }
+  &__avatar {
+    margin-right: 12px;
+  }
+  &__info {
+    &-title {
+      margin-bottom: 10px;
+    }
+    &-subtitle {
+      .marked-text {
+        color: $color-accent;
+      }
+    }
+  }
+  &.selected-card {
+    @include border-like-shadow(2px, $color-accent);
+  }
+}

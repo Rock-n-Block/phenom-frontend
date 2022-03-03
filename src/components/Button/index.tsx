@@ -1,8 +1,9 @@
 import { CSSProperties, FC, PropsWithChildren, RefObject, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import cx from 'classnames';
-// import { IconNames } from 'typings';
 
+import cx from 'classnames';
+
+// import { IconNames } from 'typings';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -118,6 +119,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
         styles.button,
         styles[size],
         styles[color],
+        
         styles[
           `${
             padding.includes('small') ||

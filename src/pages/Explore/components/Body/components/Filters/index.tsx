@@ -25,7 +25,12 @@ const collections: any = [
   { id: 0, media: mock.search, name: 'Basketball' },
 ];
 const types = [{ name: 'Single NFT' }, { name: 'Multiple NFT' }];
-const sortings = ['Price: Low to High', 'Price: High to Low ', 'Date: Last', 'Date: New'];
+const sortings = [
+  { value: 'Price: Low to High' },
+  { value: 'Price: High to Low ' },
+  { value: 'Date: Last' },
+  { value: 'Date: New' },
+];
 
 type Props = {
   filterCategory: any;
@@ -149,7 +154,9 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <Dropdown
           className={styles.sortingDropdown}
           options={sortings}
-          value={sortBy || 'Sort by'}
+          value={sortBy || { value: 'Sort by' }}
+          drawBy="value"
+          returnBy="value"
           setValue={(value: string) => setSortBy(value)}
         />
       </div>
