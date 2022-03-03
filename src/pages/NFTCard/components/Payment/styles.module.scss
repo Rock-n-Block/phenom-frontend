@@ -3,11 +3,18 @@
 .choose {
   margin-top: 32px;
   margin-bottom: 44px;
-  @include flexbox(flex-start, space-between);
+  @include flexbox(flex-start, flex-start);
+  flex-wrap: wrap;
 
   &Inside {
     margin-bottom: 0;
   }
+}
+
+.transfer,
+.remove {
+  margin-bottom: 16px;
+  margin-right: 16px;
 }
 
 .button {
@@ -18,7 +25,7 @@
   }
   & > svg {
     fill: $color-accent;
-  } 
+  }
 }
 
 .sellType {
@@ -216,4 +223,43 @@
 .buy {
   width: 50%;
   text-transform: uppercase;
+}
+
+.owner {
+  &List {
+    width: 100%;
+  }
+}
+
+@include large-tablet {
+  .chooseInside {
+    flex-direction: column;
+    .button {
+      width: 100%;
+    }
+  }
+  .createLotPrice,
+  .createLotBtn,
+  .switch,
+  .hours {
+    width: 100%;
+  }
+  .type {
+    padding: 16px 8px;
+    &Title {
+      font-size: 16px;
+    }
+    &Text {
+      font-size: 12px;
+    }
+  }
+  .switch {
+    p {
+      font-size: 14px;
+    }
+  }
+  .hour {
+    font-size: 14px;
+    width: auto;
+  }
 }

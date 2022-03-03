@@ -102,7 +102,8 @@ const NFTCard: VFC = () => {
             isUserCanBuyNft ||
             isUserCanEnterInAuction ||
             isUserCanPutOnSale ||
-            nft?.selling) && (
+            isUserCanRemoveFromSale ||
+            isUserCanChangePrice) && (
             <Payment
               nft={nft}
               isUserCanEndAuction={isUserCanEndAuction}

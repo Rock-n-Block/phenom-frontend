@@ -42,7 +42,7 @@ const Payment: VFC<IPayment> = ({
   isUserCanBuyNft,
   isUserCanEnterInAuction,
   isUserCanPutOnSale,
-  // isOwner,
+  isOwner,
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
 }) => {
@@ -198,14 +198,22 @@ const Payment: VFC<IPayment> = ({
             isUserCanChangePrice) &&
             !isListing && (
               <div className={cx(styles.choose, styles.chooseInside)}>
-                <Button
-                  color="dark"
-                  className={cx(styles.button, styles.transfer)}
-                  suffixIcon={iconTransfer}
-                >
-                  Transfer
-                </Button>
-                {nft?.is_selling ? (
+                {isOwner && (
+                  <Button
+                    color="dark"
+                    className={cx(styles.button, styles.transfer)}
+                    suffixIcon={iconTransfer}
+                  >
+                    Transfer
+                  </Button>
+                )}
+
+                {isUserCanRemoveFromSale && (
+                  <Button color="dark" className={cx(styles.button, styles.remove)}>
+                    Remove from sale
+                  </Button>
+                )}
+                {isUserCanChangePrice ? (
                   <Button
                     color="light"
                     className={styles.button}
@@ -242,10 +250,17 @@ const Payment: VFC<IPayment> = ({
                   <div className={styles.iconWrapper}>
                     <DollarIcon className={styles.icon} />
                   </div>
-                  <Text size="xl" weight="semibold" color={isFixedPrice ? 'white' : 'black'}>
+                  <Text
+                    size="xl"
+                    weight="semibold"
+                    className={styles.typeTitle}
+                    color={isFixedPrice ? 'white' : 'black'}
+                  >
                     Fixed price
                   </Text>
-                  <Text color="middleGray">Sell at fixed price</Text>
+                  <Text align="center" color="middleGray" className={styles.typeText}>
+                    Sell at fixed price
+                  </Text>
                 </div>
                 <div
                   className={cx(styles.type, { [styles.typeActive]: !isFixedPrice })}
@@ -257,10 +272,18 @@ const Payment: VFC<IPayment> = ({
                   <div className={styles.iconWrapper}>
                     <PlaceBidIcon className={styles.icon} />
                   </div>
-                  <Text size="xl" weight="semibold" color={!isFixedPrice ? 'white' : 'black'}>
+                  <Text
+                    size="xl"
+                    weight="semibold"
+                    className={styles.typeTitle}
+                    color={!isFixedPrice ? 'white' : 'black'}
+                    align="center"
+                  >
                     Open for bids
                   </Text>
-                  <Text color="middleGray">Sell through Auction</Text>
+                  <Text align="center" color="middleGray" className={styles.typeText}>
+                    Sell through Auction
+                  </Text>
                 </div>
               </div>
               <div className={styles.createLot}>
