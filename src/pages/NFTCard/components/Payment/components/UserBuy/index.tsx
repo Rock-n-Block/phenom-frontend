@@ -4,33 +4,19 @@ import moment from 'moment';
 
 import { Avatar, Button, DefaultInput, QuantityInput, Text } from 'components';
 
+import { INft, TNullable } from 'types';
+
 import { iconArrowUpGreen, iconPlaceBid, PlaceBidIcon } from 'assets/img';
 
 import styles from './styles.module.scss';
 
 type IUserBuy = {
-  isAuction?: boolean;
-  isTimedAuction?: boolean;
-  price?: string | number;
-  USD_price?: string | number;
-  // standart: 'ERC721' | 'ERC1155';
-  standart: string;
-  availableAmount?: number;
-  start_auction?: number;
-  end_auction?: number;
-  highest_bidder?: any;
+  nft: TNullable<INft>;
+  isUserCanBuyNft: boolean;
+  isUserCanEnterInAuction: boolean;
 };
 
-const UserBuy: VFC<IUserBuy> = ({
-  isAuction,
-  isTimedAuction,
-  price,
-  USD_price,
-  standart,
-  availableAmount,
-  end_auction,
-  highest_bidder,
-}) => {
+const UserBuy: VFC<IUserBuy> = ({ nft }) => {
   const [quantity, setQuantity] = useState('1');
   const [bid, setBid] = useState('');
   const [time, setTime] = useState<any>();
@@ -38,8 +24,8 @@ const UserBuy: VFC<IUserBuy> = ({
 
   useEffect(() => {
     let timeInterval: any;
-    if (end_auction) {
-      const eventTime = +(end_auction || 0) * 1000;
+    if (nft?.end_auction) {
+      const eventTime = +(nft?.end_auction || 0) * 1000;
       const date = new Date();
       const currentTime = date.getTime() - date.getTimezoneOffset() * 60000;
       const diffTime = eventTime - currentTime;
@@ -53,16 +39,16 @@ const UserBuy: VFC<IUserBuy> = ({
     }
 
     return () => clearInterval(timeInterval);
-  }, [end_auction]);
+  }, [nft]);
 
   return (
     <div className={styles.userBuy}>
-      {isTimedAuction && (
+      {nft?.is_timed_auc_selling && (
         <div className={styles.timedAuc}>
           <div className={styles.timedAucTitle}>
             <PlaceBidIcon className={styles.timedAucIcon} />
             <Text size="m" weight="semibold">
-              Sale ends at {moment(end_auction, 'X').format('MMMM Do YYYY, h:mma')}
+              Sale ends at {moment(nft?.end_auction, 'X').format('MMMM Do YYYY, h:mma')}
             </Text>
           </div>
           <div className={styles.time}>
@@ -87,9 +73,9 @@ const UserBuy: VFC<IUserBuy> = ({
           </div>
         </div>
       )}
-      {isAuction || isTimedAuction ? (
+      {nft?.is_auc_selling || nft?.is_timed_auc_selling ? (
         <div>
-          {highest_bidder ? (
+          {nft?.highest_bid ? (
             <Text color="yellow" size="m" weight="semibold">
               Current bid
             </Text>
@@ -104,40 +90,42 @@ const UserBuy: VFC<IUserBuy> = ({
           Price
         </Text>
       )}
-      {price && (
+      {nft?.price && (
         <Text weight="semibold" color="blue" className={styles.price}>
-          {price} PHETA
+          {nft?.price} PHETA
         </Text>
       )}
-      {USD_price && (
+      {nft?.USD_price && (
         <Text color="middleGray" size="m" className={styles.usdPrice}>
-          ${USD_price}
+          ${nft?.USD_price}
         </Text>
       )}
-      {highest_bidder && (
+      {nft?.highest_bid && (
         <div className={styles.highest}>
-          <Avatar id={highest_bidder.id} avatar={highest_bidder.avatar} />
+          <Avatar id={nft?.highest_bid.id} avatar={nft?.highest_bid.bidder_avatar} />
           <Text>
-            {highest_bidder.name}{' '}
+            {nft?.highest_bid.bidder}{' '}
             <img alt="arrow" src={iconArrowUpGreen} className={styles.arrow} />{' '}
           </Text>
         </div>
       )}
-      {standart === 'ERC1155' && <Text className={styles.quantity}>Quantity</Text>}
-      {(isAuction || isTimedAuction) && <Text className={styles.quantity}>Bid</Text>}
+      {nft?.standart === 'ERC1155' && <Text className={styles.quantity}>Quantity</Text>}
+      {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+        <Text className={styles.quantity}>Bid</Text>
+      )}
       <div className={styles.priceBids}>
-        {standart === 'ERC1155' && (
+        {nft?.standart === 'ERC1155' && (
           <QuantityInput
             value={+quantity < 10 ? `0${quantity}` : quantity}
             setValue={setQuantity}
             name="quantity"
             writeable={false}
-            maxAmount={availableAmount}
+            maxAmount={nft?.available}
             minAmount={1}
             inputClassName={styles.quantityInput}
           />
         )}
-        {(isAuction || isTimedAuction) && (
+        {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
           <DefaultInput
             name="bid"
             value={bid}
@@ -150,9 +138,9 @@ const UserBuy: VFC<IUserBuy> = ({
         <Button
           className={styles.buy}
           padding="extra-large"
-          suffixIcon={isAuction || isTimedAuction ? iconPlaceBid : ''}
+          suffixIcon={nft?.is_auc_selling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
         >
-          {isAuction || isTimedAuction ? 'Place a bid' : 'Buy'}
+          {nft?.is_auc_selling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
         </Button>
       </div>
     </div>

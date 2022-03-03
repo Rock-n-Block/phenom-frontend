@@ -40,8 +40,8 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <UploadFiles
             type={type}
-            setMediaFile={(value: File) => setFieldValue('media', value)}
-            setPreviewFile={(value: File) => setFieldValue('preview', value)}
+            setMediaFile={() => (value: File) => setFieldValue('media', value)}
+            setPreviewFile={() => (value: File) => setFieldValue('preview', value)}
           />
         )}
       />
@@ -52,7 +52,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           <DefaultInput
             name="createNFT_name"
             value={values.name}
-            setValue={(value: string) => setFieldValue('name', value)}
+            setValue={() => (value: string) => setFieldValue('name', value)}
             label="Name"
             placeholder="NFT name"
             onBlur={handleBlur}
@@ -67,7 +67,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           <TextArea
             name="createNFT_description"
             value={values.description}
-            setValue={(value: string) => setFieldValue('description', value)}
+            setValue={() => (value: string) => setFieldValue('description', value)}
             label="Description"
             placeholder="Description"
             error={touched.description && errors.description ? errors.description : undefined}
@@ -82,7 +82,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           <Dropdown
             key="category"
             value={values.category || ''}
-            setValue={(value: any) => setFieldValue('category', value)}
+            setValue={() => (value: any) => setFieldValue('category', value)}
             returnBy="id"
             drawBy="category"
             name="category"
@@ -100,7 +100,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             key="subcategory"
             name="subcategory"
             value={values.subcategory || ''}
-            setValue={(value: any) => setFieldValue('subcategory', value)}
+            setValue={() => (value: any) => setFieldValue('subcategory', value)}
             returnBy="id"
             drawBy="category"
             label="Subcategory"
@@ -142,7 +142,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           render={() => (
             <Stock
               count={values.quantity || '0'}
-              setCount={(value: string) => setFieldValue('quantity', value)}
+              setCount={() => (value: string) => setFieldValue('quantity', value)}
               className={styles['field-quantity']}
             />
           )}

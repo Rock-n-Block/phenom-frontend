@@ -4,11 +4,19 @@ import cx from 'classnames';
 
 import { Button, DefaultInput, Selector, Text } from 'components';
 
-import { DollarIcon, iconTransfer, PlaceBidIcon } from 'assets/img';
+import { INft, TNullable } from 'types';
+
+import { DollarIcon, iconPencil, iconTransfer, PlaceBidIcon } from 'assets/img';
 
 import styles from './styles.module.scss';
 
-type IOwnerList = {};
+type IOwnerList = {
+  nft: TNullable<INft>;
+  isUserCanEndAuction: boolean;
+  isUserCanPutOnSale: boolean;
+  isUserCanRemoveFromSale: boolean;
+  isUserCanChangePrice: boolean;
+};
 
 const hours = [
   { value: '12', label: '12 h' },
@@ -16,7 +24,7 @@ const hours = [
   { value: '48', label: '48 h' },
 ];
 
-const OwnerList: VFC<IOwnerList> = () => {
+const OwnerList: VFC<IOwnerList> = ({ nft }) => {
   const [isListing, setIsListing] = useState(false);
   const [isFixedPrice, setIsFixedPrice] = useState(false);
   const [price, setPrice] = useState('');
@@ -109,7 +117,7 @@ const OwnerList: VFC<IOwnerList> = () => {
                         className={cx(styles.hourLabel, {
                           [styles.hourLabelActive]: value === hoursTime,
                         })}
-                        align='center'
+                        align="center"
                       >
                         {label}
                       </Text>
@@ -132,9 +140,20 @@ const OwnerList: VFC<IOwnerList> = () => {
           >
             Transfer
           </Button>
-          <Button color="light" className={styles.button} onClick={handleList}>
-            List for sale
-          </Button>
+          {nft?.is_selling ? (
+            <Button
+              color="light"
+              className={styles.button}
+              suffixIcon={iconPencil}
+              onClick={handleList}
+            >
+              Edit
+            </Button>
+          ) : (
+            <Button color="light" className={styles.button} onClick={handleList}>
+              List for sale
+            </Button>
+          )}
         </div>
       )}
     </div>

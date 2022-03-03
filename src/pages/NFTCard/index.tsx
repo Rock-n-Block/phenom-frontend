@@ -2,13 +2,12 @@ import { useEffect, useMemo, useState, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import mock from 'mock';
-import moment from 'moment';
 
 import { Text } from 'components';
 
 import { NameAndLike, OwnersAndCreators, Payment, PropsAndDescr } from './components';
 
-import { useWindowSize } from 'hooks';
+import { useGetUserAccessForNft, useWindowSize } from 'hooks';
 
 import styles from './styles.module.scss';
 
@@ -18,6 +17,16 @@ const NFTCard: VFC = () => {
   const { width } = useWindowSize();
 
   const isDesktop = useMemo(() => +width >= 1023, [width]);
+
+  const {
+    isUserCanEndAuction,
+    isUserCanBuyNft,
+    isUserCanEnterInAuction,
+    isUserCanPutOnSale,
+    isOwner,
+    isUserCanRemoveFromSale,
+    isUserCanChangePrice,
+  } = useGetUserAccessForNft(nft, 1);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -45,18 +54,25 @@ const NFTCard: VFC = () => {
               name={nft.name}
               likeCount={nft.likes_count}
               artId={nft.id}
-              inStockNumber={nft.in_stock_number}
+              inStockNumber={nft.available}
             />
-            <Payment
-              standart={nft.standart}
-              availableAmount={nft.in_stock_number}
-              price={nft.price}
-              USD_price={nft.USD_price}
-              isTimedAuction={nft.is_timed_auction}
-              isAuction={nft.is_auction}
-              end_auction={nft.is_timed_auction && moment.now() / 1000}
-              isSelling={nft.is_selling}
-            />
+            {(isUserCanEndAuction ||
+              isUserCanBuyNft ||
+              isUserCanEnterInAuction ||
+              isUserCanPutOnSale ||
+              isUserCanRemoveFromSale ||
+              isUserCanChangePrice) && (
+              <Payment
+                nft={nft}
+                isUserCanEndAuction={isUserCanEndAuction}
+                isUserCanBuyNft={isUserCanBuyNft}
+                isUserCanEnterInAuction={isUserCanEnterInAuction}
+                isUserCanPutOnSale={isUserCanPutOnSale}
+                isOwner={isOwner}
+                isUserCanRemoveFromSale={isUserCanRemoveFromSale}
+                isUserCanChangePrice={isUserCanChangePrice}
+              />
+            )}
             {nft.creator && nft.owners && (
               <OwnersAndCreators
                 creator={nft.creator}
@@ -82,16 +98,22 @@ const NFTCard: VFC = () => {
             )}
             <img src={nft.img} alt="nftCard" className={styles.nftCardImg} />
           </div>
-          <Payment
-            standart={nft.standart}
-            availableAmount={nft.in_stock_number}
-            price={nft.price}
-            USD_price={nft.USD_price}
-            isTimedAuction={nft.is_timed_auction}
-            isAuction={nft.is_auction}
-            end_auction={nft.is_timed_auction && moment.now() / 1000}
-            isSelling={nft.is_selling}
-          />
+          {(isUserCanEndAuction ||
+            isUserCanBuyNft ||
+            isUserCanEnterInAuction ||
+            isUserCanPutOnSale ||
+            nft?.selling) && (
+            <Payment
+              nft={nft}
+              isUserCanEndAuction={isUserCanEndAuction}
+              isUserCanBuyNft={isUserCanBuyNft}
+              isUserCanEnterInAuction={isUserCanEnterInAuction}
+              isUserCanPutOnSale={isUserCanPutOnSale}
+              isOwner={isOwner}
+              isUserCanRemoveFromSale={isUserCanRemoveFromSale}
+              isUserCanChangePrice={isUserCanChangePrice}
+            />
+          )}
           <PropsAndDescr properties={nft.properties} description={nft.description} />
 
           {nft.creator && nft.owners && (
