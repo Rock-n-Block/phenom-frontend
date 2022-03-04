@@ -21,5 +21,6 @@ export { default as CollectionCard } from './CollectionCard';
 export { default as Selector } from './Selector';
 export { default as UploadAvatar } from './UploadAvatar';
 export { default as Modal } from './Modal';
+export { default as Loader } from './Loader';
 export * from './Typography';
 export * from './Preview';

@@ -18,6 +18,14 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
+import TransferModal from '../modals/TransferModal';
+import ApproveModal from '../modals/ApproveModal';
+
+enum ModalType {
+  init = 'INIT',
+  approve = 'APPROVE',
+  transfer = 'TRANSFER',
+}
 
 type IPayment = {
   nft: TNullable<INft>;
@@ -55,6 +63,15 @@ const Payment: VFC<IPayment> = ({
   const [price, setPrice] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
+  const [modalType, setModalType] = useState(ModalType.init);
+
+  const handleSetModalType = useCallback((newModalType: ModalType) => {
+    setModalType(newModalType);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setModalType(ModalType.init);
+  }, []);
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -187,6 +204,7 @@ const Payment: VFC<IPayment> = ({
                 className={styles.buy}
                 padding="extra-large"
                 suffixIcon={nft?.is_auc_selling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
+                onClick={() => handleSetModalType(ModalType.approve)}
               >
                 {nft?.is_auc_selling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
               </Button>
@@ -203,13 +221,18 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
+                    onClick={() => handleSetModalType(ModalType.transfer)}
                   >
                     Transfer
                   </Button>
                 )}
 
                 {isUserCanRemoveFromSale && (
-                  <Button color="dark" className={cx(styles.button, styles.remove)}>
+                  <Button
+                    color="dark"
+                    className={cx(styles.button, styles.remove)}
+                    onClick={() => handleSetModalType(ModalType.approve)}
+                  >
                     Remove from sale
                   </Button>
                 )}
@@ -334,11 +357,21 @@ const Payment: VFC<IPayment> = ({
                   </>
                 )}
                 {nft?.price ? (
-                  <Button padding="medium" className={styles.createLotBtn} disabled={!price}>
+                  <Button
+                    padding="medium"
+                    className={styles.createLotBtn}
+                    disabled={!price}
+                    onClick={() => handleSetModalType(ModalType.approve)}
+                  >
                     Update
                   </Button>
                 ) : (
-                  <Button padding="medium" className={styles.createLotBtn} disabled={!price}>
+                  <Button
+                    padding="medium"
+                    className={styles.createLotBtn}
+                    disabled={!price}
+                    onClick={() => handleSetModalType(ModalType.approve)}
+                  >
                     Create lot
                   </Button>
                 )}
@@ -352,6 +385,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
+                    onClick={() => handleSetModalType(ModalType.transfer)}
                   >
                     Transfer
                   </Button>
@@ -376,21 +410,11 @@ const Payment: VFC<IPayment> = ({
         </div>
       )}
 
-      {/* {isOwner ? (
-        <OwnerList
-          nft={nft}
-          isUserCanEndAuction={isUserCanEndAuction}
-          isUserCanPutOnSale={isUserCanPutOnSale}
-          isUserCanRemoveFromSale={isUserCanRemoveFromSale}
-          isUserCanChangePrice={isUserCanChangePrice}
-        />
-      ) : (
-        <UserBuy
-          nft={nft}
-          isUserCanBuyNft={isUserCanBuyNft}
-          isUserCanEnterInAuction={isUserCanEnterInAuction}
-        />
-      )} */}
+      <TransferModal
+        visible={modalType === ModalType.transfer}
+        onClose={() => handleCloseModal()}
+      />
+      <ApproveModal visible={modalType === ModalType.approve} onClose={() => handleCloseModal()} />
     </>
   );
 };
