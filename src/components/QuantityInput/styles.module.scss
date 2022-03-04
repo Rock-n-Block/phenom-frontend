@@ -1,16 +1,26 @@
 @import '/src/styles/helpers.scss';
 
 .buttons-wrapper {
-  @include flexbox(center, flex-end);
+  @include flexbox(center, flex-start);
 }
 
 .add-remove-button {
   &:not(:last-child) {
     margin-right: 11px;
   }
+  svg {
+    @include transition;
+  }
   &:hover {
-    * #add-white {
-      fill: $color-dark-svg;
+    svg {
+      filter: invert(1);
     }
+  }
+}
+
+@include large-mobile {
+  .buttons-wrapper {
+    padding-right: 11px;
+    @include flexbox(center, flex-end);
   }
 }

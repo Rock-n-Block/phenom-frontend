@@ -29,6 +29,7 @@ import {
 } from 'pages';
 
 import { routes } from 'appConstants';
+import { CreateCollection } from 'pages/CreateCollection';
 
 const RoutesPage = () => {
   const { loadNamespaces } = useLanguage();
@@ -82,6 +83,15 @@ const RoutesPage = () => {
           <Page
             classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
             component={<CreateNFT type="Multiple" />}
+          />
+        }
+      />
+      <Route
+        path={routes.create.collection}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<CreateCollection />}
           />
         }
       />

@@ -19,5 +19,6 @@ export { default as DeletePreview } from './DeletePreview';
 export { default as Switch } from './Switch';
 export { default as CollectionCard } from './CollectionCard';
 export { default as Selector } from './Selector';
+export { default as UploadAvatar } from './UploadAvatar';
 export * from './Typography';
 export * from './Preview';

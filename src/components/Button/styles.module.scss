@@ -9,6 +9,7 @@
   @include gilroy;
   box-sizing: border-box;
   border: 2px solid transparent;
+  @include transition;
   &:focus {
     outline: none;
   }

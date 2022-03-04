@@ -1,0 +1,81 @@
+@import '/src/styles/helpers.scss';
+.create-collection__wrapper {
+  padding-bottom: 136px;
+  &__detail {
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 100vw;
+    background: rgba($color-light-4, 0.5);
+    height: 422px;
+    z-index: -1;
+  }
+  &__title {
+    margin: 95px 0 50px;
+    @include transition;
+  }
+  &__selector {
+    width: 262px;
+    &-body {
+      margin-bottom: 110px;
+      @include flexbox;
+    }
+  }
+  &__avatar {
+    position: relative;
+    top: -50%;
+    transform: translateY(-60%);
+    margin-bottom: -50px;
+    @include flexbox;
+  }
+  &__logo {
+    &-title {
+      margin-bottom: 24px;
+    }
+    &-subtitle {
+      margin-bottom: 40px;
+      line-height: 24px;
+    }
+  }
+  &__name {
+    margin: 24px 0 32px;
+  }
+  &__description {
+    margin-bottom: 45px;
+  }
+  .btns-section {
+    margin-top: 54px;
+    @include flexbox(flex-start, flex-start);
+    .submit-btn {
+      margin-right: 15px;
+    }
+    button {
+      text-transform: uppercase;
+    }
+  }
+}
+
+@include large-mobile {
+  .create-collection__wrapper {
+      padding: 0 20px 58px;
+    &__detail {
+      transform: translateY(-155px);
+    }
+    &__title {
+      transform: scale(0);
+      height: auto;
+      max-height: 0;
+      margin: 0 0 60px;
+    }
+    .btns-section {
+      @include flexbox(center, flex-start, column);
+      .submit-btn {
+        margin-right: 0;
+        margin-bottom: 14px;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
