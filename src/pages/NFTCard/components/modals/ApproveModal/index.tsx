@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
 
-import { Button, Loader, Modal, Text } from 'components';
+import { Button, Loader, Modal, Text, Clipboard } from 'components';
 
 import styles from './styles.module.scss';
 import { iconError, iconSuccess } from 'assets/img';
@@ -133,6 +133,12 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose }) => {
         <Button className={styles.button} padding="small" onClick={handleSendAgain}>
           Send again
         </Button>
+      )}
+      {step === 2 && isApproved && (
+        <Clipboard
+          className={styles.clipboard}
+          value="https://bscscan.com/tx/0xde069b4b27c870e85960xde069b4b27c870e85960xde069b4b27c870e8596"
+        />
       )}
     </Modal>
   );
