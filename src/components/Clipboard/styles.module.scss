@@ -1,0 +1,47 @@
+@import '/src/styles/helpers.scss';
+
+.clipboard-wrapper {
+  width: clamp(280px, 100%, 345px);
+  padding: 8px 18px;
+  border-radius: 12px;
+  background: $color-light-4;
+  @include transition;
+  @include flexbox(center, space-between);
+  &__text {
+    flex: 0 0 calc(100% - 30px);
+  }
+  &__btn {
+    flex: 0 0 20px;
+    position: relative;
+    &-status{
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        pointer-events: none;
+        @include transition;
+        &.copy-out{
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+        &.copy-fail,
+        &.copy-success{
+            opacity: 1;
+            transform: translateX(-50%) translateY(-7.5px);
+        }
+        &.copy-fail{
+            color: $color-error;
+        }
+        &.copy-success{
+            color: $color-accent;
+        }
+    }
+    &:disabled{
+        cursor: not-allowed;
+        svg{
+            filter: hue-rotate(90deg);
+        }
+    }
+  }
+}

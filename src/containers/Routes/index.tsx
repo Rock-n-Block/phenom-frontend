@@ -19,6 +19,7 @@ import {
   // Discover,
   Home,
   NFTCard,
+  Profile,
   // LostPage404,
   // Nft,
   // Profile,
@@ -27,9 +28,9 @@ import {
   // TopNfts,
   // CreateCollection,
 } from 'pages';
+import { CreateCollection } from 'pages/CreateCollection';
 
 import { routes } from 'appConstants';
-import { CreateCollection } from 'pages/CreateCollection';
 
 const RoutesPage = () => {
   const { loadNamespaces } = useLanguage();
@@ -107,6 +108,15 @@ const RoutesPage = () => {
           <Page
             classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
             component={<NFTCard />}
+          />
+        }
+      />
+      <Route
+        path={`${routes.profile.root}/*`}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<Profile />}
           />
         }
       />
