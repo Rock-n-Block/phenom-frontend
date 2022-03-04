@@ -8,6 +8,7 @@ export { ReactComponent as PlaceBidIcon } from './place-bid.svg';
 export { ReactComponent as DollarIcon } from './dollar.svg';
 export { ReactComponent as DeleteSVG } from './delete.svg';
 export { ReactComponent as ReloadSVG } from './reload.svg';
+export { default as iconCross } from './cross.svg';
 export { default as iconPencil } from './pencil.svg';
 export { default as iconHeart } from './heart.svg';
 export { default as iconPlus } from './plus.svg';
