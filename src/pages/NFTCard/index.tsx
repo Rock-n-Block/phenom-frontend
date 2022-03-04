@@ -40,7 +40,7 @@ const NFTCard: VFC = () => {
         <>
           <div className={styles.left}>
             <div className={styles.nftCardImgWrapper}>
-              {(nft.is_auction || nft.is_timed_auction) && (
+              {(nft.is_auc_selling || nft.is_timed_auc_selling) && (
                 <div className={styles.auction}>
                   <Text color="white">Auction</Text>
                 </div>
@@ -91,7 +91,7 @@ const NFTCard: VFC = () => {
             inStockNumber={nft.in_stock_number}
           />
           <div className={styles.nftCardImgWrapper}>
-            {(nft.is_auction || nft.is_timed_auction) && (
+            {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
               <div className={styles.auction}>
                 <Text color="white">Auction</Text>
               </div>
