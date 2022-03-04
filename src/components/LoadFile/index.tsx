@@ -228,10 +228,7 @@ const LoadFile: VFC<ILoadFile> = ({
         <Text
           id="createPage.UploadExtensions"
           values={{
-            extensions: extensions
-              .slice(0, extensions.length - 1)
-              .map((e) => e.toUpperCase())
-              .join(', '),
+            extensions: extensions.map((e) => e.toUpperCase()).join(', '),
             size: reqMaxSize.size,
             unit: `${toPC('upload units', 'createPage')}.${reqMaxSize.unit}`,
           }}
