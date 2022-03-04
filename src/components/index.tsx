@@ -22,5 +22,7 @@ export { default as Selector } from './Selector';
 export { default as UploadAvatar } from './UploadAvatar';
 export { default as Modal } from './Modal';
 export { default as Loader } from './Loader';
+export { default as TabBar } from './TabBar';
+export { default as Clipboard } from './Clipboard';
 export * from './Typography';
 export * from './Preview';
