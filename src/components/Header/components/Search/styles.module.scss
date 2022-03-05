@@ -22,6 +22,8 @@
     position: absolute;
     padding: 0 0 0 18px;
     height: 40px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 

@@ -43,7 +43,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
     },
     [setFieldValue],
   );
-  console.log(errors);
+
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field

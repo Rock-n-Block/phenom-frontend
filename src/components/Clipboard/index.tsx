@@ -14,16 +14,18 @@ interface IClipboard {
   value: string;
   clipDelay?: number;
   className?: string;
+  theme?: 'white' | 'gray';
 }
 
 /**
  *
  * @param {string} value - clipboard value which will be displayed and copied
  * @param {number} [clipDelay] - delay of copping @default clipDelay = 2000 ms
- *  @param {string} [className] - class name for the wrapper
+ * @param {string} [className] - class name for the wrapper
+ * @param {'white' | 'gary'} [theme] - color theme of the clipboard
  * @returns
  */
-const Clipboard: VFC<IClipboard> = ({ value, clipDelay = 2000, className }) => {
+const Clipboard: VFC<IClipboard> = ({ value, clipDelay = 2000, className, theme = 'white' }) => {
   const { copy, copyStatus } = useClipboard(value, clipDelay);
   const [statusText, setStatusText] = useState('copied!');
 
@@ -32,7 +34,7 @@ const Clipboard: VFC<IClipboard> = ({ value, clipDelay = 2000, className }) => {
   }, [copyStatus]);
 
   return (
-    <div className={cn(styles['clipboard-wrapper'], className)}>
+    <div className={cn(styles['clipboard-wrapper'], styles[theme], className)}>
       <EllipsisText className={cn(styles['clipboard-wrapper__text'])}>
         <Text tag="span">{value}</Text>
       </EllipsisText>

@@ -38,6 +38,7 @@ const RoutesPage = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (pathname === routes.home.root) {
       loadNamespaces('Home');
     }
@@ -121,7 +122,7 @@ const RoutesPage = () => {
           />
         }
       />
-      <Route 
+      <Route
         path={routes.profile.edit}
         element={
           <Page
