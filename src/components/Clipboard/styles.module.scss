@@ -5,10 +5,10 @@
   padding: 8px 18px;
   border-radius: 12px;
   &.white{
-    background: $color-gray-0;
+    background: $color-light-4;
   }
   &.gray{
-      background: $color-light-1;
+      background: $color-gray-0;
   }
   @include transition;
   @include flexbox(center, space-between);

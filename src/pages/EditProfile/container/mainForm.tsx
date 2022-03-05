@@ -1,5 +1,6 @@
 import { useCallback, VFC } from 'react';
 
+import cn from 'classnames';
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, CopiedInput, DefaultInput, Text, TextArea, UploadAvatar } from 'components';
@@ -13,7 +14,9 @@ import styles from './styles.module.scss';
 const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
   setFieldValue,
   handleSubmit,
+  validateForm,
   errors,
+  touched,
   values,
 }) => {
   const setter = useCallback(
@@ -21,10 +24,15 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
     [setFieldValue],
   );
 
-  const onSubmitClick = useCallback(() => {
-    handleSubmit();
-  }, [handleSubmit]);
+  const onSubmitClick = useCallback(
+    (vals: any) => {
+      validateForm(vals);
+      handleSubmit();
+    },
+    [handleSubmit, validateForm],
+  );
 
+  console.log(errors);
   return (
     <Form className={styles['edit-profile__wrapper']}>
       <Text
@@ -81,7 +89,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="Input name"
             setValue={setter('name')}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.name}
+            error={touched.name ? errors.name : undefined}
           />
         )}
       />
@@ -96,7 +104,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="address"
             setValue={setter('address')}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.address}
+            error={touched.address ? errors.address : undefined}
           />
         )}
       />
@@ -111,7 +119,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             setValue={setter('description')}
             maxElements={500}
             className={styles['edit-profile__wrapper__description']}
-            error={errors.description}
+            error={touched.description ? errors.description : undefined}
           />
         )}
       />
@@ -126,7 +134,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="Input email"
             setValue={(value: string) => setFieldValue('socials.email', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.email}
+            error={touched.socials?.email ? errors.socials?.email : undefined}
           />
         )}
       />
@@ -148,8 +156,8 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             label="Website"
             placeholder="Input website"
             setValue={(value: string) => setFieldValue('socials.site', value)}
-            className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.site}
+            className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+            error={touched.socials?.site ? errors.socials?.site : undefined}
           />
         )}
       />
@@ -167,7 +175,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="Input instagram"
             setValue={(value: string) => setFieldValue('socials.instagram', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.instagram}
+            error={touched.socials?.instagram ? errors.socials?.instagram : undefined}
           />
         )}
       />
@@ -182,12 +190,16 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="Input twitter"
             setValue={(value: string) => setFieldValue('socials.twitter', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.twitter}
+            error={touched.socials?.twitter ? errors.socials?.twitter : undefined}
           />
         )}
       />
       <div className={styles['btns-section']}>
-        <Button className={styles['submit-btn']} onClick={onSubmitClick}>
+        <Button
+          disabled={Object.keys(errors).length !== 0}
+          className={styles['submit-btn']}
+          onClick={() => onSubmitClick(values)}
+        >
           Save
         </Button>
       </div>
