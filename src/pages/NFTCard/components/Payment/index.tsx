@@ -167,7 +167,7 @@ const Payment: VFC<IPayment> = ({
           {nft?.highest_bid && (
             <div className={styles.highest}>
               <Avatar id={nft?.highest_bid.id} avatar={nft?.highest_bid.bidder_avatar} />
-              <Text>
+              <Text className={styles.highestName}>
                 {nft?.highest_bid.bidder}{' '}
                 <img alt="arrow" src={iconArrowUpGreen} className={styles.arrow} />{' '}
               </Text>
@@ -226,7 +226,15 @@ const Payment: VFC<IPayment> = ({
                     Transfer
                   </Button>
                 )}
-
+                {isUserCanEndAuction && (
+                  <Button
+                    color="dark"
+                    className={cx(styles.button, styles.remove)}
+                    onClick={() => handleSetModalType(ModalType.approve)}
+                  >
+                    Accept bid
+                  </Button>
+                )}
                 {isUserCanRemoveFromSale && (
                   <Button
                     color="dark"
@@ -236,7 +244,7 @@ const Payment: VFC<IPayment> = ({
                     Remove from sale
                   </Button>
                 )}
-                {isUserCanChangePrice ? (
+                {isUserCanChangePrice && (
                   <Button
                     color="light"
                     className={styles.button}
@@ -245,7 +253,8 @@ const Payment: VFC<IPayment> = ({
                   >
                     Edit
                   </Button>
-                ) : (
+                )}
+                {isUserCanPutOnSale && (
                   <Button color="light" className={styles.button} onClick={handleList}>
                     List for sale
                   </Button>
