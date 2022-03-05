@@ -79,9 +79,6 @@ export default (nft: TNullable<INft>, userId: string | number) => {
       if (nft.standart === 'ERC721') {
         return true;
       }
-      if (nft.standart === 'ERC1155' && nft.highest_bid?.bidder_id !== userId) {
-        return true;
-      }
     }
     return false;
   }, [nft, isOwner, userId]);
