@@ -119,7 +119,7 @@ export const Text: FC<IText> = (props) => {
 
   useEffect(() => {
     const pathChecker = /^(.+)\.([^.]+)$/gm;
-    if (id && pathChecker.test(id)) {
+    if (id && pathChecker.test(id) && id !== 'none') {
       let trans = t(id);
       if (values) {
         Object.entries(values).forEach(([key, val]) => {
@@ -130,7 +130,7 @@ export const Text: FC<IText> = (props) => {
         setTranslate(trans);
       }
       setFailed(false);
-    } else if (isDebug) {
+    } else if (id !== 'none' && isDebug) {
       console.error(
         `✔️ id of translate is not valid. Try to load "${id}". Fallback: "${props.children}"`,
       );

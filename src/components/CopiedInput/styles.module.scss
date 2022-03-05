@@ -1,0 +1,40 @@
+@import '/src/styles/helpers.scss';
+
+.clipboard-wrapper {
+    &__btn {
+      position: relative;
+      width: 100%;
+      padding-right: 20px;
+      @include flexbox(center, flex-end);
+      &-status{
+          position: absolute;
+          bottom: 100%;
+          left: 35%;
+          transform: translateX(-50%);
+          opacity: 0;
+          pointer-events: none;
+          @include transition;
+          &.copy-out{
+              opacity: 0;
+              transform: translateX(-50%);
+          }
+          &.copy-fail,
+          &.copy-success{
+              opacity: 1;
+              transform: translateX(-50%) translateY(-5px);
+          }
+          &.copy-fail{
+              color: $color-error;
+          }
+          &.copy-success{
+              color: $color-accent;
+          }
+      }
+      &:disabled{
+          cursor: not-allowed;
+          svg{
+              filter: hue-rotate(90deg);
+          }
+      }
+    }
+  }

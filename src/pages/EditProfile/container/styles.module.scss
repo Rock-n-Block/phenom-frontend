@@ -1,16 +1,7 @@
 @import '/src/styles/helpers.scss';
-.create-collection__wrapper {
+.edit-profile__wrapper {
+  width: clamp(310px, 100%, 532px);
   padding-bottom: 136px;
-  &__detail {
-    position: absolute;
-    top: -80px;
-    left: 0;
-    width: 100vw;
-    background: rgba($color-light-4, 0.5);
-    height: 422px;
-    z-index: -1;
-    @include transition;
-  }
   &__title {
     margin: 95px 0 50px;
     @include transition;
@@ -22,16 +13,17 @@
       @include flexbox;
     }
   }
+  &__socials{
+    margin: 60px 0 18px;
+  }
   &__avatar {
+    margin-bottom: 50px;
     position: relative;
-    top: -50%;
-    transform: translateY(-60%);
-    margin-bottom: -50px;
     @include flexbox;
   }
   &__logo {
     &-title {
-      margin-bottom: 24px;
+      margin: 12px 0;
     }
     &-subtitle {
       margin-bottom: 40px;
@@ -46,10 +38,8 @@
   }
   .btns-section {
     margin-top: 54px;
-    @include flexbox(flex-start, flex-start);
-    .submit-btn {
-      margin-right: 15px;
-    }
+    width: 100%;
+    @include flexbox(center, center);
     button {
       text-transform: uppercase;
     }
@@ -57,7 +47,7 @@
 }
 
 @include large-mobile {
-  .create-collection__wrapper {
+  .edit-profile__wrapper {
       padding: 0 20px 58px;
     &__detail {
       transform: translateY(-155px);

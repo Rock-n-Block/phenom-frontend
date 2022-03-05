@@ -1,0 +1,72 @@
+@import '/src/styles/helpers.scss';
+
+.about-me__wrapper {
+  width: 100%;
+  padding-top: 82px;
+  @include flexbox(flex-start, flex-start);
+  &__socials {
+    flex: 0 0 30%;
+  }
+  &__description {
+    flex: 0 0 clamp(320px, 100%, 550px);
+    line-height: 24px;
+  }
+}
+
+.social-item__wrapper {
+  position: relative;
+  &:not(:last-child) {
+    margin-bottom: 28px;
+  }
+  @include flexbox(center, flex-start);
+  &:hover {
+    .social-item__wrapper {
+      &__icon {
+        &.can-copy {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+      }
+    }
+  }
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba($color-light-4, 1);
+    @include flexbox;
+    @include transition;
+    &-copy {
+      width: 28px;
+      height: 28px;
+      @include flexbox;
+    }
+  }
+  &__text {
+    margin-left: 11px;
+  }
+}
+
+@include middle-tablet {
+  .about-me__wrapper {
+    padding-bottom: 40px;
+    @include flexbox(flex-start, flex-start, column-reverse);
+    &__socials {
+      flex: 0 0 auto;
+    }
+    &__description {
+      flex: 0 0 auto;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+  }
+}
+
+@include large-mobile{
+  .about-me__wrapper{
+    padding-top: 40px;
+  }
+}

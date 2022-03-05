@@ -26,6 +26,11 @@ export const maxSize: TMaxSize = {
   unit: 'Mb',
 };
 
+export const maxAvatarSize: TMaxSize = {
+  size: 30,
+  unit: 'Mb',
+};
+
 export const getFileGroup = (extension: TAvailableExtensions): TFilesGroup | null => {
   if (audioFormats.includes(extension as any)) {
     return 'audio';

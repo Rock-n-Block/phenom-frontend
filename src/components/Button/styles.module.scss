@@ -105,7 +105,7 @@
     font-weight: 600;
 
     color: $color-dark;
-    background: $color-light-4;
+    background: rgba($color-light-4, 0.6);
 
     & > svg {
       fill: $color-dark;
@@ -144,7 +144,7 @@
 }
 
 .small {
-  padding: 12px 24px;
+  padding: 10px 28px;
   border-radius: 30px;
   font-size: 13px;
   // height: 32px;

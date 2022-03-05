@@ -1,0 +1,32 @@
+@import '/src/styles/helpers.scss';
+
+.nft-list__body {
+  &.vertical {
+    .nft-list__body {
+      &__sort{
+        margin: 40px 0 0 0;
+        @include flexbox(center, space-between);
+      }
+      &__content {
+        margin: 32px 0 40px;
+        display: grid;
+        justify-content: center;
+        grid-gap: 25px;
+      }
+      &__load-more{
+        @include flexbox;
+      }
+    }
+  }
+}
+
+.nft-sort{
+  min-width: 192px;
+}
+
+@include middle-mobile{
+  .nft-sort{
+    min-width: 130px;
+    max-width: 160px;
+  }
+}

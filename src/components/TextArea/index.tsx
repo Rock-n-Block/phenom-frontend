@@ -25,7 +25,7 @@ const TextArea: VFC<ITextArea> = ({
   maxElements = 'infinity',
   className,
 }) => {
-  const [symbCount, setSymbCount] = useState(0);
+  const [symbCount, setSymbCount] = useState(value.length);
 
   const onFieldChange = useCallback(
     (e: FormEvent<HTMLTextAreaElement>) => {
