@@ -30,6 +30,8 @@ const Stock: VFC<IStock> = ({ count, setCount, className }) => {
         label="Quantity"
         inputClassName={styles['nft-quantity__wrapper__input']}
         maxCounterWidth="160px"
+        minAmount={1}
+        writeable
       />
     </section>
   );

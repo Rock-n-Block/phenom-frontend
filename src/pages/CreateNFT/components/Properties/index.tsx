@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState, VFC } from 'react';
 
+import cn from 'classnames';
+
 import { Button, DefaultInput, DeletePreview, Text } from 'components';
 
 import { TSingleProp } from 'types';
 
 import styles from './styles.module.scss';
-
-import cn from 'classnames';
 
 type PropError = {
   id: number | null;
@@ -24,6 +24,7 @@ interface IProperties {
   initProps: TSingleProp[];
   setProps: (props: TSingleProp[]) => void;
   className?: string;
+  initErrors?: any[] | any;
 }
 
 const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField, error }) => {
@@ -34,7 +35,7 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
           name={`property${name}${id}`}
           value={name}
           label="Name"
-          placeholder="Input name"
+          placeholder="Input Text"
           className={styles['single-prop__body-inputs__input']}
           labelClassName={styles['single-prop__body-inputs__label']}
           setValue={(v: string) => setField('name', v, id)}
@@ -44,7 +45,7 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
           name={`property${type}${id}`}
           value={type}
           label="Type"
-          placeholder="Input type"
+          placeholder="Input Text"
           className={styles['single-prop__body-inputs__input']}
           labelClassName={styles['single-prop__body-inputs__label']}
           setValue={(v: string) => setField('type', v, id)}
@@ -56,7 +57,7 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
   );
 };
 
-const Properties: VFC<IProperties> = ({ initProps, setProps, className }) => {
+const Properties: VFC<IProperties> = ({ initProps, setProps, className, initErrors }) => {
   const [properties, setProperties] = useState<TSingleProp[]>(initProps);
   const [errors, setErrors] = useState<PropError[]>([]);
   const idx = useRef(0);
@@ -108,6 +109,11 @@ const Properties: VFC<IProperties> = ({ initProps, setProps, className }) => {
     return res;
   }, []);
 
+  useEffect(() => {
+    if (initErrors) setErrors(checkPropsValid(properties));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [properties, initErrors]);
+
   const getErrorById = useCallback((id: number) => errors.find((e) => e.id === id), [errors]);
 
   const addProp = useCallback(() => {
@@ -128,7 +134,8 @@ const Properties: VFC<IProperties> = ({ initProps, setProps, className }) => {
 
   useEffect(() => {
     setProps(properties);
-  }, [properties, setProps]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [properties]);
 
   return (
     <section className={cn(styles['properties-wrapper'], className)}>
@@ -147,7 +154,9 @@ const Properties: VFC<IProperties> = ({ initProps, setProps, className }) => {
         ))}
       </div>
       <div>
-        <Button onClick={addProp} className={styles['properties-wrapper__add']}>Add more +</Button>
+        <Button onClick={addProp} className={styles['properties-wrapper__add']}>
+          Add more +
+        </Button>
       </div>
     </section>
   );

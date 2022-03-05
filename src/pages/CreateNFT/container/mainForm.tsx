@@ -22,11 +22,16 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
   handleBlur,
   handleSubmit,
   handleReset,
+  validateForm,
   type,
 }) => {
-  const onSubmitClick = useCallback(() => {
-    handleSubmit();
-  }, [handleSubmit]);
+  const onSubmitClick = useCallback(
+    (vals: any) => {
+      validateForm(vals);
+      handleSubmit();
+    },
+    [handleSubmit, validateForm],
+  );
 
   const onCancelClick = useCallback(() => {
     handleReset();
@@ -38,6 +43,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
     },
     [setFieldValue],
   );
+  console.log(errors);
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field
@@ -60,7 +66,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             value={values.name}
             setValue={(value: string) => setFieldValue('name', value)}
             label="Name"
-            placeholder="NFT name"
+            placeholder="Input Text"
             onBlur={handleBlur}
             error={touched.name && errors.name ? errors.name : undefined}
             className={styles['field-data']}
@@ -75,7 +81,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             value={values.description}
             setValue={(value: string) => setFieldValue('description', value)}
             label="Description"
-            placeholder="Description"
+            placeholder="Input Text"
             error={touched.description && errors.description ? errors.description : undefined}
             maxElements={createValidator.description.max}
             className={styles['field-data']}
@@ -87,7 +93,8 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <Dropdown
             key="category"
-            value={values.category || ''}
+            value={values.category || null}
+            placeholder="Select category"
             setValue={(value: any) => setFieldValue('category', value)}
             returnBy="id"
             drawBy="category"
@@ -105,7 +112,8 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           <Dropdown
             key="subcategory"
             name="subcategory"
-            value={values.subcategory || ''}
+            placeholder="Select subcategory"
+            value={values.subcategory || null}
             setValue={(value: any) => setFieldValue('subcategory', value)}
             returnBy="id"
             drawBy="category"
@@ -121,11 +129,12 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <Properties
             initProps={values.properties}
-            setProps={() => {
+            setProps={
               // eslint-disable-next-line no-unused-expressions
-              (value: TSingleProp[]) => setFieldValue('properties', value);
-            }}
+              (value: TSingleProp[]) => setFieldValue('properties', value)
+            }
             className={styles['field-prop']}
+            initErrors={touched.properties && errors.properties}
           />
         )}
       />
@@ -147,7 +156,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
           name="quantity"
           render={() => (
             <Stock
-              count={values.quantity || '0'}
+              count={values.quantity || ''}
               setCount={(value: string) => setFieldValue('quantity', value)}
               className={styles['field-quantity']}
             />
@@ -155,10 +164,14 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         />
       )}
       <div className={styles['btns-section']}>
-        <Button className={styles['submit-btn']} onClick={onSubmitClick}>
+        <Button
+          disabled={Object.keys(errors).length !== 0}
+          className={styles['submit-btn']}
+          onClick={() => onSubmitClick(values)}
+        >
           Create Item
         </Button>
-        <Button color="outline" onClick={onCancelClick}>
+        <Button color="outline" onClick={() => onCancelClick()}>
           Cancel
         </Button>
       </div>

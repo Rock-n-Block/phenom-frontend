@@ -17,7 +17,7 @@ type TProperty = {
 type TCategory = {
   id: number;
   category: string;
-}
+};
 
 export type TCreateNFT = 'Single' | 'Multiple';
 
@@ -50,7 +50,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       collections: [],
       media: null,
       preview: null,
-      quantity: '',
+      quantity: '1',
     }),
     [type],
   );
@@ -60,15 +60,29 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     validationSchema: Yup.object().shape({
       name: Yup.string()
         .min(createValidator.name.min, 'Too short!')
-        .max(createValidator.name.max, 'Too long!'),
+        .max(createValidator.name.max, 'Too long!')
+        .required(),
+      description: Yup.string().max(createValidator.description.max, 'Too long!'),
+      properties: Yup.array().of(
+        Yup.object()
+          .shape({
+            id: Yup.number(),
+            name: Yup.string().min(createValidator.properties.name).required('name is required'),
+            type: Yup.string().min(createValidator.properties.type).required('type is required'),
+          })
+          .notRequired()
+          .default(undefined),
+      ),
+      quantity: Yup.string()
+        .test('count', 'not enough', (val) => Number(val) >= createValidator.quantity)
+        .required(),
     }),
     handleSubmit: (values) => {
       console.log(values);
     },
-    validateOnChange: true,
     displayName: 'create-nft',
   })(MainForm);
-  return <FormWithFormik type={type}/>;
+  return <FormWithFormik type={type} />;
 };
 
 export default CreateFormContainer;

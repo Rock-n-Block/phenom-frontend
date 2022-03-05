@@ -7,9 +7,6 @@
     @include flexbox(center, space-between);
     .fetching-button {
       @include transition;
-      &:hover {
-        transform: rotate(360deg);
-      }
       &:disabled {
         filter: hue-rotate(90deg);
         opacity: 0.5;
@@ -30,6 +27,7 @@
         height: 24px;
         border-radius: 50%;
         background: $color-light-0;
+        color: $color-black;
         font-size: 24px;
         font-weight: normal;
         @include flexbox(center, center);
