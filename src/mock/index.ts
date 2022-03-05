@@ -19,6 +19,7 @@ const mock = {
   },
   search: searchAvatar,
   user: userAvatar,
+  id: 1,
   trending: trendingAvatar,
   topCollection: topCollectionAvatar,
   nftCard: {
