@@ -19,6 +19,7 @@ const mock = {
   },
   search: searchAvatar,
   user: userAvatar,
+  id: 1,
   trending: trendingAvatar,
   topCollection: topCollectionAvatar,
   nftCard: {
@@ -59,7 +60,8 @@ const mock = {
           avatar: userAvatar,
         },
       ],
-      bids: [],
+      bids: [23],
+      highest_bid: { id: 2, bidder: 'Name Name', bidder_avatar: userAvatar },
       collection: { avatar: topCollectionAvatar, id: 1, name: 'Collection Name1', price: '22343' },
       price: 234234,
       USD_price: 223.34,

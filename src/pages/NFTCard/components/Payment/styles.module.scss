@@ -17,6 +17,14 @@
   margin-right: 16px;
 }
 
+.highest{
+  @include flexbox(center, flex-start);
+
+  &Name{
+    margin-left: 16px;
+  }
+}
+
 .button {
   text-transform: uppercase;
   img {

@@ -9,12 +9,12 @@ import mock from 'mock';
 import { Button, H4, Text } from 'components';
 import { sliceString } from 'utils';
 
+import { routes } from 'appConstants';
 import { usePopover } from 'hooks';
 
 import { CrossIcon, iconArrowDownBlue, iconCopy, iconCreate, iconEdit, iconExit } from 'assets/img';
 
 import styles from './User.module.scss';
-import { routes } from 'appConstants';
 
 interface IUserProps {
   className?: string;
@@ -67,14 +67,14 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
       </div>
       <div className={styles.head}>
         <div className={styles.top}>
-          <div className={styles.avatar}>
+          <Link to={routes.profile.link(mock.id)} className={styles.avatar}>
             <img src={mock.user} alt="avatar" />
             <Text>Username</Text>
-          </div>
-          <div className={styles.edit}>
+          </Link>
+          <Link to={routes.profile.edit} className={styles.edit}>
             <img src={iconEdit} alt="edit" />
             <Text>EDIT</Text>
-          </div>
+          </Link>
         </div>
         <div className={styles.balance}>
           <Text color="blue">0.00 PHETA</Text>
