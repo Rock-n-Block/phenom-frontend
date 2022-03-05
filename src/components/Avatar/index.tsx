@@ -29,7 +29,9 @@ const Avatar: FC<IProps> = ({
 }) => {
   return (
     <Link
-      to={isCollection ? routes.collection.link(id || '') : routes.profile.link(id || '', 'about')}
+      to={
+        isCollection ? routes.collection.link(id || '') : routes.profile.link(id || '', 'about-me')
+      }
       className={cn(styles.avatar, className, { [styles.withAnim]: withAnim })}
     >
       <FallbackImage

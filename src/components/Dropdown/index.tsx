@@ -106,7 +106,7 @@ const Dropdown: FC<IDropdownProps> = ({
                     tabIndex={0}
                     role="button"
                     className={cn(styles.option, {
-                      [styles.selectioned]: option[drawBy] === value[returnBy],
+                      [styles.selectioned]: option[drawBy] === value[drawBy],
                     })}
                     onClick={() => handleClick(option)}
                     key={`dropdown_option_${option[returnBy]}`}
@@ -132,7 +132,7 @@ const Dropdown: FC<IDropdownProps> = ({
                   },
                   option.symbol === value ? 'text-gradient' : '',
                 )}
-                onClick={() => handleClick(option[returnBy]?.toUpperCase())}
+                onClick={() => handleClick(option)}
                 key={`dropdown_option_${option[returnBy]}`}
               >
                 <img alt="" className={styles.image} src={option.image} />

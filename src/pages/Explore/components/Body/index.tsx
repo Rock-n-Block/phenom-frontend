@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import cx from 'classnames';
+import { useLanguage } from 'context';
 import mock from 'mock';
 
 import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'components';
@@ -33,7 +33,7 @@ const categories = [
   },
 ];
 const Body: VFC = () => {
-  const { t } = useTranslation('Explore');
+  const { t } = useLanguage();
   const [checkedCategory, setCheckedCategory] = useState(categories[0].key);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
@@ -57,7 +57,7 @@ const Body: VFC = () => {
       authorId: 1,
       bids: [1],
       isAuction: true,
-      USD_price: 22.03,
+      USD_price: '22.03',
     },
     {
       artId: '0342348',
@@ -69,7 +69,7 @@ const Body: VFC = () => {
       authorAvatar: mock.user,
       authorId: 1,
       isAuction: false,
-      USD_price: 22.03,
+      USD_price: '22.03',
     },
     {
       artId: '0342348',
@@ -82,7 +82,7 @@ const Body: VFC = () => {
       authorId: 1,
       bids: [],
       isAuction: true,
-      USD_price: 22.03,
+      USD_price: '22.03',
     },
   ];
 
@@ -165,7 +165,7 @@ const Body: VFC = () => {
         </div>
         <div className={styles.load}>
           <Button color="outline" className={styles.loadBtn}>
-            {t('Filters.LoadMore')}
+            {t('Explore:Filters.LoadMore')}
           </Button>
         </div>
       </div>

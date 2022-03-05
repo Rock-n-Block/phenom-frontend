@@ -94,6 +94,9 @@ $color-gradient-2: linear-gradient(96.38deg, #dde1ff 10.59%, #fee8fd 126.41%);
     padding-left: 20px;
     padding-right: 20px;
   }
+  @include middle-mobile{
+    max-width: 100vw;
+  }
 }
 
 //placeholder

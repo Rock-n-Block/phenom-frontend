@@ -1,0 +1,80 @@
+@import '/src/styles/helpers.scss';
+
+.profile-page__wrapper {
+  padding-top: 58px;
+  &__detail {
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 100vw;
+    background: rgba($color-light-4, 0.5);
+    height: 660px;
+    z-index: -1;
+    @include transition;
+  }
+  &-info {
+    padding-bottom: 146px;
+    &.owner-page {
+      padding-bottom: 90px;
+    }
+    @include flexbox(center, flex-start, column);
+    @include container;
+    &__avatar {
+      margin-bottom: 16px;
+    }
+    &__name {
+      margin-bottom: 10px;
+    }
+    &__balance {
+      line-height: 24px;
+      margin-bottom: 4px;
+      &-amount {
+        line-height: 32px;
+        margin-bottom: 16px;
+      }
+    }
+    &__address {
+      margin-bottom: 16px;
+    }
+  }
+  &-tab-bar {
+    max-width: 1082px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: -24px;
+  }
+  &-content {
+    @include container;
+    padding-bottom: 130px;
+  }
+}
+
+.tab-width {
+  max-width: 150px;
+}
+
+@media screen and (max-width: 1082px) {
+  .profile-page__wrapper {
+    &-tab-bar {
+      max-width: 100vw;
+    }
+  }
+}
+
+@include large-mobile {
+  .profile-page__wrapper {
+    padding-top: 28px;
+    &__detail{
+      transform: translateY(-100px);
+    }
+    &-info {
+      padding-bottom: 50px;
+      &.owner-page {
+        padding-bottom: 20px;
+      }
+      &__address {
+        width: clamp(280px, 100%, 280px);
+      }
+    }
+  }
+}

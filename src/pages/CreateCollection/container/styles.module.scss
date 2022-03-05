@@ -9,6 +9,7 @@
     background: rgba($color-light-4, 0.5);
     height: 422px;
     z-index: -1;
+    @include transition;
   }
   &__title {
     margin: 95px 0 50px;

@@ -1,3 +1,5 @@
+import { TSingleCollection } from "types";
+
 export const CategoryOptions = [
   { id: 1, category: '1' },
   { id: 2, category: '2' },
@@ -10,7 +12,7 @@ export const SubCategoryOptions = [
   { id: 3, category: 's3' },
 ];
 
-export const CollectionsList = [
+export const CollectionsList: TSingleCollection[] = [
   {
     id: 1,
     name: 'Collection name',

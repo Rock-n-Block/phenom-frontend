@@ -15,6 +15,16 @@ interface ICollectionCard {
   isSelected?: boolean;
 }
 
+/**
+ * 
+ * @param {TSingleCollection} collection - entity of the collection
+ * @param {boolean} [selectable] - allows user to select card
+ * @default selectable = false
+ * @param {(collection: TSingleCollection) => void} [setIsSelected] - callback which will be called when card has been selected. Return collection
+ * @param {boolean} [isSelected] - initial state of card
+ * @default isSelected = false
+ * @returns 
+ */
 const CollectionCard: VFC<ICollectionCard> = ({
   collection,
   selectable = false,

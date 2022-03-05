@@ -22,5 +22,6 @@ export { default as Selector } from './Selector';
 export { default as UploadAvatar } from './UploadAvatar';
 export { default as TabBar } from './TabBar';
 export { default as Clipboard } from './Clipboard';
+export { default as NFTList } from './NFTList';
 export * from './Typography';
 export * from './Preview';
