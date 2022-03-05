@@ -10,6 +10,7 @@ import { useLanguage } from 'context';
 import {
   Create,
   CreateNFT,
+  EditProfile,
   Explore,
   // Activity,
   // CollectionPage,
@@ -117,6 +118,15 @@ const RoutesPage = () => {
           <Page
             classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
             component={<Profile />}
+          />
+        }
+      />
+      <Route 
+        path={routes.profile.edit}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<EditProfile />}
           />
         }
       />

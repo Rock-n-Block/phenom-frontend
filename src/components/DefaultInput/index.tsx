@@ -6,24 +6,48 @@ import { checkMinMax, validateOnlyNumbers } from 'utils';
 
 import styles from './styles.module.scss';
 
-interface IDefaultInput {
+export interface IDefaultInput {
   name: string;
   value: string;
   setValue: (value: string) => void;
   subInfo?: string | ReactElement;
-  maxSubInfoWidth?: string | ReactElement;
+  maxSubInfoWidth?: string;
   placeholder?: string;
   error?: string;
   label?: string | ReactElement;
   className?: string;
   labelClassName?: string;
-  onFocus?: (...args: any) => void;
-  onBlur?: (...args: any) => void;
+  onFocus?: (e: FormEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FormEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   type?: 'text' | 'number';
   min?: string | number;
   max?: string | number;
 }
+
+/**
+ *
+ * @param {string} name - uniq id of the component
+ * @param {string} value - the value of the input
+ * @param {(value: string) => void} setValue - callback function which will be called when input has been changed
+ * @param {string | ReactElement} [subInfo] - element which will be placed at the right side of the input for further modifications
+ * @param {string} [maxSubInfoWidth] - max width of the "subInfo"
+ * @default maxSubInfoWidth = 150px
+ * @param {string} [placeholder]
+ * @param {error} [error] - error string
+ * @param {string | ReactElement} [label] - label of the input
+ * @param {string} [className] - input class name
+ * @param {string} [labelClassName] - label class name
+ * @param {(e: FormEvent<HTMLInputElement>) => void} [onFocus] - callback which will be called when input has focus
+ * @param {(e: FormEvent<HTMLInputElement>) => void} [onBlur] - callback which will be called when input has lost focus
+ * @param {boolean} [disabled]
+ * @default disabled = false
+ * @param {'text' | 'number'} [type] - type of the input
+ * @default type = 'text'
+ * @param {'string' | 'number' } [min] - minimal count of symbols
+ * @param {'string' | 'number' } [max] - maximal count of symbols
+ * @returns
+ */
 
 const DefaultInput: VFC<IDefaultInput> = ({
   name,
@@ -50,7 +74,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
       e.preventDefault();
       e.stopPropagation();
       setIsActive(true);
-      onFocus?.();
+      onFocus?.(e);
     },
     [onFocus],
   );
@@ -60,7 +84,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
       e.preventDefault();
       e.stopPropagation();
       setIsActive(false);
-      onBlur?.();
+      onBlur?.(e);
     },
     [onBlur],
   );
