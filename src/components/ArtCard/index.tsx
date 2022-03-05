@@ -158,11 +158,11 @@ const ArtCard: FC<Props> = ({
                 Minimal bid
               </Text>
             ))}
-          <Text className={styles.artCardPrice} size="xl" color="blue" weight="semibold">
+          <Text id="none" className={styles.artCardPrice} size="xl" color="blue" weight="semibold">
             {`${toFixed(price, 3)} ${asset}`}{' '}
           </Text>
           <div className={styles.bottom}>
-            <Text weight="bold" color="lightGray">
+            <Text id="none" weight="bold" color="lightGray">
               $ {USD_price}
             </Text>
             {!bids?.length ? (
@@ -186,7 +186,7 @@ const ArtCard: FC<Props> = ({
                 icon={iconHeart}
                 color="transparent"
               />
-              <Text weight="bold">{numberFormatter(likesCount, 3)}</Text>
+              <Text id="none" weight="bold">{numberFormatter(likesCount, 3)}</Text>
             </div>
           )}
         </div>
