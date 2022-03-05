@@ -1,6 +1,15 @@
 @import '/src/styles/helpers.scss';
 
 .clipboard-wrapper {
+  width: clamp(280px, 100%, 345px);
+  padding: 8px 18px;
+  border-radius: 12px;
+  background: $color-light-4;
+  @include transition;
+  @include flexbox(center, space-between);
+  &__text {
+    flex: 0 0 calc(100% - 30px);
+  }
   &__btn {
     flex: 0 0 20px;
     position: relative;
