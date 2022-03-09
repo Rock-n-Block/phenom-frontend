@@ -176,6 +176,10 @@ html {
   box-sizing: inherit;
 }
 
+*::placeholder{
+  font-family: 'Gilroy', sans-serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;

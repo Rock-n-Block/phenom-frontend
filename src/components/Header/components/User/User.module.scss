@@ -150,6 +150,11 @@
 }
 
 .connectSection{
+  &Desktop{
+    .connectText{
+      text-transform: uppercase;
+    }
+  }
   &Mobile{
     display: none;
   }
@@ -337,5 +342,15 @@
 @include large-mobile{
   .address{
     width: 100%;
+  }
+  .connectSection{
+    &Mobile{
+      &Motion{
+        top: calc(100% + 5px);
+        .arrow{
+          transform: scale(0.9) translateY(2px);
+        }
+      }
+    }
   }
 }

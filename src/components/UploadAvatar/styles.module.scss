@@ -9,6 +9,7 @@
   border: 1px dashed $color-dark-4;
   overflow: hidden;
   position: relative;
+  overflow: hidden;
   @include transition;
   &.failed-load {
     background: rgba($color-error, 0.2);
