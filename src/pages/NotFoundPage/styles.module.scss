@@ -1,0 +1,45 @@
+@import 'src/styles/helpers.scss';
+
+.notFound {
+  background-color: rgba($color-light-4, 0.5);
+  border-radius: 40px;
+  margin: 80px auto 0;
+  padding: 64px;
+  @include flexbox;
+  flex-direction: column;
+  max-width: 712px;
+  width: 100%;
+
+  &Img{
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: 517px;
+  }
+
+  &Btn{
+    margin-top: 44px;
+    text-transform: uppercase;
+  }
+  
+  &Wrapper{
+    @include container;
+    margin-bottom: 300px;
+  }
+}
+
+.text{
+  width: 70%;
+
+  &Title{
+    margin-bottom: 12px;
+  }
+}
+
+@include large-mobile{
+  .notFound{
+    padding: 104px 20px 48px;
+  }
+  .text{
+    width: 100%;
+  }
+}
