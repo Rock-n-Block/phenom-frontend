@@ -34,8 +34,10 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
   );
 
   const onCancelClick = useCallback(() => {
-    handleReset();
-  }, [handleReset]);
+    if (!Object.keys(touched)) {
+      handleReset();
+    }
+  }, [handleReset, touched]);
 
   const handleSetFieldValue = useCallback(
     (fieldName: string) => (value: any) => {

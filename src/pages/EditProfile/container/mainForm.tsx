@@ -33,7 +33,6 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
     [handleSubmit, validateForm],
   );
 
-  console.log(errors, touched);
   return (
     <Form className={styles['edit-profile__wrapper']}>
       <Text
