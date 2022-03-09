@@ -31,7 +31,7 @@ interface IUserProps {
   isDesktop: boolean;
 }
 
-const UserBody: FC<{ user: any }> = ({ user }) => {
+const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect }) => {
   const dropdownOptions = useMemo(
     () => [
       {
@@ -60,11 +60,12 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
       },
       {
         title: 'Exit',
-        url: '/',
+        url: '',
         icon: iconExit,
+        onClick: disconnect
       },
     ],
-    [],
+    [disconnect],
   );
 
   const { closePopover } = usePopover();
@@ -115,11 +116,11 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
               tabIndex={0}
               className={styles.item}
               key={index}
-              onClick={() => {}}
+              onClick={option.onClick}
               role="button"
-              onKeyDown={() => {}}
+              onKeyDown={option.onClick}
             >
-              <Text className={styles.text} weight="medium" size="m">
+              <Text className={styles.text} weight="bold" size="m" align="center">
                 {option.title}
               </Text>
             </div>
@@ -130,7 +131,11 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
   );
 };
 
-const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
+const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
+  user,
+  close,
+  disconnect,
+}) => {
   const dropdownOptions = useMemo(
     () => [
       {
@@ -229,7 +234,11 @@ const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
           </Link>
         </div>
       </div>
-      <Button color="transparent" className={cx(styles.itemMobile, styles.exit)}>
+      <Button
+        color="transparent"
+        className={cx(styles.itemMobile, styles.exit)}
+        onClick={disconnect}
+      >
         <Text className={styles.text} tag="span">
           Exit
         </Text>
@@ -296,7 +305,7 @@ const ConnectSection: VFC<IConnectSection> = ({ connect }) => {
 const User: FC<IUserProps> = ({ className, isDesktop }) => {
   const [isBodyOpen, setIsBodyOpen] = useState(false);
   const { address, id } = useShallowSelector<State, UserState>(userSelector.getUser);
-  const { connect } = useWalletConnectContext();
+  const { connect, disconnect } = useWalletConnectContext();
 
   const handleOpenBody = useCallback((value: boolean) => {
     setIsBodyOpen(value);
@@ -308,8 +317,8 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
     },
     [connect],
   );
-    console.log(address);
-  if (!address) {
+  console.log('address', address, 'id', id);
+  if (!address && !id) {
     return <ConnectSection connect={onConnectClick} />;
   }
   return isDesktop ? (
@@ -318,7 +327,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
         <img src={mock.user} alt="Avatar" />
       </Popover.Button>
       <Popover.Body className={styles.popoverBody}>
-        <UserBody user={{ id, address }} />
+        <UserBody user={{ id, address }} disconnect={disconnect} />
       </Popover.Body>
     </Popover>
   ) : (
@@ -331,7 +340,11 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
         <Burger isOpen={isBodyOpen} />
       </Button>
       {isBodyOpen ? (
-        <UserMobile user={{ id, address }} close={() => setIsBodyOpen(false)} />
+        <UserMobile
+          user={{ id, address }}
+          close={() => setIsBodyOpen(false)}
+          disconnect={disconnect}
+        />
       ) : (
         <></>
       )}
