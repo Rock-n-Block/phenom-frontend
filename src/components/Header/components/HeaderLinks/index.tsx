@@ -2,13 +2,18 @@ import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 import { Link, useLocation } from 'react-router-dom';
 
+import userSelector from 'store/user/selectors';
+
 import cx from 'classnames';
 import { Popover } from 'containers';
+import { requirements, TRequirements } from 'containers/GuardRoute';
 
 import { Button, Text } from 'components';
+import Clipboard from 'components/Clipboard';
 
 import { routes } from 'appConstants';
-import { usePopover, useWindowSize } from 'hooks';
+import { usePopover, useShallowSelector, useWindowSize } from 'hooks';
+import { State, UserState } from 'types';
 
 import styles from './styles.module.scss';
 
@@ -80,6 +85,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
 const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
   const navigate = useNavigate();
   const { width } = useWindowSize();
+  const { address } = useShallowSelector<State, UserState>(userSelector.getUser);
 
   const location = useLocation();
 
@@ -92,14 +98,15 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
         isNested: width > 768,
         internalLinks: tags,
         url: width < 768 ? routes.explore.root : '',
+        guarded: [] as TRequirements[],
       },
       {
         url: routes.create.root,
         active: location.pathname.includes(routes.create.root),
         title: 'Create',
         isNested: false,
+        guarded: ['logged'] as TRequirements[],
       },
-      { title: '0x76F2a6e3...Cb92d63b5', url: '/', isUnderlined: true },
     ],
     [location.pathname, width],
   );
@@ -113,7 +120,10 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
 
   return (
     <div className={cx(styles.headerNavigation, className)}>
-      {nav.map(({ url, title, active, disabled, isNested, internalLinks, isUnderlined }) => {
+      {nav.map(({ url, title, active, disabled, isNested, internalLinks, guarded }) => {
+        if (!guarded.every((g) => requirements[g]({ isLogged: address.length !== 0 }))) {
+          return null;
+        }
         if (isNested && !disabled) {
           return (
             <Popover position="center" key={title}>
@@ -144,11 +154,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
               key={title}
               color="transparent"
               onClick={() => handleMenuItemClick(url)}
-              className={cx(
-                styles.linkBtn,
-                { [styles.active]: active },
-                { [styles.underline]: isUnderlined },
-              )}
+              className={cx(styles.linkBtn, { [styles.active]: active })}
             >
               <Text
                 weight="bold"
@@ -163,6 +169,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
         }
         return null;
       })}
+      {address && <Clipboard className={styles.copiedAddress} value={address} format="default" />}
     </div>
   );
 };

@@ -171,7 +171,7 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
           Menu
         </H4>
       </div>
-      <Clipboard theme="gray" value={user.address} />
+      <Clipboard theme="gray" value={user.address} className={styles.address} />
       <div className={cx(styles.dropdown, { [styles.active]: isLinksOpen })}>
         <div
           onKeyDown={() => {}}
@@ -319,7 +319,6 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
     },
     [connect],
   );
-  console.log('address', address, 'id', id);
   if (!address && !id) {
     return <ConnectSection connect={onConnectClick} />;
   }

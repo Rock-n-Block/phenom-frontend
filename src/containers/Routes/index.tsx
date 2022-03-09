@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 // import { useMst } from 'store';
-import { Page } from 'containers';
+import { GuardRoute, Page } from 'containers';
 import { useLanguage } from 'context';
 
 // import { GuardedRoute } from 'components';
@@ -21,7 +21,7 @@ import {
   Home,
   NFTCard,
   NotFoundPage,
-  Profile
+  Profile,
   // LostPage404,
   // Nft,
   // Profile,
@@ -58,7 +58,6 @@ const RoutesPage = () => {
       />
       <Route exact path={routes.profile.edit} render={() => <Page component={<ProfileEdit />} />} />
       <Route path={routes.profile.root} render={() => <Page component={<Profile />} />} /> */}
-
       <Route
         path="*"
         element={
@@ -76,37 +75,45 @@ const RoutesPage = () => {
       <Route
         path={routes.create.root}
         element={
-          <Page
-            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<Create />}
-          />
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<Create />}
+            />
+          </GuardRoute>
         }
       />
       <Route
         path={routes.create.single}
         element={
-          <Page
-            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<CreateNFT type="Single" />}
-          />
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<CreateNFT type="Single" />}
+            />
+          </GuardRoute>
         }
       />
       <Route
         path={routes.create.multiple}
         element={
-          <Page
-            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<CreateNFT type="Multiple" />}
-          />
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<CreateNFT type="Multiple" />}
+            />
+          </GuardRoute>
         }
       />
       <Route
         path={routes.create.collection}
         element={
-          <Page
-            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<CreateCollection />}
-          />
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<CreateCollection />}
+            />
+          </GuardRoute>
         }
       />
       <Route
@@ -136,10 +143,12 @@ const RoutesPage = () => {
       <Route
         path={routes.profile.edit}
         element={
-          <Page
-            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-            component={<EditProfile />}
-          />
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<EditProfile />}
+            />
+          </GuardRoute>
         }
       />
       {/* <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />
