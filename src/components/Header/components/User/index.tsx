@@ -1,17 +1,28 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState, VFC } from 'react';
 import { Link } from 'react-router-dom';
+
+import userSelector from 'store/user/selectors';
 
 import cx from 'classnames';
 import { Popover } from 'containers';
+import { useWalletConnectContext } from 'context';
 import mock from 'mock';
 
 import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
 import { routes } from 'appConstants';
-import { usePopover } from 'hooks';
+import { usePopover, useShallowSelector } from 'hooks';
+import { Chains, State, UserState, WalletProviders } from 'types';
 
-import { CrossIcon, iconArrowDownBlue, iconCreate, iconEdit, iconExit } from 'assets/img';
+import {
+  ArrowConnectSVG,
+  iconArrowDownBlue,
+  iconCreate,
+  iconEdit,
+  iconExit,
+  WalletConnectSVG,
+} from 'assets/img';
 
 import styles from './User.module.scss';
 
@@ -239,20 +250,75 @@ const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
   );
 };
 
+interface IBurger {
+  isOpen: boolean;
+}
+
+const Burger: VFC<IBurger> = ({ isOpen }) => {
+  return (
+    <div className={cx(styles.burger, { [styles.open]: isOpen })}>
+      <span className={styles.line1} />
+      <span className={styles.line2} />
+    </div>
+  );
+};
+
+interface IConnectSection {
+  connect: (provider: WalletProviders, chain: Chains) => void;
+}
+
+const ConnectSection: VFC<IConnectSection> = ({ connect }) => {
+  const onClickHandler = useCallback(() => {
+    connect(WalletProviders.metamask, Chains.bsc);
+  }, [connect]);
+  return (
+    <div className={styles.connectSection}>
+      <div className={styles.connectSectionDesktop}>
+        <Button color="outline" onClick={onClickHandler} type="button">
+          <Text color="inherit">Connect to metamask</Text>
+        </Button>
+      </div>
+      <div className={styles.connectSectionMobile}>
+        <Button color="light" onClick={onClickHandler}>
+          <WalletConnectSVG />
+        </Button>
+        <div className={styles.connectSectionMobileMotion}>
+          <Text color="gray" weight="medium" size="xs" className={styles.connectText}>
+            Connect to metamask
+          </Text>
+          <ArrowConnectSVG className={styles.arrow} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const User: FC<IUserProps> = ({ className, isDesktop }) => {
   const [isBodyOpen, setIsBodyOpen] = useState(false);
+  const { address, id } = useShallowSelector<State, UserState>(userSelector.getUser);
+  const { connect } = useWalletConnectContext();
 
   const handleOpenBody = useCallback((value: boolean) => {
     setIsBodyOpen(value);
   }, []);
 
+  const onConnectClick = useCallback(
+    (provider: WalletProviders, chain: Chains) => {
+      connect(provider, chain);
+    },
+    [connect],
+  );
+    console.log(address);
+  if (!address) {
+    return <ConnectSection connect={onConnectClick} />;
+  }
   return isDesktop ? (
     <Popover className={cx(styles.user, className)}>
       <Popover.Button className={styles.popoverBtn}>
         <img src={mock.user} alt="Avatar" />
       </Popover.Button>
       <Popover.Body className={styles.popoverBody}>
-        <UserBody user={{ id: 0, address: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4' }} />
+        <UserBody user={{ id, address }} />
       </Popover.Body>
     </Popover>
   ) : (
@@ -262,13 +328,10 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
         className={styles.userBtn}
         onClick={() => handleOpenBody(!isBodyOpen)}
       >
-        {isBodyOpen ? <CrossIcon /> : <img src={mock.user} alt="Avatar" />}
+        <Burger isOpen={isBodyOpen} />
       </Button>
       {isBodyOpen ? (
-        <UserMobile
-          user={{ id: 0, address: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4' }}
-          close={() => setIsBodyOpen(false)}
-        />
+        <UserMobile user={{ id, address }} close={() => setIsBodyOpen(false)} />
       ) : (
         <></>
       )}

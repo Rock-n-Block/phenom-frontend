@@ -35,7 +35,7 @@ type Props = {
   description?: string;
 };
 
-const isDebug = true;
+const isDebug = false;
 
 const TextGenerator: FC<PropsWithChildren<Props>> = ({
   tag = 'p',
@@ -130,10 +130,11 @@ export const Text: FC<IText> = (props) => {
         setTranslate(trans);
       }
       setFailed(false);
-    } else if (id !== 'none' && isDebug) {
-      console.error(
-        `✔️ id of translate is not valid. Try to load "${id}". Fallback: "${props.children}"`,
-      );
+    } else if (id !== 'none') {
+      if (isDebug)
+        console.error(
+          `✔️ id of translate is not valid. Try to load "${id}". Fallback: "${props.children}"`,
+        );
       setFailed(true);
     }
   }, [id, props.children, t, translate, values, i18nProvider.options.defaultNS]);

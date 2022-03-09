@@ -32,3 +32,4 @@ export { default as NullAvatarSrc } from './Profile.svg';
 export * from './Create';
 export * from './CreateNFT';
 export * from './Profile';
+export * from './connect';

@@ -16,7 +16,6 @@ export function* loginSaga({ type, payload: { address, web3Provider } }: ReturnT
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const signedMessage = yield call(web3Provider.eth.personal.sign, metamaskMessage, address, '');
-
     const {
       data: { key },
     } = yield call(baseApi.metamaskLogin, {
