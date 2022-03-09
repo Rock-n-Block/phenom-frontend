@@ -4,7 +4,7 @@ import {
   takeLatest,
   call,
 } from 'redux-saga/effects';
-import apiActions from 'store/api/actions';
+import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { toast } from 'react-toastify';
 import actionTypes from '../actionTypes';
@@ -20,6 +20,8 @@ export function* loginSaga({
   yield put(apiActions.request(type));
   try {
     const { data: metamaskMessage } = yield call(baseApi.getMetamaskMessage);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const signedMessage = yield call(web3Provider.eth.personal.sign, metamaskMessage, address, '');
 
     const { data: { key } } = yield call(baseApi.metamaskLogin, {

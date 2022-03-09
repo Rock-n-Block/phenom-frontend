@@ -3,7 +3,7 @@
 import {
   put, takeLatest,
 } from 'redux-saga/effects';
-import apiActions from 'store/api/actions';
+import * as apiActions from 'store/api/actions';
 import actionTypes from '../actionTypes';
 import { getTokenBalance } from '../actions';
 

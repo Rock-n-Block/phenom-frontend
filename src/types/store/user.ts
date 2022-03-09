@@ -1,5 +1,5 @@
 export type UserState = {
-  id: number;
+  id: number | null;
   avatar: string;
   address: string;
   balance: string | number;
