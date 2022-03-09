@@ -1,5 +1,6 @@
 import { useCallback, VFC } from 'react';
 
+import cn from 'classnames';
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, CopiedInput, DefaultInput, Text, TextArea, UploadAvatar } from 'components';
@@ -13,7 +14,10 @@ import styles from './styles.module.scss';
 const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
   setFieldValue,
   handleSubmit,
+  validateForm,
+  handleBlur,
   errors,
+  touched,
   values,
 }) => {
   const setter = useCallback(
@@ -21,9 +25,13 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
     [setFieldValue],
   );
 
-  const onSubmitClick = useCallback(() => {
-    handleSubmit();
-  }, [handleSubmit]);
+  const onSubmitClick = useCallback(
+    (vals: any) => {
+      validateForm(vals);
+      handleSubmit();
+    },
+    [handleSubmit, validateForm],
+  );
 
   return (
     <Form className={styles['edit-profile__wrapper']}>
@@ -38,7 +46,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
       </Text>
       <div className={styles['edit-profile__wrapper__avatar']}>
         <Field
-          name="media"
+          name="avatarFile"
           render={() => (
             <UploadAvatar
               fileURL={values.avatarURL || ''}
@@ -79,9 +87,10 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.name}
             label="Name"
             placeholder="Input name"
+            onBlur={handleBlur}
             setValue={setter('name')}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.name}
+            error={touched.name ? errors.name : undefined}
           />
         )}
       />
@@ -94,9 +103,10 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.address}
             label="Wallet address"
             placeholder="address"
+            onBlur={handleBlur}
             setValue={setter('address')}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.address}
+            error={touched.address ? errors.address : undefined}
           />
         )}
       />
@@ -110,8 +120,9 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             placeholder="Input description"
             setValue={setter('description')}
             maxElements={500}
+            onBlur={handleBlur}
             className={styles['edit-profile__wrapper__description']}
-            error={errors.description}
+            error={touched.description ? errors.description : undefined}
           />
         )}
       />
@@ -124,9 +135,10 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.socials.email}
             label="Email"
             placeholder="Input email"
+            onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.email', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.email}
+            error={touched.socials?.email ? errors.socials?.email : undefined}
           />
         )}
       />
@@ -147,9 +159,10 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.socials.site}
             label="Website"
             placeholder="Input website"
+            onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.site', value)}
-            className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.site}
+            className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
+            error={touched.socials?.site ? errors.socials?.site : undefined}
           />
         )}
       />
@@ -165,9 +178,10 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.socials.instagram}
             label="Instagram Username"
             placeholder="Input instagram"
+            onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.instagram', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.instagram}
+            error={touched.socials?.instagram ? errors.socials?.instagram : undefined}
           />
         )}
       />
@@ -180,14 +194,19 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             value={values.socials.twitter}
             label="Instagram Twitter"
             placeholder="Input twitter"
+            onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.twitter', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={errors.socials?.twitter}
+            error={touched.socials?.twitter ? errors.socials?.twitter : undefined}
           />
         )}
       />
       <div className={styles['btns-section']}>
-        <Button className={styles['submit-btn']} onClick={onSubmitClick}>
+        <Button
+          disabled={!!Object.keys(errors).length || !Object.keys(touched).length}
+          className={styles['submit-btn']}
+          onClick={() => onSubmitClick(values)}
+        >
           Save
         </Button>
       </div>

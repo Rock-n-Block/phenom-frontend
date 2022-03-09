@@ -6,15 +6,14 @@ import cx from 'classnames';
 import { Popover } from 'containers';
 import mock from 'mock';
 
-import { Button, H4, Text } from 'components';
-import { sliceString } from 'utils';
+import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
+import { routes } from 'appConstants';
 import { usePopover } from 'hooks';
 
-import { CrossIcon, iconArrowDownBlue, iconCopy, iconCreate, iconEdit, iconExit } from 'assets/img';
+import { CrossIcon, iconArrowDownBlue, iconCreate, iconEdit, iconExit } from 'assets/img';
 
 import styles from './User.module.scss';
-import { routes } from 'appConstants';
 
 interface IUserProps {
   className?: string;
@@ -67,21 +66,20 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
       </div>
       <div className={styles.head}>
         <div className={styles.top}>
-          <div className={styles.avatar}>
+          <Link to={routes.profile.link(mock.id, 'about-me')} className={styles.avatar}>
             <img src={mock.user} alt="avatar" />
             <Text>Username</Text>
-          </div>
-          <div className={styles.edit}>
+          </Link>
+          <Link to={routes.profile.edit} className={styles.edit}>
             <img src={iconEdit} alt="edit" />
             <Text>EDIT</Text>
-          </div>
+          </Link>
         </div>
         <div className={styles.balance}>
           <Text color="blue">0.00 PHETA</Text>
         </div>
         <div className={styles.address}>
-          <Text>{sliceString(user.address, 28, 0)}</Text>
-          <img src={iconCopy} alt="copy" className={styles.copy} />
+          <Clipboard value={user.address} />
         </div>
       </div>
       <ul className={styles.menu}>
@@ -157,10 +155,7 @@ const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
           Menu
         </H4>
       </div>
-      <div className={cx(styles.address, styles.itemMobile)}>
-        <Text>{sliceString(user.address, 28, 0)}</Text>
-        <img src={iconCopy} alt="copy" className={styles.copy} />
-      </div>
+      <Clipboard theme="gray" value={user.address} />
       <div className={cx(styles.dropdown, { [styles.active]: isLinksOpen })}>
         <div
           onKeyDown={() => {}}
@@ -207,20 +202,20 @@ const UserMobile: FC<{ user: any; close: any }> = ({ user, close }) => {
       <div className={styles.userButtons}>
         <div className={styles.userItem}>
           <div className={styles.avatar}>
-            <img src={mock.user} alt="avatar" />
-            <Text>Username</Text>
+            <Avatar id={mock.id} avatar={mock.user} />
+            <Text>username</Text>
           </div>
           <div className={styles.balance}>
             <Text color="blue">0.00 PHETA</Text>
           </div>
         </div>
         <div className={styles.userItem}>
-          <div className={styles.createWrapper}>
+          <Link to={routes.create.root} className={styles.createWrapper}>
             <div className={styles.imageWrapper}>
               <img src={iconCreate} alt="" className={styles.create} />
             </div>
             <Text>Create</Text>
-          </div>
+          </Link>
         </div>
       </div>
       <Button color="transparent" className={cx(styles.itemMobile, styles.exit)}>

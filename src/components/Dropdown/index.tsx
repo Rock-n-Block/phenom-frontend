@@ -24,6 +24,7 @@ interface IDropdownProps {
   drawBy?: string;
   label?: string;
   error?: string;
+  placeholder?: string;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -40,6 +41,7 @@ const Dropdown: FC<IDropdownProps> = ({
   returnBy = 'symbol',
   drawBy = 'symbol',
   label,
+  placeholder,
   error,
 }) => {
   const [visible, setVisible] = useState(false);
@@ -71,9 +73,9 @@ const Dropdown: FC<IDropdownProps> = ({
           onClick={() => setVisible(!visible)}
         >
           {isWritable ? (
-            <input value={value[drawBy]} className={styles.input} />
+            <input value={value ? value[drawBy] : ''} className={styles.input} />
           ) : (
-            <div className={styles.selection}>{value[drawBy]}</div>
+            <div className={styles.selection}>{value ? value[drawBy] : placeholder}</div>
           )}
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>
@@ -106,7 +108,7 @@ const Dropdown: FC<IDropdownProps> = ({
                     tabIndex={0}
                     role="button"
                     className={cn(styles.option, {
-                      [styles.selectioned]: option[drawBy] === value[drawBy],
+                      [styles.selectioned]: option[drawBy] === value ? value[drawBy] : '',
                     })}
                     onClick={() => handleClick(option)}
                     key={`dropdown_option_${option[returnBy]}`}

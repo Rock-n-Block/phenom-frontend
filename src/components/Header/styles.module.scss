@@ -39,11 +39,21 @@
 @include middle-tablet {
   .header {
     padding-top: 14px;
+    &Logo {
+      max-width: 1000px;
+      width: auto;
+      @include transition;
+      &.closed{
+        display: none;
+      }
+    }
   }
   .searchDesktop {
     margin-left: 0;
   }
   .open {
-    width: 282px;
+    margin-right: 5px;
+    width: auto;
+    min-width: 85%;
   }
 }

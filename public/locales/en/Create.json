@@ -1,8 +1,8 @@
 {
   "createOptions": {
     "Create": "Create",
-    "Single": "Single Nft",
-    "Multiple": "Multiple Nft",
+    "Single": "Single NFT",
+    "Multiple": "Multiple NFT",
     "CreateACollection": "Create a collection"
   },
   "createPage": {
@@ -10,7 +10,7 @@
     "UploadFile": "Upload file",
     "UploadDrag": "Drag or choose your file to upload",
     "UploadDrop": "Drop files",
-    "UploadExtensions": "{{extensions}}. Max {{size}} {{unit}}.",
+    "UploadExtensions": "({{extensions}}. Max {{size}} {{unit}}.)",
     "UploadUnits": {
       "bits": "bits",
       "bytes": "bytes",
