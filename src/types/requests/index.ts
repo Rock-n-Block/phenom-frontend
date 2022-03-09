@@ -1,4 +1,3 @@
-import { Type } from 'types/api/enums';
 import Web3 from 'web3';
 
 export type BodyWithToken<T = never> = {
@@ -85,7 +84,7 @@ export type GetProfileInfoReq = {
 
 export type SearchNftReq = {
   page: number;
-  nft_type?: Type;
+  nft_type?: any;
   attributes?: string;
   rarity?: string;
   on_timed_auc_sale?: boolean;

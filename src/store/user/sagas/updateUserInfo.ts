@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { put, takeLatest, call } from 'redux-saga/effects';
-import apiActions from 'store/api/actions';
+import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import actionTypes from '../actionTypes';
 import { updateUserInfo } from '../actions';
