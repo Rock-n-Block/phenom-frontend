@@ -5,7 +5,7 @@
  * This file was automatically generated.
  */
 
-export enum Display theme {
+export enum Display_theme {
     Padded = "Padded",
     Contained = "Contained",
     Covered = "Covered"

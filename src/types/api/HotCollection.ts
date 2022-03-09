@@ -6,7 +6,7 @@
  */
 
 import { Creator } from "./Creator";
-import { Display theme } from "./enums";
+import { Display_theme } from "./enums";
 import { Standart } from "./enums";
 import { Status } from "./enums";
 
@@ -17,7 +17,7 @@ export interface HotCollection {
     creator: Creator;
     deployBlock?: number;
     description?: string;
-    displayTheme?: Display theme;
+    displayTheme?: Display_theme;
     id?: string;
     isDefault?: boolean;
     isNsfw?: boolean;
