@@ -2,6 +2,7 @@ import { i18n } from 'i18next';
 
 export * from './components';
 export * from './hooks';
+export * from './store';
 
 declare global {
   interface Window {

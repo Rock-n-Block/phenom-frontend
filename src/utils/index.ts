@@ -9,3 +9,4 @@ export * from './degrees';
 export * from './numberFormatter';
 export * from './validateOnlyNumbers';
 export * from './checkMinMax';
+export * from './validateStatus';
