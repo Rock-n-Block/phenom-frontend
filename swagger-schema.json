@@ -1496,7 +1496,7 @@
         "name": { "title": "Name", "type": "string", "maxLength": 50, "minLength": 1 },
         "address": { "title": "Address", "type": "string", "maxLength": 60, "x-nullable": true },
         "display_theme": {
-          "title": "Display theme",
+          "title": "Display_theme",
           "type": "string",
           "enum": ["Padded", "Contained", "Covered"]
         },
@@ -1605,7 +1605,7 @@
         "name": { "title": "Name", "type": "string", "maxLength": 50, "minLength": 1 },
         "address": { "title": "Address", "type": "string", "maxLength": 60, "x-nullable": true },
         "display_theme": {
-          "title": "Display theme",
+          "title": "Display_theme",
           "type": "string",
           "enum": ["Padded", "Contained", "Covered"]
         },
@@ -1747,7 +1747,7 @@
         "name": { "title": "Name", "type": "string", "maxLength": 50, "minLength": 1 },
         "address": { "title": "Address", "type": "string", "maxLength": 60, "x-nullable": true },
         "display_theme": {
-          "title": "Display theme",
+          "title": "Display_theme",
           "type": "string",
           "enum": ["Padded", "Contained", "Covered"]
         },
@@ -1824,7 +1824,7 @@
         "name": { "title": "Name", "type": "string", "maxLength": 50, "minLength": 1 },
         "address": { "title": "Address", "type": "string", "maxLength": 60, "x-nullable": true },
         "display_theme": {
-          "title": "Display theme",
+          "title": "Display_theme",
           "type": "string",
           "enum": ["Padded", "Contained", "Covered"]
         },

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import { put, takeLatest } from 'redux-saga/effects';
-import { request, success, error } from 'store/api/actions';
-import actionTypes from '../actionTypes';
+import { error, request, success } from 'store/api/actions';
+
 import { getTokenBalance } from '../actions';
+import actionTypes from '../actionTypes';
 
 export function* getTokenBalanceSaga({
   type,

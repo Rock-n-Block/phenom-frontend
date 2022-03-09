@@ -6,7 +6,7 @@
  */
 
 import { Creator } from "./Creator";
-import { DisplayTheme } from "./enums";
+import { Display_theme } from "./enums";
 
 
 export interface TrendingCollection {
@@ -14,7 +14,7 @@ export interface TrendingCollection {
     avatar?: string;
     creator: Creator;
     description?: string;
-    displayTheme?: DisplayTheme;
+    displayTheme?: Display_theme;
     id?: string;
     isDefault?: boolean;
     isNsfw?: boolean;
