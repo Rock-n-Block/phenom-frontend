@@ -275,7 +275,9 @@ const ConnectSection: VFC<IConnectSection> = ({ connect }) => {
     <div className={styles.connectSection}>
       <div className={styles.connectSectionDesktop}>
         <Button color="outline" onClick={onClickHandler} type="button">
-          <Text color="inherit">Connect to metamask</Text>
+          <Text color="inherit" weight="medium" className={styles.connectText}>
+            Connect to metamask
+          </Text>
         </Button>
       </div>
       <div className={styles.connectSectionMobile}>
@@ -308,7 +310,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
     },
     [connect],
   );
-    console.log(address);
+  console.log(address);
   if (!address) {
     return <ConnectSection connect={onConnectClick} />;
   }

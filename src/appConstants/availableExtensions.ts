@@ -1,7 +1,7 @@
 export const audioFormats = ['mp3', 'ogg', 'wav'] as const;
 export const threeDFormats = ['glb', 'glf'] as const;
 export const imagesFormats = ['png', 'gif', 'webp', 'jpeg', 'jpg', 'svg'] as const;
-export const videosFormats = ['mp4'] as const;
+export const videosFormats = ['mp4', 'webm'] as const;
 
 export type TFilesGroup = 'audio' | 'threeD' | 'image' | 'video';
 

@@ -34,6 +34,10 @@
   .headerSearch {
     display: none;
   }
+  .searchDesktop {
+    margin-left: 0;
+    min-width: 342px;
+  }
 }
 
 @include middle-tablet {
@@ -42,14 +46,19 @@
     &Logo {
       max-width: 1000px;
       width: auto;
-      @include transition;
+      transform: scale(1);
+      @include transition($next: opacity 0.3s ease-in-out 0.5s);
       &.closed{
-        display: none;
+        max-width: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(0);
+        @include transition(0.3s, ease-in-out, 0.3s, transform 0s ease-in-out 0s);
       }
     }
   }
-  .searchDesktop {
-    margin-left: 0;
+  .searchDesktop{
+    min-width: 0;
   }
   .open {
     margin-right: 5px;

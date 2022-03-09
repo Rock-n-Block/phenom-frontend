@@ -3,6 +3,7 @@
 .avatar {
   position: relative;
   display: inline-block;
+  overflow: hidden;
   @include transition;
   &Img {
     object-fit: cover;

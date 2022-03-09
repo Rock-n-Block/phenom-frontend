@@ -9,10 +9,10 @@
 
   &Input {
     input {
-      width: 342px;
+      width: 100%;
       @include transition;
       @include middle-mobile {
-        max-width: 282px;
+        max-width: auto;
         width: 100%;
       }
     }
@@ -50,7 +50,6 @@
   border-radius: 15px;
 
   // &.desktop {
-  width: 342px;
   // }
 
   &.isVisible {

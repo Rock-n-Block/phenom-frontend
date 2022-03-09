@@ -147,9 +147,14 @@ $transition-delay: 0s;
   $duration: $transition-duration,
   $function: $transition-timing-function,
   $delay: $transition-delay,
-  $property: all
+  $property: all,
+  $next: false,
 ) {
-  transition: $property $duration $function $delay;
+  @if ($next){
+    transition: $property $duration $function $delay, $next;
+  }@else{
+    transition: $property $duration $function $delay;
+  }
 }
 
 // media queries

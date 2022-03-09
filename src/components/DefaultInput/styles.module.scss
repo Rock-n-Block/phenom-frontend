@@ -20,7 +20,9 @@
     background: transparent;
     font-size: 14px;
     line-height: 24px;
-    @include gilroy;
+    &::placeholder{
+      @include gilroy;
+    }
     @include transition;
     &-container {
       border-radius: 12px;
