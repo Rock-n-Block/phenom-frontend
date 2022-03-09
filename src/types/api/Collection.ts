@@ -6,7 +6,7 @@
  */
 
 import { Creator } from "./Creator";
-import { Display theme } from "./enums";
+import { Display_theme } from "./enums";
 
 
 export interface Collection {
@@ -15,7 +15,7 @@ export interface Collection {
     cover?: string;
     creator: Creator;
     description?: string;
-    displayTheme?: Display theme;
+    displayTheme?: Display_theme;
     floorPrice?: string;
     id?: string;
     isDefault?: boolean;
