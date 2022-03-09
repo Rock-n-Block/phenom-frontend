@@ -100,7 +100,7 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
             name="create_collection_name"
             value={values.name}
             label="Name"
-            placeholder="Input name"
+            placeholder="Input text"
             setValue={setter('name')}
             className={styles['create-collection__wrapper__name']}
             error={errors.name}
@@ -114,7 +114,7 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
             name="create_collection_description"
             value={values.description}
             label="Description"
-            placeholder="Input description"
+            placeholder="Input text"
             setValue={setter('description')}
             maxElements={500}
             className={styles['create-collection__wrapper__description']}
@@ -124,7 +124,7 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
       />
       <div className={styles['btns-section']}>
         <Button className={styles['submit-btn']} onClick={onSubmitClick}>
-          Create Item
+          Create
         </Button>
         <Button color="outline" onClick={onCancelClick}>
           Cancel
