@@ -1,7 +1,10 @@
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { LanguageProvider } from 'context';
+import store from './store/configureStore';
+import { Provider } from 'react-redux';
+
+import { LanguageProvider, WalletProvider } from 'context';
 
 import { combineProviders } from 'utils';
 
@@ -10,7 +13,12 @@ import i18n from './i18n';
 
 import 'styles/index.scss';
 
-const CombinedProviders = combineProviders([Router, [LanguageProvider, { i18nProvider: i18n }]]);
+const CombinedProviders = combineProviders([
+  WalletProvider,
+  [LanguageProvider, { i18nProvider: i18n }],
+  Router,
+  [Provider, { store: store.store }],
+]);
 
 const root = document.getElementById('root');
 const app = (
