@@ -46,6 +46,10 @@
   }
 }
 
+.site-block{
+  margin-bottom: 10px;
+}
+
 @include large-mobile {
   .edit-profile__wrapper {
       padding: 0 20px 58px;

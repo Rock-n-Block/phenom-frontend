@@ -77,8 +77,12 @@ const QuantityInput: VFC<IQuantityInput> = ({
   const onQuantityChanged = useCallback(
     (val: string) => {
       if (writeable) {
-        if (Number.isFinite(val)) {
-          if (checkRange(+val)) {
+        if (Number.isFinite(+val)) {
+          if (val.length !== 0) {
+            if (checkRange(+val)) {
+              setValue(val);
+            }
+          } else {
             setValue(val);
           }
         }

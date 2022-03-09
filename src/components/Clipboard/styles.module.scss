@@ -4,7 +4,12 @@
   width: clamp(280px, 100%, 345px);
   padding: 8px 18px;
   border-radius: 12px;
-  background: $color-light-4;
+  &.white{
+    background: $color-light-4;
+  }
+  &.gray{
+      background: $color-gray-0;
+  }
   @include transition;
   @include flexbox(center, space-between);
   &__text {
@@ -44,4 +49,10 @@
         }
     }
   }
+}
+
+@include middle-mobile{
+    .clipboard-wrapper {
+        width: clamp(250px, 100%, 100%);
+    }
 }

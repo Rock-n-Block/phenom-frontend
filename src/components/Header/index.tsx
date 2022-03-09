@@ -3,9 +3,10 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import cx from 'classnames';
 
 import { Logo } from 'components';
-import { useWindowSize } from 'hooks';
 
 import { HeaderLinks, Search, User } from './components';
+
+import { useWindowSize } from 'hooks';
 
 import styles from './styles.module.scss';
 

@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, useCallback, useState, VFC } from 'react';
+import { FocusEventHandler, FormEvent, ReactElement, useCallback, useState, VFC } from 'react';
 
 import cn from 'classnames';
 
@@ -13,6 +13,7 @@ interface ITextArea {
   placeholder?: string;
   label?: string | ReactElement;
   className?: string;
+  onBlur?: (e: FormEvent<HTMLTextAreaElement>) => void;
 }
 
 const TextArea: VFC<ITextArea> = ({
@@ -24,6 +25,7 @@ const TextArea: VFC<ITextArea> = ({
   placeholder,
   maxElements = 'infinity',
   className,
+  onBlur,
 }) => {
   const [symbCount, setSymbCount] = useState(value.length);
 
@@ -36,6 +38,15 @@ const TextArea: VFC<ITextArea> = ({
       e.stopPropagation();
     },
     [setValue],
+  );
+
+  const onTextareaBlur: FocusEventHandler<HTMLTextAreaElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onBlur?.(e);
+    },
+    [onBlur],
   );
 
   return (
@@ -53,6 +64,7 @@ const TextArea: VFC<ITextArea> = ({
         value={value}
         placeholder={placeholder}
         onChange={onFieldChange}
+        onBlur={onTextareaBlur}
       />
       <p
         className={cn(styles['text-area__body-counter'], {

@@ -235,7 +235,7 @@ const LoadFile: VFC<ILoadFile> = ({
           align="center"
           className={styles['load-file__wrapper__body-extensions']}
         >
-          PNG, GIF, WEBP, MP4, JPEG, SVG, WEBM, WAV, OGG, GLB, GLF or MP3. Max 5 Mb.
+          (PNG, GIF, WEBP, MP4, JPEG, SVG, WEBM, WAV, OGG, GLB, GLF or MP3. Max 5 Mb.)
         </Text>
       </label>
     </section>
