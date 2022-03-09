@@ -22,7 +22,7 @@ interface IClipboard {
  * @param {string} value - clipboard value which will be displayed and copied
  * @param {number} [clipDelay] - delay of copping @default clipDelay = 2000 ms
  * @param {string} [className] - class name for the wrapper
- * @param {'white' | 'gary'} [theme] - color theme of the clipboard
+ * @param {'white' | 'gray'} [theme] - color theme of the clipboard
  * @returns
  */
 const Clipboard: VFC<IClipboard> = ({ value, clipDelay = 2000, className, theme = 'white' }) => {

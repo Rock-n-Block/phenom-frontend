@@ -171,7 +171,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         >
           Create Item
         </Button>
-        <Button color="outline" onClick={() => onCancelClick()}>
+        <Button color="outline" onClick={onCancelClick}>
           Cancel
         </Button>
       </div>
