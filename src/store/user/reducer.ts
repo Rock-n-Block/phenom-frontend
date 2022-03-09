@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { UserState } from 'types';
 
 const initialState: UserState = {
@@ -16,16 +17,19 @@ export const userReducer = createSlice({
   initialState,
   reducers: {
     updateWallet: (state, action: PayloadAction<Partial<UserState>>) => ({
-      ...state, ...action.payload,
+      ...state,
+      ...action.payload,
     }),
     updateProvider: (state, action: PayloadAction<Partial<UserState>>) => ({
-      ...state, ...action.payload,
+      ...state,
+      ...action.payload,
     }),
     connectWalletState: (state, action: PayloadAction<Partial<UserState>>) => ({
-      ...state, ...action.payload,
+      ...state,
+      ...action.payload,
     }),
     disconnectWalletState: () => {
-      localStorage.removeItem('walletconnect');
+      localStorage.removeItem('phenom-wallet-connect');
       return {
         ...initialState,
       };
@@ -33,11 +37,7 @@ export const userReducer = createSlice({
   },
 });
 
-export const {
-  connectWalletState,
-  disconnectWalletState,
-  updateWallet,
-  updateProvider,
-} = userReducer.actions;
+export const { connectWalletState, disconnectWalletState, updateWallet, updateProvider } =
+  userReducer.actions;
 
 export default userReducer.reducer;

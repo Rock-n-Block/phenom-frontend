@@ -3,3 +3,4 @@ export { default as useWindowSize } from './useWindowSize';
 export { default as useClasses } from './useClasses';
 export { default as useClipboard } from './useClipboard';
 export { default as useGetUserAccessForNft } from './useGetUserAccessForNft';
+export { default as useShallowSelector } from './useShallowSelector';

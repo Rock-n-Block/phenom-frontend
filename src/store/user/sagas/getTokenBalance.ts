@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
-import {
-  put, takeLatest,
-} from 'redux-saga/effects';
-import * as apiActions from 'store/api/actions';
-import actionTypes from '../actionTypes';
+import { put, takeLatest } from 'redux-saga/effects';
+import { error, request, success } from 'store/api/actions';
+
 import { getTokenBalance } from '../actions';
+import actionTypes from '../actionTypes';
 
 export function* getTokenBalanceSaga({
-  type, payload: {
-    web3Provider,
-  },
+  type,
+  payload: { web3Provider },
 }: ReturnType<typeof getTokenBalance>) {
-  yield put(apiActions.request(type));
+  yield put(request(type));
   // const {
   //   abi: tokenAbi,
   //   address: tokenAddress,
@@ -26,10 +24,10 @@ export function* getTokenBalanceSaga({
 
     // yield put(updateBalance(balance));
 
-    yield put(apiActions.success(type));
+    yield put(success(type));
   } catch (err) {
     console.log(err);
-    yield put(apiActions.error(type, err));
+    yield put(error(type, err));
   }
 }
 

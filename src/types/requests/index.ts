@@ -84,7 +84,6 @@ export type GetProfileInfoReq = {
 
 export type SearchNftReq = {
   page: number;
-  nft_type?: any;
   attributes?: string;
   rarity?: string;
   on_timed_auc_sale?: boolean;

@@ -23,6 +23,44 @@
   }
 }
 
+.burger{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .line{
+    &2,
+    &1{
+      position: absolute;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: $color-burger-line;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      @include transition;
+    }
+    &1{
+      top: calc(50% - 3px);
+    }
+    &2{
+      top: calc(50% + 3px);
+
+    }
+  }
+  &.open{
+    .line{
+      &1{
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &2{
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+  }
+}
+
 .avatar,
 .edit {
   @include flexbox;
@@ -108,6 +146,12 @@
     @include flexbox(center, center);
     width: 36px;
     height: 36px;
+  }
+}
+
+.connectSection{
+  &Mobile{
+    display: none;
   }
 }
 
@@ -244,5 +288,54 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+@include large-tablet{
+  .connectSection{
+    &Mobile{
+      display: block;
+      position: relative;
+      button{
+        padding: 15px;
+      }
+      &Motion{
+        position: absolute;
+        right: 50%;
+        top: calc(100% + 25px);
+        transform: translateX(10px);
+        animation: motion 2s ease-in-out forwards infinite;
+        @include flexbox;
+        .arrow{
+          min-width: 40px;
+          position: relative;
+          top: -10px;
+        }
+        .connectText{
+          width: max-content;
+        }
+      }
+    }
+    &Desktop{
+      display: none;
+    }
+  }
+}
+
+@keyframes motion{
+  0%{
+    transform: translateX(10px) translateY(0);
+  }
+  50%{
+    transform: translateX(10px) translateY(10px);
+  }
+  100%{
+    transform: translateX(10px) translateY(0);
+  }
+}
+
+@include large-mobile{
+  .address{
+    width: 100%;
   }
 }

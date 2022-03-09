@@ -1,16 +1,17 @@
 /* eslint-disable max-len */
-import { put, takeLatest, call } from 'redux-saga/effects';
-import * as apiActions from 'store/api/actions';
-import { baseApi } from 'store/api/apiRequestBuilder';
-import actionTypes from '../actionTypes';
-import { updateUserInfo } from '../actions';
 import { disconnectWalletState, updateWallet } from '../reducer';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { error, request, success } from 'store/api/actions';
+import { baseApi } from 'store/api/apiRequestBuilder';
+
+import { updateUserInfo } from '../actions';
+import actionTypes from '../actionTypes';
 
 export function* updateUserInfoSaga({
   type,
   payload: { web3Provider },
 }: ReturnType<typeof updateUserInfo>) {
-  yield put(apiActions.request(type));
+  yield put(request(type));
   try {
     // TODO: get user balance
     console.log(web3Provider);
@@ -18,10 +19,10 @@ export function* updateUserInfoSaga({
 
     yield put(updateWallet(data));
 
-    yield put(apiActions.success(type));
+    yield put(success(type));
   } catch (err) {
     console.log(err);
-    yield put(apiActions.error(type, err));
+    yield put(error(type, err));
     yield put(disconnectWalletState());
   }
 }

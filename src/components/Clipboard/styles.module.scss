@@ -8,7 +8,7 @@
     background: $color-light-4;
   }
   &.gray{
-      background: $color-gray-0;
+      background: $color-light-1;
   }
   @include transition;
   @include flexbox(center, space-between);
