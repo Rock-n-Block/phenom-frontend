@@ -20,7 +20,8 @@ import {
   // Discover,
   Home,
   NFTCard,
-  Profile,
+  NotFoundPage,
+  Profile
   // LostPage404,
   // Nft,
   // Profile,
@@ -57,6 +58,16 @@ const RoutesPage = () => {
       />
       <Route exact path={routes.profile.edit} render={() => <Page component={<ProfileEdit />} />} />
       <Route path={routes.profile.root} render={() => <Page component={<Profile />} />} /> */}
+
+      <Route
+        path="*"
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<NotFoundPage />}
+          />
+        }
+      />
 
       <Route
         path={routes.home.root}
