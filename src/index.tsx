@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from './store/configureStore';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { LanguageProvider, WalletProvider } from 'context';
 
@@ -17,6 +18,7 @@ const CombinedProviders = combineProviders([
   WalletProvider,
   [LanguageProvider, { i18nProvider: i18n }],
   Router,
+  [PersistGate, { loading: null, persistor: store.persistor }],
   [Provider, { store: store.store }],
 ]);
 
