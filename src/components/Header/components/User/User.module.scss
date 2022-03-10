@@ -340,8 +340,10 @@
 }
 
 @include large-mobile{
-  .address{
-    width: 100%;
+  .mobileBody{
+    .address{
+      width: 100%;
+    }
   }
   .connectSection{
     &Mobile{

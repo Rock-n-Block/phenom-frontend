@@ -1,7 +1,7 @@
 @import 'src/styles/helpers';
 
 .headerNavigation {
-  @include flexbox(flex-start, flex-start);
+  @include flexbox(center, flex-start);
   margin-left: auto;
   gap: 30px;
   height: 100%;
@@ -13,10 +13,6 @@
   text-transform: uppercase;
 }
 
-.underline{
-  text-decoration: underline;
-}
-
 .linkBtn {
   height: 100%;
   position: relative;
@@ -24,6 +20,11 @@
   &.active {
     color: rgba($color-dark, 0.5);
   }
+}
+
+.copiedAddress{
+  width: 100%;
+  min-width: 190px;
 }
 
 .dropdownLink {
@@ -39,4 +40,13 @@
 
 .popoverBody {
   padding: 8px 0 16px;
+}
+
+@include large-tablet{
+  .headerNavigation{
+    display: none;
+  }
+  .copiedAddress{
+    display: none;
+  }
 }

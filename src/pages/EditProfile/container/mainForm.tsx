@@ -104,7 +104,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             label="Wallet address"
             placeholder="address"
             onBlur={handleBlur}
-            setValue={setter('address')}
+            setValue={() => {}}
             className={styles['edit-profile__wrapper__name']}
             error={touched.address ? errors.address : undefined}
           />
