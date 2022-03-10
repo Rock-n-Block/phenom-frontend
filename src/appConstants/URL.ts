@@ -6,4 +6,5 @@ export default {
   getTrendingNfts: 'store/trending/',
   presearchNfts: 'store/presearch/',
   searchNfts: 'store/search/',
+  getCategories: '/store/categories/'
 };

@@ -1,4 +1,9 @@
-import { useCallback, useEffect, useState, VFC } from 'react';
+import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { getCategories } from 'store/nfts/actions';
+import nftSelector from 'store/nfts/selectors';
 
 import cx from 'classnames';
 import { useLanguage } from 'context';
@@ -8,39 +13,60 @@ import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'component
 
 import { Filters } from './components';
 
+import { useShallowSelector } from 'hooks';
+import { Categories } from 'types';
+
 import styles from './styles.module.scss';
 
-const categories = [
-  {
-    title: 'Category №1',
-    key: 'category_1',
-  },
-  {
-    title: 'Category №2',
-    key: 'category_2',
-  },
-  {
-    title: 'Category №3',
-    key: 'category_3',
-  },
-  {
-    title: 'Category №4',
-    key: 'category_4',
-  },
-  {
-    title: 'Category №5',
-    key: 'category_5',
-  },
-];
 const Body: VFC = () => {
+  const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const params = useParams();
+  const activeCategory = useMemo(() => params.filterValue as Categories, [params.filterValue]);
+  const tags = useMemo(() => {
+    let initialArray: any = [];
+
+    if (activeCategory === Categories.allCategories)
+      initialArray = categories?.reduce(
+        (result: any, currentCategory: any) => [...result, ...currentCategory.tags],
+        initialArray,
+      );
+
+    if (activeCategory !== Categories.allCategories) {
+      categories?.forEach((currentCategory: any) => {
+        if (activeCategory === currentCategory.name) {
+          initialArray = [...currentCategory.tags];
+        }
+      });
+    }
+
+    return initialArray;
+  }, [activeCategory, categories]);
+  console.log(tags)
+
+  const [activeTag, setActiveTag] = useState(tags[0]?.name || '');
+
+  useEffect(() => {
+    if (tags[0]?.name) {
+      setActiveTag(tags[0].name)
+    }
+  }, [tags])
+
   const { t } = useLanguage();
-  const [checkedCategory, setCheckedCategory] = useState(categories[0].key);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({});
+  const dispatch = useDispatch();
 
-  const handleClickCategory = useCallback((value: string) => {
+  const handleGetCategories = useCallback(() => {
+    dispatch(getCategories({}));
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleGetCategories();
+  }, [handleGetCategories]);
+
+  const handleClickCategory = useCallback((value) => {
     setPage(1);
-    setCheckedCategory(value);
+    setActiveTag(value);
   }, []);
 
   const isNftsLoading = false;
@@ -89,19 +115,19 @@ const Body: VFC = () => {
   useEffect(() => {
     // call saga to fetch new nfts
 
-    console.log({ page, checkedCategory, filters });
-  }, [page, checkedCategory, filters]);
+    console.log({ page, activeCategory, filters });
+  }, [page, activeCategory, filters]);
   return (
     <>
       <TabLookingComponent
-        tabs={categories}
+        tabs={tags}
         wrapClassName={styles.categories}
         action={(value) => handleClickCategory(value)}
-        activeTab={checkedCategory}
+        activeTab={activeTag}
         tabClassName={styles.category}
       />
       <div className={styles.container}>
-        <Filters filterCategory={checkedCategory} onFiltersChange={setFilters} />
+        <Filters filterCategory={activeCategory} onFiltersChange={setFilters} />
         <div className={styles.filterResults}>
           <div className={cx(styles.cards)}>
             {isNftsLoading && nftCards.length === 0 ? (

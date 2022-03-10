@@ -1,10 +1,12 @@
+import { Categories } from "types";
+
 export const routes = {
   home: {
     root: '/',
   },
   explore: {
-    root: '/explore',
-    filter: (fileterValue: string): string => `/explore?filter=${fileterValue}`,
+    root: '/explore/:filterValue',
+    filter: (fileterValue: Categories): string => `/explore/${fileterValue}`,
     input: (input: string): string => `/explore?text=${input}`,
   },
   nft: {
@@ -24,7 +26,7 @@ export const routes = {
   profile: {
     link: (
       id: string | number,
-      tab?: 'for-sale' | 'owned' | 'favorites' | 'about-me' | 'collections' | 'sold' | 'bided',
+      tab?: 'for-sale' | 'owned' | 'favorites' | 'about-me' | 'collections' | 'sold' | 'bidded',
     ): string => `/profile/${id}${tab ? `/${tab}` : ''}`,
     root: '/profile/:userId',
     edit: '/profile/edit',

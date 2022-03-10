@@ -8,7 +8,8 @@ import styles from './styles.module.scss';
 
 export interface ITab {
   key: string;
-  title: string;
+  title?: string;
+  name?: string;
   icon?: JSX.Element | string;
   url?: string;
 }
@@ -32,7 +33,7 @@ const TabLookingComponent: FC<Props> = ({
   wrapClassName,
   type,
 }) => {
-  const handleClick = (key: string) => {
+  const handleClick = (key: any) => {
     action(key);
   };
 
@@ -54,14 +55,14 @@ const TabLookingComponent: FC<Props> = ({
     >
       <div ref={scrollProviderRef} className={styles.scrollProvider}>
         <div ref={tabWrapperRef} className={cx(styles.tabWrapper, className)}>
-          {tabs.map(({ title, icon, key, url }) => {
+          {tabs.map(({ title, name, icon, key, url }) => {
             return type === 'tabs' ? (
               <Button
-                onClick={() => handleClick(key)}
+                onClick={() => handleClick(name || key)}
                 color="transparent"
-                key={title}
+                key={title || name}
                 href={url}
-                className={cx(styles.tab, { [styles.selected]: key === activeTab }, tabClassName)}
+                className={cx(styles.tab, { [styles.selected]: (key || name) === activeTab }, tabClassName)}
               >
                 {icon && typeof icon === 'string' ? (
                   <img className={styles.tabIcon} src={icon} alt="" />
@@ -69,16 +70,16 @@ const TabLookingComponent: FC<Props> = ({
                   icon
                 )}
                 <Text className={styles.tabText} weight="medium" size="m">
-                  {title}
+                  {title || name}
                 </Text>
               </Button>
             ) : (
               <Button
-                color={key === activeTab ? 'dark' : 'light'}
-                onClick={() => action(key)}
+                color={(key || name) === activeTab ? 'dark' : 'light'}
+                onClick={() => action(name || key)}
                 className={tabClassName}
               >
-                {title}
+                {title || name}
               </Button>
             );
           })}
