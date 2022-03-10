@@ -22,7 +22,7 @@ interface IClipboard {
 const getFormatted = (value: string, format: 'dotted' | 'available') => {
   switch (format) {
     case 'dotted':
-      return sliceString(value, 10, -5);
+      return sliceString(value, 10, 5);
     default:
       return value;
   }
