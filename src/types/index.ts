@@ -1,4 +1,10 @@
+import { ModalsInitialState } from './store/modals';
+import { UserState } from './store/user';
+
 import { i18n } from 'i18next';
+
+import { Category } from './api/Category';
+import { TokenFull } from './api/TokenFull';
 
 export * from './components';
 export * from './hooks';
@@ -84,6 +90,19 @@ export interface INft {
   has_digital_key: boolean;
   is_timed_auc_selling: boolean;
 }
+
+export type NftsState = {
+  nfts: TokenFull[];
+  // detailedNft: TokenFull;
+  totalPages: number;
+  categories: TNullable<Category[]>
+};
+
+export type State = {
+  user: UserState;
+  modals: ModalsInitialState;
+  nfts: NftsState;
+};
 
 export interface IOwner extends Omit<IBaseInfo, 'address'> {
   price: number;

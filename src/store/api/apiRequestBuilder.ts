@@ -1,6 +1,7 @@
 import { URL } from 'appConstants';
 import { LoginReq } from 'types';
 import { SearchNftReq } from 'types/requests';
+
 import ajax from './ajax';
 
 export const baseApi = {
@@ -51,4 +52,10 @@ export const baseApi = {
       params: { ...params, items_per_page },
     });
   },
+  getCategories(){
+    return ajax({
+      method: 'get',
+      url: URL.getCategories
+    })
+  }
 };

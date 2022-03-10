@@ -13,7 +13,7 @@ import Clipboard from 'components/Clipboard';
 
 import { routes } from 'appConstants';
 import { usePopover, useShallowSelector, useWindowSize } from 'hooks';
-import { State, UserState } from 'types';
+import { Categories, State, UserState } from 'types';
 
 import styles from './styles.module.scss';
 
@@ -44,7 +44,7 @@ const tags = [
 
 const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, onClick }) => {
   const { closePopover } = usePopover();
-  const handleTagClick = (title: string) => {
+  const handleTagClick = (title: Categories) => {
     closePopover();
     onClick(routes.explore.filter(title));
   };
@@ -71,7 +71,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
             className={styles.dropdownLink}
             key={tag.title}
             color="transparent"
-            onClick={() => handleTagClick(tag.title as string)}
+            onClick={() => handleTagClick(tag.title as Categories)}
           >
             <Text color="black" size="m" weight="bold" className={styles.linktext}>
               {tag.title}

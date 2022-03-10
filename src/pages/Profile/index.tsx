@@ -39,8 +39,8 @@ const Profile: VFC = () => {
         name: 'Sold',
       },
       {
-        value: '/bided',
-        name: 'Bided',
+        value: '/bidded',
+        name: 'Bidded',
       },
       {
         value: '/favorites',
@@ -125,7 +125,7 @@ const Profile: VFC = () => {
           <Route path="owned" element={<Preview key="owned" cardsData={nftCards} />} />
           <Route path="for-sale" element={<Preview key="for-sale" cardsData={nftCards} />} />
           <Route path="sold" element={<Preview key="sold" cardsData={nftCards} />} />
-          <Route path="bided" element={<Preview key="bided" cardsData={nftCards} />} />
+          <Route path="bidded" element={<Preview key="bidded" cardsData={nftCards} />} />
           <Route
             path="favorites"
             element={<Preview key="favorites" withAuction cardsData={nftCards} />}

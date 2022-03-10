@@ -13,7 +13,7 @@ import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
 import { routes } from 'appConstants';
 import { usePopover, useShallowSelector } from 'hooks';
-import { Chains, State, UserState, WalletProviders } from 'types';
+import { Categories, Chains, State, UserState, WalletProviders } from 'types';
 
 import {
   ArrowConnectSVG,
@@ -51,7 +51,7 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
         url: '/',
       },
       {
-        title: 'Bided',
+        title: 'Bidded',
         url: '/',
       },
       {
@@ -62,7 +62,7 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
         title: 'Exit',
         url: '',
         icon: iconExit,
-        onClick: disconnect
+        onClick: disconnect,
       },
     ],
     [disconnect],
@@ -140,23 +140,23 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
     () => [
       {
         title: 'All categories',
-        url: routes.explore.filter('all categories'),
+        url: routes.explore.filter(Categories.allCategories),
       },
       {
         title: 'Rooms',
-        url: routes.explore.filter('rooms'),
+        url: routes.explore.filter(Categories.rooms),
       },
       {
-        title: ' Area',
-        url: routes.explore.filter('area'),
+        title: 'Area',
+        url: routes.explore.filter(Categories.area),
       },
       {
         title: 'Buildings',
-        url: routes.explore.filter('buildings'),
+        url: routes.explore.filter(Categories.buildings),
       },
       {
         title: 'Skins',
-        url: routes.explore.filter('skins'),
+        url: routes.explore.filter(Categories.skins),
       },
     ],
     [],

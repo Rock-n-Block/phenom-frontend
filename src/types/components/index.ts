@@ -4,3 +4,4 @@ export * from './collections';
 export * from './tabBar';
 export * from './profile';
 export * from './nft';
+export * from './categoryCards';
