@@ -38,18 +38,17 @@ const Body: VFC = () => {
         }
       });
     }
-
-    return initialArray;
+    return initialArray || [];
   }, [activeCategory, categories]);
-  console.log(tags)
+  console.log(tags);
 
   const [activeTag, setActiveTag] = useState(tags[0]?.name || '');
 
   useEffect(() => {
     if (tags[0]?.name) {
-      setActiveTag(tags[0].name)
+      setActiveTag(tags[0].name);
     }
-  }, [tags])
+  }, [tags]);
 
   const { t } = useLanguage();
   const [page, setPage] = useState(1);
