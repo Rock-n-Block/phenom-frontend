@@ -16,13 +16,13 @@ interface IClipboard {
   clipDelay?: number;
   className?: string;
   theme?: 'white' | 'gray';
-  format?: 'default' | 'available';
+  format?: 'dotted' | 'available';
 }
 
-const getFormatted = (value: string, format: 'default' | 'available') => {
+const getFormatted = (value: string, format: 'dotted' | 'available') => {
   switch (format) {
-    case 'default':
-      return sliceString(value, 10, 5);
+    case 'dotted':
+      return sliceString(value, 10, -5);
     default:
       return value;
   }
@@ -34,8 +34,8 @@ const getFormatted = (value: string, format: 'default' | 'available') => {
  * @param {number} [clipDelay] - delay of copping @default clipDelay = 2000 ms
  * @param {string} [className] - class name for the wrapper
  * @param {'white' | 'gray'} [theme] - color theme of the clipboard
- * @param {'default' | 'available'} [format] - format of drawing value
- * * default - default address split 0x00000000...0000
+ * @param {'dotted' | 'available'} [format] - format of drawing value
+ * * dotted - default address split 0x00000000...0000
  * * available - take as much place as possible
  * @returns
  */

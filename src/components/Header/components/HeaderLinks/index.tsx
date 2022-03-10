@@ -169,7 +169,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
         }
         return null;
       })}
-      {address && <Clipboard className={styles.copiedAddress} value={address} format="default" />}
+      {address && <Clipboard className={styles.copiedAddress} value={address} format="dotted" />}
     </div>
   );
 };
