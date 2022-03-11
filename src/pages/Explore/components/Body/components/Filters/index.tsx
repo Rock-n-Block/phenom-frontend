@@ -38,7 +38,7 @@ type Props = {
 };
 
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
-  console.log(filterCategory, onFiltersChange);
+  console.log(filterCategory);
   const { t } = useTranslation('Explore');
 
   const [checkedFilters, setCheckedFilters] = useState<any>({});
@@ -96,6 +96,10 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
       setIsApplied(false);
     }
   }, [checkedFilters, isApplied]);
+
+  useEffect(() => {
+    onFiltersChange({ ...appliedFilters, isAuctionOnly, sortBy });
+  }, [appliedFilters, isAuctionOnly, onFiltersChange, sortBy]);
   return (
     <>
       <div className={styles.filters}>
