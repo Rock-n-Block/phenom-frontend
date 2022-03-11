@@ -5,10 +5,7 @@
  * This file was automatically generated.
  */
 
-
-
 export interface Tag {
-    icon?: string;
-    image?: string;
-    name?: string;
+  name: string;
+  id: number;
 }

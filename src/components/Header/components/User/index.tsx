@@ -13,7 +13,7 @@ import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
 import { routes } from 'appConstants';
 import { usePopover, useShallowSelector } from 'hooks';
-import { Categories, Chains, State, UserState, WalletProviders } from 'types';
+import { CategoryName, Chains, State, UserState, WalletProviders } from 'types';
 
 import {
   ArrowConnectSVG,
@@ -140,23 +140,23 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
     () => [
       {
         title: 'All categories',
-        url: routes.explore.filter(Categories.allCategories),
+        url: routes.explore.filter(CategoryName.allCategories),
       },
       {
         title: 'Rooms',
-        url: routes.explore.filter(Categories.rooms),
+        url: routes.explore.filter(CategoryName.rooms),
       },
       {
         title: 'Area',
-        url: routes.explore.filter(Categories.area),
+        url: routes.explore.filter(CategoryName.area),
       },
       {
         title: 'Buildings',
-        url: routes.explore.filter(Categories.buildings),
+        url: routes.explore.filter(CategoryName.buildings),
       },
       {
         title: 'Skins',
-        url: routes.explore.filter(Categories.skins),
+        url: routes.explore.filter(CategoryName.skins),
       },
     ],
     [],
