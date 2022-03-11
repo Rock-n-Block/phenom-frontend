@@ -40,7 +40,7 @@ const Collections: VFC<ICollections> = ({
         const newSelected = selected.filter((c) => c.id !== collection.id);
         setSelected(newSelected);
       } else {
-        setSelected([...selected, collection]);
+        setSelected([collection]);
       }
     },
     [isSelected, selected],

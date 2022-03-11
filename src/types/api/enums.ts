@@ -31,4 +31,12 @@ export enum TokenState {
     Burned = "Burned",
     Expired = "Expired"
 } 
+
+export enum CategoryName {
+    rooms = 'Rooms',
+    area = 'Area',
+    skins = 'Skins',
+    buildings = 'Buildings',
+    allCategories = 'All categories',
+  }
  

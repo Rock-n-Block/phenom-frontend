@@ -2,12 +2,12 @@ import { VFC } from 'react';
 
 import { Text } from 'components';
 
-import { Categories } from 'types';
+import { CategoryName } from 'types';
 
 import styles from './styles.module.scss';
 
 interface ITitle {
-  activeCategory: Categories;
+  activeCategory: CategoryName;
 }
 
 const Title: VFC<ITitle> = ({ activeCategory }) => {

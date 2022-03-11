@@ -1,4 +1,4 @@
-import { Categories } from "types";
+import { CategoryName } from "types";
 
 export const routes = {
   home: {
@@ -6,7 +6,7 @@ export const routes = {
   },
   explore: {
     root: '/explore/:filterValue',
-    filter: (fileterValue: Categories): string => `/explore/${fileterValue}`,
+    filter: (fileterValue: CategoryName): string => `/explore/${fileterValue}`,
     input: (input: string): string => `/explore?text=${input}`,
   },
   nft: {

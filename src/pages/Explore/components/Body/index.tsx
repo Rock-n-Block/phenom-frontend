@@ -9,16 +9,17 @@ import { useLanguage } from 'context';
 import mock from 'mock';
 
 import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'components';
+import { ITab } from 'components/TabLookingComponent';
 
 import { Filters } from './components';
 
 import { useGetTags, useShallowSelector } from 'hooks';
-import { Categories } from 'types';
+import { CategoryName } from 'types';
 
 import styles from './styles.module.scss';
 
 interface IBody {
-  activeCategory: Categories;
+  activeCategory: CategoryName;
 }
 
 const Body: VFC<IBody> = ({ activeCategory }) => {
@@ -107,7 +108,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     <>
       {tags && tags.length !== 0 && (
         <TabLookingComponent
-          tabs={tags}
+          tabs={tags.map<ITab>((tag) => ({ key: String(tag.id), title: tag.name }))}
           wrapClassName={styles.categories}
           action={(value) => handleClickCategory(value)}
           activeTab={activeTag}
