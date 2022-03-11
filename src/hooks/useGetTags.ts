@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Categories, TNullable } from 'types';
 
 const useGetTags = (activeCategory: any, categories: TNullable<Categories[]>) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeTag, setActiveTag] = useState('');
   const tags = useMemo(() => {
     let initialArray: any = [];
 
@@ -21,10 +21,11 @@ const useGetTags = (activeCategory: any, categories: TNullable<Categories[]>) =>
       });
     }
 
+    if (initialArray?.length) {
+      setActiveTag(initialArray[0].name);
+    }
     return initialArray;
   }, [activeCategory, categories]);
-
-  const [activeTag, setActiveTag] = useState(tags ? tags[0].name : '');
 
   const handleSetActiveTag = useCallback((tag: string) => {
     setActiveTag(tag);
@@ -33,11 +34,10 @@ const useGetTags = (activeCategory: any, categories: TNullable<Categories[]>) =>
   useEffect(() => {
     if (tags && tags[0]?.name) {
       setActiveTag(tags[0].name);
-      setIsLoading(false);
     }
   }, [tags]);
 
-  return { activeTag, tags, handleSetActiveTag, isLoading };
+  return { activeTag, tags, handleSetActiveTag };
 };
 
 export default useGetTags;

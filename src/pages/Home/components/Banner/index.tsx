@@ -9,6 +9,7 @@ import { routes } from 'appConstants';
 import { metaverse } from 'assets/img';
 
 import styles from './styles.module.scss';
+import { Categories } from 'types';
 
 const Banner: FC = () => {
   const { t } = useTranslation('Home');
@@ -33,7 +34,7 @@ const Banner: FC = () => {
           and also earn rewards for their activity.
         </Text>
         <div className={styles.bannerBtn}>
-          <Button href={routes.explore.root} padding="extra-large">
+          <Button href={routes.explore.filter(Categories.allCategories)} padding="extra-large">
             {t('Banner.Explore')}
           </Button>
         </div>

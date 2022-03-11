@@ -1,37 +1,29 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getCategories } from 'store/nfts/actions';
-import actionTypes from 'store/nfts/actionTypes';
 import nftSelector from 'store/nfts/selectors';
-import uiSelector from 'store/ui/selectors';
 
 import cx from 'classnames';
 import { useLanguage } from 'context';
 import mock from 'mock';
 
-import { ArtCard, ArtCardSkeleton, Button, Loader, TabLookingComponent } from 'components';
+import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'components';
 
 import { Filters } from './components';
 
 import { useGetTags, useShallowSelector } from 'hooks';
-import { Categories, RequestStatus } from 'types';
+import { Categories } from 'types';
 
 import styles from './styles.module.scss';
 
-const Body: VFC = () => {
+interface IBody {
+  activeCategory: Categories;
+}
+
+const Body: VFC<IBody> = ({ activeCategory }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
-  const params = useParams();
-  const activeCategory = useMemo(() => params.filterValue as Categories, [params.filterValue]);
-  const { tags, activeTag, handleSetActiveTag, isLoading } = useGetTags(activeCategory, categories);
-  const { [actionTypes.GET_CATEGORIES]: categoriesRequestStatus } = useShallowSelector(
-    uiSelector.getUI,
-  );
-  const isCategoriesLoading = useMemo(
-    () => categoriesRequestStatus === RequestStatus.REQUEST && isLoading,
-    [categoriesRequestStatus, isLoading],
-  );
+  const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
 
   const { t } = useLanguage();
   const [page, setPage] = useState(1);
@@ -103,13 +95,8 @@ const Body: VFC = () => {
     console.log({ page, activeCategory, filters });
   }, [page, activeCategory, filters]);
 
-  useEffect(() => {
-    console.log('isCategoriesLoading', isCategoriesLoading, 'tags', tags);
-  }, [isCategoriesLoading, tags]);
   return (
     <>
-      {isCategoriesLoading && <Loader />}
-      {console.log(tags)}
       {tags && tags.length !== 0 && (
         <TabLookingComponent
           tabs={tags}
