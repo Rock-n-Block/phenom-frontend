@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { getCategories } from 'store/nfts/actions';
+import { getCategories, searchNfts } from 'store/nfts/actions';
 import nftSelector from 'store/nfts/selectors';
 
 import cx from 'classnames';
@@ -23,6 +23,8 @@ interface IBody {
 
 const Body: VFC<IBody> = ({ activeCategory }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const collections = useShallowSelector(nftSelector.getProp('collections'));
+  console.log('collections', collections)
   const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
 
   const { t } = useLanguage();
@@ -34,9 +36,15 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     dispatch(getCategories({}));
   }, [dispatch]);
 
+  const handleSearchCollections = useCallback(() => {
+    const requestData = { type: 'collections', page: 1 };
+    dispatch(searchNfts({ requestData }));
+  }, [dispatch]);
+
   useEffect(() => {
     handleGetCategories();
-  }, [handleGetCategories]);
+    handleSearchCollections();
+  }, [handleGetCategories, handleSearchCollections]);
 
   const handleClickCategory = useCallback(
     (value) => {
