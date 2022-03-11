@@ -3,18 +3,20 @@ import { useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { getCategories } from 'store/nfts/actions';
+import actionTypes from 'store/nfts/actionTypes';
 import nftSelector from 'store/nfts/selectors';
+import uiSelector from 'store/ui/selectors';
 
 import cx from 'classnames';
 import { useLanguage } from 'context';
 import mock from 'mock';
 
-import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'components';
+import { ArtCard, ArtCardSkeleton, Button, Loader, TabLookingComponent } from 'components';
 
 import { Filters } from './components';
 
-import { useShallowSelector } from 'hooks';
-import { Categories } from 'types';
+import { useGetTags, useShallowSelector } from 'hooks';
+import { Categories, RequestStatus } from 'types';
 
 import styles from './styles.module.scss';
 
@@ -22,34 +24,14 @@ const Body: VFC = () => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
   const params = useParams();
   const activeCategory = useMemo(() => params.filterValue as Categories, [params.filterValue]);
-  const tags = useMemo(() => {
-    let initialArray: any = [];
-
-    if (activeCategory === Categories.allCategories)
-      initialArray = categories?.reduce(
-        (result: any, currentCategory: any) => [...result, ...currentCategory.tags],
-        initialArray,
-      );
-
-    if (activeCategory !== Categories.allCategories) {
-      categories?.forEach((currentCategory: any) => {
-        if (activeCategory === currentCategory.name) {
-          initialArray = [...currentCategory.tags];
-        }
-      });
-    }
-
-    return initialArray;
-  }, [activeCategory, categories]);
-  console.log(tags)
-
-  const [activeTag, setActiveTag] = useState(tags[0]?.name || '');
-
-  useEffect(() => {
-    if (tags[0]?.name) {
-      setActiveTag(tags[0].name)
-    }
-  }, [tags])
+  const { tags, activeTag, handleSetActiveTag, isLoading } = useGetTags(activeCategory, categories);
+  const { [actionTypes.GET_CATEGORIES]: categoriesRequestStatus } = useShallowSelector(
+    uiSelector.getUI,
+  );
+  const isCategoriesLoading = useMemo(
+    () => categoriesRequestStatus === RequestStatus.REQUEST && isLoading,
+    [categoriesRequestStatus, isLoading],
+  );
 
   const { t } = useLanguage();
   const [page, setPage] = useState(1);
@@ -64,10 +46,13 @@ const Body: VFC = () => {
     handleGetCategories();
   }, [handleGetCategories]);
 
-  const handleClickCategory = useCallback((value) => {
-    setPage(1);
-    setActiveTag(value);
-  }, []);
+  const handleClickCategory = useCallback(
+    (value) => {
+      setPage(1);
+      handleSetActiveTag(value);
+    },
+    [handleSetActiveTag],
+  );
 
   const isNftsLoading = false;
 
@@ -117,15 +102,24 @@ const Body: VFC = () => {
 
     console.log({ page, activeCategory, filters });
   }, [page, activeCategory, filters]);
+
+  useEffect(() => {
+    console.log('isCategoriesLoading', isCategoriesLoading, 'tags', tags);
+  }, [isCategoriesLoading, tags]);
   return (
     <>
-      <TabLookingComponent
-        tabs={tags}
-        wrapClassName={styles.categories}
-        action={(value) => handleClickCategory(value)}
-        activeTab={activeTag}
-        tabClassName={styles.category}
-      />
+      {isCategoriesLoading && <Loader />}
+      {console.log(tags)}
+      {tags && tags.length !== 0 && (
+        <TabLookingComponent
+          tabs={tags}
+          wrapClassName={styles.categories}
+          action={(value) => handleClickCategory(value)}
+          activeTab={activeTag}
+          tabClassName={styles.category}
+        />
+      )}
+
       <div className={styles.container}>
         <Filters filterCategory={activeCategory} onFiltersChange={setFilters} />
         <div className={styles.filterResults}>
