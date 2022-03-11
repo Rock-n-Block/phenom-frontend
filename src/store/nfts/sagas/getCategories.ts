@@ -11,11 +11,10 @@ export function* getCategoriesSaga({ type }: ReturnType<typeof getCategories>) {
 
   try {
     const { data } = yield call(baseApi.getCategories);
-    console.log('data', data);
     yield put(setCategories(data));
-
   } catch (err) {
     console.log(err);
+    yield put(apiActions.error(type, err));
   }
 }
 

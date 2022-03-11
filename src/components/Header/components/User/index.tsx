@@ -51,7 +51,7 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
         url: '/',
       },
       {
-        title: 'Bidded',
+        title: 'Bided',
         url: '/',
       },
       {
