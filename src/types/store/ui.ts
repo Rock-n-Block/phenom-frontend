@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-shadow
 export enum RequestStatus {
   INIT = 'INIT',
   REQUEST = 'REQUEST',
@@ -9,5 +10,5 @@ export enum RequestStatus {
 export type UIState = Record<string, RequestStatus>;
 
 export type StateWithUIState<P = Record<string, unknown>> = {
-  ui: UIState;
+  ui: UIState,
 } & P;

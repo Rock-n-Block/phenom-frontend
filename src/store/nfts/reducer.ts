@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NftsState } from 'types';
-import { Category } from 'types/api/Category';
+import { Categories, NftsState } from 'types';
 import { TokenFull } from 'types/api/TokenFull';
 
 const initialState: NftsState = {
@@ -18,7 +17,7 @@ export const nftsReducer = createSlice({
       ...state,
       nfts: action.payload,
     }),
-    setCategories: (state, action: PayloadAction<Category[]>) => ({
+    setCategories: (state, action: PayloadAction<Categories[]>) => ({
       ...state,
       categories: action.payload,
     }),

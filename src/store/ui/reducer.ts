@@ -1,4 +1,4 @@
-import nftActionTypes from 'store/nfts/actionTypes';
+import nftsActionTypes from 'store/nfts/actionTypes';
 import userActionTypes from 'store/user/actionTypes';
 import { RequestStatus } from 'types/store';
 
@@ -7,8 +7,9 @@ import { UIState } from 'types';
 import { getUIReducer } from '.';
 
 const initialState: UIState = {
+  [nftsActionTypes.GET_CATEGORIES]: RequestStatus.INIT,
   [userActionTypes.GET_TOKEN_BALANCE]: RequestStatus.INIT,
-  [nftActionTypes.CREATE_TOKEN]: RequestStatus.REQUEST,
+  [nftsActionTypes.CREATE_TOKEN]: RequestStatus.REQUEST,
 };
 
 const uiReducer = getUIReducer(initialState);
