@@ -5,7 +5,13 @@ import cn from 'classnames';
 import { Text } from 'components';
 import { byteSize, toPC } from 'utils';
 
-import { availableExtensions, maxSize, TAvailableExtensions, TMaxSize } from 'appConstants';
+import {
+  availableExtensions,
+  getExtension,
+  maxSize,
+  TAvailableExtensions,
+  TMaxSize,
+} from 'appConstants';
 
 import { ImageSVG } from 'assets/img';
 
@@ -14,6 +20,7 @@ import styles from './styles.module.scss';
 export enum ErrorList {
   emptyLoad, // there is no files in input
   largeFile, // file is more than required
+  noneType,
 }
 
 export type TLoadError = {
@@ -122,7 +129,17 @@ const LoadFile: VFC<ILoadFile> = ({
     const handleDrop = (e: DragEvent) => {
       const dt = e.dataTransfer;
       const files = Array.from(dt?.files || []);
-      filesWorker(files);
+      const nullFunc = () => {};
+      const onError = onLoadError || nullFunc;
+      if (!files.every((f) => extensions.includes(getExtension(f.name) as any))) {
+        onError({
+          msg: "Type doesn't exist",
+          numbers: [],
+          type: ErrorList.noneType,
+        });
+      } else {
+        filesWorker(files);
+      }
     };
     const dropArea = areaRef.current || null;
     if (dropArea) {
@@ -158,7 +175,7 @@ const LoadFile: VFC<ILoadFile> = ({
         dropArea.removeEventListener('drop', handleDrop, false);
       }
     };
-  }, [filesWorker]);
+  }, [extensions, filesWorker, onLoadError]);
 
   const onDragOrSelect = useCallback(
     async (e: FormEvent<HTMLInputElement>) => {
