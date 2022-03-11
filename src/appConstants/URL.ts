@@ -6,5 +6,6 @@ export default {
   getTrendingNfts: 'store/trending/',
   presearchNfts: 'store/presearch/',
   searchNfts: 'store/search/',
-  getCategories: '/store/categories/'
+  getCategories: '/store/categories/',
+  createNewToken: '/store/create_token/',
 };
