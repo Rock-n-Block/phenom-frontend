@@ -1,5 +1,5 @@
 import { URL } from 'appConstants';
-import { LoginReq } from 'types';
+import { LoginReq, Token } from 'types';
 import { SearchNftReq } from 'types/requests';
 
 import ajax from './ajax';
@@ -52,10 +52,17 @@ export const baseApi = {
       params: { ...params, items_per_page },
     });
   },
-  getCategories(){
+  getCategories() {
     return ajax({
       method: 'get',
-      url: URL.getCategories
-    })
-  }
+      url: URL.getCategories,
+    });
+  },
+  createNewToken(token: Token) {
+    return ajax({
+      method: 'POST',
+      url: URL.createNewToken,
+      params: token,
+    });
+  },
 };

@@ -5,7 +5,7 @@
  * This file was automatically generated.
  */
 
-import { State } from "./enums";
+import { TokenState } from "./enums";
 import { Creator } from "./Creator";
 
 
@@ -13,6 +13,6 @@ export interface Bet {
     amount?: string;
     id?: number;
     quantity?: number;
-    state?: State;
+    state?: TokenState;
     user?: Creator;
 }

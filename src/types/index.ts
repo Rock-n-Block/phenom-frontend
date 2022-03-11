@@ -1,6 +1,3 @@
-import { ModalsInitialState } from './store/modals';
-import { UserState } from './store/user';
-
 import { i18n } from 'i18next';
 
 import { Category } from './api/Category';
@@ -11,6 +8,7 @@ export * from './hooks';
 export * from './config';
 export * from './context';
 export * from './store';
+export * from './api';
 
 declare global {
   interface Window {
@@ -95,13 +93,7 @@ export type NftsState = {
   nfts: TokenFull[];
   // detailedNft: TokenFull;
   totalPages: number;
-  categories: TNullable<Category[]>
-};
-
-export type State = {
-  user: UserState;
-  modals: ModalsInitialState;
-  nfts: NftsState;
+  categories: TNullable<Category[]>;
 };
 
 export interface IOwner extends Omit<IBaseInfo, 'address'> {
