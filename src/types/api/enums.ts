@@ -24,7 +24,7 @@ export enum Status {
     Expired = "Expired"
 } 
  
-export enum State {
+export enum TokenState {
     Pending = "Pending",
     Failed = "Failed",
     Committed = "Committed",

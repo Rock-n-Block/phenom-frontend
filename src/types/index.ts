@@ -9,6 +9,7 @@ export * from './hooks';
 export * from './config';
 export * from './context';
 export * from './store';
+export * from './api';
 
 declare global {
   interface Window {
