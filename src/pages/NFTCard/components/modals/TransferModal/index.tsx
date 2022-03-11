@@ -24,7 +24,7 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose }) => {
         setValue={handleInputChange}
         placeholder="Input text"
       />
-      <Button className={styles.button} padding="small">
+      <Button className={styles.button}>
         Send
       </Button>
     </Modal>

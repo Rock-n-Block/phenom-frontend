@@ -173,7 +173,6 @@ const Payment: VFC<IPayment> = ({
               </Text>
             </div>
           )}
-          {nft?.standart === 'ERC1155' && <Text className={styles.quantity}>Quantity</Text>}
           {/* {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
           <Text className={styles.quantity}>Bid</Text>
         )} */}
@@ -181,10 +180,10 @@ const Payment: VFC<IPayment> = ({
             <div className={styles.priceBids}>
               {nft?.standart === 'ERC1155' && (
                 <QuantityInput
-                  value={+quantity < 10 ? `0${quantity}` : quantity}
+                  value={quantity}
                   setValue={setQuantity}
                   name="quantity"
-                  writeable={false}
+                  writeable
                   maxAmount={nft?.available}
                   minAmount={1}
                   inputClassName={styles.quantityInput}
