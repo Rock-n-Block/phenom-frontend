@@ -1,4 +1,4 @@
-import { Categories, IBaseInfo, IBidder, ICurrency, IOwner, TNullable } from "types";
+import { IBaseInfo, IBidder, ICurrency, IOwner, TNullable, TResponseCategories } from "types";
 import { TokenFull } from "types/api/TokenFull";
 
 export interface INft {
@@ -54,5 +54,5 @@ export type NftsState = {
   collections: IBaseInfo[];
   // detailedNft: TokenFull;
   totalPages: number;
-  categories: TNullable<Categories[]>
+  categories: TNullable<TResponseCategories>
 };

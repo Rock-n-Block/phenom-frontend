@@ -78,7 +78,28 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         .required(),
     }),
     handleSubmit: (values) => {
-      console.log(values);
+      const newTokenForm = new FormData();
+      newTokenForm.append('name', values.name);
+      newTokenForm.append('description', values.description);
+      newTokenForm.append('standart', values.type === 'Single' ? 'ERC721' : 'ERC1155');
+      newTokenForm.append('collection', JSON.stringify(values.collections[0].id));
+      newTokenForm.append(
+        'details',
+        JSON.stringify(Object.fromEntries(values.properties.map((prop) => Object.entries(prop)))),
+      );
+      if (values.media) {
+        newTokenForm.append('media', new Blob([values.media[0]]));
+      }
+      if (values.preview) {
+        newTokenForm.append('cover', new Blob([values.preview[0]], { type: 'image' }));
+      }
+      newTokenForm.append(
+        'selling_quantity',
+        JSON.stringify(values.type === 'Multiple' ? values.quantity : 1),
+      );
+      if (values.subcategory) {
+        newTokenForm.append('tags', values.subcategory.category);
+      }
     },
     displayName: 'create-nft',
   })(MainForm);

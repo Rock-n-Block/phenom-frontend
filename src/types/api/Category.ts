@@ -5,10 +5,13 @@
  * This file was automatically generated.
  */
 
+import { CategoryName } from ".";
 import { Tag } from "./Tag";
 
 
 export interface Category {
-    name?: string;
+    name: CategoryName;
     tags: Tag[];
+    image: string;
+    id: number;
 }

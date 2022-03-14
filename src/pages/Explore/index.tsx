@@ -5,13 +5,13 @@ import { useLanguage } from 'context';
 
 import { Body, Title } from './components';
 
-import { Categories } from 'types';
+import { CategoryName } from 'types';
 
 import styles from './styles.module.scss';
 
 const Explore: VFC = () => {
   const params = useParams();
-  const activeCategory = useMemo(() => params.filterValue as Categories, [params.filterValue]);
+  const activeCategory = useMemo(() => params.filterValue as CategoryName, [params.filterValue]);
   const { hasNamespaceLoaded } = useLanguage();
   if (!hasNamespaceLoaded('Explore')) {
     return <div>Loading</div>;

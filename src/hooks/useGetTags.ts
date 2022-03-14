@@ -1,20 +1,23 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Categories, TNullable } from 'types';
+import { Category, CategoryName, Tag, TNullable, TResponseCategories } from 'types';
 
-const useGetTags = (activeCategory: any, categories: TNullable<Categories[]>) => {
+const useGetTags = (activeCategory: any, categories: TNullable<TResponseCategories>) => {
   const [activeTag, setActiveTag] = useState('');
   const tags = useMemo(() => {
-    let initialArray: any = [];
+    let initialArray: Tag[] = [];
 
-    if (activeCategory === Categories.allCategories)
-      initialArray = categories?.reduce(
-        (result: any, currentCategory: any) => [...result, ...currentCategory.tags],
-        initialArray,
-      );
+    if (activeCategory === CategoryName.allCategories) {
+      if (categories) {
+        initialArray = categories.reduce(
+          (result: Tag[], currentCategory: Category) => [...result, ...currentCategory.tags],
+          initialArray,
+        );
+      }
+    }
 
-    if (activeCategory !== Categories.allCategories) {
-      categories?.forEach((currentCategory: any) => {
+    if (activeCategory !== CategoryName.allCategories) {
+      categories?.forEach(function (currentCategory: Category) {
         if (activeCategory === currentCategory.name) {
           initialArray = [...currentCategory.tags];
         }
