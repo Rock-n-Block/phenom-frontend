@@ -168,7 +168,7 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void; isOpen: bo
   const [isLinksOpen, setIsLinksOpen] = useState(false);
 
   useEffect(() => {
-    return isOpen ? () => close() : null;
+    return isOpen ? () => close() : () => {};
   }, [close, isOpen, location.pathname]);
 
   return (
