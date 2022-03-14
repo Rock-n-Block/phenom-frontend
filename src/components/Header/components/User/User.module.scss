@@ -61,7 +61,10 @@
   }
 }
 
-.avatar,
+.avatar{
+  @include flexbox(center, flex-start);
+  gap: 16px;
+}
 .edit {
   @include flexbox;
   gap: 16px;
