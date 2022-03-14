@@ -1,5 +1,6 @@
 import { Button } from 'components';
 import { useMemo, VFC } from 'react';
+import { FILTER_DIVIDER } from 'utils';
 
 import FilterLabel from '../FilterLabel';
 // import { useNewFilters } from 'hooks';
@@ -14,7 +15,7 @@ interface IProps {
   changeFilter: any;
   minPrice: string;
   maxPrice: string;
-  clearMinMax: any
+  clearMinMax: any;
 }
 
 const Labels: VFC<IProps> = ({
@@ -23,7 +24,7 @@ const Labels: VFC<IProps> = ({
   changeFilter,
   minPrice,
   maxPrice,
-  clearMinMax
+  clearMinMax,
 }) => {
   const minMaxLabel = useMemo(() => {
     if (minPrice && maxPrice)
@@ -39,7 +40,12 @@ const Labels: VFC<IProps> = ({
     <div className={s.labels}>
       {renderFilters.map((filter: any) => {
         if (filter !== 'minPrice' && filter !== 'maxPrice') {
-          return <FilterLabel title={filter} onClick={() => changeFilter(filter)} />;
+          return (
+            <FilterLabel
+              title={filter.split(FILTER_DIVIDER)[2]}
+              onClick={() => changeFilter(filter)}
+            />
+          );
         }
         return null;
       })}

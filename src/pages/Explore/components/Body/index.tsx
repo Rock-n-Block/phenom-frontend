@@ -24,8 +24,7 @@ interface IBody {
 
 const Body: VFC<IBody> = ({ activeCategory }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
-  const collections = useShallowSelector(nftSelector.getProp('collections'));
-  console.log('collections', collections);
+  // const collections = useShallowSelector(nftSelector.getProp('collections'));
   const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
 
   const { t } = useLanguage();
@@ -45,36 +44,40 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
   const handleSearchNfts = useCallback(
     (
       category: string,
+      activetags: string,
       // TODO: types filters
       filtersData: any,
       page: number,
       shouldConcat?: boolean,
     ) => {
-      console.log('filtersData', filtersData);
       const requestData = {
-        categories: category,
+        // eslint-disable-next-line
+        // @ts-ignore
+        categories: categories?.filter((categoryOption: any) => categoryOption.name === category)[0]?.id || 0,
+        tags: tags?.filter((tagsOption: any) => tagsOption.name === activetags)[0]?.id,
         page,
-        rarity: filtersData?.rarity?.join(','),
-        attributes: JSON.stringify(filtersData?.attributes),
-        on_timed_auc_sale: filtersData.isAuction,
-        order_by: filtersData?.orderBy,
+        collections: filtersData?.collections?.join(','),
+        max_price: filtersData?.maxPrice,
+        min_price: filtersData?.minPrice,
+        on_auc_sale: filtersData?.isAuctionOnly,
+        order_by: filtersData?.orderBy?.label,
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [dispatch],
+    [categories, dispatch, tags],
   );
 
   const handleLoadMore = useCallback(
     (page: number, shouldConcat = false) => {
-      handleSearchNfts(activeCategory, filters, page, shouldConcat);
+      handleSearchNfts(activeCategory, activeTag, filters, page, shouldConcat);
     },
-    [activeCategory, filters, handleSearchNfts],
+    [activeCategory, activeTag, filters, handleSearchNfts],
   );
 
   useEffect(() => {
-    handleSearchNfts(activeCategory, filters, 1);
+    handleSearchNfts(activeCategory, activeTag, filters, 1);
     setCurrentPage(1);
-  }, [activeCategory, filters, handleSearchNfts]);
+  }, [activeCategory, activeTag, filters, handleSearchNfts]);
 
   useEffect(() => {
     handleGetCategories();

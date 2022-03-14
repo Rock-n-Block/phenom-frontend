@@ -4,6 +4,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import cn from 'classnames';
 
 import { Checkbox, EllipsisText, Text } from 'components';
+import { FILTER_DIVIDER } from 'utils';
 
 import { iconArrowDownGray } from 'assets/img';
 
@@ -18,6 +19,7 @@ interface IDropdownProps {
   checkedFilters: Array<any>;
   onFilterClick: (filterName: string) => void;
   placeholder: string;
+  backendLabel: string;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -29,6 +31,7 @@ const Dropdown: FC<IDropdownProps> = ({
   checkedFilters,
   onFilterClick,
   placeholder,
+  backendLabel,
 }) => {
   const [visible, setVisible] = useState(false);
   const handleClickOption = useCallback(
@@ -61,30 +64,33 @@ const Dropdown: FC<IDropdownProps> = ({
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>
         <div className={cn(styles.body, bodyClassName)}>
-          {options.map(({ name, media }: any, key: number) => (
-            <div
-              onKeyDown={() => {}}
-              tabIndex={0}
-              role="button"
-              className={cn(styles.option)}
-              onClick={(e: FormEvent<HTMLDivElement>) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleClickOption(name);
-              }}
-              key={`dropdown_option_${name}`}
-            >
-              <Checkbox
-                value={checkedFilters?.[name]}
-                onChange={(e: FormEvent<HTMLInputElement>) => handleClickCheckbox(e, name)}
-                id={key.toString()}
-              />
-              {media && <img src={media} alt="media" />}
-              <EllipsisText className={styles.text}>
-                <Text tag="span">{name}</Text>
-              </EllipsisText>
-            </div>
-          ))}
+          {options.map(({ value, label, media }: any, key: number) => {
+            const filterName: any = `${backendLabel}${FILTER_DIVIDER}${label}${FILTER_DIVIDER}${value}`;
+            return (
+              <div
+                onKeyDown={() => {}}
+                tabIndex={0}
+                role="button"
+                className={cn(styles.option)}
+                onClick={(e: FormEvent<HTMLDivElement>) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleClickOption(filterName);
+                }}
+                key={`dropdown_option_${value}`}
+              >
+                <Checkbox
+                  value={checkedFilters?.[filterName] || false}
+                  onChange={(e: FormEvent<HTMLInputElement>) => handleClickCheckbox(e, filterName)}
+                  id={key.toString()}
+                />
+                {media && <img src={media} alt="media" />}
+                <EllipsisText className={styles.text}>
+                  <Text tag="span">{value}</Text>
+                </EllipsisText>
+              </div>
+            );
+          })}
         </div>
       </div>
     </OutsideClickHandler>
