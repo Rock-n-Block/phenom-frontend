@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useMemo, useState, VFC } from 'react';
-import { Link } from 'react-router-dom';
+import { FC, useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import userSelector from 'store/user/selectors';
 
@@ -131,11 +131,14 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
   );
 };
 
-const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
+const UserMobile: FC<{ user: any; close: any; disconnect: () => void; isOpen: boolean }> = ({
   user,
   close,
   disconnect,
+  isOpen,
 }) => {
+  const location = useLocation();
+
   const dropdownOptions = useMemo(
     () => [
       {
@@ -163,6 +166,10 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
   );
 
   const [isLinksOpen, setIsLinksOpen] = useState(false);
+
+  useEffect(() => {
+    return isOpen ? () => close() : null;
+  }, [close, isOpen, location.pathname]);
 
   return (
     <div className={styles.mobileBody}>
@@ -345,6 +352,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
           user={{ id, address }}
           close={() => setIsBodyOpen(false)}
           disconnect={disconnect}
+          isOpen={isBodyOpen}
         />
       ) : (
         <></>
