@@ -9,7 +9,7 @@
 
 export interface NotableDrop {
     backgroundColor?: string;
-    collectionId?: string;
+    collectionUrl?: string;
     description?: string;
     image?: string;
     name?: string;

@@ -51,8 +51,6 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
       shouldConcat?: boolean,
     ) => {
       const requestData = {
-        // eslint-disable-next-line
-        // @ts-ignore
         categories: categories?.filter((categoryOption: any) => categoryOption.name === category)[0]?.id || 0,
         tags: tags?.filter((tagsOption: any) => tagsOption.name === activetags)[0]?.id,
         page,

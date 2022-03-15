@@ -57,3 +57,11 @@ export interface IOwner extends Omit<IBaseInfo, 'address'> {
 
 export type TNullable<T> = T | null;
 export type TOptionable<T> = T | undefined;
+
+export enum CategoryName {
+  rooms = 'Rooms',
+  area = 'Area',
+  skins = 'Skins',
+  buildings = 'Buildings',
+  allCategories = 'All categories',
+}

@@ -5,20 +5,23 @@
  * This file was automatically generated.
  */
 
-import { Creator } from "./Creator";
+import { UserSlim } from "./UserSlim";
 import { Display_theme } from "./enums";
+import { Standart } from "./enums";
 
 
 export interface TrendingCollection {
     address?: string;
     avatar?: string;
-    creator: Creator;
+    cover?: string;
+    creator: UserSlim;
     description?: string;
     displayTheme?: Display_theme;
-    id?: string;
     isDefault?: boolean;
     isNsfw?: boolean;
     name?: string;
-    shortUrl?: string;
+    standart: Standart;
+    symbol: string;
+    url?: string;
     views: number;
 }
