@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useMemo, useState, VFC } from 'react';
+import { FC, RefObject, useCallback, useMemo, useRef, useState, VFC } from 'react';
 import { Link } from 'react-router-dom';
 
 import userSelector from 'store/user/selectors';
@@ -12,7 +12,7 @@ import mock from 'mock';
 import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
 import { routes } from 'appConstants';
-import { usePopover, useShallowSelector } from 'hooks';
+import { useClickOutside, usePopover, useShallowSelector } from 'hooks';
 import { CategoryName, Chains, State, UserState, WalletProviders } from 'types';
 
 import {
@@ -131,11 +131,14 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
   );
 };
 
-const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
-  user,
-  close,
-  disconnect,
-}) => {
+interface IUserMobile {
+  user: any;
+  close: any;
+  disconnect: () => void;
+  bodyRef?: RefObject<HTMLDivElement>;
+}
+
+const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef }) => {
   const dropdownOptions = useMemo(
     () => [
       {
@@ -165,7 +168,7 @@ const UserMobile: FC<{ user: any; close: any; disconnect: () => void }> = ({
   const [isLinksOpen, setIsLinksOpen] = useState(false);
 
   return (
-    <div className={styles.mobileBody}>
+    <div ref={bodyRef} className={styles.mobileBody}>
       <div className={styles.title}>
         <H4 align="center" weight="bold">
           Menu
@@ -308,6 +311,9 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
   const [isBodyOpen, setIsBodyOpen] = useState(false);
   const { address, id } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { connect, disconnect } = useWalletConnectContext();
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  useClickOutside(bodyRef, () => setIsBodyOpen(false), btnRef);
 
   const handleOpenBody = useCallback((value: boolean) => {
     setIsBodyOpen(value);
@@ -336,6 +342,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
       <Button
         color="transparent"
         className={styles.userBtn}
+        btnRef={btnRef}
         onClick={() => handleOpenBody(!isBodyOpen)}
       >
         <Burger isOpen={isBodyOpen} />
@@ -345,6 +352,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
           user={{ id, address }}
           close={() => setIsBodyOpen(false)}
           disconnect={disconnect}
+          bodyRef={bodyRef}
         />
       ) : (
         <></>

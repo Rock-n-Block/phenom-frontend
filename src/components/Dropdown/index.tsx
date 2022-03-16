@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, FormEvent, useCallback, useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'classnames';
@@ -25,6 +25,8 @@ interface IDropdownProps {
   label?: string;
   error?: string;
   placeholder?: string;
+  disabled?: boolean;
+  onBlur?: (e: FormEvent<HTMLDivElement>) => void;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -43,16 +45,46 @@ const Dropdown: FC<IDropdownProps> = ({
   label,
   placeholder,
   error,
+  disabled,
+  onBlur,
 }) => {
   const [visible, setVisible] = useState(false);
 
-  const handleClick = (str: any) => {
-    setValue(str);
-    setVisible(false);
-  };
+  const handleClick = useCallback(
+    (str: any) => {
+      setValue(str);
+      setVisible(false);
+    },
+    [setValue],
+  );
+
+  const onHeadClick = useCallback(
+    (e: FormEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!disabled) {
+        const prev = visible;
+        setVisible(!prev);
+        if (prev) {
+          onBlur?.(e);
+        }
+      }
+    },
+    [disabled, onBlur, visible],
+  );
+
+  const onOutsideClick = useCallback(
+    (e: MouseEvent) => {
+      if (visible) {
+        setVisible(false);
+        onBlur?.(e as any);
+      }
+    },
+    [onBlur, visible],
+  );
 
   return (
-    <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
+    <OutsideClickHandler onOutsideClick={onOutsideClick}>
       {label && (
         <Text size="s" weight="medium" className={cn(styles.label, className)}>
           {label}
@@ -69,8 +101,8 @@ const Dropdown: FC<IDropdownProps> = ({
           onKeyDown={() => {}}
           tabIndex={0}
           role="button"
-          className={cn(styles.head, headClassName)}
-          onClick={() => setVisible(!visible)}
+          className={cn(styles.head, headClassName, { [styles.disabled]: disabled })}
+          onClick={onHeadClick}
         >
           {isWritable ? (
             <input value={value ? value[drawBy] : ''} className={styles.input} />
@@ -79,7 +111,11 @@ const Dropdown: FC<IDropdownProps> = ({
           )}
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>
-        {error && <Text className={styles.error}>{error}</Text>}
+        {error && (
+          <Text color="inherit" className={styles.error}>
+            {error}
+          </Text>
+        )}
         {!isWithImage ? (
           <div className={cn(styles.body, bodyClassName)}>
             {typeof options[0] === 'string'

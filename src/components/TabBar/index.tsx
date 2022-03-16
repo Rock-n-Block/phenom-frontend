@@ -20,6 +20,7 @@ const TabBar: VFC<ITabBar> = ({ rootPath, options, className, tabClassName }) =>
       <nav className={cn(styles['tab-bar__wrapper__body'])}>
         {options.map((opt) => (
           <NavLink
+            key={opt.value}
             className={({ isActive }) =>
               cn(styles['tab-bar__wrapper__body-tab'], tabClassName, {
                 [styles['active-tab']]: isActive,

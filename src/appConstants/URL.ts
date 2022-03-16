@@ -3,9 +3,11 @@ export default {
   metamaskLogin: 'account/metamask_login/',
   getProfileInfo: (id: string | number) => `/account/${id}/`,
   getSelfInfo: '/account/self/',
+  getSelfCollection: '/account/self/collections/',
   getTrendingNfts: 'store/trending/',
   presearchNfts: 'store/presearch/',
   searchNfts: 'store/search/',
   getCategories: '/store/categories/',
   createNewToken: '/store/create_token/',
+  createNewCollection: '/store/create_collection/',
 };

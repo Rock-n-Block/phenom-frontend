@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
 import { login, updateUserInfo } from 'store/user/actions';
-import { disconnectWalletState, updateProvider } from 'store/user/reducer';
+import { disconnectWalletState, updateChain, updateProvider } from 'store/user/reducer';
 import userSelector from 'store/user/selectors';
 
 import { Subscription } from 'rxjs';
@@ -74,6 +74,7 @@ const WalletConnectContext: FC = ({ children }) => {
               login({ address: accountInfo.address, web3Provider: WalletConnect.current.Web3() }),
             );
             dispatch(updateProvider({ provider: accountInfo.type }));
+            dispatch(updateChain({ chain }));
           }
 
           setCurrentSubscriber(sub);

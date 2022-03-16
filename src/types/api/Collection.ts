@@ -17,7 +17,7 @@ export interface Collection {
     description?: string;
     displayTheme?: Display_theme;
     floorPrice?: string;
-    id?: string;
+    url: number;
     isDefault?: boolean;
     isNsfw?: boolean;
     name?: string;
@@ -27,4 +27,5 @@ export interface Collection {
     stats?: string;
     tokensCount?: string;
     volumeTraded?: string;
+    standart?: string;
 }

@@ -95,3 +95,11 @@ export type SearchNftAction = {
   requestData: SearchNftReq;
   shouldConcat?: boolean;
 };
+
+export type RequestWithNetwork = {
+  network: string;
+};
+
+export type CreateCollectionAction = {
+  collection: FormData;
+} & RequestWithNetwork;
