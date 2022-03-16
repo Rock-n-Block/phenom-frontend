@@ -1,20 +1,26 @@
 import { useCallback, VFC } from 'react';
 
+import createActionTypes from 'store/nfts/actionTypes';
+import nftSelector from 'store/nfts/selectors';
+import uiSelector from 'store/ui/selectors';
+import actionTypes from 'store/user/actionTypes';
+import userSelector from 'store/user/selectors';
+
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, DefaultInput, Dropdown, TextArea } from 'components';
 
 import { Collections, Properties, Stock, UploadFiles } from '../components';
 
-import { createValidator } from 'appConstants';
-import { TSingleCollection, TSingleProp } from 'types';
+import { createValidator, getFileGroup, getStandard } from 'appConstants';
+import { useShallowSelector } from 'hooks';
+import { Collection, RequestStatus, TSingleProp } from 'types';
 
-import { CategoryOptions, CollectionsList, SubCategoryOptions } from '../mock/mock';
-import { ICreateForm } from '.';
+import { IMainForm } from '.';
 
 import styles from './styles.module.scss';
 
-const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
+const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   setFieldValue,
   values,
   touched,
@@ -25,6 +31,12 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
   validateForm,
   type,
 }) => {
+  const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const collections = useShallowSelector(userSelector.getProp('collections'));
+  const {
+    [actionTypes.GET_SELF_COLLECTION]: gettingCollectionsRequest,
+    [createActionTypes.CREATE_TOKEN]: creatingToken,
+  } = useShallowSelector(uiSelector.getUI);
   const onSubmitClick = useCallback(
     (vals: any) => {
       validateForm(vals);
@@ -41,11 +53,10 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
 
   const handleSetFieldValue = useCallback(
     (fieldName: string) => (value: any) => {
-      setFieldValue(fieldName, value);
+      setFieldValue(fieldName, [value]);
     },
     [setFieldValue],
   );
-
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field
@@ -69,7 +80,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             setValue={(value: string) => setFieldValue('name', value)}
             label="Name"
             placeholder="Input Text"
-            onBlur={handleBlur}
+            onBlur={handleBlur('name')}
             error={touched.name && errors.name ? errors.name : undefined}
             className={styles['field-data']}
           />
@@ -99,11 +110,12 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             placeholder="Select category"
             setValue={(value: any) => setFieldValue('category', value)}
             returnBy="id"
-            drawBy="category"
+            drawBy="name"
             name="category"
             label="Category"
-            options={CategoryOptions}
-            error={errors.category}
+            onBlur={handleBlur('category')}
+            options={categories || []}
+            error={touched.category ? errors.category : undefined}
             className={styles['field-selector']}
           />
         )}
@@ -118,11 +130,15 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
             value={values.subcategory || null}
             setValue={(value: any) => setFieldValue('subcategory', value)}
             returnBy="id"
-            drawBy="category"
+            drawBy="name"
             label="Subcategory"
-            options={SubCategoryOptions}
-            error={errors.subcategory}
+            options={values.category?.tags || []}
+            error={touched.subcategory ? errors.subcategory : undefined}
+            onBlur={handleBlur('subcategory')}
             className={styles['field-selector']}
+            disabled={
+              (values.category && values.category.tags.length === 0) || values.category === null
+            }
           />
         )}
       />
@@ -131,6 +147,7 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         render={() => (
           <Properties
             initProps={values.properties}
+            onBlur={handleBlur('properties')}
             setProps={
               // eslint-disable-next-line no-unused-expressions
               (value: TSingleProp[]) => setFieldValue('properties', value)
@@ -144,11 +161,11 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
         name="collections"
         render={() => (
           <Collections
-            initCollections={CollectionsList}
-            onRefresh={() => {}}
-            setSelectedCollection={() => {
-              // eslint-disable-next-line no-unused-expressions
-              (value: TSingleCollection[]) => setFieldValue('collections', value);
+            initCollections={collections.filter((c) => c.standart === getStandard(values.type))}
+            onRefresh={values.onReload}
+            fetching={gettingCollectionsRequest === RequestStatus.REQUEST}
+            setSelectedCollection={(value: Collection[]) => {
+              setFieldValue('collections', value);
             }}
           />
         )}
@@ -167,9 +184,14 @@ const MainForm: VFC<FormikProps<ICreateForm> & ICreateForm> = ({
       )}
       <div className={styles['btns-section']}>
         <Button
-          disabled={Object.keys(errors).length !== 0}
+          disabled={
+            Object.keys(errors).length !== 0 ||
+            values.media === null ||
+            (getFileGroup(values.media[0].name as any) !== 'image' && values.preview === null)
+          }
           className={styles['submit-btn']}
           onClick={() => onSubmitClick(values)}
+          loading={creatingToken === RequestStatus.REQUEST}
         >
           Create Item
         </Button>

@@ -7,8 +7,6 @@
 
 import { UserSlim } from "./UserSlim";
 import { Display_theme } from "./enums";
-import { Standart } from "./enums";
-
 
 export interface Collection {
     address?: string;
@@ -17,6 +15,7 @@ export interface Collection {
     creator: UserSlim;
     description?: string;
     displayTheme?: Display_theme;
+    url: number;
     floorPrice?: number;
     isDefault?: boolean;
     isNsfw?: boolean;
@@ -24,10 +23,9 @@ export interface Collection {
     ownersCount?: number;
     properties?: any;
     rankings?: any;
-    standart: Standart;
     stats?: any;
     symbol: string;
     tokensCount?: number;
-    url?: string;
     volumeTraded?: string;
+    standart?: string;
 }

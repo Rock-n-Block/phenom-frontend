@@ -1,8 +1,19 @@
-import { useCallback, VFC } from 'react';
+/* eslint-disable import/no-named-as-default-member */
+import { useCallback, useEffect, VFC } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import apiActions from 'store/api/actions';
+import actionTypes from 'store/nfts/actionTypes';
+import uiSelector from 'store/ui/selectors';
 
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, DefaultInput, Selector, Text, TextArea, UploadAvatar } from 'components';
+
+import { routes } from 'appConstants';
+import { useShallowSelector } from 'hooks';
+import { RequestStatus } from 'types';
 
 import { CreateCollectionFields, ICreateCollection } from '.';
 
@@ -12,17 +23,38 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
   setFieldValue,
   handleSubmit,
   handleReset,
+  validateForm,
   errors,
   values,
+  touched,
 }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const setter = useCallback(
     (field: CreateCollectionFields) => (value: any) => setFieldValue(field, value),
     [setFieldValue],
   );
 
-  const onSubmitClick = useCallback(() => {
-    handleSubmit();
-  }, [handleSubmit]);
+  const { [actionTypes.CREATE_COLLECTION]: collectionCreateRequest } = useShallowSelector(
+    uiSelector.getUI,
+  );
+
+  useEffect(() => {
+    if (collectionCreateRequest) {
+      if (collectionCreateRequest === RequestStatus.SUCCESS) {
+        navigate(routes.create[values.isSingle ? 'single' : 'multiple']);
+        dispatch(apiActions.reset(actionTypes.CREATE_COLLECTION));
+      }
+    }
+  }, [collectionCreateRequest, dispatch, navigate, values.isSingle]);
+
+  const onSubmitClick = useCallback(
+    (vals: any) => {
+      validateForm(vals).then((errs) => Object.keys(errs).length === 0 && handleSubmit());
+    },
+    [handleSubmit, validateForm],
+  );
 
   const onCancelClick = useCallback(() => {
     handleReset();
@@ -103,7 +135,22 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
             placeholder="Input text"
             setValue={setter('name')}
             className={styles['create-collection__wrapper__name']}
-            error={errors.name}
+            error={touched.name ? errors.name : undefined}
+          />
+        )}
+      />
+      <Field
+        name="symbol"
+        required
+        render={() => (
+          <DefaultInput
+            name="create_collection_symbol"
+            value={values.symbol}
+            label="Symbol"
+            placeholder="Input text"
+            setValue={setter('symbol')}
+            className={styles['create-collection__wrapper__symbol']}
+            error={touched.symbol ? errors.symbol : undefined}
           />
         )}
       />
@@ -123,7 +170,12 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
         )}
       />
       <div className={styles['btns-section']}>
-        <Button className={styles['submit-btn']} onClick={onSubmitClick}>
+        <Button
+          className={styles['submit-btn']}
+          onClick={() => onSubmitClick(values)}
+          disabled={Object.keys(errors).length !== 0 || values.avatarFile === null}
+          loading={collectionCreateRequest === RequestStatus.REQUEST}
+        >
           Create
         </Button>
         <Button color="outline" onClick={onCancelClick}>

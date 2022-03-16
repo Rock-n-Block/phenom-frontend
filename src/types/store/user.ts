@@ -1,3 +1,5 @@
+import { Collection } from 'types';
+
 export type UserState = {
   id: number | null;
   avatar: string;
@@ -5,7 +7,9 @@ export type UserState = {
   balance: string | number;
   key: string;
   provider: string;
+  chain: string;
   displayName: string;
+  collections: Collection[];
 };
 
 export type LoginReq = {

@@ -116,7 +116,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
           <TextArea
             name="edit_profile_description"
             value={values.description}
-            label="Description"
+            label="Account Bio"
             placeholder="Input description"
             setValue={setter('description')}
             maxElements={500}
@@ -138,7 +138,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.email', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={touched.socials?.email ? errors.socials?.email : undefined}
+            error={errors.socials ? errors.socials?.email : undefined}
           />
         )}
       />
@@ -162,7 +162,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.site', value)}
             className={cn(styles['edit-profile__wrapper__name'], styles['site-block'])}
-            error={touched.socials?.site ? errors.socials?.site : undefined}
+            error={errors.socials ? errors.socials?.site : undefined}
           />
         )}
       />
@@ -181,7 +181,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.instagram', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={touched.socials?.instagram ? errors.socials?.instagram : undefined}
+            error={errors.socials ? errors.socials?.instagram : undefined}
           />
         )}
       />
@@ -197,7 +197,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.twitter', value)}
             className={styles['edit-profile__wrapper__name']}
-            error={touched.socials?.twitter ? errors.socials?.twitter : undefined}
+            error={errors.socials ? errors.socials?.twitter : undefined}
           />
         )}
       />

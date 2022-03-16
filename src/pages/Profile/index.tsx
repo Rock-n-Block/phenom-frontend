@@ -1,13 +1,14 @@
 import { useMemo, VFC } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 
+import userSelector from 'store/user/selectors';
+
 import cn from 'classnames';
 
 import { Avatar, Button, Clipboard, TabBar, Text } from 'components';
 
-import { CollectionsList } from 'pages/CreateNFT/mock/mock';
-
 import { routes } from 'appConstants';
+import { useShallowSelector } from 'hooks';
 import { TBarOption } from 'types';
 
 import { nftCards, profile } from './mock';
@@ -19,6 +20,7 @@ import styles from './styles.module.scss';
 
 const Profile: VFC = () => {
   const { userId } = useParams();
+  const collections = useShallowSelector(userSelector.getProp('collections'));
 
   const Tabs = useMemo<TBarOption[]>(
     () => [
@@ -132,7 +134,7 @@ const Profile: VFC = () => {
           />
           <Route
             path="collections"
-            element={<Collections key="collections" cardsData={CollectionsList} />}
+            element={<Collections key="collections" cardsData={collections} />}
           />
         </Routes>
       </div>

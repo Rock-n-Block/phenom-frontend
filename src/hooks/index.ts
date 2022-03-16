@@ -5,3 +5,4 @@ export { default as useClipboard } from './useClipboard';
 export { default as useGetUserAccessForNft } from './useGetUserAccessForNft';
 export { default as useShallowSelector } from './useShallowSelector';
 export { default as useGetTags } from './useGetTags';
+export { default as useClickOutside } from './useClickOutside';

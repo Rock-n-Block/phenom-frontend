@@ -5,6 +5,7 @@ export * from './availableExtensions';
 export * from './createValidators';
 export * from './resCodes';
 export { default as URL } from './URL';
+export { getStandard } from './standards';
 
 export const DEFAULT_CURRENCY = 'PHETA';
 export const DEBOUNCE_DELAY_1000 = 1000;

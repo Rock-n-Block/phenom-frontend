@@ -19,6 +19,7 @@ export default function* ajax(
   if (accessToken) {
     client.defaults.headers.common.Authorization = `Token ${accessToken}`;
   }
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const response: AxiosResponse<ApiResponse<unknown>> = yield call<
