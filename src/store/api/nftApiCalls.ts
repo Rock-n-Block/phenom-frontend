@@ -1,5 +1,5 @@
 import { DEFAULT_CURRENCY, URL } from 'appConstants';
-import { BidReq, CreateLotReq } from 'types/requests';
+import { BidReq, SetOnAuctionReq } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -43,7 +43,7 @@ export default {
       },
     });
   },
-  setOnAuction(data: CreateLotReq) {
+  setOnAuction(data: SetOnAuctionReq) {
     return ajax({
       method: 'post',
       url: URL.set_on_auction(data.id),
