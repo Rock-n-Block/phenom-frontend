@@ -7,7 +7,7 @@
 
 
 
-export interface Tag {
+export interface AccountTokenSlim {
     id?: number;
-    name?: string;
+    media?: string;
 }

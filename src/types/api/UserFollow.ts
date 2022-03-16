@@ -5,24 +5,26 @@
  * This file was automatically generated.
  */
 
+import { AccountTokenSlim } from "./AccountTokenSlim";
 
 
-export interface Following {
+export interface UserFollow {
     address?: string;
     avatar?: string;
     bio?: string;
     createdAt?: string;
-    createdTokens?: string;
+    createdTokensCount?: number;
     customUrl?: string;
     displayName?: string;
     facebook?: string;
-    followersCount?: string;
-    id?: string;
+    followersCount?: number;
+    id?: number;
     instagram?: string;
     isVerificated?: boolean;
     name?: string;
-    ownedTokens?: string;
+    ownedTokensCount?: number;
     site?: string;
-    tokens?: string;
+    tokens?: AccountTokenSlim[];
     twitter?: string;
+    url?: string;
 }

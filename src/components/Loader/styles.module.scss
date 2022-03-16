@@ -1,6 +1,6 @@
 @import 'src/styles/helpers';
 
-.wrapper{
+.wrapper {
   @include flexbox;
 }
 
@@ -25,14 +25,21 @@
   transform: translate(-50%, -50%);
   width: 84px;
   height: 84px;
-  background: $color-light-3;
   border-radius: 50%;
+}
+
+.color_white:before {
+  background: $color-light-3;
+}
+
+.color_purple:before {
+  background: $color-light;
 }
 
 @keyframes spin {
   from {
     transform: rotate(0deg);
-    background: conic-gradient($color-accent, rgba(12, 7, 253, 0))
+    background: conic-gradient($color-accent, rgba(12, 7, 253, 0));
   }
   to {
     transform: rotate(360deg);

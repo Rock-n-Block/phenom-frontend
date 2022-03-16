@@ -46,6 +46,8 @@
   .header {
     padding-top: 14px;
     &Logo {
+      position: absolute;
+      left: calc(50% - 131px/2);
       max-width: 1000px;
       width: auto;
       @include transition($next: opacity 0.3s ease-in-out 0.5s);

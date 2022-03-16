@@ -5,26 +5,29 @@
  * This file was automatically generated.
  */
 
-import { Creator } from "./Creator";
+import { UserSlim } from "./UserSlim";
 import { Display_theme } from "./enums";
+import { Standart } from "./enums";
 
 
 export interface Collection {
     address?: string;
     avatar?: string;
     cover?: string;
-    creator: Creator;
+    creator: UserSlim;
     description?: string;
     displayTheme?: Display_theme;
-    floorPrice?: string;
-    id?: string;
+    floorPrice?: number;
     isDefault?: boolean;
     isNsfw?: boolean;
     name?: string;
-    owners?: string;
-    properties?: string;
-    rankings?: string;
-    stats?: string;
-    tokensCount?: string;
+    ownersCount?: number;
+    properties?: any;
+    rankings?: any;
+    standart: Standart;
+    stats?: any;
+    symbol: string;
+    tokensCount?: number;
+    url?: string;
     volumeTraded?: string;
 }

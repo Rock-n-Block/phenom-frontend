@@ -1,13 +1,15 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
 import mock from 'mock';
 
 import { Text } from 'components';
 
+import { routes } from 'appConstants';
+
 import { categories } from 'assets/img';
 
-// import { routes } from 'appConstants';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -22,10 +24,6 @@ const tags = [
 ];
 
 const Categories: FC<Props> = ({ className }) => {
-  const handleTagClick = (title: string) => {
-    // history.push(routes.explore.filter(title === 'All NFTs' ? '' : title));
-    console.log(title);
-  };
   return (
     <div className={cx(styles.categories, className)}>
       <div className={styles.gradient}>
@@ -39,18 +37,12 @@ const Categories: FC<Props> = ({ className }) => {
       <div className={styles.box}>
         {tags.length ? (
           tags.map((tag: any) => (
-            <div
-              tabIndex={0}
-              role="button"
-              className={styles.tag}
-              onKeyDown={() => {}}
-              onClick={() => handleTagClick(tag.title)}
-            >
+            <Link className={styles.tag} to={routes.explore.filter(tag.title)}>
               <img alt="category" className={styles.image} src={tag.image} />
               <Text className={styles.text} weight="bold">
                 {tag.title}
               </Text>
-            </div>
+            </Link>
           ))
         ) : (
           <></>

@@ -6,14 +6,19 @@
  */
 
 import { Display_theme } from "./enums";
+import { Standart } from "./enums";
 
 
 export interface CollectionSlim {
     address?: string;
     avatar?: string;
+    cover?: string;
+    description?: string;
     displayTheme?: Display_theme;
-    id?: string;
     isDefault?: boolean;
     isNsfw?: boolean;
     name?: string;
+    standart: Standart;
+    symbol: string;
+    url?: string;
 }

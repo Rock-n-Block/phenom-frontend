@@ -5,27 +5,24 @@
  * This file was automatically generated.
  */
 
-import { Creator } from "./Creator";
+import { UserSlim } from "./UserSlim";
 import { Display_theme } from "./enums";
 import { Standart } from "./enums";
-import { Status } from "./enums";
 
 
-export interface HotCollection {
+export interface CompositeCollection {
     address?: string;
     avatar?: string;
-    creator: Creator;
-    deployBlock?: number;
+    cover?: string;
+    creator: UserSlim;
     description?: string;
     displayTheme?: Display_theme;
-    id?: string;
     isDefault?: boolean;
     isNsfw?: boolean;
-    likesCount?: string;
+    likesCount?: number;
     name?: string;
-    shortUrl?: string;
     standart: Standart;
-    status?: Status;
     symbol: string;
-    tokens?: string;
+    tokens?: string[];
+    url?: string;
 }

@@ -4,9 +4,13 @@ import { Skeleton } from 'components';
 
 import s from '../styles.module.scss';
 
-const ArtCardSkeleton: VFC = () => {
+interface IArtCardSkeleton {
+  minHeight?: number;
+}
+
+const ArtCardSkeleton: VFC<IArtCardSkeleton> = ({ minHeight = 350 }) => {
   return (
-    <div style={{ minHeight: '350px', overflow: 'hidden' }} className={s.artCard}>
+    <div style={{ minHeight: `${minHeight}px`, overflow: 'hidden' }} className={s.artCard}>
       <Skeleton />
     </div>
   );

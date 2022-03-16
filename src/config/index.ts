@@ -1,6 +1,6 @@
 import { Chains, IConnectWallet, IContracts } from 'types';
 
-import { erc20Abi } from './abi';
+import { erc20Abi, marketPlaceAbi, nftAbi } from './abi';
 import { isMainnet } from './constants';
 
 export const chains: {
@@ -51,6 +51,8 @@ export const connectWallet = (newChainName: string): IConnectWallet => {
 // eslint-disable-next-line no-shadow
 export enum ContractsNames {
   token = 'token',
+  marketpalce = 'marketpalce',
+  nft = 'nft',
 }
 
 export type IContractsNames = keyof typeof ContractsNames;
@@ -60,14 +62,45 @@ export const contractsConfig: IContracts = {
   decimals: 18,
   contracts: {
     [ContractsNames.token]: {
-      mainnet: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '0x906041Be37F54D50c37c76c31351dA7CDddb0eBc',
+        },
         abi: erc20Abi,
       },
-      testnet: {
+      mainnet: {
         address: {
           [Chains.bsc]: '',
         },
         abi: erc20Abi,
+      },
+    },
+    [ContractsNames.marketpalce]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '0xFfa329d313d371ECC595539847a300eF231bEafB',
+        },
+        abi: marketPlaceAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+        },
+        abi: marketPlaceAbi,
+      },
+    },
+    [ContractsNames.nft]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '0xcec38C5b1B4b869835623CFCB7F42a206589A446',
+        },
+        abi: nftAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+        },
+        abi: nftAbi,
       },
     },
   },

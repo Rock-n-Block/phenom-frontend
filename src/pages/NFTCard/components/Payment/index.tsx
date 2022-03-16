@@ -6,7 +6,11 @@ import moment from 'moment';
 
 import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
 
+import { DEFAULT_CURRENCY } from 'appConstants';
 import { INft, TNullable } from 'types';
+
+import ApproveModal from '../modals/ApproveModal';
+import TransferModal from '../modals/TransferModal';
 
 import {
   DollarIcon,
@@ -18,8 +22,6 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-import TransferModal from '../modals/TransferModal';
-import ApproveModal from '../modals/ApproveModal';
 
 enum ModalType {
   init = 'INIT',
@@ -36,12 +38,19 @@ type IPayment = {
   isOwner: boolean;
   isUserCanRemoveFromSale: boolean;
   isUserCanChangePrice: boolean;
+  handleBuy: () => void;
+  handleSetOnAuction: (
+    minimalBid: number | string,
+    currency: string,
+    auctionDuration: number,
+  ) => () => void;
+  handleBid: (amount: number | string, currency: string) => void;
 };
 
 const hours = [
-  { value: '12', label: '12 h' },
-  { value: '24', label: '24 h' },
-  { value: '48', label: '48 h' },
+  { value: 43200, label: '12 h' },
+  { value: 86400, label: '24 h' },
+  { value: 172800, label: '48 h' },
 ];
 
 const Payment: VFC<IPayment> = ({
@@ -53,6 +62,9 @@ const Payment: VFC<IPayment> = ({
   isOwner,
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
+  handleBuy,
+  handleSetOnAuction,
+  handleBid,
 }) => {
   const [quantity, setQuantity] = useState('1');
   const [bid, setBid] = useState('');
@@ -81,7 +93,7 @@ const Payment: VFC<IPayment> = ({
     setIsFixedPrice(!isFixedPrice);
   }, [isFixedPrice]);
 
-  const handleChangeHours = useCallback((value: string) => {
+  const handleChangeHours = useCallback((value: number) => {
     setHoursTime(value);
   }, []);
 
@@ -203,7 +215,11 @@ const Payment: VFC<IPayment> = ({
                 className={styles.buy}
                 padding="extra-large"
                 suffixIcon={nft?.is_auc_selling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
-                onClick={() => handleSetModalType(ModalType.approve)}
+                onClick={
+                  nft?.is_auc_selling || nft?.is_timed_auc_selling
+                    ? () => handleBid(bid, nft?.currency.symbol || 'PHETA')
+                    : () => handleBuy()
+                }
               >
                 {nft?.is_auc_selling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
               </Button>
@@ -378,7 +394,9 @@ const Payment: VFC<IPayment> = ({
                     padding="medium"
                     className={styles.createLotBtn}
                     disabled={!price}
-                    onClick={() => handleSetModalType(ModalType.approve)}
+                    onClick={() =>
+                      handleSetOnAuction(price, nft?.currency.symbol || DEFAULT_CURRENCY, hoursTime)
+                    }
                   >
                     Create lot
                   </Button>

@@ -10,6 +10,6 @@
 export interface Cover {
     avatar?: string;
     coverIpfs?: string;
-    id?: string;
     owner?: string;
+    url?: string;
 }

@@ -16,27 +16,11 @@ export enum Standart {
     ERC1155 = "ERC1155"
 } 
  
-export enum Status {
+export enum State {
     Pending = "Pending",
     Failed = "Failed",
     Committed = "Committed",
     Burned = "Burned",
     Expired = "Expired"
 } 
- 
-export enum TokenState {
-    Pending = "Pending",
-    Failed = "Failed",
-    Committed = "Committed",
-    Burned = "Burned",
-    Expired = "Expired"
-} 
-
-export enum CategoryName {
-    rooms = 'Rooms',
-    area = 'Area',
-    skins = 'Skins',
-    buildings = 'Buildings',
-    allCategories = 'All categories',
-  }
  

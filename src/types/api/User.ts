@@ -5,6 +5,7 @@
  * This file was automatically generated.
  */
 
+import { UserFollow } from "./UserFollow";
 
 
 export interface User {
@@ -16,13 +17,15 @@ export interface User {
     customUrl?: string;
     displayName?: string;
     facebook?: string;
-    followers?: string;
-    followersCount?: string;
-    follows?: string;
-    followsCount?: string;
-    id?: string;
+    followers?: UserFollow[];
+    followersCount?: number;
+    follows?: UserFollow[];
+    followsCount?: number;
+    id?: number;
     instagram?: string;
     isVerificated?: boolean;
+    name?: string;
     site?: string;
     twitter?: string;
+    url?: string;
 }

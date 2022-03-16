@@ -30,7 +30,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
             </Text>
           }
           type="number"
-          max={maxPrice}
+          // max={maxPrice}
         />
         <DefaultInput
           className={styles.price}
@@ -44,7 +44,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
             </Text>
           }
           type="number"
-          min={minPrice}
+          // min={minPrice}
         />
       </div>
     </div>
