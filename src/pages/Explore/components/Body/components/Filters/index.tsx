@@ -6,6 +6,7 @@ import { omit } from 'lodash';
 import mock from 'mock';
 
 import { Button, Checkbox, Dropdown } from 'components';
+import { convertFilterValuesForBackend } from 'utils';
 
 import { MenuFilter, PriceFilter } from './components';
 
@@ -14,22 +15,27 @@ import Labels from '../Labels';
 import styles from './styles.module.scss';
 
 const collections: any = [
-  { id: 0, media: mock.search, name: 'Ba' },
+  { id: 0, media: mock.search, value: 'Ba', label: 0 },
   {
     id: 0,
     media: mock.search,
-    name: 'BananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananas',
+    value:
+      'BananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananas',
+    label: 0,
   },
-  { id: 0, media: mock.search, name: 'Bali' },
-  { id: 0, media: mock.search, name: 'Bar' },
-  { id: 0, media: mock.search, name: 'Basketball' },
+  { id: 0, media: mock.search, value: 'Bali', label: 0 },
+  { id: 0, media: mock.search, value: 'Bar', label: 0 },
+  { id: 0, media: mock.search, value: 'Basketball', label: 0 },
 ];
-const types = [{ name: 'Single NFT' }, { name: 'Multiple NFT' }];
+const types = [
+  { value: 'Single NFT', label: 'ERC721' },
+  { value: 'Multiple NFT', label: 'ERC721' },
+];
 const sortings = [
-  { value: 'Price: Low to High' },
-  { value: 'Price: High to Low ' },
-  { value: 'Date: Last' },
-  { value: 'Date: New' },
+  { value: 'Price: Low to High', label: '-price' },
+  { value: 'Price: High to Low', label: 'price' },
+  { value: 'Date: Last', label: '-date' },
+  { value: 'Date: New', label: 'date' },
 ];
 
 type Props = {
@@ -38,11 +44,11 @@ type Props = {
 };
 
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
-  console.log(filterCategory, onFiltersChange);
+  console.log(filterCategory);
   const { t } = useTranslation('Explore');
 
   const [checkedFilters, setCheckedFilters] = useState<any>({});
-  const [sortBy, setSortBy] = useState<any>('');
+  const [orderBy, setOrderBy] = useState<any>('');
   const [appliedFilters, setAppliedFilters] = useState<any>({});
   const [isAuctionOnly, setIsAuctionOnly] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
@@ -96,6 +102,10 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
       setIsApplied(false);
     }
   }, [checkedFilters, isApplied]);
+
+  useEffect(() => {
+    onFiltersChange({ ...convertFilterValuesForBackend(appliedFilters), isAuctionOnly, orderBy });
+  }, [appliedFilters, isAuctionOnly, onFiltersChange, orderBy]);
   return (
     <>
       <div className={styles.filters}>
@@ -107,6 +117,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             keyName="collection"
             onFilterClick={handleFilterClick}
             placeholder="Choose a collection"
+            backendLabel="collections"
           />
           <MenuFilter
             className={styles.dropdownSmall}
@@ -115,6 +126,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             keyName="type"
             onFilterClick={handleFilterClick}
             placeholder="Choose type"
+            backendLabel="standart"
           />
         </div>
         <PriceFilter
@@ -154,10 +166,10 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <Dropdown
           className={styles.sortingDropdown}
           options={sortings}
-          value={sortBy || { value: 'Sort by' }}
+          value={orderBy || { value: 'Sort by' }}
           drawBy="value"
           returnBy="value"
-          setValue={(value: string) => setSortBy(value)}
+          setValue={(value: string) => setOrderBy(value)}
         />
       </div>
     </>

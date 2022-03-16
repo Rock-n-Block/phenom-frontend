@@ -7,9 +7,7 @@
 
 
 
-export interface Cover {
-    avatar?: string;
-    coverIpfs?: string;
-    owner?: string;
-    url?: string;
+export interface AccountTokenSlim {
+    id?: number;
+    media?: string;
 }

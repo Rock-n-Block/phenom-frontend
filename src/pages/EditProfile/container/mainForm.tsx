@@ -66,7 +66,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
         color="black"
         weight="medium"
       >
-        acceptable file format: {imagesFormats.join(', ')} maximum file size: {maxAvatarSize.size}{' '}
+        acceptable file format: {imagesFormats.join(', ').toUpperCase()} maximum file size: {maxAvatarSize.size}{' '}
         {maxAvatarSize.unit}
       </Text>
       <Text
@@ -192,7 +192,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
           <DefaultInput
             name="edit_profile_twitter"
             value={values.socials.twitter}
-            label="Instagram Twitter"
+            label="Twitter Username"
             placeholder="Input twitter"
             onBlur={handleBlur}
             setValue={(value: string) => setFieldValue('socials.twitter', value)}

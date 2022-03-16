@@ -24,12 +24,11 @@ interface IBody {
 
 const Body: VFC<IBody> = ({ activeCategory }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
-  const collections = useShallowSelector(nftSelector.getProp('collections'));
-  console.log('collections', collections)
+  // const collections = useShallowSelector(nftSelector.getProp('collections'));
   const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
 
   const { t } = useLanguage();
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({});
   const dispatch = useDispatch();
 
@@ -42,6 +41,42 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     dispatch(searchNfts({ requestData }));
   }, [dispatch]);
 
+  const handleSearchNfts = useCallback(
+    (
+      category: string,
+      activetags: string,
+      // TODO: types filters
+      filtersData: any,
+      page: number,
+      shouldConcat?: boolean,
+    ) => {
+      const requestData = {
+        categories: categories?.filter((categoryOption: any) => categoryOption.name === category)[0]?.id || 0,
+        tags: tags?.filter((tagsOption: any) => tagsOption.name === activetags)[0]?.id,
+        page,
+        collections: filtersData?.collections?.join(','),
+        max_price: filtersData?.maxPrice,
+        min_price: filtersData?.minPrice,
+        on_auc_sale: filtersData?.isAuctionOnly,
+        order_by: filtersData?.orderBy?.label,
+      };
+      dispatch(searchNfts({ requestData, shouldConcat }));
+    },
+    [categories, dispatch, tags],
+  );
+
+  const handleLoadMore = useCallback(
+    (page: number, shouldConcat = false) => {
+      handleSearchNfts(activeCategory, activeTag, filters, page, shouldConcat);
+    },
+    [activeCategory, activeTag, filters, handleSearchNfts],
+  );
+
+  useEffect(() => {
+    handleSearchNfts(activeCategory, activeTag, filters, 1);
+    setCurrentPage(1);
+  }, [activeCategory, activeTag, filters, handleSearchNfts]);
+
   useEffect(() => {
     handleGetCategories();
     handleSearchCollections();
@@ -49,7 +84,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
 
   const handleClickCategory = useCallback(
     (value) => {
-      setPage(1);
+      setCurrentPage(1);
       handleSetActiveTag(value);
     },
     [handleSetActiveTag],
@@ -101,8 +136,8 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
   useEffect(() => {
     // call saga to fetch new nfts
 
-    console.log({ page, activeCategory, filters });
-  }, [page, activeCategory, filters]);
+    console.log('filters', filters);
+  }, [filters]);
 
   return (
     <>
@@ -134,7 +169,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
               </>
             ) : (
               nftCards.map((artCard: any) => {
-                if (isNftsLoading && page === 1) {
+                if (isNftsLoading && currentPage === 1) {
                   return <ArtCardSkeleton />;
                 }
                 const {
@@ -170,7 +205,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
                 );
               })
             )}
-            {isNftsLoading && page >= 2 && (
+            {isNftsLoading && currentPage >= 2 && (
               <>
                 <ArtCardSkeleton />
                 <ArtCardSkeleton />
@@ -180,7 +215,11 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
           </div>
         </div>
         <div className={styles.load}>
-          <Button color="outline" className={styles.loadBtn}>
+          <Button
+            color="outline"
+            className={styles.loadBtn}
+            onClick={() => handleLoadMore(currentPage + 1)}
+          >
             {t('Explore:Filters.LoadMore')}
           </Button>
         </div>

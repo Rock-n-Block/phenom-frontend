@@ -5,14 +5,15 @@
  * This file was automatically generated.
  */
 
-import { TokenState } from "./enums";
-import { Creator } from "./Creator";
+import { State } from "./enums";
+import { UserSlim } from "./UserSlim";
 
 
-export interface Bet {
+export interface Bid {
     amount?: string;
+    currency?: string;
     id?: number;
     quantity?: number;
-    state?: TokenState;
-    user?: Creator;
+    state?: State;
+    user?: UserSlim;
 }

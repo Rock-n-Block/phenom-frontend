@@ -36,13 +36,13 @@ export interface IContracts {
   contracts: {
     [index: string]: {
       mainnet: {
-        address?: {
+        address: {
           [key in Chains]: string;
         };
         abi: any[];
       };
       testnet: {
-        address?: {
+        address: {
           [key in Chains]: string;
         };
         abi: any[];

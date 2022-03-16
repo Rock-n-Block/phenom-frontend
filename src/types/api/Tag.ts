@@ -5,7 +5,9 @@
  * This file was automatically generated.
  */
 
+
+
 export interface Tag {
-  name: string;
-  id: number;
+    id: number;
+    name: string;
 }

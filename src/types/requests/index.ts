@@ -31,6 +31,35 @@ export type ApproveReq = {
   web3Provider: Web3;
   spender: string;
   amount: string;
+  tokenAddress: string,
+};
+
+export type ApproveNftReq = {
+  id: number | string;
+  web3Provider: Web3,
+};
+
+export type SetOnAuctionReq = {
+  id: number | string;
+  selling?: boolean;
+  minimalBid: number | string;
+  price?: number;
+  currency?: string;
+  startAuction?: number;
+  start_auction?: number;
+  end_auction?: number;
+  endAuction?: number;
+};
+
+export type SetOnAuctionPreReq = {
+  id: number | string;
+  internalId: number | string;
+  minimalBid: number | string;
+  currency?: string;
+  end_auction?: number;
+  auctionDuration?: number;
+  endAuction?: number;
+  web3Provider: Web3,
 };
 
 export type CreateNewPoolReq = {
@@ -54,7 +83,6 @@ export type UpdateUserInfoReq = {
 
 export type GetDetailedNftReq = {
   id: number | string;
-  web3Provider: Web3;
 };
 
 export type GetTrendingNftsReq = {
@@ -63,6 +91,8 @@ export type GetTrendingNftsReq = {
 
 export type BuyReq = {
   id: number | string;
+  amount: number | string;
+  sellerId: number | string;
   web3Provider: Web3;
 };
 
@@ -72,7 +102,7 @@ export type LikeReq = {
 
 export type BidReq = {
   id: number | string;
-  amount: number;
+  amount: number | string;
   currency: string;
   web3Provider: Web3;
 };

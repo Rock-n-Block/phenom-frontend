@@ -5,10 +5,11 @@
  * This file was automatically generated.
  */
 
+import { Currency } from "./Currency";
 
 
 export interface Network {
-    currencies?: string;
+    currencies?: Currency[];
     ipfsIcon?: string;
     name?: string;
     nativeSymbol?: string;

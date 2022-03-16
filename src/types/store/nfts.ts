@@ -52,7 +52,7 @@ export interface INft {
 export type NftsState = {
   nfts: TokenFull[];
   collections: IBaseInfo[];
-  // detailedNft: TokenFull;
+  detailedNft: TNullable<TokenFull>;
   totalPages: number;
   categories: TNullable<TResponseCategories>;
 };

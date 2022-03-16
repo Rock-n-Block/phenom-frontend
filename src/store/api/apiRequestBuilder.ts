@@ -3,6 +3,7 @@ import { LoginReq, Token } from 'types';
 import { CreateCollectionAction, RequestWithNetwork, SearchNftReq } from 'types/requests';
 
 import ajax from './ajax';
+import NftApiCalls from './nftApiCalls';
 
 export const baseApi = {
   getMetamaskMessage() {
@@ -80,4 +81,6 @@ export const baseApi = {
       data: collection,
     });
   },
+  
+  ...NftApiCalls,
 };

@@ -12,6 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 
+import userActionTypes from './user/actionTypes';
 import reducer from './rootReducer';
 import rootSaga from './rootSaga';
 
@@ -20,6 +21,7 @@ const sagaMiddleware = createSagaMiddleware();
 const userPersistConfig = {
   key: 'user',
   storage,
+  whitelist: ['address', 'provider', 'key', 'id'],
 };
 
 const reducers = {
@@ -32,7 +34,16 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          userActionTypes.LOGIN,
+          userActionTypes.UPDATE_USER_INFO,
+        ],
       },
     }).concat(sagaMiddleware),
 });
