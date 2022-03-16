@@ -8,4 +8,8 @@ export default {
   searchNfts: 'store/search/',
   getCategories: '/store/categories/',
   createNewToken: '/store/create_token/',
+  getTokenById: (id: string | number) => `/store/token/${id}/`,
+  set_on_auction: (id: string | number) => `/store/token/${id}/set_on_auction/`,
+  buy: 'store/buy/',
+  bid: 'store/bids/make_bid/',
 };

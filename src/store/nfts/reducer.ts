@@ -6,6 +6,7 @@ import { TokenFull } from 'types/api/TokenFull';
 const initialState: NftsState = {
   nfts: [],
   collections: [],
+  detailedNft: null,
   categories: null,
   totalPages: 0,
 };
@@ -34,6 +35,10 @@ export const nftsReducer = createSlice({
       ...state,
       detailedNft: action.payload,
     }),
+    clearDetailedNft: (state) => ({
+      ...state,
+      detailedNft: null,
+    }),
     clearNfts: (state) => ({
       ...state,
       nfts: [],
@@ -51,6 +56,7 @@ export const {
   clearCollections,
   setDetailedNft,
   setTotalPages,
+  clearDetailedNft,
   clearNfts,
   setCategories,
 } = nftsReducer.actions;
