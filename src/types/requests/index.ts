@@ -31,12 +31,12 @@ export type ApproveReq = {
   web3Provider: Web3;
   spender: string;
   amount: string;
-  tokenAddress: string,
+  tokenAddress: string;
 };
 
 export type ApproveNftReq = {
   id: number | string;
-  web3Provider: Web3,
+  web3Provider: Web3;
 };
 
 export type SetOnAuctionReq = {
@@ -59,7 +59,7 @@ export type SetOnAuctionPreReq = {
   end_auction?: number;
   auctionDuration?: number;
   endAuction?: number;
-  web3Provider: Web3,
+  web3Provider: Web3;
 };
 
 export type CreateNewPoolReq = {
@@ -113,15 +113,30 @@ export type GetProfileInfoReq = {
 };
 
 export type SearchNftReq = {
+  type: string;
   page: number;
-  attributes?: string;
-  rarity?: string;
   on_timed_auc_sale?: boolean;
+  on_auc_sale?: boolean;
   order_by?: string;
   items_per_page?: number;
+  categories?: number;
+  tags?: number;
+  collections?: string[];
+  max_price?: string | number;
+  min_price?: string | number;
+};
+
+export type SearchCollectionsReq = {
+  type: string;
+  page: number;
 };
 
 export type SearchNftAction = {
   requestData: SearchNftReq;
+  shouldConcat?: boolean;
+};
+
+export type SearchCollectionAction = {
+  requestData: SearchCollectionsReq;
   shouldConcat?: boolean;
 };

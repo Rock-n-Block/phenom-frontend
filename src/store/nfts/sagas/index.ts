@@ -7,9 +7,11 @@ import createTokenSaga from './createToken';
 import getCategoriesSaga from './getCategories';
 import getDetailedNftSaga from './getDetailedNft';
 import searchCollectionsSaga from './searchCollections';
+import searchNftsSaga from './searchNfts';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
+  yield fork(searchNftsSaga);
   yield fork(buy);
   yield fork(bid);
   yield fork(getCategoriesSaga);
