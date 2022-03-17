@@ -38,7 +38,6 @@ const Collections: VFC<ICollections> = ({
   useEffect(() => {
     setCollections(initCollections);
   }, [initCollections]);
-
   const setIsSelected = useCallback(
     (collection: Collection) => {
       if (isSelected(collection.url)) {
