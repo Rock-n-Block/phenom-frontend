@@ -115,10 +115,6 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     [nftsRequestStatus],
   );
 
-  useEffect(() => {
-    console.log('nftsRequestStatus', nftsRequestStatus);
-  }, [nftsRequestStatus]);
-
   return (
     <>
       {tags && tags.length !== 0 && (

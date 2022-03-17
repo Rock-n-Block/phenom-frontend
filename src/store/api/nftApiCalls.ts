@@ -1,5 +1,5 @@
 import { DEFAULT_CURRENCY, URL } from 'appConstants';
-import { BidReq, SetOnAuctionReq } from 'types/requests';
+import { BidReq, SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -10,13 +10,13 @@ export default {
       url: URL.getTokenById(params.id),
     });
   },
-  // like(data: { id: string | number }) {
-  //   return ajax({
-  //     method: 'post',
-  //     url: URL.like,
-  //     data,
-  //   });
-  // },
+  like(data: { id: string | number }) {
+    return ajax({
+      method: 'post',
+      url: URL.like,
+      data,
+    });
+  },
   buy(data: { id: string | number }) {
     return ajax({
       method: 'post',
@@ -36,10 +36,11 @@ export default {
   },
   removeFromSale(data: { id: string | number }) {
     return ajax({
-      method: 'patch',
-      url: URL.getTokenById(data.id),
+      method: 'post',
+      url: URL.set_on_auction(data.id),
       data: {
         selling: false,
+        ...data,
       },
     });
   },
@@ -47,6 +48,16 @@ export default {
     return ajax({
       method: 'post',
       url: URL.set_on_auction(data.id),
+      data: {
+        selling: true,
+        ...data,
+      },
+    });
+  },
+  setOnSale(data: SetOnSaleReq) {
+    return ajax({
+      method: 'post',
+      url: URL.set_on_sale(data.id),
       data: {
         selling: true,
         ...data,

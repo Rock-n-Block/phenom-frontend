@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { useEffect, useMemo, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, getDetailedNft, setOnAuction } from 'store/nfts/actions';
+import { getDetailedNft } from 'store/nfts/actions';
 import actionTypes from 'store/nfts/actionTypes';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import nftsSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
-
-import { useWalletConnectContext } from 'context';
 
 import { Loader, Text } from 'components';
 
@@ -21,11 +19,9 @@ import styles from './styles.module.scss';
 
 const NFTCard: VFC = () => {
   const { id = 1 } = useParams();
-  const [nft] = useState<any>({});
   const { width } = useWindowSize();
   const dispatch = useDispatch();
   const detailedNft = useShallowSelector(nftsSelector.getProp('detailedNft'));
-  const { walletService } = useWalletConnectContext();
 
   const { [actionTypes.GET_DETAILED_NFT]: getDetailedNftRequestStatus } = useShallowSelector(
     uiSelector.getUI,
@@ -46,52 +42,7 @@ const NFTCard: VFC = () => {
     isOwner,
     isUserCanRemoveFromSale,
     isUserCanChangePrice,
-  } = useGetUserAccessForNft(nft, 1);
-
-  const handleBuy = useCallback(() => {
-    if (detailedNft) {
-      dispatch(
-        buy({
-          id: detailedNft?.id || 0,
-          amount: detailedNft?.price || 0,
-          sellerId: 0,
-          web3Provider: walletService.Web3(),
-        }),
-      );
-    }
-  }, [detailedNft, dispatch, walletService]);
-
-  const handleSetOnAuction = useCallback(
-    (minimalBid: number | string, currency: string, auctionDuration?: number) => () => {
-      if (detailedNft) {
-        dispatch(
-          setOnAuction({
-            id: detailedNft?.id || 0,
-            internalId: detailedNft.internalId || 0,
-            minimalBid,
-            currency,
-            auctionDuration,
-            web3Provider: walletService.Web3(),
-          }),
-        );
-      }
-    },
-    [detailedNft, dispatch, walletService],
-  );
-
-  const handleBid = useCallback(
-    (amount: number | string, currency: string) => {
-      dispatch(
-        bid({
-          id: detailedNft?.id || 0,
-          amount,
-          currency,
-          web3Provider: walletService.Web3(),
-        }),
-      );
-    },
-    [detailedNft, dispatch, walletService],
-  );
+  } = useGetUserAccessForNft(detailedNft, 1);
 
   useEffect(() => {
     if (id) {
@@ -135,6 +86,7 @@ const NFTCard: VFC = () => {
                   likeCount={detailedNft?.likeCount || 0}
                   artId={detailedNft?.id || +id}
                   inStockNumber={detailedNft?.available}
+                  isLiked={detailedNft?.isLiked}
                 />
                 {(isUserCanEndAuction ||
                   isUserCanBuyNft ||
@@ -151,9 +103,6 @@ const NFTCard: VFC = () => {
                     isOwner={isOwner}
                     isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                     isUserCanChangePrice={isUserCanChangePrice}
-                    handleBuy={handleBuy}
-                    handleSetOnAuction={handleSetOnAuction}
-                    handleBid={handleBid}
                   />
                 )}
                 {detailedNft?.creator && detailedNft?.owners && (
@@ -172,6 +121,7 @@ const NFTCard: VFC = () => {
                 likeCount={detailedNft?.likeCount || 0}
                 artId={detailedNft?.id || +id}
                 inStockNumber={detailedNft?.in_stock_number}
+                isLiked={detailedNft?.isLiked}
               />
               <div className={styles.nftCardImgWrapper}>
                 {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
@@ -196,9 +146,6 @@ const NFTCard: VFC = () => {
                   isOwner={isOwner}
                   isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                   isUserCanChangePrice={isUserCanChangePrice}
-                  handleBuy={handleBuy}
-                  handleSetOnAuction={handleSetOnAuction}
-                  handleBid={handleBid}
                 />
               )}
               <PropsAndDescr

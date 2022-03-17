@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { bid, buy, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
+
 import cx from 'classnames';
-// import { OwnerList, UserBuy } from './components';
+import { useWalletConnectContext } from 'context';
 import moment from 'moment';
 
 import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
@@ -38,13 +41,6 @@ interface IPayment {
   isOwner: boolean;
   isUserCanRemoveFromSale: boolean;
   isUserCanChangePrice: boolean;
-  handleBuy: () => void;
-  handleSetOnAuction: (
-    minimalBid: number | string,
-    currency: string,
-    auctionDuration: number,
-  ) => () => void;
-  handleBid: (amount: number | string, currency: string) => void;
 }
 
 const hours = [
@@ -62,17 +58,16 @@ const Payment: VFC<IPayment> = ({
   isOwner,
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
-  handleBuy,
-  handleSetOnAuction,
-  handleBid,
 }) => {
+  const dispatch = useDispatch();
+  const { walletService } = useWalletConnectContext();
   const [quantity, setQuantity] = useState('1');
-  const [bid, setBid] = useState('');
+  const [bidValue, setBidValue] = useState('');
   const [time, setTime] = useState<any>();
   const [days, setDays] = useState(0);
   const [isListing, setIsListing] = useState(false);
   const [isFixedPrice, setIsFixedPrice] = useState(false);
-  const [price, setPrice] = useState('');
+  const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
   const [modalType, setModalType] = useState(ModalType.init);
@@ -96,6 +91,78 @@ const Payment: VFC<IPayment> = ({
   const handleChangeHours = useCallback((value: number) => {
     setHoursTime(value);
   }, []);
+
+  const handleBuy = useCallback(() => {
+    if (nft) {
+      dispatch(
+        buy({
+          id: nft?.id || 0,
+          amount: nft?.price || 0,
+          sellerId: 0,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    }
+  }, [nft, dispatch, walletService]);
+
+  const handleSetOnAuction = useCallback(
+    (minimalBid: number | string, currency: string, auctionDuration?: number) => () => {
+      if (nft) {
+        dispatch(
+          setOnAuction({
+            id: nft?.id || 0,
+            internalId: nft.internalId || 0,
+            minimalBid,
+            currency,
+            auctionDuration,
+            web3Provider: walletService.Web3(),
+          }),
+        );
+      }
+    },
+    [nft, dispatch, walletService],
+  );
+
+  const handleSetOnSale = useCallback(
+    (price: number | string, currency: string, amount?: number | string) => () => {
+      if (nft) {
+        dispatch(
+          setOnSale({
+            id: nft?.id || 0,
+            internalId: nft.internalId || 0,
+            price,
+            currency,
+            amount,
+            web3Provider: walletService.Web3(),
+          }),
+        );
+      }
+    },
+    [nft, dispatch, walletService],
+  );
+
+  const handleBid = useCallback(
+    (amount: number | string, currency: string) => {
+      dispatch(
+        bid({
+          id: nft?.id || 0,
+          amount,
+          currency,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    },
+    [nft, dispatch, walletService],
+  );
+
+  const handleRemoveFromSale = useCallback(() => {
+    dispatch(
+      removeFromSale({
+        id: nft?.id,
+        web3Provider: walletService.Web3(),
+      }),
+    );
+  }, [nft, dispatch, walletService]);
 
   useEffect(() => {
     let timeInterval: any;
@@ -204,8 +271,8 @@ const Payment: VFC<IPayment> = ({
               {(nft?.isAucSelling || nft?.is_timed_auc_selling) && (
                 <DefaultInput
                   name="bid"
-                  value={bid}
-                  setValue={setBid}
+                  value={bidValue}
+                  setValue={setBidValue}
                   className={styles.priceInput}
                   placeholder="0.00"
                   type="number"
@@ -217,7 +284,7 @@ const Payment: VFC<IPayment> = ({
                 suffixIcon={nft?.isAucSelling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
                 onClick={
                   nft?.isAucSelling || nft?.is_timed_auc_selling
-                    ? () => handleBid(bid, nft?.currency.symbol || 'PHETA')
+                    ? () => handleBid(bidValue, nft?.currency.symbol || 'PHETA')
                     : () => handleBuy()
                 }
               >
@@ -254,7 +321,7 @@ const Payment: VFC<IPayment> = ({
                   <Button
                     color="dark"
                     className={cx(styles.button, styles.remove)}
-                    onClick={() => handleSetModalType(ModalType.approve)}
+                    onClick={() => handleRemoveFromSale()}
                   >
                     Remove from sale
                   </Button>
@@ -337,15 +404,17 @@ const Payment: VFC<IPayment> = ({
                 <Text>{isFixedPrice ? 'Price' : 'Minimum bid'}</Text>
                 <DefaultInput
                   name="priceOrBid"
-                  value={price}
-                  setValue={setPrice}
+                  value={priceValue}
+                  setValue={setPriceValue}
                   type="number"
                   placeholder="0.00"
                   className={styles.createLotPrice}
                 />
-                <Text color="middleGray" size="m">
-                  ${price ? (+price / 2463.3).toFixed(2) : '00.00'}
-                </Text>
+                {nft?.usdPrice && (
+                  <Text color="middleGray" size="m">
+                    ${nft?.usdPrice}
+                  </Text>
+                )}
                 {!isFixedPrice && (
                   <>
                     <Selector
@@ -381,21 +450,47 @@ const Payment: VFC<IPayment> = ({
                   </>
                 )}
                 {nft?.price ? (
-                  <Button
-                    padding="medium"
-                    className={styles.createLotBtn}
-                    disabled={!price}
-                    onClick={() => handleSetModalType(ModalType.approve)}
-                  >
-                    Update
-                  </Button>
+                  <div>
+                    {
+                      // TODO: проверить не конфликтует quantity для покупки с quantity для выставления на продажу
+                      nft?.standart === 'ERC1155' && (
+                        <QuantityInput
+                          value={quantity}
+                          setValue={setQuantity}
+                          name="quantity"
+                          writeable
+                          maxAmount={nft?.available}
+                          minAmount={1}
+                          inputClassName={styles.quantityInput}
+                        />
+                      )
+                    }
+                    <Button
+                      padding="medium"
+                      className={styles.createLotBtn}
+                      disabled={!priceValue}
+                      onClick={() =>
+                        handleSetOnSale(
+                          priceValue,
+                          nft?.currency.symbol || DEFAULT_CURRENCY,
+                          +quantity,
+                        )
+                      }
+                    >
+                      Update
+                    </Button>
+                  </div>
                 ) : (
                   <Button
                     padding="medium"
                     className={styles.createLotBtn}
-                    disabled={!price}
+                    disabled={!priceValue}
                     onClick={() =>
-                      handleSetOnAuction(price, nft?.currency.symbol || DEFAULT_CURRENCY, hoursTime)
+                      handleSetOnAuction(
+                        priceValue,
+                        nft?.currency.symbol || DEFAULT_CURRENCY,
+                        hoursTime,
+                      )
                     }
                   >
                     Create lot
