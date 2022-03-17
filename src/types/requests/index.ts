@@ -1,5 +1,7 @@
 import Web3 from 'web3';
 
+import { Token } from 'types';
+
 export type BodyWithToken<T = never> = {
   token?: string;
 } & T;
@@ -31,12 +33,12 @@ export type ApproveReq = {
   web3Provider: Web3;
   spender: string;
   amount: string;
-  tokenAddress: string,
+  tokenAddress: string;
 };
 
 export type ApproveNftReq = {
   id: number | string;
-  web3Provider: Web3,
+  web3Provider: Web3;
 };
 
 export type SetOnAuctionReq = {
@@ -59,7 +61,7 @@ export type SetOnAuctionPreReq = {
   end_auction?: number;
   auctionDuration?: number;
   endAuction?: number;
-  web3Provider: Web3,
+  web3Provider: Web3;
 };
 
 export type CreateNewPoolReq = {
@@ -124,6 +126,11 @@ export type SearchNftReq = {
 export type SearchNftAction = {
   requestData: SearchNftReq;
   shouldConcat?: boolean;
+};
+
+export type CreateTokenRequest = {
+  token: Token;
+  web3: Web3;
 };
 
 export type RequestWithNetwork = {

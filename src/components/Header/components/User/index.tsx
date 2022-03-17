@@ -136,11 +136,10 @@ interface IUserMobile {
   close: any;
   disconnect: () => void;
   bodyRef?: RefObject<HTMLDivElement>;
-  isOpen: boolean 
+  isOpen: boolean;
 }
 
 const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen }) => {
-
   const location = useLocation();
 
   const dropdownOptions = useMemo(
@@ -228,10 +227,10 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
       </div>
       <div className={styles.userButtons}>
         <div className={styles.userItem}>
-          <div className={styles.avatar}>
-            <Avatar id={mock.id} avatar={mock.user} />
+          <Link to={routes.profile.link(mock.id, 'about-me')} className={styles.avatar}>
+            <Avatar size={30} withShadow={false} id={mock.id} avatar={mock.user} />
             <Text>username</Text>
-          </div>
+          </Link>
           <div className={styles.balance}>
             <Text color="blue">0.00 PHETA</Text>
           </div>

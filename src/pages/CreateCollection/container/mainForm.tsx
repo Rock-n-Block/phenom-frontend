@@ -11,7 +11,7 @@ import { Field, Form, FormikProps } from 'formik';
 
 import { Button, DefaultInput, Selector, Text, TextArea, UploadAvatar } from 'components';
 
-import { routes } from 'appConstants';
+import { createValidator, routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { RequestStatus } from 'types';
 
@@ -23,6 +23,7 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
   setFieldValue,
   handleSubmit,
   handleReset,
+  handleBlur,
   validateForm,
   errors,
   values,
@@ -57,8 +58,9 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
   );
 
   const onCancelClick = useCallback(() => {
+    navigate(routes.create.root);
     handleReset();
-  }, [handleReset]);
+  }, [handleReset, navigate]);
 
   return (
     <Form className={styles['create-collection__wrapper']}>
@@ -134,6 +136,7 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
             label="Name"
             placeholder="Input text"
             setValue={setter('name')}
+            onBlur={handleBlur('name')}
             className={styles['create-collection__wrapper__name']}
             error={touched.name ? errors.name : undefined}
           />
@@ -149,6 +152,8 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
             label="Symbol"
             placeholder="Input text"
             setValue={setter('symbol')}
+            onBlur={handleBlur('symbol')}
+            max={createValidator.symbol.max}
             className={styles['create-collection__wrapper__symbol']}
             error={touched.symbol ? errors.symbol : undefined}
           />

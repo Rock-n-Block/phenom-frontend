@@ -22,18 +22,22 @@ const Collections: VFC<ICollections> = ({
   onRefresh,
   fetching = false,
 }) => {
-  const [collections] = useState(initCollections);
+  const [collections, setCollections] = useState(initCollections);
   const [selected, setSelected] = useState<Collection[]>([]);
 
   useEffect(() => {
     setSelectedCollection(selected);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   const isSelected = useCallback(
     (url: number) => selected.findIndex((s) => s.url === url) !== -1,
     [selected],
   );
+
+  useEffect(() => {
+    setCollections(initCollections);
+  }, [initCollections]);
 
   const setIsSelected = useCallback(
     (collection: Collection) => {
