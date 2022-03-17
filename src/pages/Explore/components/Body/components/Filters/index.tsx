@@ -37,7 +37,6 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory);
   const { t } = useTranslation('Explore');
   const collections = useShallowSelector(nftSelector.getProp('collections'));
-  console.log(collections)
   const [checkedFilters, setCheckedFilters] = useState<any>({});
   const [orderBy, setOrderBy] = useState<any>('');
   const [appliedFilters, setAppliedFilters] = useState<any>({});
@@ -105,7 +104,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             className={styles.dropdown}
             options={collections.map((collection: any) => ({
               value: collection.name,
-              media: collection.media,
+              media: collection.avatar,
               label: collection.id,
             }))}
             checkedFilters={checkedFilters}
