@@ -84,7 +84,7 @@ const Dropdown: FC<IDropdownProps> = ({
                   onChange={(e: FormEvent<HTMLInputElement>) => handleClickCheckbox(e, filterName)}
                   id={key.toString()}
                 />
-                {media && <img src={media} alt="media" />}
+                {media && <img src={media} alt="media" className={styles.optionMedia} />}
                 <EllipsisText className={styles.text}>
                   <Text tag="span">{value}</Text>
                 </EllipsisText>

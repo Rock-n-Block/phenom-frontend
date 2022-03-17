@@ -35,8 +35,8 @@ const useGetTags = (activeCategory: any, categories: TNullable<TResponseCategori
   }, []);
 
   useEffect(() => {
-    if (tags && tags[0]?.name) {
-      setActiveTag(tags[0].name);
+    if (tags && tags[0]?.id) {
+      setActiveTag(String(tags[0].id));
     }
   }, [tags]);
 
