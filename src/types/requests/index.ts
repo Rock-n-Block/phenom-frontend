@@ -62,6 +62,22 @@ export type SetOnAuctionPreReq = {
   web3Provider: Web3;
 };
 
+export type SetOnSaleReq = {
+  id: number | string;
+  price: number | string;
+  currency?: string;
+  amount?: number | string;
+};
+
+export type SetOnSalePreReq = {
+  id: number | string;
+  internalId: number | string;
+  price: number | string;
+  currency?: string;
+  amount?: number | string;
+  web3Provider: Web3;
+};
+
 export type CreateNewPoolReq = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   poolData: any;

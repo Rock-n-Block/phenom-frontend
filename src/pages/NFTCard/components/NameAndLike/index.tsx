@@ -1,5 +1,8 @@
 import { useCallback, useState, VFC } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { like } from 'store/nfts/actions';
+
 import cx from 'classnames';
 
 import { Button, EllipsisText, Text } from 'components';
@@ -13,15 +16,35 @@ type INameAndLike = {
   name: string;
   artId: number;
   likeCount: number;
+  isLiked?: boolean;
   inStockNumber?: number;
 };
 
-const NameAndLike: VFC<INameAndLike> = ({ name, artId, likeCount, inStockNumber }) => {
-  const [isLike, setIsLike] = useState(false);
+const NameAndLike: VFC<INameAndLike> = ({
+  name,
+  artId,
+  likeCount,
+  isLiked = false,
+  inStockNumber,
+}) => {
+  const [isLike, setIsLike] = useState(isLiked);
+  const [likesNumber, setLikesNumber] = useState(likeCount);
+  const dispatch = useDispatch();
 
   const handleLike = useCallback(() => {
+    if (isLike) {
+      setLikesNumber(likesNumber - 1);
+    }
+    if (!isLike) {
+      setLikesNumber(likesNumber + 1);
+    }
     setIsLike(!isLike);
-  }, [isLike]);
+    dispatch(
+      like({
+        id: artId,
+      }),
+    );
+  }, [artId, dispatch, isLike, likesNumber]);
 
   return (
     <div className={styles.nameAndLike}>
@@ -38,7 +61,7 @@ const NameAndLike: VFC<INameAndLike> = ({ name, artId, likeCount, inStockNumber 
         >
           {isLike ? <HeartFilledIcon /> : <HeartIcon />}
           <Text size="s" color="inherit">
-            {numberFormatter(likeCount || 0, 1000)}
+            {numberFormatter(likesNumber || 0, 1000)}
           </Text>
         </Button>
       </div>

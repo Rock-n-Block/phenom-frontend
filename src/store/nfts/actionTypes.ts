@@ -8,7 +8,10 @@ const BUY = 'BUY' as const;
 const APPROVE = 'APPROVE' as const;
 const APPROVE_NFT = 'APPROVE_NFT' as const;
 const SET_ON_AUCTION = 'SET_ON_AUCTION' as const;
+const SET_ON_SALE = 'SET_ON_SALE' as const;
 const BID = 'BID' as const;
+const REMOVE_FROM_SALE = 'REMOVE_FROM_SALE' as const;
+const LIKE = 'LIKE' as const;
 
 export default {
   GET_CATEGORIES,
@@ -21,5 +24,8 @@ export default {
   APPROVE,
   APPROVE_NFT,
   SET_ON_AUCTION,
+  SET_ON_SALE,
   BID,
+  REMOVE_FROM_SALE,
+  LIKE,
 };
