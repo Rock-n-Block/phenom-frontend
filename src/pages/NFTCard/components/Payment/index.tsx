@@ -410,9 +410,11 @@ const Payment: VFC<IPayment> = ({
                   placeholder="0.00"
                   className={styles.createLotPrice}
                 />
-                <Text color="middleGray" size="m">
-                  ${priceValue ? (+priceValue / 2463.3).toFixed(2) : '00.00'}
-                </Text>
+                {nft?.usdPrice && (
+                  <Text color="middleGray" size="m">
+                    ${nft?.usdPrice}
+                  </Text>
+                )}
                 {!isFixedPrice && (
                   <>
                     <Selector
