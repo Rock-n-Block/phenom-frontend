@@ -24,11 +24,13 @@
     color: $color-dark;
     min-height: 185px;
     resize: none;
+    @include gilroy;
     @include border-like-shadow;
     @include transition;
     &::placeholder {
       opacity: 0.32;
       @include transition;
+      @include gilroy;
     }
     &:hover {
       @include border-like-shadow($width: 2px);

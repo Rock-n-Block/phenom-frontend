@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 import { CollectionCard, Text } from 'components';
 
-import { TSingleCollection } from 'types';
+import { Collection } from 'types';
 
 import { ReloadSVG } from 'assets/img';
 
 import styles from './styles.module.scss';
 
 interface ICollections {
-  initCollections: TSingleCollection[];
-  setSelectedCollection: (collections: TSingleCollection[]) => void;
+  initCollections: Collection[];
+  setSelectedCollection: (collections: Collection[]) => void;
   onRefresh?: () => void;
   fetching?: boolean;
 }
@@ -23,21 +23,22 @@ const Collections: VFC<ICollections> = ({
   fetching = false,
 }) => {
   const [collections] = useState(initCollections);
-  const [selected, setSelected] = useState<TSingleCollection[]>([]);
+  const [selected, setSelected] = useState<Collection[]>([]);
 
   useEffect(() => {
     setSelectedCollection(selected);
-  }, [selected, setSelectedCollection]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   const isSelected = useCallback(
-    (id: number) => selected.findIndex((s) => s.id === id) !== -1,
+    (url: number) => selected.findIndex((s) => s.url === url) !== -1,
     [selected],
   );
 
   const setIsSelected = useCallback(
-    (collection: TSingleCollection) => {
-      if (isSelected(collection.id)) {
-        const newSelected = selected.filter((c) => c.id !== collection.id);
+    (collection: Collection) => {
+      if (isSelected(collection.url)) {
+        const newSelected = selected.filter((c) => c.url !== collection.url);
         setSelected(newSelected);
       } else {
         setSelected([collection]);
@@ -67,11 +68,11 @@ const Collections: VFC<ICollections> = ({
       <div className={styles['collection-section__wrapper__body']}>
         {collections.map((c) => (
           <CollectionCard
-            key={c.id}
+            key={c.url}
             collection={c}
             selectable
             setIsSelected={setIsSelected}
-            isSelected={isSelected(c.id)}
+            isSelected={isSelected(+c.url)}
           />
         ))}
       </div>

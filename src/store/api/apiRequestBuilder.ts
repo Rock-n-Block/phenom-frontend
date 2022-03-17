@@ -1,6 +1,6 @@
 import { URL } from 'appConstants';
 import { LoginReq, Token } from 'types';
-import { SearchNftReq } from 'types/requests';
+import { CreateCollectionAction, RequestWithNetwork, SearchNftReq } from 'types/requests';
 
 import ajax from './ajax';
 import NftApiCalls from './nftApiCalls';
@@ -38,6 +38,13 @@ export const baseApi = {
       url: URL.getSelfInfo,
     });
   },
+  getSelfCollections({ network }: RequestWithNetwork) {
+    return ajax({
+      method: 'get',
+      url: URL.getSelfCollection,
+      params: { network },
+    });
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   presearchNfts(params: any) {
     return ajax({
@@ -61,9 +68,17 @@ export const baseApi = {
   },
   createNewToken(token: Token) {
     return ajax({
-      method: 'POST',
+      method: 'post',
       url: URL.createNewToken,
-      params: token,
+      data: token,
+    });
+  },
+  createNewCollection({ collection, network }: CreateCollectionAction) {
+    return ajax({
+      method: 'post',
+      url: URL.createNewCollection,
+      params: { network },
+      data: collection,
     });
   },
   

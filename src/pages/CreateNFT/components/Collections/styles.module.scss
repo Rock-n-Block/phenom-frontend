@@ -10,6 +10,7 @@
       &:disabled {
         filter: hue-rotate(90deg);
         opacity: 0.5;
+        cursor: not-allowed;
         animation: fetching 2s ease-in-out forwards infinite;
       }
     }
@@ -32,13 +33,13 @@
         font-weight: normal;
         @include flexbox(center, center);
       }
-    }
-    &:hover {
-      .collection-section__wrapper {
-        &__add {
-          &-body {
-            &__detail {
-              animation: adding 1s ease-in-out;
+      &:hover {
+        .collection-section__wrapper {
+          &__add {
+            &-body {
+              &__detail {
+                animation: adding 1s ease-in-out;
+              }
             }
           }
         }
@@ -60,7 +61,10 @@
   0% {
     transform: rotate(0);
   }
-  50% {
+  40% {
+    transform: rotate(180deg);
+  }
+  60% {
     transform: rotate(180deg);
   }
   100% {

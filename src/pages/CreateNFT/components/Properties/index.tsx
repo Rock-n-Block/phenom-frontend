@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, VFC } from 'react';
+import { FormEvent, useCallback, useEffect, useRef, useState, VFC } from 'react';
 
 import cn from 'classnames';
 
@@ -17,17 +17,19 @@ type PropError = {
 type EditableProp = TSingleProp & {
   onDeleteClick: (id: number) => void;
   setField: (name: keyof TSingleProp, value: any, id: number) => void;
+  onBlur?: (e: FormEvent<HTMLInputElement>) => void;
   error?: PropError;
 };
 
 interface IProperties {
   initProps: TSingleProp[];
   setProps: (props: TSingleProp[]) => void;
+  onBlur?: (e: FormEvent<HTMLInputElement>) => void;
   className?: string;
   initErrors?: any[] | any;
 }
 
-const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField, error }) => {
+const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField, onBlur, error }) => {
   return (
     <div className={styles['single-prop__body']}>
       <div className={styles['single-prop__body-inputs']}>
@@ -40,10 +42,12 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
           labelClassName={styles['single-prop__body-inputs__label']}
           setValue={(v: string) => setField('name', v, id)}
           error={error?.name}
+          onBlur={onBlur}
         />
         <DefaultInput
           name={`property${type}${id}`}
           value={type}
+          onBlur={onBlur}
           label="Type"
           placeholder="Input Text"
           className={styles['single-prop__body-inputs__input']}
@@ -57,7 +61,7 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
   );
 };
 
-const Properties: VFC<IProperties> = ({ initProps, setProps, className, initErrors }) => {
+const Properties: VFC<IProperties> = ({ initProps, setProps, onBlur, className, initErrors }) => {
   const [properties, setProperties] = useState<TSingleProp[]>(initProps);
   const [errors, setErrors] = useState<PropError[]>([]);
   const idx = useRef(0);
@@ -150,6 +154,7 @@ const Properties: VFC<IProperties> = ({ initProps, setProps, className, initErro
             {...p}
             onDeleteClick={() => onDelete(p.id)}
             setField={setProp}
+            onBlur={onBlur}
           />
         ))}
       </div>

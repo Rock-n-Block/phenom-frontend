@@ -9,6 +9,8 @@
 
 .searchDesktop {
   margin-left: 40px;
+  width: 100%;
+  max-width: 350px;
 }
 
 .header {
@@ -60,6 +62,7 @@
   }
   .searchDesktop{
     min-width: 0;
+    max-width: 0;
   }
   .open {
     margin-right: 5px;

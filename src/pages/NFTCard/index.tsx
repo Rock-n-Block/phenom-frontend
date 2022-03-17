@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, setOnAuction, getDetailedNft } from 'store/nfts/actions';
+import { bid, buy, getDetailedNft, setOnAuction } from 'store/nfts/actions';
 import actionTypes from 'store/nfts/actionTypes';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import nftsSelector from 'store/nfts/selectors';

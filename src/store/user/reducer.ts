@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { UserState } from 'types';
+import { Chains, UserState } from 'types';
 
 const initialState: UserState = {
   id: null,
@@ -10,6 +10,8 @@ const initialState: UserState = {
   key: '',
   provider: '',
   displayName: '',
+  collections: [],
+  chain: Chains.bsc,
 };
 
 export const userReducer = createSlice({
@@ -24,7 +26,15 @@ export const userReducer = createSlice({
       ...state,
       ...action.payload,
     }),
+    updateChain: (state, action: PayloadAction<Partial<UserState>>) => ({
+      ...state,
+      ...action.payload,
+    }),
     connectWalletState: (state, action: PayloadAction<Partial<UserState>>) => ({
+      ...state,
+      ...action.payload,
+    }),
+    updateCollections: (state, action: PayloadAction<Partial<UserState>>) => ({
       ...state,
       ...action.payload,
     }),
@@ -37,7 +47,13 @@ export const userReducer = createSlice({
   },
 });
 
-export const { connectWalletState, disconnectWalletState, updateWallet, updateProvider } =
-  userReducer.actions;
+export const {
+  connectWalletState,
+  disconnectWalletState,
+  updateWallet,
+  updateProvider,
+  updateCollections,
+  updateChain,
+} = userReducer.actions;
 
 export default userReducer.reducer;

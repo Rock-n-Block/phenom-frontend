@@ -4,26 +4,26 @@ import cn from 'classnames';
 
 import { Avatar, Checkbox, Text } from 'components';
 
-import { TSingleCollection } from 'types';
+import { Collection } from 'types';
 
 import styles from './styles.module.scss';
 
 interface ICollectionCard {
-  collection: TSingleCollection;
+  collection: Collection;
   selectable?: boolean;
-  setIsSelected?: (collection: TSingleCollection) => void;
+  setIsSelected?: (collection: Collection) => void;
   isSelected?: boolean;
 }
 
 /**
- * 
- * @param {TSingleCollection} collection - entity of the collection
+ *
+ * @param {Collection} collection - entity of the collection
  * @param {boolean} [selectable] - allows user to select card
  * @default selectable = false
- * @param {(collection: TSingleCollection) => void} [setIsSelected] - callback which will be called when card has been selected. Return collection
+ * @param {(collection: Collection) => void} [setIsSelected] - callback which will be called when card has been selected. Return collection
  * @param {boolean} [isSelected] - initial state of card
  * @default isSelected = false
- * @returns 
+ * @returns
  */
 const CollectionCard: VFC<ICollectionCard> = ({
   collection,
@@ -50,15 +50,15 @@ const CollectionCard: VFC<ICollectionCard> = ({
     >
       {selectable && (
         <Checkbox
-          id={collection.id.toString()}
+          id={collection.url.toString()}
           value={isSelected}
           onChange={onBlockClick}
           className={styles['collection-card__wrapper__checkbox']}
         />
       )}
       <Avatar
-        id={collection.id}
-        avatar={collection.icon}
+        id={collection.url}
+        avatar={collection.avatar || ''}
         isCollection
         size={56}
         className={styles['collection-card__wrapper__avatar']}
@@ -78,10 +78,7 @@ const CollectionCard: VFC<ICollectionCard> = ({
           color="middleGray"
           className={styles['collection-card__wrapper__info-subtitle']}
         >
-          Floor price:{' '}
-          <span className={styles['marked-text']}>
-            {collection.price} {collection.currency}
-          </span>
+          Floor price: <span className={styles['marked-text']}>{collection.floorPrice || 0} PHETA</span>
         </Text>
       </div>
     </div>

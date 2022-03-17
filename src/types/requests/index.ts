@@ -140,3 +140,10 @@ export type SearchCollectionAction = {
   requestData: SearchCollectionsReq;
   shouldConcat?: boolean;
 };
+export type RequestWithNetwork = {
+  network: string;
+};
+
+export type CreateCollectionAction = {
+  collection: FormData;
+} & RequestWithNetwork;

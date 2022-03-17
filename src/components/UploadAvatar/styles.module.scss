@@ -30,6 +30,7 @@
     height: 100%;
     position: relative;
     cursor: pointer;
+    border-radius: 50%;
     @include flexbox(center, center, column);
     &__hidden-input {
       position: fixed;

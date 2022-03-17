@@ -33,11 +33,16 @@ const TextArea: VFC<ITextArea> = ({
     (e: FormEvent<HTMLTextAreaElement>) => {
       e.preventDefault();
       const currentValue = e.currentTarget.value;
-      setValue(currentValue);
-      setSymbCount(currentValue.length);
+      if (maxElements === 'infinity') {
+        setValue(currentValue);
+        setSymbCount(currentValue.length);
+      } else if (+maxElements >= currentValue.length) {
+        setValue(currentValue);
+        setSymbCount(currentValue.length);
+      }
       e.stopPropagation();
     },
-    [setValue],
+    [maxElements, setValue],
   );
 
   const onTextareaBlur: FocusEventHandler<HTMLTextAreaElement> = useCallback(

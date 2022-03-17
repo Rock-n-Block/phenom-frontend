@@ -137,6 +137,7 @@ const DefaultInput: VFC<IDefaultInput> = ({
           type="text"
           id={`default_input_${name}`}
           disabled={disabled}
+          autoComplete="off"
         />
         {subInfo && (
           <div

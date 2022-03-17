@@ -2,6 +2,7 @@ const GET_CATEGORIES = 'GET_CATEGORIES' as const;
 const CREATE_TOKEN = 'CREATE_TOKEN' as const;
 const SEARCH_NFTS = 'SEARCH_NFTS' as const;
 const SEARCH_COLLECTIONS = 'SEARCH_COLLECTIONS' as const;
+const CREATE_COLLECTION = 'CREATE_COLLECTION' as const;
 const GET_DETAILED_NFT = 'GET_DETAILED_NFT' as const;
 const BUY = 'BUY' as const;
 const APPROVE = 'APPROVE' as const;
@@ -14,6 +15,7 @@ export default {
   CREATE_TOKEN,
   SEARCH_NFTS,
   SEARCH_COLLECTIONS,
+  CREATE_COLLECTION,
   GET_DETAILED_NFT,
   BUY,
   APPROVE,
