@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef, useState, VFC } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getCategories, searchNfts } from 'store/nfts/actions';
 import { clearNfts } from 'store/nfts/reducer';
 import nftSelector from 'store/nfts/selectors';
+import uiSelector from 'store/ui/selectors';
 
 import cx from 'classnames';
 import { useLanguage } from 'context';
@@ -16,9 +17,10 @@ import { Filters } from './components';
 
 import { DEBOUNCE_DELAY_100, DEFAULT_CURRENCY } from 'appConstants';
 import { useGetTags, useShallowSelector } from 'hooks';
-import { CategoryName, TNullable } from 'types';
+import { CategoryName, RequestStatus, TNullable } from 'types';
 
 import styles from './styles.module.scss';
+import actionTypes from 'store/nfts/actionTypes';
 
 interface IBody {
   activeCategory: CategoryName;
@@ -28,8 +30,9 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const categories = useShallowSelector(nftSelector.getProp('categories'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalNftsPages'));
   const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
-
+  const { [actionTypes.SEARCH_NFTS]: nftsRequestStatus } = useShallowSelector(uiSelector.getUI);
   const { t } = useLanguage();
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({});
@@ -56,7 +59,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
         type: 'items',
         categories: categories?.filter((categoryOption: any) => categoryOption.name === category)[0]
           ?.id,
-        tags: tags?.filter((tagsOption: any) => tagsOption.name === activetags)[0]?.id,
+        tags: activetags ? +activetags : undefined,
         page,
         collections: filtersData?.collections?.join(','),
         max_price: filtersData?.maxPrice,
@@ -66,7 +69,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [categories, dispatch, tags],
+    [categories, dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
@@ -107,13 +110,14 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     [handleSetActiveTag],
   );
 
-  const isNftsLoading = false;
+  const isNftsLoading = useMemo(
+    () => nftsRequestStatus === RequestStatus.REQUEST,
+    [nftsRequestStatus],
+  );
 
   useEffect(() => {
-    // call saga to fetch new nfts
-
-    console.log('filters', filters);
-  }, [filters]);
+    console.log('nftsRequestStatus', nftsRequestStatus);
+  }, [nftsRequestStatus]);
 
   return (
     <>
@@ -150,33 +154,22 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
                 if (isNftsLoading && currentPage === 1) {
                   return <ArtCardSkeleton />;
                 }
-                const {
-                  artId,
-                  name,
-                  price,
-                  media,
-                  currency,
-                  author,
-                  authorAvatar,
-                  authorId,
-                  bids,
-                  isAuction,
-                  USD_price,
-                } = artCard;
+                const { id, name, price, media, currency, creator, bids, isAuction, USD_price } =
+                  artCard;
                 return (
                   <ArtCard
-                    artId={artId}
+                    artId={id}
                     name={name}
                     price={price}
                     imageMain={media}
                     asset={currency?.symbol || DEFAULT_CURRENCY}
-                    author={author}
-                    authorAvatar={authorAvatar}
-                    authorId={authorId}
+                    author={creator?.name || creator?.address}
+                    authorAvatar={creator?.avatar}
+                    authorId={creator?.id}
                     bids={bids}
                     isAuction={isAuction}
                     USD_price={USD_price}
-                    likeAction={(id: any) => {
+                    likeAction={() => {
                       return id;
                     }}
                   />
@@ -192,15 +185,17 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
             )}
           </div>
         </div>
-        <div className={styles.load}>
-          <Button
-            color="outline"
-            className={styles.loadBtn}
-            onClick={() => handleLoadMore(currentPage + 1)}
-          >
-            {t('Explore:Filters.LoadMore')}
-          </Button>
-        </div>
+        {currentPage < totalPages && (
+          <div className={styles.load}>
+            <Button
+              color="outline"
+              className={styles.loadBtn}
+              onClick={() => handleLoadMore(currentPage + 1)}
+            >
+              {t('Explore:Filters.LoadMore')}
+            </Button>
+          </div>
+        )}
       </div>
     </>
   );

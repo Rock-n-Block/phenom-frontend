@@ -117,21 +117,24 @@ const NFTCard: VFC = () => {
             <>
               <div className={styles.left}>
                 <div className={styles.nftCardImgWrapper}>
-                  {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+                  {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
                     <div className={styles.auction}>
                       <Text color="white">Auction</Text>
                     </div>
                   )}
-                  <img src={nft?.img} alt="nftCard" className={styles.nftCardImg} />
+                  <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
                 </div>
-                <PropsAndDescr properties={nft?.properties} description={nft?.description} />
+                <PropsAndDescr
+                  properties={detailedNft?.properties}
+                  description={detailedNft?.description}
+                />
               </div>
               <div className={styles.right}>
                 <NameAndLike
-                  name={nft?.name}
-                  likeCount={nft?.likes_count}
-                  artId={nft?.id}
-                  inStockNumber={nft?.available}
+                  name={detailedNft?.name}
+                  likeCount={detailedNft?.likeCount || 0}
+                  artId={detailedNft?.id || +id}
+                  inStockNumber={detailedNft?.available}
                 />
                 {(isUserCanEndAuction ||
                   isUserCanBuyNft ||
@@ -140,7 +143,7 @@ const NFTCard: VFC = () => {
                   isUserCanRemoveFromSale ||
                   isUserCanChangePrice) && (
                   <Payment
-                    nft={nft}
+                    nft={detailedNft}
                     isUserCanEndAuction={isUserCanEndAuction}
                     isUserCanBuyNft={isUserCanBuyNft}
                     isUserCanEnterInAuction={isUserCanEnterInAuction}
@@ -153,11 +156,11 @@ const NFTCard: VFC = () => {
                     handleBid={handleBid}
                   />
                 )}
-                {nft?.creator && nft?.owners && (
+                {detailedNft?.creator && detailedNft?.owners && (
                   <OwnersAndCreators
-                    creator={nft?.creator}
-                    owners={nft?.owners}
-                    collection={nft?.collection}
+                    creator={detailedNft?.creator}
+                    owners={detailedNft?.owners}
+                    collection={detailedNft?.collection}
                   />
                 )}
               </div>
@@ -165,18 +168,18 @@ const NFTCard: VFC = () => {
           ) : (
             <div className={styles.column}>
               <NameAndLike
-                name={nft?.name}
-                likeCount={nft?.likes_count}
-                artId={nft?.id}
-                inStockNumber={nft?.in_stock_number}
+                name={detailedNft?.name}
+                likeCount={detailedNft?.likeCount || 0}
+                artId={detailedNft?.id || +id}
+                inStockNumber={detailedNft?.in_stock_number}
               />
               <div className={styles.nftCardImgWrapper}>
-                {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+                {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
                   <div className={styles.auction}>
                     <Text color="white">Auction</Text>
                   </div>
                 )}
-                <img src={nft?.img} alt="nftCard" className={styles.nftCardImg} />
+                <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
               </div>
               {(isUserCanEndAuction ||
                 isUserCanBuyNft ||
@@ -185,7 +188,7 @@ const NFTCard: VFC = () => {
                 isUserCanRemoveFromSale ||
                 isUserCanChangePrice) && (
                 <Payment
-                  nft={nft}
+                  nft={detailedNft}
                   isUserCanEndAuction={isUserCanEndAuction}
                   isUserCanBuyNft={isUserCanBuyNft}
                   isUserCanEnterInAuction={isUserCanEnterInAuction}
@@ -198,13 +201,16 @@ const NFTCard: VFC = () => {
                   handleBid={handleBid}
                 />
               )}
-              <PropsAndDescr properties={nft?.properties} description={nft?.description} />
+              <PropsAndDescr
+                properties={detailedNft?.properties}
+                description={detailedNft?.description}
+              />
 
-              {nft?.creator && nft?.owners && (
+              {detailedNft?.creator && detailedNft?.owners && (
                 <OwnersAndCreators
-                  creator={nft?.creator}
-                  owners={nft?.owners}
-                  collection={nft?.collection}
+                  creator={detailedNft?.creator}
+                  owners={detailedNft?.owners}
+                  collection={detailedNft?.collection}
                 />
               )}
             </div>

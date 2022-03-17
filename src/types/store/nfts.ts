@@ -53,6 +53,7 @@ export type NftsState = {
   nfts: TokenFull[];
   collections: IBaseInfo[];
   detailedNft: TNullable<TokenFull>;
-  totalPages: number;
+  totalNftsPages: number;
+  totalCollectionsPages: number;
   categories: TNullable<TResponseCategories>;
 };

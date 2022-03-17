@@ -7,7 +7,7 @@ import moment from 'moment';
 import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { INft, TNullable } from 'types';
+import { TokenFull } from 'types';
 
 import ApproveModal from '../modals/ApproveModal';
 import TransferModal from '../modals/TransferModal';
@@ -29,8 +29,8 @@ enum ModalType {
   transfer = 'TRANSFER',
 }
 
-type IPayment = {
-  nft: TNullable<INft>;
+interface IPayment {
+  nft: TokenFull;
   isUserCanEndAuction: boolean;
   isUserCanBuyNft: boolean;
   isUserCanEnterInAuction: boolean;
@@ -45,7 +45,7 @@ type IPayment = {
     auctionDuration: number,
   ) => () => void;
   handleBid: (amount: number | string, currency: string) => void;
-};
+}
 
 const hours = [
   { value: 43200, label: '12 h' },
@@ -99,8 +99,8 @@ const Payment: VFC<IPayment> = ({
 
   useEffect(() => {
     let timeInterval: any;
-    if (nft?.end_auction) {
-      const eventTime = +(nft?.end_auction || 0) * 1000;
+    if (nft?.endAuction) {
+      const eventTime = +(nft?.endAuction || 0) * 1000;
       const date = new Date();
       const currentTime = date.getTime() - date.getTimezoneOffset() * 60000;
       const diffTime = eventTime - currentTime;
@@ -124,7 +124,7 @@ const Payment: VFC<IPayment> = ({
               <div className={styles.timedAucTitle}>
                 <PlaceBidIcon className={styles.timedAucIcon} />
                 <Text size="m" weight="semibold">
-                  Sale ends at {moment(nft?.end_auction, 'X').format('MMMM Do YYYY, h:mma')}
+                  Sale ends at {moment(nft?.endAuction, 'X').format('MMMM Do YYYY, h:mma')}
                 </Text>
               </div>
               <div className={styles.time}>
@@ -149,9 +149,9 @@ const Payment: VFC<IPayment> = ({
               </div>
             </div>
           )}
-          {nft?.is_auc_selling || nft?.is_timed_auc_selling ? (
+          {nft?.isAucSelling || nft?.is_timed_auc_selling ? (
             <div>
-              {nft?.highest_bid ? (
+              {nft?.highestBid ? (
                 <Text color="yellow" size="m" weight="semibold">
                   Current bid
                 </Text>
@@ -171,16 +171,16 @@ const Payment: VFC<IPayment> = ({
               {nft?.price} PHETA
             </Text>
           )}
-          {nft?.USD_price && (
+          {nft?.usdPrice && (
             <Text color="middleGray" size="m" className={styles.usdPrice}>
-              ${nft?.USD_price}
+              ${nft?.usdPrice}
             </Text>
           )}
-          {nft?.highest_bid && (
+          {nft?.highestBid && (
             <div className={styles.highest}>
-              <Avatar id={nft?.highest_bid.id} avatar={nft?.highest_bid.bidder_avatar} />
+              <Avatar id={nft?.highestBid.id || 0} avatar={nft?.highestBid.bidder_avatar} />
               <Text className={styles.highestName}>
-                {nft?.highest_bid.bidder}{' '}
+                {nft?.highestBid.bidder}{' '}
                 <img alt="arrow" src={iconArrowUpGreen} className={styles.arrow} />{' '}
               </Text>
             </div>
@@ -201,7 +201,7 @@ const Payment: VFC<IPayment> = ({
                   inputClassName={styles.quantityInput}
                 />
               )}
-              {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+              {(nft?.isAucSelling || nft?.is_timed_auc_selling) && (
                 <DefaultInput
                   name="bid"
                   value={bid}
@@ -214,14 +214,14 @@ const Payment: VFC<IPayment> = ({
               <Button
                 className={styles.buy}
                 padding="extra-large"
-                suffixIcon={nft?.is_auc_selling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
+                suffixIcon={nft?.isAucSelling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
                 onClick={
-                  nft?.is_auc_selling || nft?.is_timed_auc_selling
+                  nft?.isAucSelling || nft?.is_timed_auc_selling
                     ? () => handleBid(bid, nft?.currency.symbol || 'PHETA')
                     : () => handleBuy()
                 }
               >
-                {nft?.is_auc_selling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
+                {nft?.isAucSelling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
               </Button>
             </div>
           )}
@@ -415,7 +415,7 @@ const Payment: VFC<IPayment> = ({
                   >
                     Transfer
                   </Button>
-                  {nft?.is_selling ? (
+                  {nft?.isSelling ? (
                     <Button
                       color="light"
                       className={styles.button}

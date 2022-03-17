@@ -1,4 +1,4 @@
-import { setCollections } from '../reducer';
+import { setCollections, setTotalCollectionsPages } from '../reducer';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
@@ -14,7 +14,7 @@ import actionTypes from '../actionTypes';
 export function* searchCollectionsSaga({
   type,
   payload: { requestData, shouldConcat },
-}: ReturnType<typeof searchNfts>) {  
+}: ReturnType<typeof searchNfts>) {
   yield put(apiActions.request(type));
 
   try {
@@ -28,6 +28,9 @@ export function* searchCollectionsSaga({
     yield put(
       setCollections(shouldConcat ? [...collections, ...camelizedResult] : camelizedResult),
     );
+    yield put(setTotalCollectionsPages(data.total_pages));
+
+    yield put(apiActions.success(type));
   } catch (err) {
     console.log(err);
     yield put(apiActions.error(type, err));

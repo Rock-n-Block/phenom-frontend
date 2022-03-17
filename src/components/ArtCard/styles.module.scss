@@ -151,6 +151,10 @@
 .bottom {
   @include flexbox(flex-start, space-between);
   width: 100%;
+
+  &Right{
+    justify-content: flex-end;
+  }
 }
 
 .artCardAuthorContainer {

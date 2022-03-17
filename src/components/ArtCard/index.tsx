@@ -143,28 +143,40 @@ const ArtCard: FC<Props> = ({
           Id: {artId}
         </Text>
         <div className={cx(styles.flexContainer, styles.column)}>
-          {!isAuction && (
-            <Text weight="bold" color="lightGray" className={styles.price}>
-              Price
-            </Text>
+          {price && (
+            <>
+              {!isAuction && (
+                <Text weight="bold" color="lightGray" className={styles.price}>
+                  Price
+                </Text>
+              )}
+              {isAuction &&
+                (bids?.length ? (
+                  <Text weight="bold" color="yellow" className={styles.current}>
+                    Current bid
+                  </Text>
+                ) : (
+                  <Text weight="bold" color="green" className={styles.minimal}>
+                    Minimal bid
+                  </Text>
+                ))}
+              <Text
+                id="none"
+                className={styles.artCardPrice}
+                size="xl"
+                color="blue"
+                weight="semibold"
+              >
+                {`${toFixed(price, 3)} ${asset}`}{' '}
+              </Text>
+            </>
           )}
-          {isAuction &&
-            (bids?.length ? (
-              <Text weight="bold" color="yellow" className={styles.current}>
-                Current bid
+          <div className={cx(styles.bottom, { [styles.bottomRight]: !price })}>
+            {USD_price && (
+              <Text id="none" weight="bold" color="lightGray">
+                $ {USD_price}
               </Text>
-            ) : (
-              <Text weight="bold" color="green" className={styles.minimal}>
-                Minimal bid
-              </Text>
-            ))}
-          <Text id="none" className={styles.artCardPrice} size="xl" color="blue" weight="semibold">
-            {`${toFixed(price, 3)} ${asset}`}{' '}
-          </Text>
-          <div className={styles.bottom}>
-            <Text id="none" weight="bold" color="lightGray">
-              $ {USD_price}
-            </Text>
+            )}
             {!bids?.length ? (
               <Text color="middleGray" weight="semibold" size="m">
                 {inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}
@@ -186,7 +198,9 @@ const ArtCard: FC<Props> = ({
                 icon={iconHeart}
                 color="transparent"
               />
-              <Text id="none" weight="bold">{numberFormatter(likesCount, 3)}</Text>
+              <Text id="none" weight="bold">
+                {numberFormatter(likesCount, 3)}
+              </Text>
             </div>
           )}
         </div>

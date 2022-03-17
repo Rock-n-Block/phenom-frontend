@@ -1,4 +1,4 @@
-import { setNfts } from '../reducer';
+import { setNfts, setTotalNftsPages } from '../reducer';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
@@ -26,6 +26,9 @@ export function* searchCollectionsSaga({
     const camelizedResult = camelize(data.results) as TokenFull[];
 
     yield put(setNfts(shouldConcat ? [...nfts, ...camelizedResult] : camelizedResult));
+    yield put(setTotalNftsPages(data.total_pages));
+
+    yield put(apiActions.success(type));
   } catch (err) {
     console.log(err);
     yield put(apiActions.error(type, err));
