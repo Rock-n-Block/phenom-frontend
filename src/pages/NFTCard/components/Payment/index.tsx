@@ -10,9 +10,9 @@ import moment from 'moment';
 import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { TokenFull } from 'types';
+import { Modals, TokenFull } from 'types';
 
-import ApproveModal from '../modals/ApproveModal';
+import ApprovePendingModal from '../modals/ApprovePendingModal';
 import TransferModal from '../modals/TransferModal';
 
 import {
@@ -25,12 +25,10 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-
-enum ModalType {
-  init = 'INIT',
-  approve = 'APPROVE',
-  transfer = 'TRANSFER',
-}
+import ApproveRejectedModal from '../modals/ApproveRejectedModal';
+import SendPendingModal from '../modals/SendPendingModal';
+import SendSuccessModal from '../modals/SendSuccessModal';
+import SendRejectedModal from '../modals/SendRejectedModal';
 
 interface IPayment {
   nft: TokenFull;
@@ -70,14 +68,14 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
-  const [modalType, setModalType] = useState(ModalType.init);
+  const [modalType, setModalType] = useState(Modals.none);
 
-  const handleSetModalType = useCallback((newModalType: ModalType) => {
+  const handleSetModalType = useCallback((newModalType: Modals) => {
     setModalType(newModalType);
   }, []);
 
   const handleCloseModal = useCallback(() => {
-    setModalType(ModalType.init);
+    setModalType(Modals.none);
   }, []);
 
   const handleList = useCallback(() => {
@@ -303,7 +301,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(ModalType.transfer)}
+                    onClick={() => handleSetModalType(Modals.Transfer)}
                   >
                     Transfer
                   </Button>
@@ -312,7 +310,7 @@ const Payment: VFC<IPayment> = ({
                   <Button
                     color="dark"
                     className={cx(styles.button, styles.remove)}
-                    onClick={() => handleSetModalType(ModalType.approve)}
+                    onClick={() => handleSetModalType(Modals.ApprovePending)}
                   >
                     Accept bid
                   </Button>
@@ -506,7 +504,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(ModalType.transfer)}
+                    onClick={() => handleSetModalType(Modals.Transfer)}
                   >
                     Transfer
                   </Button>
@@ -531,11 +529,28 @@ const Payment: VFC<IPayment> = ({
         </div>
       )}
 
-      <TransferModal
-        visible={modalType === ModalType.transfer}
+      <TransferModal visible={modalType === Modals.Transfer} onClose={() => handleCloseModal()} />
+
+      <ApprovePendingModal
+        visible={modalType === Modals.ApprovePending}
         onClose={() => handleCloseModal()}
       />
-      <ApproveModal visible={modalType === ModalType.approve} onClose={() => handleCloseModal()} />
+      <ApproveRejectedModal
+        visible={modalType === Modals.ApproveRejected}
+        onClose={() => handleCloseModal()}
+      />
+      <SendPendingModal
+        visible={modalType === Modals.SendPending}
+        onClose={() => handleCloseModal()}
+      />
+      <SendSuccessModal
+        visible={modalType === Modals.SendSuccess}
+        onClose={() => handleCloseModal()}
+      />
+      <SendRejectedModal
+        visible={modalType === Modals.SendRejected}
+        onClose={() => handleCloseModal()}
+      />
     </>
   );
 };

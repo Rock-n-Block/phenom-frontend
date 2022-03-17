@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getCategories, searchNfts } from 'store/nfts/actions';
+import actionTypes from 'store/nfts/actionTypes';
 import { clearNfts } from 'store/nfts/reducer';
 import nftSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
@@ -20,7 +21,6 @@ import { useGetTags, useShallowSelector } from 'hooks';
 import { CategoryName, RequestStatus, TNullable } from 'types';
 
 import styles from './styles.module.scss';
-import actionTypes from 'store/nfts/actionTypes';
 
 interface IBody {
   activeCategory: CategoryName;
