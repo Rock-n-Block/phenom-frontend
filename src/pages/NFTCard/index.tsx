@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { useEffect, useMemo, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, getDetailedNft, setOnAuction } from 'store/nfts/actions';
+import { getDetailedNft } from 'store/nfts/actions';
 import actionTypes from 'store/nfts/actionTypes';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import nftsSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
-
-import { useWalletConnectContext } from 'context';
 
 import { Loader, Text } from 'components';
 
@@ -21,11 +19,9 @@ import styles from './styles.module.scss';
 
 const NFTCard: VFC = () => {
   const { id = 1 } = useParams();
-  const [nft] = useState<any>({});
   const { width } = useWindowSize();
   const dispatch = useDispatch();
   const detailedNft = useShallowSelector(nftsSelector.getProp('detailedNft'));
-  const { walletService } = useWalletConnectContext();
 
   const { [actionTypes.GET_DETAILED_NFT]: getDetailedNftRequestStatus } = useShallowSelector(
     uiSelector.getUI,
@@ -46,52 +42,7 @@ const NFTCard: VFC = () => {
     isOwner,
     isUserCanRemoveFromSale,
     isUserCanChangePrice,
-  } = useGetUserAccessForNft(nft, 1);
-
-  const handleBuy = useCallback(() => {
-    if (detailedNft) {
-      dispatch(
-        buy({
-          id: detailedNft?.id || 0,
-          amount: detailedNft?.price || 0,
-          sellerId: 0,
-          web3Provider: walletService.Web3(),
-        }),
-      );
-    }
-  }, [detailedNft, dispatch, walletService]);
-
-  const handleSetOnAuction = useCallback(
-    (minimalBid: number | string, currency: string, auctionDuration?: number) => () => {
-      if (detailedNft) {
-        dispatch(
-          setOnAuction({
-            id: detailedNft?.id || 0,
-            internalId: detailedNft.internalId || 0,
-            minimalBid,
-            currency,
-            auctionDuration,
-            web3Provider: walletService.Web3(),
-          }),
-        );
-      }
-    },
-    [detailedNft, dispatch, walletService],
-  );
-
-  const handleBid = useCallback(
-    (amount: number | string, currency: string) => {
-      dispatch(
-        bid({
-          id: detailedNft?.id || 0,
-          amount,
-          currency,
-          web3Provider: walletService.Web3(),
-        }),
-      );
-    },
-    [detailedNft, dispatch, walletService],
-  );
+  } = useGetUserAccessForNft(detailedNft, 1);
 
   useEffect(() => {
     if (id) {
@@ -117,21 +68,25 @@ const NFTCard: VFC = () => {
             <>
               <div className={styles.left}>
                 <div className={styles.nftCardImgWrapper}>
-                  {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+                  {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
                     <div className={styles.auction}>
                       <Text color="white">Auction</Text>
                     </div>
                   )}
-                  <img src={nft?.img} alt="nftCard" className={styles.nftCardImg} />
+                  <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
                 </div>
-                <PropsAndDescr properties={nft?.properties} description={nft?.description} />
+                <PropsAndDescr
+                  properties={detailedNft?.properties}
+                  description={detailedNft?.description}
+                />
               </div>
               <div className={styles.right}>
                 <NameAndLike
-                  name={nft?.name}
-                  likeCount={nft?.likes_count}
-                  artId={nft?.id}
-                  inStockNumber={nft?.available}
+                  name={detailedNft?.name}
+                  likeCount={detailedNft?.likeCount || 0}
+                  artId={detailedNft?.id || +id}
+                  inStockNumber={detailedNft?.available}
+                  isLiked={detailedNft?.isLiked}
                 />
                 {(isUserCanEndAuction ||
                   isUserCanBuyNft ||
@@ -140,7 +95,7 @@ const NFTCard: VFC = () => {
                   isUserCanRemoveFromSale ||
                   isUserCanChangePrice) && (
                   <Payment
-                    nft={nft}
+                    nft={detailedNft}
                     isUserCanEndAuction={isUserCanEndAuction}
                     isUserCanBuyNft={isUserCanBuyNft}
                     isUserCanEnterInAuction={isUserCanEnterInAuction}
@@ -148,16 +103,13 @@ const NFTCard: VFC = () => {
                     isOwner={isOwner}
                     isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                     isUserCanChangePrice={isUserCanChangePrice}
-                    handleBuy={handleBuy}
-                    handleSetOnAuction={handleSetOnAuction}
-                    handleBid={handleBid}
                   />
                 )}
-                {nft?.creator && nft?.owners && (
+                {detailedNft?.creator && detailedNft?.owners && (
                   <OwnersAndCreators
-                    creator={nft?.creator}
-                    owners={nft?.owners}
-                    collection={nft?.collection}
+                    creator={detailedNft?.creator}
+                    owners={detailedNft?.owners}
+                    collection={detailedNft?.collection}
                   />
                 )}
               </div>
@@ -165,18 +117,19 @@ const NFTCard: VFC = () => {
           ) : (
             <div className={styles.column}>
               <NameAndLike
-                name={nft?.name}
-                likeCount={nft?.likes_count}
-                artId={nft?.id}
-                inStockNumber={nft?.in_stock_number}
+                name={detailedNft?.name}
+                likeCount={detailedNft?.likeCount || 0}
+                artId={detailedNft?.id || +id}
+                inStockNumber={detailedNft?.in_stock_number}
+                isLiked={detailedNft?.isLiked}
               />
               <div className={styles.nftCardImgWrapper}>
-                {(nft?.is_auc_selling || nft?.is_timed_auc_selling) && (
+                {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
                   <div className={styles.auction}>
                     <Text color="white">Auction</Text>
                   </div>
                 )}
-                <img src={nft?.img} alt="nftCard" className={styles.nftCardImg} />
+                <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
               </div>
               {(isUserCanEndAuction ||
                 isUserCanBuyNft ||
@@ -185,7 +138,7 @@ const NFTCard: VFC = () => {
                 isUserCanRemoveFromSale ||
                 isUserCanChangePrice) && (
                 <Payment
-                  nft={nft}
+                  nft={detailedNft}
                   isUserCanEndAuction={isUserCanEndAuction}
                   isUserCanBuyNft={isUserCanBuyNft}
                   isUserCanEnterInAuction={isUserCanEnterInAuction}
@@ -193,18 +146,18 @@ const NFTCard: VFC = () => {
                   isOwner={isOwner}
                   isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                   isUserCanChangePrice={isUserCanChangePrice}
-                  handleBuy={handleBuy}
-                  handleSetOnAuction={handleSetOnAuction}
-                  handleBid={handleBid}
                 />
               )}
-              <PropsAndDescr properties={nft?.properties} description={nft?.description} />
+              <PropsAndDescr
+                properties={detailedNft?.properties}
+                description={detailedNft?.description}
+              />
 
-              {nft?.creator && nft?.owners && (
+              {detailedNft?.creator && detailedNft?.owners && (
                 <OwnersAndCreators
-                  creator={nft?.creator}
-                  owners={nft?.owners}
-                  collection={nft?.collection}
+                  creator={detailedNft?.creator}
+                  owners={detailedNft?.owners}
+                  collection={detailedNft?.collection}
                 />
               )}
             </div>

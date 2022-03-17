@@ -1,32 +1,22 @@
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import nftSelector from 'store/nfts/selectors';
+
 import BigNumber from 'bignumber.js';
 import { omit } from 'lodash';
-import mock from 'mock';
 
 import { Button, Checkbox, Dropdown } from 'components';
 import { convertFilterValuesForBackend } from 'utils';
 
 import { MenuFilter, PriceFilter } from './components';
 
+import { useShallowSelector } from 'hooks';
+
 import Labels from '../Labels';
 
 import styles from './styles.module.scss';
 
-const collections: any = [
-  { id: 0, media: mock.search, value: 'Ba', label: 0 },
-  {
-    id: 0,
-    media: mock.search,
-    value:
-      'BananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananasBananas',
-    label: 0,
-  },
-  { id: 0, media: mock.search, value: 'Bali', label: 0 },
-  { id: 0, media: mock.search, value: 'Bar', label: 0 },
-  { id: 0, media: mock.search, value: 'Basketball', label: 0 },
-];
 const types = [
   { value: 'Single NFT', label: 'ERC721' },
   { value: 'Multiple NFT', label: 'ERC721' },
@@ -46,7 +36,7 @@ type Props = {
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory);
   const { t } = useTranslation('Explore');
-
+  const collections = useShallowSelector(nftSelector.getProp('collections'));
   const [checkedFilters, setCheckedFilters] = useState<any>({});
   const [orderBy, setOrderBy] = useState<any>('');
   const [appliedFilters, setAppliedFilters] = useState<any>({});
@@ -112,7 +102,11 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
         <div className={styles.filtersLeft}>
           <MenuFilter
             className={styles.dropdown}
-            options={collections}
+            options={collections.map((collection: any) => ({
+              value: collection.name,
+              media: collection.avatar,
+              label: collection.id,
+            }))}
             checkedFilters={checkedFilters}
             keyName="collection"
             onFilterClick={handleFilterClick}

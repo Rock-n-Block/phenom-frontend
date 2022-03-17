@@ -5,6 +5,7 @@ export enum Modals {
   SendPending = 'SendPending',
   SendRejected = 'SendRejected',
   SendSuccess = 'SendSuccess',
+  Transfer = 'Transfer',
   none = '',
 }
 

@@ -64,6 +64,22 @@ export type SetOnAuctionPreReq = {
   web3Provider: Web3;
 };
 
+export type SetOnSaleReq = {
+  id: number | string;
+  price: number | string;
+  currency?: string;
+  amount?: number | string;
+};
+
+export type SetOnSalePreReq = {
+  id: number | string;
+  internalId: number | string;
+  price: number | string;
+  currency?: string;
+  amount?: number | string;
+  web3Provider: Web3;
+};
+
 export type CreateNewPoolReq = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   poolData: any;
@@ -115,12 +131,22 @@ export type GetProfileInfoReq = {
 };
 
 export type SearchNftReq = {
+  type: string;
   page: number;
-  attributes?: string;
-  rarity?: string;
   on_timed_auc_sale?: boolean;
+  on_auc_sale?: boolean;
   order_by?: string;
   items_per_page?: number;
+  categories?: number;
+  tags?: number;
+  collections?: string[];
+  max_price?: string | number;
+  min_price?: string | number;
+};
+
+export type SearchCollectionsReq = {
+  type: string;
+  page: number;
 };
 
 export type SearchNftAction = {
@@ -133,6 +159,10 @@ export type CreateTokenRequest = {
   web3: Web3;
 };
 
+export type SearchCollectionAction = {
+  requestData: SearchCollectionsReq;
+  shouldConcat?: boolean;
+};
 export type RequestWithNetwork = {
   network: string;
 };

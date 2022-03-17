@@ -8,7 +8,8 @@ const initialState: NftsState = {
   collections: [],
   detailedNft: null,
   categories: null,
-  totalPages: 0,
+  totalNftsPages: 0,
+  totalCollectionsPages: 0
 };
 
 export const nftsReducer = createSlice({
@@ -27,9 +28,13 @@ export const nftsReducer = createSlice({
       ...state,
       categories: action.payload,
     }),
-    setTotalPages: (state, action: PayloadAction<number>) => ({
+    setTotalNftsPages: (state, action: PayloadAction<number>) => ({
       ...state,
-      totalPages: action.payload,
+      totalNftsPages: action.payload,
+    }),
+    setTotalCollectionsPages: (state, action: PayloadAction<number>) => ({
+      ...state,
+      totalCollectionsPages: action.payload,
     }),
     setDetailedNft: (state, action: PayloadAction<TokenFull>) => ({
       ...state,
@@ -55,7 +60,8 @@ export const {
   setCollections,
   clearCollections,
   setDetailedNft,
-  setTotalPages,
+  setTotalNftsPages,
+  setTotalCollectionsPages,
   clearDetailedNft,
   clearNfts,
   setCategories,

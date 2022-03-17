@@ -53,7 +53,7 @@ export const baseApi = {
       params,
     });
   },
-  searchNfts({ items_per_page = 6, ...params }: SearchNftReq) {
+  searchNfts({ items_per_page = 6, ...params }: SearchNftReq) {    
     return ajax({
       method: 'get',
       url: URL.searchNfts,

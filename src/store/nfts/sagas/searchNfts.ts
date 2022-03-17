@@ -1,4 +1,4 @@
-import { setCollections, setTotalCollectionsPages } from '../reducer';
+import { setNfts, setTotalNftsPages } from '../reducer';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
@@ -21,14 +21,12 @@ export function* searchCollectionsSaga({
     const { data } = yield call(baseApi.searchNfts, requestData);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const collections = yield select(nftSelector.getProp('collections'));
+    const nfts = yield select(nftSelector.getProp('nfts'));
 
     const camelizedResult = camelize(data.results) as TokenFull[];
 
-    yield put(
-      setCollections(shouldConcat ? [...collections, ...camelizedResult] : camelizedResult),
-    );
-    yield put(setTotalCollectionsPages(data.total_pages));
+    yield put(setNfts(shouldConcat ? [...nfts, ...camelizedResult] : camelizedResult));
+    yield put(setTotalNftsPages(data.total_pages));
 
     yield put(apiActions.success(type));
   } catch (err) {
@@ -38,5 +36,5 @@ export function* searchCollectionsSaga({
 }
 
 export default function* listener() {
-  yield takeLatest(actionTypes.SEARCH_COLLECTIONS, searchCollectionsSaga);
+  yield takeLatest(actionTypes.SEARCH_NFTS, searchCollectionsSaga);
 }
