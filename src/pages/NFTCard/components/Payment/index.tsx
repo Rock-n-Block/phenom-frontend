@@ -103,7 +103,7 @@ const Payment: VFC<IPayment> = ({
       );
     }
   }, [nft, dispatch, walletService]);
-  
+
   const handleEndAuction = useCallback(() => {
     if (nft) {
       dispatch(
