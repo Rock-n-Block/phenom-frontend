@@ -25,6 +25,8 @@ type Props = {
   style?: CSSProperties;
   href?: string;
   btnRef?: RefObject<HTMLButtonElement>;
+  loaderSize?: 'large' | 'medium' | 'small';
+  loaderColor?: 'white' | 'purple' | 'dark';
 };
 
 /**
@@ -71,6 +73,8 @@ const Button: FC<PropsWithChildren<Props>> = ({
   btnRef,
   onMouseLeave,
   onMouseOver = () => {},
+  loaderSize,
+  loaderColor,
 }) => {
   if (href)
     return (
@@ -154,7 +158,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
       onMouseEnter={onMouseOver}
     >
       {loading ? (
-        <Loader className={styles.loader}/>
+        <Loader className={styles.loader} size={loaderSize} backgroundColor={loaderColor} />
       ) : (
         <>
           {icon && <img src={icon} className={styles.icon} alt="" />}
