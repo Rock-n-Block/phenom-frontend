@@ -25,7 +25,7 @@ const useGetTags = (activeCategory: any, categories: TNullable<TResponseCategori
     }
 
     if (initialArray?.length) {
-      setActiveTag(initialArray[0].name || '');
+      setActiveTag(String(initialArray[0].id) || '');
     }
     return initialArray;
   }, [activeCategory, categories]);

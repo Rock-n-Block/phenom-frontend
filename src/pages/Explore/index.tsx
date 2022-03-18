@@ -4,11 +4,13 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { searchCollections } from 'store/nfts/actions';
 import { clearCollections } from 'store/nfts/reducer';
+import nftSelector from 'store/nfts/selectors';
 
 import { useLanguage } from 'context';
 
 import { Body, Title } from './components';
 
+import { useGetTags, useShallowSelector } from 'hooks';
 import { CategoryName } from 'types';
 
 import styles from './styles.module.scss';
@@ -16,7 +18,17 @@ import styles from './styles.module.scss';
 const Explore: VFC = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const activeCategory = useMemo(() => params.filterValue as CategoryName, [params.filterValue]);
+  const activeCategoryName = useMemo(
+    () => params.filterValue as CategoryName,
+    [params.filterValue],
+  );
+  const categories = useShallowSelector(nftSelector.getProp('categories'));
+  const activeCategory = useMemo(
+    () =>
+      categories?.filter((categoryOption: any) => categoryOption.name === activeCategoryName)[0],
+    [activeCategoryName, categories],
+  );
+  const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategoryName, categories);
 
   const handleSearchCollections = useCallback(() => {
     const requestData = { type: 'collections', page: 1 };
@@ -41,8 +53,13 @@ const Explore: VFC = () => {
 
   return (
     <div className={styles.explore}>
-      <Title activeCategory={activeCategory} />
-      <Body activeCategory={activeCategory} />
+      <Title activeCategory={activeCategory?.name || CategoryName.allCategories} />
+      <Body
+        activeCategory={activeCategory}
+        tags={tags}
+        activeTag={activeTag}
+        handleSetActiveTag={handleSetActiveTag}
+      />
     </div>
   );
 };

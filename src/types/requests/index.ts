@@ -137,7 +137,7 @@ export type SearchNftReq = {
   on_auc_sale?: boolean;
   order_by?: string;
   items_per_page?: number;
-  categories?: number;
+  categories?: number | string;
   tags?: number;
   collections?: string[];
   max_price?: string | number;
