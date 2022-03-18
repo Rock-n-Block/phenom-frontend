@@ -73,7 +73,13 @@ const NFTCard: VFC = () => {
                       <Text color="white">Auction</Text>
                     </div>
                   )}
-                  <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
+                  {detailedNft?.media ? (
+                    <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
+                  ) : (
+                    <div className={styles.noImage}>
+                      <Loader backgroundColor="purple" />
+                    </div>
+                  )}
                 </div>
                 <PropsAndDescr
                   properties={detailedNft?.properties}
