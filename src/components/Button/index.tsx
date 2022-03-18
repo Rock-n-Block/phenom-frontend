@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
 
+import { Loader } from 'components';
+
 // import { IconNames } from 'typings';
 import styles from './styles.module.scss';
 
@@ -119,7 +121,7 @@ const Button: FC<PropsWithChildren<Props>> = ({
         styles.button,
         styles[size],
         styles[color],
-        
+
         styles[
           `${
             padding.includes('small') ||
@@ -151,12 +153,14 @@ const Button: FC<PropsWithChildren<Props>> = ({
       onMouseLeave={onMouseLeave}
       onMouseEnter={onMouseOver}
     >
-      {icon && <img src={icon} className={styles.icon} alt="" />}
-      {children}
       {loading ? (
-        <></>
+        <Loader className={styles.loader}/>
       ) : (
-        suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />
+        <>
+          {icon && <img src={icon} className={styles.icon} alt="" />}
+          {children}
+          {suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />}
+        </>
       )}
     </button>
   );

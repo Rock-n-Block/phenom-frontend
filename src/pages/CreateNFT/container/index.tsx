@@ -5,10 +5,11 @@ import { createToken, getCategories } from 'store/nfts/actions';
 import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 
+import { useWalletConnectContext } from 'context';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { createValidator, getFileGroup, TAvailableExtensions } from 'appConstants';
+import { createValidator, getExtension, getFileGroup, TAvailableExtensions } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { Category, Collection, Tag } from 'types';
 
@@ -46,6 +47,8 @@ export interface IMainForm extends ICreateForm {
 const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
+
+  const { walletService } = useWalletConnectContext();
 
   const onReloadClick = useCallback(() => {
     dispatch(getSelfCollections({ network: chain }));
@@ -108,23 +111,19 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       if (values.collections.length !== 0) {
         newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
       }
-      newTokenForm.append(
-        'details',
-        JSON.stringify(
-          Object.fromEntries(
-            values.properties.map((prop) =>
-              Object.entries(prop)
-                .slice(1)
-                .map((e) => e[1]),
-            ),
+      if (values.properties.length !== 0) {
+        newTokenForm.append(
+          'details',
+          JSON.stringify(
+            values.properties.filter((p) => p.name && p.type).map((p) => ({ [p.name]: p.type })),
           ),
-        ),
-      );
+        );
+      }
       if (values.media && values.media[0]) {
         newTokenForm.append('media', values.media[0]);
         newTokenForm.append(
           'format',
-          getFileGroup(values.media[0].name as TAvailableExtensions) || 'image',
+          getFileGroup(getExtension(values.media[0].name) as TAvailableExtensions) || 'image',
         );
       }
       if (values.preview && values.preview[0]) {
@@ -138,9 +137,9 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
       }
       if (values.subcategory) {
-        newTokenForm.append('tags', values.subcategory.name);
+        newTokenForm.append('tags', JSON.stringify(values.subcategory.id));
       }
-      dispatch(createToken(newTokenForm as any));
+      dispatch(createToken({ token: newTokenForm as any, web3: walletService.Web3() }));
     },
     displayName: 'create-nft',
   })(MainForm);

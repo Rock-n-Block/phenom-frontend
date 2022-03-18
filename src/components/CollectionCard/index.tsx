@@ -39,7 +39,6 @@ const CollectionCard: VFC<ICollectionCard> = ({
     },
     [collection, setIsSelected],
   );
-
   return (
     <div
       className={cn(styles['collection-card__wrapper'], { [styles['selected-card']]: isSelected })}
@@ -78,7 +77,8 @@ const CollectionCard: VFC<ICollectionCard> = ({
           color="middleGray"
           className={styles['collection-card__wrapper__info-subtitle']}
         >
-          Floor price: <span className={styles['marked-text']}>{collection.floorPrice || 0} PHETA</span>
+          Floor price:{' '}
+          <span className={styles['marked-text']}>{collection.floorPrice || 0} PHETA</span>
         </Text>
       </div>
     </div>

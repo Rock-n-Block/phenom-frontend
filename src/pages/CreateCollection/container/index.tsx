@@ -48,7 +48,10 @@ const CreateFormContainer: VFC = () => {
         .min(createValidator.name.min, 'Too short!')
         .max(createValidator.name.max, 'Too long!')
         .required(),
-      symbol: Yup.string().min(2, 'Too Short!').max(6, 'Too Long!').required(),
+      symbol: Yup.string()
+        .min(createValidator.symbol.min, 'Too Short!')
+        .max(createValidator.symbol.max, 'Too Long!')
+        .required(),
     }),
     handleSubmit: (values) => {
       const newCollectionForm = new FormData();

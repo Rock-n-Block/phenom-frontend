@@ -1,5 +1,9 @@
-import { useCallback, VFC } from 'react';
+/* eslint-disable import/no-named-as-default-member */
+import { useCallback, useEffect, VFC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import apiActions from 'store/api/actions';
 import createActionTypes from 'store/nfts/actionTypes';
 import nftSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
@@ -12,7 +16,7 @@ import { Button, DefaultInput, Dropdown, TextArea } from 'components';
 
 import { Collections, Properties, Stock, UploadFiles } from '../components';
 
-import { createValidator, getFileGroup, getStandard } from 'appConstants';
+import { createValidator, getFileGroup, getStandard, routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { Collection, RequestStatus, TSingleProp } from 'types';
 
@@ -33,6 +37,9 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
 }) => {
   const categories = useShallowSelector(nftSelector.getProp('categories'));
   const collections = useShallowSelector(userSelector.getProp('collections'));
+  const id = useShallowSelector(userSelector.getProp('id'));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     [actionTypes.GET_SELF_COLLECTION]: gettingCollectionsRequest,
     [createActionTypes.CREATE_TOKEN]: creatingToken,
@@ -46,10 +53,11 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   );
 
   const onCancelClick = useCallback(() => {
+    navigate(routes.create.root);
     if (!Object.keys(touched)) {
       handleReset();
     }
-  }, [handleReset, touched]);
+  }, [handleReset, navigate, touched]);
 
   const handleSetFieldValue = useCallback(
     (fieldName: string) => (value: any) => {
@@ -57,6 +65,14 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     },
     [setFieldValue],
   );
+
+  useEffect(() => {
+    if (creatingToken === RequestStatus.SUCCESS) {
+      navigate(routes.profile.link(String(id), 'owned'));
+      dispatch(apiActions.reset(createActionTypes.CREATE_TOKEN));
+    }
+  }, [creatingToken, dispatch, id, navigate]);
+
   return (
     <Form className={styles['create-nft-form___wrapper']}>
       <Field

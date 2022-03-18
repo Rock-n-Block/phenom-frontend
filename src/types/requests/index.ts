@@ -1,5 +1,7 @@
 import Web3 from 'web3';
 
+import { Token } from 'types';
+
 export type BodyWithToken<T = never> = {
   token?: string;
 } & T;
@@ -150,6 +152,11 @@ export type SearchCollectionsReq = {
 export type SearchNftAction = {
   requestData: SearchNftReq;
   shouldConcat?: boolean;
+};
+
+export type CreateTokenRequest = {
+  token: Token;
+  web3: Web3;
 };
 
 export type SearchCollectionAction = {
