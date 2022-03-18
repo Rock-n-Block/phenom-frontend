@@ -17,21 +17,22 @@ import { ITab } from 'components/TabLookingComponent';
 import { Filters } from './components';
 
 import { DEBOUNCE_DELAY_100, DEFAULT_CURRENCY } from 'appConstants';
-import { useGetTags, useShallowSelector } from 'hooks';
-import { CategoryName, RequestStatus, TNullable } from 'types';
+import { useShallowSelector } from 'hooks';
+import { RequestStatus, Tag, TNullable } from 'types';
 
 import styles from './styles.module.scss';
 
 interface IBody {
-  activeCategory: CategoryName;
+  activeCategory: any;
+  tags: Tag[];
+  activeTag: string;
+  handleSetActiveTag: any;
 }
 
-const Body: VFC<IBody> = ({ activeCategory }) => {
+const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag }) => {
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
-  const categories = useShallowSelector(nftSelector.getProp('categories'));
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalNftsPages'));
-  const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategory, categories);
   const { [actionTypes.SEARCH_NFTS]: nftsRequestStatus } = useShallowSelector(uiSelector.getUI);
   const { t } = useLanguage();
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +49,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
 
   const handleSearchNfts = useCallback(
     (
-      category: string,
+      category: any,
       activetags: string,
       // TODO: types filters
       filtersData: any,
@@ -57,8 +58,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
     ) => {
       const requestData = {
         type: 'items',
-        categories: categories?.filter((categoryOption: any) => categoryOption.name === category)[0]
-          ?.id,
+        categories: category?.id,
         tags: activetags ? +activetags : undefined,
         page,
         collections: filtersData?.collections?.join(','),
@@ -69,7 +69,7 @@ const Body: VFC<IBody> = ({ activeCategory }) => {
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
-    [categories, dispatch],
+    [dispatch],
   );
 
   const debouncedHandleSearchNfts = useRef(debounce(handleSearchNfts, DEBOUNCE_DELAY_100)).current;
