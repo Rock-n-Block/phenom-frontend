@@ -7,6 +7,7 @@ import actionTypes from 'store/nfts/actionTypes';
 import { clearDetailedNft } from 'store/nfts/reducer';
 import nftsSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
+import userSelector from 'store/user/selectors';
 
 import { Loader, Text } from 'components';
 
@@ -22,6 +23,7 @@ const NFTCard: VFC = () => {
   const { width } = useWindowSize();
   const dispatch = useDispatch();
   const detailedNft = useShallowSelector(nftsSelector.getProp('detailedNft'));
+  const userId = useShallowSelector(userSelector.getProp('id'));
 
   const { [actionTypes.GET_DETAILED_NFT]: getDetailedNftRequestStatus } = useShallowSelector(
     uiSelector.getUI,
@@ -42,7 +44,7 @@ const NFTCard: VFC = () => {
     isOwner,
     isUserCanRemoveFromSale,
     isUserCanChangePrice,
-  } = useGetUserAccessForNft(detailedNft, 1);
+  } = useGetUserAccessForNft(detailedNft, String(userId));
 
   useEffect(() => {
     if (id) {
