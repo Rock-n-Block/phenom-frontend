@@ -1,5 +1,5 @@
 import { DEFAULT_CURRENCY, URL } from 'appConstants';
-import { BidReq, SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
+import { SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -17,10 +17,17 @@ export default {
       data,
     });
   },
-  buy(data: { id: string | number }) {
+  buy(data: { id: string | number; amount: string | number; sellerId: string | number }) {
     return ajax({
       method: 'post',
       url: URL.buy,
+      data,
+    });
+  },
+  bid(data: { token_id: number | string; amount: number | string; currency: string }) {
+    return ajax({
+      method: 'post',
+      url: URL.bid,
       data,
     });
   },
@@ -37,7 +44,7 @@ export default {
   removeFromSale(data: { id: string | number }) {
     return ajax({
       method: 'post',
-      url: URL.set_on_auction(data.id),
+      url: URL.setOnAuction(data.id),
       data: {
         selling: false,
         ...data,
@@ -47,7 +54,7 @@ export default {
   setOnAuction(data: SetOnAuctionReq) {
     return ajax({
       method: 'post',
-      url: URL.set_on_auction(data.id),
+      url: URL.setOnAuction(data.id),
       data: {
         selling: true,
         ...data,
@@ -57,22 +64,23 @@ export default {
   setOnSale(data: SetOnSaleReq) {
     return ajax({
       method: 'post',
-      url: URL.set_on_sale(data.id),
+      url: URL.setOnSale(data.id),
       data: {
         selling: true,
         ...data,
       },
     });
   },
-  bid({ amount, id, currency }: BidReq) {
+  verificateBet(data: { id: number | string }) {
+    return ajax({
+      method: 'get',
+      url: URL.verificateBet(data.id),
+    });
+  },
+  endAuction(data: { id: number | string }) {
     return ajax({
       method: 'post',
-      url: URL.bid,
-      data: {
-        amount,
-        currency,
-        token_id: id,
-      },
+      url: URL.endAuction(data.id),
     });
   },
 };

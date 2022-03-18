@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
+import { bid, buy, endAuction, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
 
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
@@ -96,7 +96,19 @@ const Payment: VFC<IPayment> = ({
         buy({
           id: nft?.id || 0,
           amount: nft?.price || 0,
+          // TODO: sellers modal
           sellerId: 0,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    }
+  }, [nft, dispatch, walletService]);
+  
+  const handleEndAuction = useCallback(() => {
+    if (nft) {
+      dispatch(
+        endAuction({
+          id: nft?.id || 0,
           web3Provider: walletService.Web3(),
         }),
       );
@@ -310,7 +322,7 @@ const Payment: VFC<IPayment> = ({
                   <Button
                     color="dark"
                     className={cx(styles.button, styles.remove)}
-                    onClick={() => handleSetModalType(Modals.ApprovePending)}
+                    onClick={() => handleEndAuction()}
                   >
                     Accept bid
                   </Button>

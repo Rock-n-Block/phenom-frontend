@@ -61,13 +61,18 @@ export function* buySaga({
       }),
     );
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const { data } = yield call(baseApi.buy, { id, amount, sellerId });
 
     const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
       ...data.initial_tx,
       from: address,
+    });
+
+    yield call(baseApi.trackTransaction, {
+      tx_hash: String(transactionHash),
+      token: id,
+      ownership: sellerId,
+      amount,
     });
 
     yield call(getDetailedNftSaga, {
