@@ -13,6 +13,7 @@
 }
 
 .loader {
+  @include transition;
   animation: spin 1.5s infinite linear;
 }
 

@@ -23,6 +23,7 @@ import {
 } from 'appConstants';
 
 import styles from './styles.module.scss';
+import { toast } from 'react-toastify';
 
 interface ICreateNFT {
   type: TCreateNFT;
@@ -61,7 +62,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
   const [filesURLs, setFilesURLs] = useState<string[]>([]);
   const [isPreview, setIsPreview] = useState<boolean>(false);
   const onError = useCallback((error: TLoadError) => {
-    console.log(error.msg);
+    toast.error(error.msg);
   }, []);
   const onLoad = useCallback(
     (fURLs: string[], fList: File[]) => {

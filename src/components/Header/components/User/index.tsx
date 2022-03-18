@@ -13,7 +13,7 @@ import { Avatar, Button, Clipboard, H4, Text } from 'components';
 
 import { routes } from 'appConstants';
 import { useClickOutside, usePopover, useShallowSelector } from 'hooks';
-import { CategoryName, Chains, State, UserState, WalletProviders } from 'types';
+import { CategoryName, Chains, State, User, UserState, WalletProviders } from 'types';
 
 import {
   ArrowConnectSVG,
@@ -31,32 +31,36 @@ interface IUserProps {
   isDesktop: boolean;
 }
 
-const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect }) => {
+type IUserBody = Required<Pick<User, 'id' | 'address'>> & {
+  disconnect: () => void;
+};
+
+const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
   const dropdownOptions = useMemo(
     () => [
       {
         title: 'Owned',
-        url: '/',
+        url: routes.profile.link(String(id), 'owned'),
       },
       {
         title: 'For sale',
-        url: '/',
+        url: routes.profile.link(String(id), 'for-sale'),
       },
       {
-        title: 'Sale',
-        url: '/',
+        title: 'Sold',
+        url: routes.profile.link(String(id), 'sold'),
       },
       {
         title: ' Favorites',
-        url: '/',
+        url: routes.profile.link(String(id), 'favorites'),
       },
       {
         title: 'Bided',
-        url: '/',
+        url: routes.profile.link(String(id), 'bided'),
       },
       {
         title: 'Collections',
-        url: '/',
+        url: routes.profile.link(String(id), 'collections'),
       },
       {
         title: 'Exit',
@@ -65,7 +69,7 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
         onClick: disconnect,
       },
     ],
-    [disconnect],
+    [disconnect, id],
   );
 
   const { closePopover } = usePopover();
@@ -91,7 +95,7 @@ const UserBody: FC<{ user: any; disconnect: () => void }> = ({ user, disconnect 
           <Text color="blue">0.00 PHETA</Text>
         </div>
         <div className={styles.address}>
-          <Clipboard value={user.address} />
+          <Clipboard value={address} />
         </div>
       </div>
       <ul className={styles.menu}>
@@ -136,11 +140,10 @@ interface IUserMobile {
   close: any;
   disconnect: () => void;
   bodyRef?: RefObject<HTMLDivElement>;
-  isOpen: boolean 
+  isOpen: boolean;
 }
 
 const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen }) => {
-
   const location = useLocation();
 
   const dropdownOptions = useMemo(
@@ -228,10 +231,10 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
       </div>
       <div className={styles.userButtons}>
         <div className={styles.userItem}>
-          <div className={styles.avatar}>
-            <Avatar id={mock.id} avatar={mock.user} />
+          <Link to={routes.profile.link(mock.id, 'about-me')} className={styles.avatar}>
+            <Avatar size={30} withShadow={false} id={mock.id} avatar={mock.user} />
             <Text>username</Text>
-          </div>
+          </Link>
           <div className={styles.balance}>
             <Text color="blue">0.00 PHETA</Text>
           </div>
@@ -315,7 +318,7 @@ const ConnectSection: VFC<IConnectSection> = ({ connect }) => {
   );
 };
 
-const User: FC<IUserProps> = ({ className, isDesktop }) => {
+const UserBtn: FC<IUserProps> = ({ className, isDesktop }) => {
   const [isBodyOpen, setIsBodyOpen] = useState(false);
   const { address, id } = useShallowSelector<State, UserState>(userSelector.getUser);
   const { connect, disconnect } = useWalletConnectContext();
@@ -342,7 +345,7 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
         <img src={mock.user} alt="Avatar" />
       </Popover.Button>
       <Popover.Body className={styles.popoverBody}>
-        <UserBody user={{ id, address }} disconnect={disconnect} />
+        <UserBody id={id || 0} address={address} disconnect={disconnect} />
       </Popover.Body>
     </Popover>
   ) : (
@@ -363,11 +366,9 @@ const User: FC<IUserProps> = ({ className, isDesktop }) => {
           bodyRef={bodyRef}
           isOpen={isBodyOpen}
         />
-      ) : (
-        <></>
-      )}
+      ) : null}
     </div>
   );
 };
 
-export default User;
+export default UserBtn;

@@ -17,6 +17,7 @@ interface IProps {
   size?: number | string;
   className?: string;
   withAnim?: boolean;
+  withShadow?: boolean;
 }
 
 const Avatar: FC<IProps> = ({
@@ -25,6 +26,7 @@ const Avatar: FC<IProps> = ({
   isCollection = false,
   size = 24,
   withAnim = true,
+  withShadow = true,
   className,
 }) => {
   return (
@@ -32,7 +34,10 @@ const Avatar: FC<IProps> = ({
       to={
         isCollection ? routes.collection.link(id || '') : routes.profile.link(id || '', 'about-me')
       }
-      className={cn(styles.avatar, className, { [styles.withAnim]: withAnim })}
+      className={cn(styles.avatar, className, {
+        [styles.withAnim]: withAnim,
+        [styles.withShadow]: withShadow,
+      })}
     >
       <FallbackImage
         src={avatar}

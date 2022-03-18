@@ -48,7 +48,7 @@ export class WalletService {
     return this.connectWallet.getAccounts();
   }
 
-  sendTransaction(transactionConfig: any, walletAddress: string) {
+  public sendTransaction(transactionConfig: any, walletAddress: string) {
     return this.Web3().eth.sendTransaction({
       ...transactionConfig,
       from: walletAddress,

@@ -12,6 +12,7 @@
             margin-bottom: 10px;
         }
         &-preview{
+            width: 100%;
             &__delete{
                 margin-top: 25px;
                 @include flexbox(center, center)
