@@ -18,6 +18,10 @@
     .submit-btn {
       margin-right: 15px;
     }
+    .loading{
+      height: 51px;
+      width: 181px;
+    }
     button {
       text-transform: uppercase;
     }
@@ -33,6 +37,9 @@
       .submit-btn {
         margin-right: 0;
         margin-bottom: 14px;
+      }
+      .loading{
+        width: 100%;
       }
       button {
         width: 100%;

@@ -23,6 +23,7 @@ import { Collection, RequestStatus, TSingleProp } from 'types';
 import { IMainForm } from '.';
 
 import styles from './styles.module.scss';
+import cx from 'classnames';
 
 const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   setFieldValue,
@@ -205,9 +206,13 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
             values.media === null ||
             (getFileGroup(values.media[0].name as any) !== 'image' && values.preview === null)
           }
-          className={styles['submit-btn']}
+          className={cx(styles['submit-btn'], {
+            [styles.loading]: creatingToken === RequestStatus.REQUEST,
+          })}
           onClick={() => onSubmitClick(values)}
           loading={creatingToken === RequestStatus.REQUEST}
+          loaderColor="dark"
+          loaderSize="small"
         >
           Create Item
         </Button>
