@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 
 import { Token } from 'types';
+import { User } from 'types/api';
 
 export type BodyWithToken<T = never> = {
   token?: string;
@@ -11,6 +12,13 @@ export type ApiResponse<T = never> = {
   statusCode?: number;
   error?: string;
   message?: string | string[];
+};
+
+export type TrackTransactionReq = {
+  tx_hash: string;
+  token: number | string;
+  ownership: string | number;
+  amount: number | string;
 };
 
 // STAKE REQUESTS
@@ -88,6 +96,7 @@ export type CreateNewPoolReq = {
 
 export type GetTokenBalanceReq = {
   web3Provider: Web3;
+  address: string;
 };
 
 export type LoginReq = {
@@ -116,6 +125,11 @@ export type BuyReq = {
 
 export type LikeReq = {
   id: number | string;
+};
+
+export type EndAucReq = {
+  id: number | string;
+  web3Provider: Web3;
 };
 
 export type BidReq = {
@@ -168,6 +182,16 @@ export type RemoveRejectAction = {
   id: number;
   owner: number;
 };
+
+export type getProfileByIdRequest = {
+  id: number | string;
+  web3Provider: Web3;
+};
+
+export type EditProfile = Pick<
+  User,
+  'avatar' | 'bio' | 'displayName' | 'twitter' | 'facebook' | 'instagram' | 'site'
+>;
 
 export type RequestWithNetwork = {
   network: string;

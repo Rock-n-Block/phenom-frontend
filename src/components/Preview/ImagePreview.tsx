@@ -16,7 +16,7 @@ export interface IImagePreview {
 
 const ImagePreview: VFC<IImagePreview> = ({ src, alt, className, fit = 'contain' }) => {
   const { t } = useLanguage();
-  if (imagesFormats.some((f) => src.includes(f)))
+  if (imagesFormats.some((f) => src.includes(f)) || src.includes('ipfs'))
     return (
       <div className={cn(styles['image-preview__wrapper'], className)}>
         <img

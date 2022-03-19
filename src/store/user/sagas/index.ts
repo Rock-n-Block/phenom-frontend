@@ -1,5 +1,6 @@
 import { fork } from 'redux-saga/effects';
 
+import editProfile from './editProfileInfo';
 import getCollections from './getSelfCollection';
 import getTokenBalance from './getTokenBalance';
 import login from './login';
@@ -10,4 +11,5 @@ export default function* userSagas() {
   yield fork(login);
   yield fork(updateUserInfo);
   yield fork(getCollections);
+  yield fork(editProfile);
 }

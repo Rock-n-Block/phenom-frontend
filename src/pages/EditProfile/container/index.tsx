@@ -1,13 +1,24 @@
 /* eslint-disable no-confusing-arrow */
-import { useMemo, VFC } from 'react';
+import { useEffect, useMemo, VFC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import apiActions from 'store/api/actions';
+import { getProfileById } from 'store/profile/actions';
+import profileSelector from 'store/profile/selectors';
+import uiSelector from 'store/ui/selectors';
+import { editProfileInfo } from 'store/user/actions';
+import actionTypes from 'store/user/actionTypes';
+import userSelector from 'store/user/selectors';
+
+import { useWalletConnectContext } from 'context';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { profile } from 'pages/Profile/mock';
-
-import { editProfileValidator } from 'appConstants';
-import { IProfile } from 'types';
+import { editProfileValidator, routes } from 'appConstants';
+import { useShallowSelector } from 'hooks';
+import { IProfile, RequestStatus } from 'types';
+import { EditProfile } from 'types/requests';
 
 import MainForm from './mainForm';
 
@@ -18,17 +29,51 @@ export interface IEditProfile extends Omit<IProfile, 'id' | 'balance' | 'currenc
 export type EditProfileFields = keyof IEditProfile;
 
 const CreateFormContainer: VFC = () => {
+  const id = useShallowSelector(userSelector.getProp('id'));
+  const avatar = useShallowSelector(userSelector.getProp('avatar'));
+  const profile = useShallowSelector(profileSelector.getProfile);
+  const { [actionTypes.EDIT_PROFILE_INFO]: editingProfile } = useShallowSelector(uiSelector.getUI);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { walletService } = useWalletConnectContext();
   const properties = useMemo<IEditProfile>(
     () => ({
       avatarFile: null,
-      avatarURL: profile.avatarURL,
-      name: profile.name,
-      address: profile.address,
-      socials: profile.socials,
-      description: profile.description,
+      avatarURL: avatar,
+      name: profile.displayName || '',
+      address: profile.address || '',
+      socials: {
+        instagram: profile.instagram || '',
+        twitter: profile.twitter || '',
+        site: profile.site || '',
+        email: '',
+      },
+      description: profile.bio || '',
     }),
-    [],
+    [
+      avatar,
+      profile.address,
+      profile.bio,
+      profile.displayName,
+      profile.instagram,
+      profile.site,
+      profile.twitter,
+    ],
   );
+  useEffect(() => {
+    if (!profile.id && id) {
+      dispatch(getProfileById({ id, web3Provider: walletService.Web3() }));
+    }
+  }, [dispatch, id, profile.id, walletService]);
+
+  useEffect(() => {
+    if (editingProfile === RequestStatus.SUCCESS) {
+      navigate(routes.profile.link(id || 0, 'about-me'));
+      // eslint-disable-next-line import/no-named-as-default-member
+      dispatch(apiActions.reset(actionTypes.EDIT_PROFILE_INFO));
+    }
+  }, [dispatch, editingProfile, id, navigate]);
+
   const FormWithFormik = withFormik<any, IEditProfile>({
     enableReinitialize: true,
     mapPropsToValues: () => properties,
@@ -64,7 +109,16 @@ const CreateFormContainer: VFC = () => {
       }),
     }),
     handleSubmit: (values) => {
-      console.log(values);
+      const newProfileForm = new FormData();
+      if (values.avatarFile) {
+        newProfileForm.append('avatar', values.avatarFile);
+      }
+      newProfileForm.append('bio', values.description);
+      newProfileForm.append('display_name', values.name);
+      newProfileForm.append('site', values.socials.site);
+      newProfileForm.append('twitter', values.socials.twitter);
+      newProfileForm.append('instagram', values.socials.instagram);
+      dispatch(editProfileInfo(newProfileForm as EditProfile));
     },
     validateOnChange: true,
     displayName: 'edit-profile',

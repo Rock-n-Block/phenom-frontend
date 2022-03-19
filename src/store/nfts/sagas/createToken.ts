@@ -57,11 +57,13 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
         yield put(apiActions.error(type, e));
       }
     } else {
-      Object.values(data).forEach((err) => {
-        toast.error(err as any);
-      });
+      toast.error('Something went wrong');
+      // Object.values(data).forEach((err) => {
+      //   toast.error(err as any);
+      // });
     }
   } catch (err) {
+    toast.error('Something went wrong');
     console.log(err);
   }
 }

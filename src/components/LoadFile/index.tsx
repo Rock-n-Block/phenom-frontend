@@ -37,6 +37,7 @@ interface ILoadFile {
   extensions?: TAvailableExtensions[];
   reqMaxSize?: TMaxSize;
   multiple?: boolean;
+  onBlur?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 const LoadFile: VFC<ILoadFile> = ({
@@ -47,6 +48,7 @@ const LoadFile: VFC<ILoadFile> = ({
   extensions = availableExtensions,
   reqMaxSize = maxSize,
   multiple = false,
+  onBlur,
 }) => {
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
@@ -199,6 +201,7 @@ const LoadFile: VFC<ILoadFile> = ({
           accept={extensions.map((e) => `.${e}`).join(',')}
           onChange={onDragOrSelect}
           id={idx}
+          onBlur={onBlur}
           multiple={multiple}
           className={styles['load-file__wrapper__body__hidden-input']}
           ref={inputRef}

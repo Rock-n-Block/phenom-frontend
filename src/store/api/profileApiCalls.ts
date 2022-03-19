@@ -1,6 +1,6 @@
 import { URL } from 'appConstants';
 import { LoginReq } from 'types';
-import { RequestWithNetwork } from 'types/requests';
+import { EditProfile, RequestWithNetwork } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -35,6 +35,13 @@ export default {
       method: 'get',
       url: URL.getSelfCollection,
       params: { network },
+    });
+  },
+  editProfile(newParams: EditProfile) {
+    return ajax({
+      method: 'patch',
+      url: URL.editProfile,
+      data: newParams,
     });
   },
 };

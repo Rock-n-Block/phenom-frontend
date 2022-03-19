@@ -6,7 +6,7 @@ type TSocial = {
 
 export interface IProfile {
   id: number;
-  avatarURL: string;
+  avatarURL: string | null;
   name: string;
   balance: string;
   currency: string;

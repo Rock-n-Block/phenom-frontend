@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useState, VFC } from 'react';
 import { toast } from 'react-toastify';
 
 import cn from 'classnames';
@@ -29,6 +29,8 @@ interface ICreateNFT {
   type: TCreateNFT;
   setPreviewFile: (preview: File) => void;
   setMediaFile: (media: File) => void;
+  onBlur: (e: FormEvent<HTMLInputElement>) => void;
+  isClearing?: boolean;
 }
 
 const getAvailableExtensions = (
@@ -57,7 +59,7 @@ const isSwitchActive = (type: TFilesGroup | null, filesCount: number) => {
   return false;
 };
 
-const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
+const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile, onBlur, isClearing }) => {
   const [fileList, setFileList] = useState<File[]>([]);
   const [filesURLs, setFilesURLs] = useState<string[]>([]);
   const [isPreview, setIsPreview] = useState<boolean>(false);
@@ -166,6 +168,13 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
     setFilesURLs([]);
   }, []);
 
+  useEffect(() => {
+    if (isClearing) {
+      setFileList([]);
+      setFilesURLs([]);
+    }
+  }, [isClearing]);
+
   return (
     <section className={styles['upload-nft__wrapper']}>
       <div className={styles['upload-nft__wrapper__body']}>
@@ -186,6 +195,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
               fileList={fileList}
               filesURLs={filesURLs}
               extensions={currentExtension}
+              onBlur={onBlur}
             />
           </div>
         )}

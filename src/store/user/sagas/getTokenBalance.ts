@@ -1,28 +1,41 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable max-len */
-import { put, takeLatest } from 'redux-saga/effects';
+import { updateWallet } from '../reducer';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { error, request, success } from 'store/api/actions';
+import { updateProfile } from 'store/profile/reducer';
+import userSelector from 'store/user/selectors';
+
+import { contractsConfig, ContractsNames } from 'config';
+import { isMainnet } from 'config/constants';
+
+import { Chains } from 'types';
 
 import { getTokenBalance } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* getTokenBalanceSaga({
   type,
-  payload: { web3Provider },
+  payload: { web3Provider, address },
 }: ReturnType<typeof getTokenBalance>) {
   yield put(request(type));
-  // const {
-  //   abi: tokenAbi,
-  //   address: tokenAddress,
-  // } = contractsConfig.contracts[ContractsNames.token][isMainnet ? 'mainnet' : 'testnet'];
-
-  // const myAddress = yield select(userSelector.getProp('address'));
+  const { abi: tokenAbi, address: tokenAddress } =
+    contractsConfig.contracts[ContractsNames.token][isMainnet ? 'mainnet' : 'testnet'];
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const myAddress = yield select(userSelector.getProp('address'));
   try {
-    // const tokenContract = yield (new web3Provider.eth.Contract(tokenAbi, tokenAddress[chain]));
-
-    // const balance = yield call(tokenContract.methods.balanceOf(myAddress).call);
-
-    // yield put(updateBalance(balance));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const tokenContract = yield new web3Provider.eth.Contract(tokenAbi, tokenAddress[Chains.bsc]);
+    if (address) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const balance = yield call(tokenContract.methods.balanceOf(address).call);
+      if (myAddress === address) {
+        yield put(updateWallet({ balance }));
+      } else {
+        yield put(updateProfile({ balance }));
+      }
+    }
 
     yield put(success(type));
   } catch (err) {

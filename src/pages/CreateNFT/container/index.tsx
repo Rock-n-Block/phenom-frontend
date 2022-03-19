@@ -33,7 +33,7 @@ export interface ICreateForm {
   collections: Collection[];
   media: File[] | null;
   preview: File[] | null;
-  quantity?: string;
+  quantity: string;
 }
 
 interface ICreateFormContainer {
@@ -54,7 +54,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     dispatch(getSelfCollections({ network: chain }));
   }, [chain, dispatch]);
 
-  const properties = useMemo<IMainForm>(
+  const clearForm = useMemo<ICreateForm>(
     () => ({
       type,
       name: '',
@@ -66,9 +66,16 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       media: null,
       preview: null,
       quantity: '1',
+    }),
+    [type],
+  );
+
+  const properties = useMemo<IMainForm>(
+    () => ({
+      ...clearForm,
       onReload: onReloadClick,
     }),
-    [onReloadClick, type],
+    [clearForm, onReloadClick],
   );
 
   useEffect(() => {
@@ -129,10 +136,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       if (values.preview && values.preview[0]) {
         newTokenForm.append('cover', values.preview[0]);
       }
-      newTokenForm.append(
-        'selling_quantity',
-        JSON.stringify(values.type === 'Multiple' ? values.quantity : 1),
-      );
+      newTokenForm.append('total_supply', values.type === 'Multiple' ? values.quantity : '1');
       if (values.collections && values.collections[0]) {
         newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
       }

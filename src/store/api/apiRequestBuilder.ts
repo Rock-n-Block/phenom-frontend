@@ -1,5 +1,5 @@
 import { URL } from 'appConstants';
-import { SearchNftReq } from 'types/requests';
+import { SearchNftReq, TrackTransactionReq } from 'types/requests';
 
 import ajax from './ajax';
 import createApiCalls from './createApiCalls';
@@ -34,6 +34,13 @@ export const baseApi = {
       method: 'get',
       url: URL.getCategories,
     });
+  },
+  trackTransaction(data: TrackTransactionReq){
+    return ajax ({
+      method: 'post',
+      url: URL.trackTransaction,
+      data
+    })
   },
   ...createApiCalls,
   ...profileApiCalls,

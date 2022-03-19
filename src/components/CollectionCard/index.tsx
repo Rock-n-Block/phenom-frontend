@@ -13,6 +13,7 @@ interface ICollectionCard {
   selectable?: boolean;
   setIsSelected?: (collection: Collection) => void;
   isSelected?: boolean;
+  onBlur?: (e: FormEvent<HTMLDivElement>) => void;
 }
 
 /**
@@ -30,11 +31,11 @@ const CollectionCard: VFC<ICollectionCard> = ({
   selectable = false,
   setIsSelected,
   isSelected = false,
+  onBlur,
 }) => {
   const onBlockClick = useCallback(
     (e: FormEvent<HTMLDivElement | HTMLInputElement>) => {
       e.preventDefault();
-      e.stopPropagation();
       setIsSelected?.(collection);
     },
     [collection, setIsSelected],
@@ -46,6 +47,7 @@ const CollectionCard: VFC<ICollectionCard> = ({
       onKeyDown={() => {}}
       tabIndex={0}
       onClick={onBlockClick}
+      onBlur={onBlur}
     >
       {selectable && (
         <Checkbox

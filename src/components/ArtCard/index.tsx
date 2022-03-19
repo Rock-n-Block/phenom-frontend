@@ -15,6 +15,7 @@ import { routes } from 'appConstants';
 import { iconHeart } from 'assets/img';
 
 import styles from './styles.module.scss';
+import Loader from 'components/Loader';
 
 type Props = {
   type?: 'Padded' | 'Contained' | 'Covered';
@@ -135,7 +136,11 @@ const ArtCard: FC<Props> = ({
         onFocus={() => {}}
         ref={wrapRef}
       >
-        <img ref={imgRef} className={cx(styles.mainImage, styles[type])} src={imageMain} alt="" />
+        {imageMain ? (
+          <img ref={imgRef} className={cx(styles.mainImage, styles[type])} src={imageMain} alt="" />
+        ) : (
+          <Loader className={styles.loader} />
+        )}
       </Link>
       <div className={styles.artCardInfo}>
         <H4>{sliceString(name, 20, 0)}</H4>

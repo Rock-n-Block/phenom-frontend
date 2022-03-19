@@ -21,6 +21,7 @@ interface IUploadAvatar {
   extensions?: TImagesFormats[];
   reqMaxSize?: TMaxSize;
   className?: string;
+  onBlur?: (e: FormEvent) => void;
 }
 
 const UploadAvatar: VFC<IUploadAvatar> = ({
@@ -31,6 +32,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
   extensions = imagesFormats,
   reqMaxSize = maxSize,
   className,
+  onBlur
 }) => {
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
@@ -170,6 +172,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
             id={idx}
             className={styles['upload-avatar__wrapper__body__hidden-input']}
             ref={inputRef}
+            onBlur={onBlur}
           />
           <div className={styles['upload-avatar__wrapper__body-icon']}>
             <ImageSVG />
@@ -185,7 +188,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
             [styles['avatar-active']]: fileURL,
           })}
         >
-          <ImagePreview src={fileURL || ''} alt="" />
+          <ImagePreview fit="cover" src={fileURL || ''} alt="" />
         </div>
       </section>
       <div

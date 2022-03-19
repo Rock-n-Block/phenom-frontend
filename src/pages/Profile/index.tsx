@@ -1,11 +1,16 @@
-import { useMemo, VFC } from 'react';
+import { useEffect, useMemo, VFC } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { getProfileById } from 'store/profile/actions';
+import profileSelector from 'store/profile/selectors';
 import userSelector from 'store/user/selectors';
 
 import cn from 'classnames';
+import { useWalletConnectContext } from 'context';
 
 import { Avatar, Button, Clipboard, TabBar, Text } from 'components';
+import { generateUsername } from 'utils';
 
 import { routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
@@ -20,7 +25,16 @@ import styles from './styles.module.scss';
 
 const Profile: VFC = () => {
   const { userId } = useParams();
-  const collections = useShallowSelector(userSelector.getProp('collections'));
+  const id = useShallowSelector(userSelector.getProp('id'));
+  const { walletService } = useWalletConnectContext();
+  const { avatar, balance, displayName, address, bio, instagram, twitter, site, collections } =
+    useShallowSelector(profileSelector.getProfile);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (userId) {
+      dispatch(getProfileById({ id: userId, web3Provider: walletService.Web3() }));
+    }
+  }, [dispatch, userId, walletService]);
 
   const Tabs = useMemo<TBarOption[]>(
     () => [
@@ -65,13 +79,13 @@ const Profile: VFC = () => {
       <div className={styles['profile-page__wrapper__detail']} />
       <div
         className={cn(styles['profile-page__wrapper-info'], {
-          [styles['owner-page']]: +userId === profile.id,
+          [styles['owner-page']]: +userId === id,
         })}
       >
         <Avatar
           id={userId}
           className={styles['profile-page__wrapper-info__avatar']}
-          avatar={profile.avatarURL}
+          avatar={avatar || ''}
           size={144}
         />
         <Text
@@ -80,7 +94,7 @@ const Profile: VFC = () => {
           weight="medium"
           className={styles['profile-page__wrapper-info__name']}
         >
-          {profile.name}
+          {displayName || generateUsername(id)}
         </Text>
         <Text className={styles['profile-page__wrapper-info__balance']} color="lightGray" size="s">
           Balance
@@ -91,13 +105,13 @@ const Profile: VFC = () => {
           size="xxl"
           weight="medium"
         >
-          {profile.balance} {profile.currency}
+          {balance} {profile.currency}
         </Text>
         <Clipboard
           className={styles['profile-page__wrapper-info__address']}
-          value={profile.address}
+          value={address || ''}
         />
-        {+userId === profile.id && (
+        {+userId === id && (
           <Button
             className={styles['profile-page__wrapper-info__edit']}
             color="light"
@@ -122,7 +136,13 @@ const Profile: VFC = () => {
         <Routes>
           <Route
             path="about-me"
-            element={<AboutMe socials={profile.socials} description={profile.description} />}
+            element={
+              <AboutMe
+                name={displayName || generateUsername(id)}
+                socials={{ instagram, twitter, site }}
+                description={bio || ''}
+              />
+            }
           />
           <Route path="owned" element={<Preview key="owned" cardsData={nftCards} />} />
           <Route path="for-sale" element={<Preview key="for-sale" cardsData={nftCards} />} />

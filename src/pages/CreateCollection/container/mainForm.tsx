@@ -58,9 +58,8 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
   );
 
   const onCancelClick = useCallback(() => {
-    navigate(routes.create.root);
     handleReset();
-  }, [handleReset, navigate]);
+  }, [handleReset]);
 
   return (
     <Form className={styles['create-collection__wrapper']}>
@@ -180,11 +179,17 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
           onClick={() => onSubmitClick(values)}
           disabled={Object.keys(errors).length !== 0 || values.avatarFile === null}
           loading={collectionCreateRequest === RequestStatus.REQUEST}
+          loaderColor="dark"
+          loaderSize="small"
         >
           Create
         </Button>
-        <Button color="outline" onClick={onCancelClick}>
-          Cancel
+        <Button
+          disabled={values.avatarFile === null && !Object.keys(touched).length}
+          color="outline"
+          onClick={onCancelClick}
+        >
+          Clear
         </Button>
       </div>
     </Form>
