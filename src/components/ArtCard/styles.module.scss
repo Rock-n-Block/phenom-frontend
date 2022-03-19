@@ -65,6 +65,11 @@
   @include flexbox(flex-start, center);
   @include transition;
 
+  .loader {
+    min-height: 328px;
+    height: 100%;
+  }
+
   .Padded,
   .Contained {
     object-fit: contain;
@@ -152,7 +157,7 @@
   @include flexbox(flex-start, space-between);
   width: 100%;
 
-  &Right{
+  &Right {
     justify-content: flex-end;
   }
 }

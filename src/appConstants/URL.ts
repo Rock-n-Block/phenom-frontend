@@ -11,9 +11,12 @@ export default {
   createNewToken: '/store/create_token/',
   createNewCollection: '/store/create_collection/',
   getTokenById: (id: string | number) => `/store/token/${id}/`,
-  set_on_auction: (id: string | number) => `/store/token/${id}/set_on_auction/`,
-  set_on_sale: (id: string | number) => `/store/token/${id}/set_on_sale/`,
+  setOnAuction: (id: string | number) => `/store/token/${id}/set_on_auction/`,
+  setOnSale: (id: string | number) => `/store/token/${id}/set_on_sale/`,
   buy: 'store/buy/',
   bid: 'store/bids/make_bid/',
-  like: '/account/self/like/'
+  like: '/account/self/like/',
+  endAuction: (id: number | string) => `/store/token/${id}/end_auction/`,
+  verificateBet: (id: number | string) => `/store/token/${id}/verificate_bet/`,
+  trackTransaction: 'store/track_transaction'
 };

@@ -180,6 +180,8 @@ const MainForm: VFC<FormikProps<ICreateCollection> & ICreateCollection> = ({
           onClick={() => onSubmitClick(values)}
           disabled={Object.keys(errors).length !== 0 || values.avatarFile === null}
           loading={collectionCreateRequest === RequestStatus.REQUEST}
+          loaderColor="dark"
+          loaderSize="small"
         >
           Create
         </Button>

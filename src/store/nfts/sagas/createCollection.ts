@@ -21,7 +21,7 @@ export function* createCollectionSaga({ type, payload }: ReturnType<typeof creat
       yield put(apiActions.success(type));
     }
   } catch (err) {
-    toast.error(err as any);
+    toast.error('Something went wrong');
     console.error(err);
     yield put(apiActions.error(type, err));
   }

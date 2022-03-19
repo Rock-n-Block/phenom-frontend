@@ -12,6 +12,8 @@ const SET_ON_SALE = 'SET_ON_SALE' as const;
 const BID = 'BID' as const;
 const REMOVE_FROM_SALE = 'REMOVE_FROM_SALE' as const;
 const LIKE = 'LIKE' as const;
+const END_AUCTION = 'END_AUCTION' as const;
+const TRACK_TRANSACTION = 'TRACK_TRANSACTION' as const;
 
 export default {
   GET_CATEGORIES,
@@ -28,4 +30,6 @@ export default {
   BID,
   REMOVE_FROM_SALE,
   LIKE,
+  END_AUCTION,
+  TRACK_TRANSACTION
 };

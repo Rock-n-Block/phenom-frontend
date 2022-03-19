@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
+import { bid, buy, endAuction, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
 
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
@@ -13,6 +13,12 @@ import { DEFAULT_CURRENCY } from 'appConstants';
 import { Modals, TokenFull } from 'types';
 
 import ApprovePendingModal from '../modals/ApprovePendingModal';
+import ApproveRejectedModal from '../modals/ApproveRejectedModal';
+import BurnModal from '../modals/BurnModal';
+import SellersModal from '../modals/SellersModal';
+import SendPendingModal from '../modals/SendPendingModal';
+import SendRejectedModal from '../modals/SendRejectedModal';
+import SendSuccessModal from '../modals/SendSuccessModal';
 import TransferModal from '../modals/TransferModal';
 
 import {
@@ -25,10 +31,6 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-import ApproveRejectedModal from '../modals/ApproveRejectedModal';
-import SendPendingModal from '../modals/SendPendingModal';
-import SendSuccessModal from '../modals/SendSuccessModal';
-import SendRejectedModal from '../modals/SendRejectedModal';
 
 interface IPayment {
   nft: TokenFull;
@@ -57,6 +59,7 @@ const Payment: VFC<IPayment> = ({
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
 }) => {
+  console.log('isUserCanPutOnSale', isUserCanPutOnSale)
   const dispatch = useDispatch();
   const { walletService } = useWalletConnectContext();
   const [quantity, setQuantity] = useState('1');
@@ -68,7 +71,7 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
-  const [modalType, setModalType] = useState(Modals.none);
+  const [modalType, setModalType] = useState(Modals.ChooseSeller);
 
   const handleSetModalType = useCallback((newModalType: Modals) => {
     setModalType(newModalType);
@@ -90,13 +93,53 @@ const Payment: VFC<IPayment> = ({
     setHoursTime(value);
   }, []);
 
-  const handleBuy = useCallback(() => {
+  // const handleBurn = useCallback(
+  //   (amount: string | number) => {
+  //     if (nft) {
+  //       dispatch(
+  //         burn({
+  //           id: nft?.id || 0,
+  //           amount,
+  //         }),
+  //       );
+  //     }
+  //   },
+  //   [nft, dispatch],
+  // );
+
+  const handleBuy = useCallback(
+    (sellerId: string | number) => {
+      if (nft) {
+        dispatch(
+          buy({
+            id: nft?.id || 0,
+            amount: nft?.price || 0,
+            sellerId,
+            web3Provider: walletService.Web3(),
+          }),
+        );
+      }
+    },
+    [nft, dispatch, walletService],
+  );
+
+  const handlePreBuy = useCallback(
+    (isSingle: boolean) => {
+      if (isSingle) {
+        handleBuy(nft?.sellers?.[0].url || 0);
+      }
+      if (!isSingle) {
+        handleSetModalType(Modals.ChooseSeller);
+      }
+    },
+    [handleBuy, handleSetModalType, nft.sellers],
+  );
+
+  const handleEndAuction = useCallback(() => {
     if (nft) {
       dispatch(
-        buy({
+        endAuction({
           id: nft?.id || 0,
-          amount: nft?.price || 0,
-          sellerId: 0,
           web3Provider: walletService.Web3(),
         }),
       );
@@ -283,7 +326,7 @@ const Payment: VFC<IPayment> = ({
                 onClick={
                   nft?.isAucSelling || nft?.is_timed_auc_selling
                     ? () => handleBid(bidValue, nft?.currency.symbol || 'PHETA')
-                    : () => handleBuy()
+                    : () => handlePreBuy(nft?.standart === 'ERC721')
                 }
               >
                 {nft?.isAucSelling || nft?.is_timed_auc_selling ? 'Place a bid' : 'Buy'}
@@ -310,7 +353,7 @@ const Payment: VFC<IPayment> = ({
                   <Button
                     color="dark"
                     className={cx(styles.button, styles.remove)}
-                    onClick={() => handleSetModalType(Modals.ApprovePending)}
+                    onClick={() => handleEndAuction()}
                   >
                     Accept bid
                   </Button>
@@ -530,6 +573,15 @@ const Payment: VFC<IPayment> = ({
       )}
 
       <TransferModal visible={modalType === Modals.Transfer} onClose={() => handleCloseModal()} />
+
+      <BurnModal visible={modalType === Modals.Burn} onClose={() => handleCloseModal()} />
+
+      <SellersModal
+        visible={modalType === Modals.ChooseSeller}
+        onClose={() => handleCloseModal()}
+        sellers={nft?.sellers}
+        handleChooseSeller={handleBuy}
+      />
 
       <ApprovePendingModal
         visible={modalType === Modals.ApprovePending}

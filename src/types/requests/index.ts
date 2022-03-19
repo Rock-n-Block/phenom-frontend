@@ -13,6 +13,13 @@ export type ApiResponse<T = never> = {
   message?: string | string[];
 };
 
+export type TrackTransactionReq = {
+  tx_hash: string;
+  token: number | string;
+  ownership: string | number;
+  amount: number | string;
+};
+
 // STAKE REQUESTS
 export type StakeReq = {
   web3Provider: Web3;
@@ -116,6 +123,11 @@ export type BuyReq = {
 
 export type LikeReq = {
   id: number | string;
+};
+
+export type EndAucReq = {
+  id: number | string;
+  web3Provider: Web3;
 };
 
 export type BidReq = {

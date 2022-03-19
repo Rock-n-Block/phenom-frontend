@@ -1,6 +1,6 @@
 import { URL } from 'appConstants';
 import { LoginReq, Token } from 'types';
-import { CreateCollectionAction, RequestWithNetwork, SearchNftReq } from 'types/requests';
+import { CreateCollectionAction, RequestWithNetwork, SearchNftReq, TrackTransactionReq } from 'types/requests';
 
 import ajax from './ajax';
 import NftApiCalls from './nftApiCalls';
@@ -18,6 +18,13 @@ export const baseApi = {
       url: URL.metamaskLogin,
       data,
     });
+  },
+  trackTransaction(data: TrackTransactionReq){
+    return ajax ({
+      method: 'post',
+      url: URL.trackTransaction,
+      data
+    })
   },
   getTrendingNfts(params: { type: string }) {
     return ajax({
@@ -81,6 +88,5 @@ export const baseApi = {
       data: collection,
     });
   },
-  
   ...NftApiCalls,
 };
