@@ -15,5 +15,6 @@ export default {
   set_on_sale: (id: string | number) => `/store/token/${id}/set_on_sale/`,
   buy: 'store/buy/',
   bid: 'store/bids/make_bid/',
-  like: '/account/self/like/'
+  like: '/account/self/like/',
+  removeReject: '/store/remove-reject/',
 };

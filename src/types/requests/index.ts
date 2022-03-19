@@ -163,6 +163,12 @@ export type SearchCollectionAction = {
   requestData: SearchCollectionsReq;
   shouldConcat?: boolean;
 };
+
+export type RemoveRejectAction = {
+  id: number;
+  owner: number;
+};
+
 export type RequestWithNetwork = {
   network: string;
 };

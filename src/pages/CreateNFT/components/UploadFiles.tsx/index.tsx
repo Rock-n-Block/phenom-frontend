@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { toast } from 'react-toastify';
 
 import cn from 'classnames';
 
@@ -23,7 +24,6 @@ import {
 } from 'appConstants';
 
 import styles from './styles.module.scss';
-import { toast } from 'react-toastify';
 
 interface ICreateNFT {
   type: TCreateNFT;
@@ -148,7 +148,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
       setMediaFile(reqFile);
       setPreviewFile(fileList.filter((f) => f.name !== reqFile.name)[0]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, previewType, reqFile, fileList]);
 
   const currentExtension = useMemo(
@@ -199,10 +199,14 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
             />
           </div>
         )}
-        <div className={cn(styles['upload-nft__wrapper__body-preview'])}>
+        <div
+          className={cn(styles['upload-nft__wrapper__body-preview'], {
+            [styles['preview-active']]: fileList.length > 0,
+          })}
+        >
           {' '}
           {currentSwitchState && isPreview ? (
-            <ImagePreview src={props.threeD.previewSrc} />
+            <ImagePreview fit="contain" src={props.threeD.previewSrc} />
           ) : (
             PreviewComponent
           )}

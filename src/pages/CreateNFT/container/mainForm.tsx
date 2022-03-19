@@ -10,6 +10,7 @@ import uiSelector from 'store/ui/selectors';
 import actionTypes from 'store/user/actionTypes';
 import userSelector from 'store/user/selectors';
 
+import cx from 'classnames';
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, DefaultInput, Dropdown, TextArea } from 'components';
@@ -23,7 +24,6 @@ import { Collection, RequestStatus, TSingleProp } from 'types';
 import { IMainForm } from '.';
 
 import styles from './styles.module.scss';
-import cx from 'classnames';
 
 const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   setFieldValue,

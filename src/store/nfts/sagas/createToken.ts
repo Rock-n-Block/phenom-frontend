@@ -6,7 +6,7 @@ import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
 
-import { Modals } from 'types';
+import { createTokenResponse, Modals } from 'types';
 
 import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
@@ -26,10 +26,11 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const address = yield select(userSelector.getProp('address'));
-    if (data.initial_tx) {
+    const { initial_tx, token } = data as createTokenResponse;
+    if (initial_tx) {
       try {
         const { transactionHash } = yield call(payload.web3.eth.sendTransaction, {
-          ...data.initial_tx,
+          ...initial_tx,
           from: address,
         });
         yield put(
@@ -41,6 +42,10 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
         );
         yield put(apiActions.success(type));
       } catch (e) {
+        yield call(baseApi.removeReject, {
+          id: token.id,
+          owner: token.creator.url,
+        });
         yield put(
           setActiveModal({
             activeModal: Modals.SendRejected,

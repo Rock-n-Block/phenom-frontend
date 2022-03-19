@@ -15,11 +15,11 @@ export interface UserSlim {
     customUrl?: string;
     displayName?: string;
     facebook?: string;
-    id?: number;
+    id: number;
     instagram?: string;
     isVerificated?: boolean;
     name?: string;
     site?: string;
     twitter?: string;
-    url?: string;
+    url: number;
 }

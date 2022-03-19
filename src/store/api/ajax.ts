@@ -11,9 +11,11 @@ const client: AxiosInstance = axios.create({
   validateStatus,
 });
 
-export default function* ajax(
+export default function* ajax<T = unknown>(
   config: AxiosRequestConfig,
-): Generator<SelectEffect | CallEffect | PutEffect> {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+): Generator<SelectEffect | CallEffect<T> | PutEffect, AxiosResponse<ApiResponse<T>>> {
   const accessToken = yield select(userSelector.getProp('key'));
 
   if (accessToken) {
@@ -22,7 +24,7 @@ export default function* ajax(
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const response: AxiosResponse<ApiResponse<unknown>> = yield call<
+  const response: AxiosResponse<ApiResponse<T>> = yield call<
     (configVar: AxiosRequestConfig) => void
   >(client, config);
 
