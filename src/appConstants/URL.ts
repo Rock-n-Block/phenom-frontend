@@ -16,7 +16,9 @@ export default {
   buy: 'store/buy/',
   bid: 'store/bids/make_bid/',
   like: '/account/self/like/',
+  removeReject: '/store/remove-reject/',
   endAuction: (id: number | string) => `/store/token/${id}/end_auction/`,
   verificateBet: (id: number | string) => `/store/token/${id}/verificate_bet/`,
-  trackTransaction: 'store/track_transaction'
+  trackTransaction: 'store/track_transaction',
+  editProfile: '/account/self/',
 };

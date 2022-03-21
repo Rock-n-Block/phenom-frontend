@@ -1,4 +1,4 @@
-import { NftsState } from './store';
+import { NftsState, ProfileState } from './store';
 import { ModalsInitialState } from './store/modals';
 import { UserState } from './store/user';
 
@@ -10,6 +10,7 @@ export * from './config';
 export * from './context';
 export * from './store';
 export * from './api';
+export * from './response';
 
 declare global {
   interface Window {
@@ -47,6 +48,7 @@ export type State = {
   user: UserState;
   modals: ModalsInitialState;
   nfts: NftsState;
+  profile: ProfileState;
 };
 
 export interface IOwner extends Omit<IBaseInfo, 'address'> {

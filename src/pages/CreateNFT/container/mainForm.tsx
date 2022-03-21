@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-as-default-member */
-import { useCallback, useEffect, VFC } from 'react';
+import { useCallback, useEffect, useState, VFC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import uiSelector from 'store/ui/selectors';
 import actionTypes from 'store/user/actionTypes';
 import userSelector from 'store/user/selectors';
 
+import cx from 'classnames';
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, DefaultInput, Dropdown, TextArea } from 'components';
@@ -23,7 +24,6 @@ import { Collection, RequestStatus, TSingleProp } from 'types';
 import { IMainForm } from '.';
 
 import styles from './styles.module.scss';
-import cx from 'classnames';
 
 const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   setFieldValue,
@@ -39,6 +39,7 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   const categories = useShallowSelector(nftSelector.getProp('categories'));
   const collections = useShallowSelector(userSelector.getProp('collections'));
   const id = useShallowSelector(userSelector.getProp('id'));
+  const [isClearing, setIsClearing] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -53,19 +54,27 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     [handleSubmit, validateForm],
   );
 
-  const onCancelClick = useCallback(() => {
-    navigate(routes.create.root);
-    if (!Object.keys(touched)) {
-      handleReset();
-    }
-  }, [handleReset, navigate, touched]);
-
   const handleSetFieldValue = useCallback(
     (fieldName: string) => (value: any) => {
       setFieldValue(fieldName, [value]);
     },
     [setFieldValue],
   );
+
+  const onCancelClick = useCallback(() => {
+    handleReset();
+    setIsClearing(true);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [handleReset]);
+
+  useEffect(() => {
+    if (Object.keys(touched).length === 0 && isClearing) {
+      setIsClearing(false);
+    }
+  }, [isClearing, touched]);
 
   useEffect(() => {
     if (creatingToken === RequestStatus.SUCCESS) {
@@ -84,6 +93,8 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
             type={type}
             setMediaFile={handleSetFieldValue('media')}
             setPreviewFile={handleSetFieldValue('preview')}
+            isClearing={isClearing}
+            onBlur={handleBlur('media')}
           />
         )}
       />
@@ -165,6 +176,7 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
           <Properties
             initProps={values.properties}
             onBlur={handleBlur('properties')}
+            isClearing={isClearing}
             setProps={
               // eslint-disable-next-line no-unused-expressions
               (value: TSingleProp[]) => setFieldValue('properties', value)
@@ -178,8 +190,10 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         name="collections"
         render={() => (
           <Collections
+            isClearing={isClearing}
             initCollections={collections.filter((c) => c.standart === getStandard(values.type))}
             onRefresh={values.onReload}
+            onBlur={handleBlur('collections')}
             fetching={gettingCollectionsRequest === RequestStatus.REQUEST}
             setSelectedCollection={(value: Collection[]) => {
               setFieldValue('collections', value);
@@ -195,6 +209,7 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
               count={values.quantity || ''}
               setCount={(value: string) => setFieldValue('quantity', value)}
               className={styles['field-quantity']}
+              onBlur={handleBlur('quantity')}
             />
           )}
         />
@@ -216,8 +231,12 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         >
           Create Item
         </Button>
-        <Button color="outline" onClick={onCancelClick}>
-          Cancel
+        <Button
+          disabled={!Object.keys(touched).length && values.media === null}
+          color="outline"
+          onClick={onCancelClick}
+        >
+          Clear
         </Button>
       </div>
     </Form>

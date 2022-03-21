@@ -27,9 +27,18 @@ interface IProperties {
   onBlur?: (e: FormEvent<HTMLInputElement>) => void;
   className?: string;
   initErrors?: any[] | any;
+  isClearing?: boolean;
 }
 
-const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField, onBlur, error }) => {
+const SingleProp: VFC<EditableProp> = ({
+  id,
+  name,
+  type,
+  onDeleteClick,
+  setField,
+  onBlur,
+  error,
+}) => {
   return (
     <div className={styles['single-prop__body']}>
       <div className={styles['single-prop__body-inputs']}>
@@ -61,7 +70,14 @@ const SingleProp: VFC<EditableProp> = ({ id, name, type, onDeleteClick, setField
   );
 };
 
-const Properties: VFC<IProperties> = ({ initProps, setProps, onBlur, className, initErrors }) => {
+const Properties: VFC<IProperties> = ({
+  initProps,
+  setProps,
+  onBlur,
+  className,
+  initErrors,
+  isClearing,
+}) => {
   const [properties, setProperties] = useState<TSingleProp[]>(initProps);
   const [errors, setErrors] = useState<PropError[]>([]);
   const idx = useRef(0);
@@ -73,6 +89,13 @@ const Properties: VFC<IProperties> = ({ initProps, setProps, onBlur, className, 
     },
     [properties],
   );
+
+  useEffect(() => {
+    if (isClearing) {
+      idx.current = 0;
+      setProperties([{ id: 0, name: '', type: '' }]);
+    }
+  }, [isClearing]);
 
   const setProp = useCallback(
     (fieldName: keyof TSingleProp, fieldValue: any, id: number) => {

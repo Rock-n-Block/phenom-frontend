@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, VFC } from 'react';
+import { FormEvent, ReactElement, useCallback, VFC } from 'react';
 
 import { DefaultInput } from 'components';
 
@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 
 interface IQuantityOption {
   type: 'add' | 'remove';
-  onClick: () => void;
+  onClick: (e: FormEvent) => void;
 }
 
 const QuantityOption: VFC<IQuantityOption> = ({ type, onClick }) => {
@@ -20,8 +20,8 @@ const QuantityOption: VFC<IQuantityOption> = ({ type, onClick }) => {
 };
 
 interface IQuantityButtons {
-  onAdd: () => void;
-  onRemove: () => void;
+  onAdd: (e: FormEvent) => void;
+  onRemove: (e: FormEvent) => void;
 }
 
 const QuantityButtons: VFC<IQuantityButtons> = ({ onAdd, onRemove }) => {
@@ -45,6 +45,7 @@ interface IQuantityInput {
   placeholder?: string;
   inputClassName?: string;
   maxCounterWidth?: string;
+  onBlur?: (e: FormEvent) => void;
 }
 
 const QuantityInput: VFC<IQuantityInput> = ({
@@ -59,6 +60,7 @@ const QuantityInput: VFC<IQuantityInput> = ({
   minAmount = 0,
   inputClassName,
   maxCounterWidth = '50%',
+  onBlur,
 }) => {
   const checkRange = useCallback(
     (val: number) => {
@@ -91,19 +93,27 @@ const QuantityInput: VFC<IQuantityInput> = ({
     [checkRange, setValue, writeable],
   );
 
-  const onAddHandler = useCallback(() => {
-    const nValue = +value;
-    if (checkRange(nValue + 1)) {
-      setValue(String(nValue + 1));
-    }
-  }, [checkRange, setValue, value]);
+  const onAddHandler = useCallback(
+    (e: FormEvent) => {
+      const nValue = +value;
+      if (checkRange(nValue + 1)) {
+        onBlur?.(e);
+        setValue(String(nValue + 1));
+      }
+    },
+    [checkRange, onBlur, setValue, value],
+  );
 
-  const onRemoveHandler = useCallback(() => {
-    const nValue = +value;
-    if (checkRange(nValue - 1)) {
-      setValue(String(nValue - 1));
-    }
-  }, [checkRange, setValue, value]);
+  const onRemoveHandler = useCallback(
+    (e: FormEvent) => {
+      const nValue = +value;
+      if (checkRange(nValue - 1)) {
+        onBlur?.(e);
+        setValue(String(nValue - 1));
+      }
+    },
+    [checkRange, onBlur, setValue, value],
+  );
 
   return (
     <DefaultInput
@@ -116,6 +126,7 @@ const QuantityInput: VFC<IQuantityInput> = ({
       subInfo={<QuantityButtons onAdd={onAddHandler} onRemove={onRemoveHandler} />}
       maxSubInfoWidth={maxCounterWidth}
       disabled={!writeable}
+      onBlur={onBlur}
       className={inputClassName}
     />
   );

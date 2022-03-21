@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { toast } from 'react-toastify';
 
 import cn from 'classnames';
 
@@ -23,12 +24,13 @@ import {
 } from 'appConstants';
 
 import styles from './styles.module.scss';
-import { toast } from 'react-toastify';
 
 interface ICreateNFT {
   type: TCreateNFT;
   setPreviewFile: (preview: File) => void;
   setMediaFile: (media: File) => void;
+  onBlur: (e: FormEvent<HTMLInputElement>) => void;
+  isClearing?: boolean;
 }
 
 const getAvailableExtensions = (
@@ -57,7 +59,7 @@ const isSwitchActive = (type: TFilesGroup | null, filesCount: number) => {
   return false;
 };
 
-const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
+const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile, onBlur, isClearing }) => {
   const [fileList, setFileList] = useState<File[]>([]);
   const [filesURLs, setFilesURLs] = useState<string[]>([]);
   const [isPreview, setIsPreview] = useState<boolean>(false);
@@ -148,7 +150,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
       setMediaFile(reqFile);
       setPreviewFile(fileList.filter((f) => f.name !== reqFile.name)[0]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props, previewType, reqFile, fileList]);
 
   const currentExtension = useMemo(
@@ -165,6 +167,13 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
     setFileList([]);
     setFilesURLs([]);
   }, []);
+
+  useEffect(() => {
+    if (isClearing) {
+      setFileList([]);
+      setFilesURLs([]);
+    }
+  }, [isClearing]);
 
   return (
     <section className={styles['upload-nft__wrapper']}>
@@ -186,6 +195,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
               fileList={fileList}
               filesURLs={filesURLs}
               extensions={currentExtension}
+              onBlur={onBlur}
             />
           </div>
         )}
@@ -199,10 +209,14 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile }) => {
             />
           </div>
         )}
-        <div className={cn(styles['upload-nft__wrapper__body-preview'])}>
+        <div
+          className={cn(styles['upload-nft__wrapper__body-preview'], {
+            [styles['preview-active']]: fileList.length > 0,
+          })}
+        >
           {' '}
           {currentSwitchState && isPreview ? (
-            <ImagePreview src={props.threeD.previewSrc} />
+            <ImagePreview fit="contain" src={props.threeD.previewSrc} />
           ) : (
             PreviewComponent
           )}

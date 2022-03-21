@@ -12,8 +12,9 @@ import { CopySVG, EmailSVG, InstagramSVG, SiteSVG, TwitterSVG } from 'assets/img
 import styles from './styles.module.scss';
 
 interface IAboutMe {
-  socials: { [key in TAvailableSocials]: string };
+  socials: { [key in TAvailableSocials]?: string | null | undefined };
   description: string;
+  name: string;
 }
 
 const getSocialIcon = (name: TAvailableSocials) => {
@@ -55,22 +56,26 @@ const SocialItem: VFC<ISocialItem> = ({ type, value }) => {
   );
 };
 
-const AboutMe: VFC<IAboutMe> = ({ socials, description }) => {
+const AboutMe: VFC<IAboutMe> = ({ socials, description, name }) => {
   return (
     <section className={styles['about-me__wrapper']}>
       <div className={styles['about-me__wrapper__socials']}>
-        {Object.entries(socials).map(([key, value], idx) => (
-          <SocialItem
-            type={key as TAvailableSocials}
-            value={value}
-            // TODO remove this
-            key={`${idx * Math.random()}`}
-          />
-        ))}
+        {Object.entries(socials).filter(
+          ([key, value], idx) =>
+            value && (
+              <SocialItem
+                type={key as TAvailableSocials}
+                value={value}
+                // TODO remove this
+                key={`${idx * Math.random()}`}
+              />
+            ),
+        )}
+        {Object.entries(socials).filter(([, value]) => value).length === 0 && `${name} doesn't left social networks 😣`}
       </div>
       <div className={styles['about-me__wrapper__description']}>
         <Text color="dark" size="s">
-          {description}
+          {description.length ? description : `${name} doesn't left bio 😣`}
         </Text>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { FormEvent, VFC } from 'react';
 
 import cn from 'classnames';
 
@@ -10,9 +10,10 @@ interface IStock {
   count: string;
   setCount: (count: string) => void;
   className?: string;
+  onBlur?: (e: FormEvent) => void;
 }
 
-const Stock: VFC<IStock> = ({ count, setCount, className }) => {
+const Stock: VFC<IStock> = ({ count, setCount, className, onBlur }) => {
   return (
     <section className={cn(styles['nft-quantity__wrapper'], className)}>
       <Text
@@ -32,6 +33,7 @@ const Stock: VFC<IStock> = ({ count, setCount, className }) => {
         maxCounterWidth="160px"
         minAmount={1}
         writeable
+        onBlur={onBlur}
       />
     </section>
   );

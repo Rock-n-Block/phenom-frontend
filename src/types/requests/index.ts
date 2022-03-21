@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 
 import { Token } from 'types';
+import { User } from 'types/api';
 
 export type BodyWithToken<T = never> = {
   token?: string;
@@ -95,6 +96,7 @@ export type CreateNewPoolReq = {
 
 export type GetTokenBalanceReq = {
   web3Provider: Web3;
+  address: string;
 };
 
 export type LoginReq = {
@@ -175,6 +177,22 @@ export type SearchCollectionAction = {
   requestData: SearchCollectionsReq;
   shouldConcat?: boolean;
 };
+
+export type RemoveRejectAction = {
+  id: number;
+  owner: number;
+};
+
+export type getProfileByIdRequest = {
+  id: number | string;
+  web3Provider: Web3;
+};
+
+export type EditProfile = Pick<
+  User,
+  'avatar' | 'bio' | 'displayName' | 'twitter' | 'facebook' | 'instagram' | 'site'
+>;
+
 export type RequestWithNetwork = {
   network: string;
 };

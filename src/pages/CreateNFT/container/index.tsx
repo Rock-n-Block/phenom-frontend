@@ -54,7 +54,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     dispatch(getSelfCollections({ network: chain }));
   }, [chain, dispatch]);
 
-  const properties = useMemo<IMainForm>(
+  const clearForm = useMemo<ICreateForm>(
     () => ({
       type,
       name: '',
@@ -66,9 +66,16 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       media: null,
       preview: null,
       quantity: '1',
+    }),
+    [type],
+  );
+
+  const properties = useMemo<IMainForm>(
+    () => ({
+      ...clearForm,
       onReload: onReloadClick,
     }),
-    [onReloadClick, type],
+    [clearForm, onReloadClick],
   );
 
   useEffect(() => {
