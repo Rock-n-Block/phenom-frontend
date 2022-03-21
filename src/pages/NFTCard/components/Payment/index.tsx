@@ -59,7 +59,6 @@ const Payment: VFC<IPayment> = ({
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
 }) => {
-  console.log('isUserCanPutOnSale', isUserCanPutOnSale)
   const dispatch = useDispatch();
   const { walletService } = useWalletConnectContext();
   const [quantity, setQuantity] = useState('1');
@@ -71,7 +70,7 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
-  const [modalType, setModalType] = useState(Modals.ChooseSeller);
+  const [modalType, setModalType] = useState(Modals.none);
 
   const handleSetModalType = useCallback((newModalType: Modals) => {
     setModalType(newModalType);
@@ -92,20 +91,6 @@ const Payment: VFC<IPayment> = ({
   const handleChangeHours = useCallback((value: number) => {
     setHoursTime(value);
   }, []);
-
-  // const handleBurn = useCallback(
-  //   (amount: string | number) => {
-  //     if (nft) {
-  //       dispatch(
-  //         burn({
-  //           id: nft?.id || 0,
-  //           amount,
-  //         }),
-  //       );
-  //     }
-  //   },
-  //   [nft, dispatch],
-  // );
 
   const handleBuy = useCallback(
     (sellerId: string | number) => {
