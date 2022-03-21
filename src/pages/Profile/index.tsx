@@ -79,7 +79,7 @@ const Profile: VFC = () => {
       <div className={styles['profile-page__wrapper__detail']} />
       <div
         className={cn(styles['profile-page__wrapper-info'], {
-          [styles['owner-page']]: +userId === id,
+          [styles['owner-page']]: userId === String(id),
         })}
       >
         <Avatar
@@ -111,7 +111,7 @@ const Profile: VFC = () => {
           className={styles['profile-page__wrapper-info__address']}
           value={address || ''}
         />
-        {+userId === id && (
+        {userId === String(id) && (
           <Button
             className={styles['profile-page__wrapper-info__edit']}
             color="light"
