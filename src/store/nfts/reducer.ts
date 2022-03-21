@@ -8,6 +8,7 @@ const initialState: NftsState = {
   detailedNft: null,
   categories: null,
   totalPages: 0,
+  trending: [],
 };
 
 export const nftsReducer = createSlice({
@@ -30,6 +31,10 @@ export const nftsReducer = createSlice({
       ...state,
       detailedNft: action.payload,
     }),
+    setTrending: (state, action: PayloadAction<TokenFull[]>) => ({
+      ...state,
+      trending: action.payload,
+    }),
     clearDetailedNft: (state) => ({
       ...state,
       detailedNft: null,
@@ -38,6 +43,10 @@ export const nftsReducer = createSlice({
       ...state,
       nfts: [],
     }),
+    clearTrending: (state) => ({
+      ...state,
+      trending: [],
+    }),
   },
 });
 
@@ -45,8 +54,10 @@ export const {
   setNfts,
   setDetailedNft,
   setTotalPages,
+  setTrending,
   clearDetailedNft,
   clearNfts,
+  clearTrending,
   setCategories,
 } = nftsReducer.actions;
 

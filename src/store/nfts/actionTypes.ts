@@ -12,6 +12,7 @@ const REMOVE_FROM_SALE = 'REMOVE_FROM_SALE' as const;
 const LIKE = 'LIKE' as const;
 const END_AUCTION = 'END_AUCTION' as const;
 const TRACK_TRANSACTION = 'TRACK_TRANSACTION' as const;
+const GET_TRENDING = 'GET_TRENDING' as const;
 
 export default {
   GET_CATEGORIES,
@@ -27,5 +28,6 @@ export default {
   REMOVE_FROM_SALE,
   LIKE,
   END_AUCTION,
-  TRACK_TRANSACTION
+  TRACK_TRANSACTION,
+  GET_TRENDING,
 };

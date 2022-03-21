@@ -10,7 +10,8 @@ import { iconArrowDownBlue } from 'assets/img';
 import styles from './styles.module.scss';
 
 type OptionType = {
-  title: string;
+  id: number;
+  name: string;
 };
 
 interface IProps {
@@ -40,7 +41,7 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
           className={styles.selected}
         >
           <H2 weight="bold" color="blue" className={styles.blueValue}>
-            {value.title.toLowerCase() === 'all categories' ? 'all categories' : value.title}
+            {value.name}
           </H2>
           <div className={styles.dropdownContainer}>
             <img
@@ -65,7 +66,7 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
                       className={styles.option}
                     >
                       <Text weight="semibold" size="xl">
-                        {option.title}
+                        {option.name}
                       </Text>
                     </div>
                   </li>

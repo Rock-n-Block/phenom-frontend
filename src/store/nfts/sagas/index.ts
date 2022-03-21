@@ -9,10 +9,12 @@ import getDetailedNftSaga from './getDetailedNft';
 import like from './like';
 import removeFromSale from './removeFromSale';
 import searchNftsSaga from './searchNfts';
+import searchTrendingSaga from './searchTrending';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
   yield fork(searchNftsSaga);
+  yield fork(searchTrendingSaga);
   yield fork(buy);
   yield fork(bid);
   yield fork(getCategoriesSaga);

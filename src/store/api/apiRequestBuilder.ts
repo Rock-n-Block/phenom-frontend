@@ -1,5 +1,10 @@
 import { URL } from 'appConstants';
-import { SearchNftReq, TrackTransactionReq } from 'types/requests';
+import {
+  SearchCollectionsReq,
+  SearchNftReq,
+  SearchTrendingsReq,
+  TrackTransactionReq,
+} from 'types/requests';
 
 import ajax from './ajax';
 import createApiCalls from './createApiCalls';
@@ -29,18 +34,32 @@ export const baseApi = {
       params: { ...params, items_per_page },
     });
   },
+  searchCollections(params: SearchCollectionsReq) {
+    return ajax({
+      method: 'get',
+      url: URL.searchNfts,
+      params,
+    });
+  },
+  searchTrendingCollections(params: SearchTrendingsReq) {
+    return ajax({
+      method: 'get',
+      url: URL.trendingCollections,
+      params,
+    });
+  },
   getCategories() {
     return ajax({
       method: 'get',
       url: URL.getCategories,
     });
   },
-  trackTransaction(data: TrackTransactionReq){
-    return ajax ({
+  trackTransaction(data: TrackTransactionReq) {
+    return ajax({
       method: 'post',
       url: URL.trackTransaction,
-      data
-    })
+      data,
+    });
   },
   ...createApiCalls,
   ...profileApiCalls,
