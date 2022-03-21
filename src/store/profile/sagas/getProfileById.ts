@@ -1,33 +1,33 @@
 /* eslint-disable max-len */
-import { disconnectWalletState, updateWallet } from '../reducer';
+import { updateProfile } from '../reducer';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { error, request, success } from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
+import { getTokenBalance } from 'store/user/actions';
 
 import { camelize } from 'utils/camelize';
 
-import { getTokenBalance, updateUserInfo } from '../actions';
-import actionTypes from '../actionTypes';
+import { getProfileById } from '../actions';
+import profileActionTypes from '../actionsTypes';
 
-export function* updateUserInfoSaga({
+export function* updateProfileInfoSaga({
   type,
-  payload: { web3Provider },
-}: ReturnType<typeof updateUserInfo>) {
+  payload: { web3Provider, id },
+}: ReturnType<typeof getProfileById>) {
   yield put(request(type));
   try {
-    const { data } = yield call(baseApi.getSelfInfo);
+    const { data } = yield call(baseApi.getProfileInfo, { id });
     yield put(getTokenBalance({ web3Provider, address: data.address }));
 
-    yield put(updateWallet(camelize(data)));
+    yield put(updateProfile(camelize(data)));
 
     yield put(success(type));
   } catch (err) {
     console.log(err);
     yield put(error(type, err));
-    yield put(disconnectWalletState());
   }
 }
 
 export default function* listener() {
-  yield takeLatest(actionTypes.UPDATE_USER_INFO, updateUserInfoSaga);
+  yield takeLatest(profileActionTypes.GET_PROFILE, updateProfileInfoSaga);
 }

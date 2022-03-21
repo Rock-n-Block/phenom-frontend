@@ -97,11 +97,11 @@ const DefaultInput: VFC<IDefaultInput> = ({
         e.stopPropagation();
         return;
       }
-      if (min || max) {
-        if (!checkMinMax(currentValue, min, max)) {
-          e.stopPropagation();
-          return;
-        }
+    }
+    if (min || max) {
+      if (!checkMinMax(String(currentValue.length), min, max)) {
+        e.stopPropagation();
+        return;
       }
     }
     setValue(currentValue);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, VFC } from 'react';
+import { FormEvent, useCallback, useEffect, useState, VFC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { CollectionCard, Text } from 'components';
@@ -14,6 +14,8 @@ interface ICollections {
   setSelectedCollection: (collections: Collection[]) => void;
   onRefresh?: () => void;
   fetching?: boolean;
+  onBlur?: (e: FormEvent<HTMLDivElement>) => void;
+  isClearing?: boolean;
 }
 
 const Collections: VFC<ICollections> = ({
@@ -21,6 +23,8 @@ const Collections: VFC<ICollections> = ({
   setSelectedCollection,
   onRefresh,
   fetching = false,
+  onBlur,
+  isClearing,
 }) => {
   const [collections, setCollections] = useState(initCollections);
   const [selected, setSelected] = useState<Collection[]>([]);
@@ -34,6 +38,12 @@ const Collections: VFC<ICollections> = ({
     (url: number) => selected.findIndex((s) => s.url === url) !== -1,
     [selected],
   );
+
+  useEffect(() => {
+    if (isClearing) {
+      setSelected([]);
+    }
+  }, [isClearing]);
 
   useEffect(() => {
     setCollections(initCollections);
@@ -76,6 +86,7 @@ const Collections: VFC<ICollections> = ({
             selectable
             setIsSelected={setIsSelected}
             isSelected={isSelected(+c.url)}
+            onBlur={onBlur}
           />
         ))}
       </div>

@@ -1,4 +1,5 @@
 import nftsActionTypes from 'store/nfts/actionTypes';
+import profileActionTypes from 'store/profile/actionsTypes';
 import userActionTypes from 'store/user/actionTypes';
 import { RequestStatus } from 'types/store';
 
@@ -11,6 +12,8 @@ const initialState: UIState = {
   [userActionTypes.GET_TOKEN_BALANCE]: RequestStatus.INIT,
   [nftsActionTypes.CREATE_TOKEN]: RequestStatus.INIT,
   [nftsActionTypes.CREATE_COLLECTION]: RequestStatus.INIT,
+  [profileActionTypes.GET_PROFILE]: RequestStatus.INIT,
+  [userActionTypes.EDIT_PROFILE_INFO]: RequestStatus.INIT,
 };
 
 const uiReducer = getUIReducer(initialState);

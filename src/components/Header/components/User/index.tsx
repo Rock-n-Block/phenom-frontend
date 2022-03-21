@@ -7,13 +7,13 @@ import userSelector from 'store/user/selectors';
 import cx from 'classnames';
 import { Popover } from 'containers';
 import { useWalletConnectContext } from 'context';
-import mock from 'mock';
 
 import { Avatar, Button, Clipboard, H4, Text } from 'components';
+import { generateUsername } from 'utils';
 
 import { routes } from 'appConstants';
 import { useClickOutside, usePopover, useShallowSelector } from 'hooks';
-import { CategoryName, Chains, State, User, UserState, WalletProviders } from 'types';
+import { CategoryName, Chains, State, UserState, WalletProviders } from 'types';
 
 import {
   ArrowConnectSVG,
@@ -31,36 +31,37 @@ interface IUserProps {
   isDesktop: boolean;
 }
 
-type IUserBody = Required<Pick<User, 'id' | 'address'>> & {
+type IUserBody = {
+  user: Pick<UserState, 'id' | 'address' | 'displayName' | 'avatar' | 'balance'>;
   disconnect: () => void;
 };
 
-const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
+const UserBody: FC<IUserBody> = ({ user, disconnect }) => {
   const dropdownOptions = useMemo(
     () => [
       {
         title: 'Owned',
-        url: routes.profile.link(String(id), 'owned'),
+        url: routes.profile.link(String(user.id), 'owned'),
       },
       {
         title: 'For sale',
-        url: routes.profile.link(String(id), 'for-sale'),
+        url: routes.profile.link(String(user.id), 'for-sale'),
       },
       {
         title: 'Sold',
-        url: routes.profile.link(String(id), 'sold'),
+        url: routes.profile.link(String(user.id), 'sold'),
       },
       {
         title: ' Favorites',
-        url: routes.profile.link(String(id), 'favorites'),
+        url: routes.profile.link(String(user.id), 'favorites'),
       },
       {
         title: 'Bided',
-        url: routes.profile.link(String(id), 'bided'),
+        url: routes.profile.link(String(user.id), 'bided'),
       },
       {
         title: 'Collections',
-        url: routes.profile.link(String(id), 'collections'),
+        url: routes.profile.link(String(user.id), 'collections'),
       },
       {
         title: 'Exit',
@@ -69,7 +70,7 @@ const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
         onClick: disconnect,
       },
     ],
-    [disconnect, id],
+    [disconnect, user.id],
   );
 
   const { closePopover } = usePopover();
@@ -82,9 +83,9 @@ const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
       </div>
       <div className={styles.head}>
         <div className={styles.top}>
-          <Link to={routes.profile.link(mock.id, 'about-me')} className={styles.avatar}>
-            <img src={mock.user} alt="avatar" />
-            <Text>Username</Text>
+          <Link to={routes.profile.link(user.id || 0, 'about-me')} className={styles.avatar}>
+            <Avatar size={30} withShadow={false} id={user.address} avatar={user.avatar} />
+            <Text>{user.displayName || generateUsername(user.id)}</Text>
           </Link>
           <Link to={routes.profile.edit} className={styles.edit}>
             <img src={iconEdit} alt="edit" />
@@ -92,10 +93,10 @@ const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
           </Link>
         </div>
         <div className={styles.balance}>
-          <Text color="blue">0.00 PHETA</Text>
+          <Text color="blue">{user.balance} PHETA</Text>
         </div>
         <div className={styles.address}>
-          <Clipboard value={address} />
+          <Clipboard value={user.address} />
         </div>
       </div>
       <ul className={styles.menu}>
@@ -136,7 +137,7 @@ const UserBody: FC<IUserBody> = ({ id, address, disconnect }) => {
 };
 
 interface IUserMobile {
-  user: any;
+  user: Pick<UserState, 'id' | 'address' | 'displayName' | 'avatar' | 'balance'>;
   close: any;
   disconnect: () => void;
   bodyRef?: RefObject<HTMLDivElement>;
@@ -231,12 +232,12 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
       </div>
       <div className={styles.userButtons}>
         <div className={styles.userItem}>
-          <Link to={routes.profile.link(mock.id, 'about-me')} className={styles.avatar}>
-            <Avatar size={30} withShadow={false} id={mock.id} avatar={mock.user} />
-            <Text>username</Text>
+          <Link to={routes.profile.link(user?.id || 0, 'about-me')} className={styles.avatar}>
+            <Avatar size={30} withShadow={false} id={user.address} avatar={user.avatar} />
+            <Text>{user.displayName || generateUsername(user.id)}</Text>
           </Link>
           <div className={styles.balance}>
-            <Text color="blue">0.00 PHETA</Text>
+            <Text color="blue">{user.balance} PHETA</Text>
           </div>
         </div>
         <div className={styles.userItem}>
@@ -320,11 +321,12 @@ const ConnectSection: VFC<IConnectSection> = ({ connect }) => {
 
 const UserBtn: FC<IUserProps> = ({ className, isDesktop }) => {
   const [isBodyOpen, setIsBodyOpen] = useState(false);
-  const { address, id } = useShallowSelector<State, UserState>(userSelector.getUser);
+  const user = useShallowSelector<State, UserState>(userSelector.getUser);
   const { connect, disconnect } = useWalletConnectContext();
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
   useClickOutside(bodyRef, () => setIsBodyOpen(false), btnRef);
+  const { id, address, avatar } = user;
 
   const handleOpenBody = useCallback((value: boolean) => {
     setIsBodyOpen(value);
@@ -342,10 +344,10 @@ const UserBtn: FC<IUserProps> = ({ className, isDesktop }) => {
   return isDesktop ? (
     <Popover className={cx(styles.user, className)}>
       <Popover.Button className={styles.popoverBtn}>
-        <img src={mock.user} alt="Avatar" />
+        <img className={styles.userBtnIcon} src={avatar} alt="Avatar" />
       </Popover.Button>
       <Popover.Body className={styles.popoverBody}>
-        <UserBody id={id || 0} address={address} disconnect={disconnect} />
+        <UserBody user={user} disconnect={disconnect} />
       </Popover.Body>
     </Popover>
   ) : (
@@ -360,7 +362,7 @@ const UserBtn: FC<IUserProps> = ({ className, isDesktop }) => {
       </Button>
       {isBodyOpen ? (
         <UserMobile
-          user={{ id, address }}
+          user={user}
           close={() => setIsBodyOpen(false)}
           disconnect={disconnect}
           bodyRef={bodyRef}

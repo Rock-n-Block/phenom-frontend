@@ -1,11 +1,16 @@
 import { useCallback, VFC } from 'react';
 
+import uiSelector from 'store/ui/selectors';
+import actionTypes from 'store/user/actionTypes';
+
 import cn from 'classnames';
 import { Field, Form, FormikProps } from 'formik';
 
 import { Button, CopiedInput, DefaultInput, Text, TextArea, UploadAvatar } from 'components';
 
 import { imagesFormats, maxAvatarSize } from 'appConstants';
+import { useShallowSelector } from 'hooks';
+import { RequestStatus } from 'types';
 
 import { EditProfileFields, IEditProfile } from '.';
 
@@ -27,12 +32,12 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
 
   const onSubmitClick = useCallback(
     (vals: any) => {
-      validateForm(vals);
-      handleSubmit();
+      validateForm(vals).then(() => handleSubmit());
     },
     [handleSubmit, validateForm],
   );
 
+  const { [actionTypes.EDIT_PROFILE_INFO]: editingProfile } = useShallowSelector(uiSelector.getUI);
   return (
     <Form className={styles['edit-profile__wrapper']}>
       <Text
@@ -51,6 +56,7 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
             <UploadAvatar
               fileURL={values.avatarURL || ''}
               reqMaxSize={maxAvatarSize}
+              onBlur={handleBlur('avatarFile')}
               onLoadEnd={(fURL, f) => {
                 setFieldValue('avatarFile', f);
                 setFieldValue('avatarURL', fURL);
@@ -66,8 +72,8 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
         color="black"
         weight="medium"
       >
-        acceptable file format: {imagesFormats.join(', ').toUpperCase()} maximum file size: {maxAvatarSize.size}{' '}
-        {maxAvatarSize.unit}
+        acceptable file format: {imagesFormats.join(', ').toUpperCase()} maximum file size:{' '}
+        {maxAvatarSize.size} {maxAvatarSize.unit}
       </Text>
       <Text
         className={styles['edit-profile__wrapper__logo-subtitle']}
@@ -206,6 +212,9 @@ const MainForm: VFC<FormikProps<IEditProfile> & IEditProfile> = ({
           disabled={!!Object.keys(errors).length || !Object.keys(touched).length}
           className={styles['submit-btn']}
           onClick={() => onSubmitClick(values)}
+          loading={editingProfile === RequestStatus.REQUEST}
+          loaderColor="dark"
+          loaderSize="small"
         >
           Save
         </Button>

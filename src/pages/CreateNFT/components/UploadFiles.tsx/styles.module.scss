@@ -1,32 +1,35 @@
 @import '/src/styles/helpers.scss';
 
-.upload-nft__wrapper{
-    width: 100%;
-    &__body{
-        margin: 0 auto;
-        &-title{
-            margin: 95px 0 85px;
-            @include transition;
-        }
-        &-switch{
-            margin-bottom: 10px;
-        }
-        &-preview{
-            width: 100%;
-            &__delete{
-                margin-top: 25px;
-                @include flexbox(center, center)
-            }
-        }
+.upload-nft__wrapper {
+  width: 100%;
+  &__body {
+    margin: 0 auto;
+    &-title {
+      margin: 95px 0 85px;
+      @include transition;
     }
+    &-switch {
+      margin-bottom: 10px;
+    }
+    &-preview {
+      width: 100%;
+      &.preview-active {
+        height: 350px;
+      }
+      &__delete {
+        margin-top: 25px;
+        @include flexbox(center, center);
+      }
+    }
+  }
 }
 
-@include large-mobile{
-    .upload-nft__wrapper{
-        &__body{
-            &-title{
-                margin: 25px 0 40px;
-            }
-        }
+@include large-mobile {
+  .upload-nft__wrapper {
+    &__body {
+      &-title {
+        margin: 25px 0 40px;
+      }
     }
+  }
 }
