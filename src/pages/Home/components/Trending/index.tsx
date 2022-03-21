@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { getTrending } from 'store/nfts/actions';
+import { clearTrending } from 'store/nfts/reducer';
 import nftsSelector from 'store/nfts/selectors';
 
 import cx from 'classnames';
@@ -62,6 +63,13 @@ const Trending: FC<Props> = ({ className }) => {
   useEffect(() => {
     fetchTrendingNfts();
   }, [fetchTrendingNfts]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearTrending());
+    },
+    [dispatch],
+  );
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>

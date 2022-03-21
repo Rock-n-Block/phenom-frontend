@@ -21,7 +21,7 @@ export const App: FC = () => {
   useEffect(() => {
     handleGetCategories();
   }, [handleGetCategories]);
-  
+
   const { ready } = useTranslation();
   if (!ready) {
     return <div>Loading</div>;

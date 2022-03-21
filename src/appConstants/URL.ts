@@ -23,4 +23,5 @@ export default {
   editProfile: '/account/self/',
   trendingCollections: '/store/trending_collections/',
   trendingTokens: '/store/trending_tokens/',
+  topCollections: '/activity/top-collections/',
 };

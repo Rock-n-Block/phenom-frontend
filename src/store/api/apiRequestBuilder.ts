@@ -19,6 +19,13 @@ export const baseApi = {
       params,
     });
   },
+  getTopCollections(params: { network: string }) {
+    return ajax({
+      method: 'get',
+      url: URL.topCollections,
+      params,
+    });
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   presearchNfts(params: any) {
     return ajax({

@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAction } from '@reduxjs/toolkit';
 
-import { CreateCollectionAction, SearchCollectionAction, SearchTrendingsReq } from 'types/requests';
+import {
+  CreateCollectionAction,
+  RequestWithNetwork,
+  SearchCollectionAction,
+  SearchTrendingsReq,
+} from 'types/requests';
 
 import actionTypes from './actionTypes';
 
@@ -12,3 +17,4 @@ export const createCollection = createAction<CreateCollectionAction>(actionTypes
 export const getTrendingCollections = createAction<SearchTrendingsReq>(
   actionTypes.GET_TRENDING_COLLECTIONS,
 );
+export const getTopCollections = createAction<RequestWithNetwork>(actionTypes.GET_TOP_COLLECTIONS);
