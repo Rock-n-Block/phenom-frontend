@@ -21,6 +21,7 @@ export function* setOnAuctionSaga({
     id,
     internalId,
     currency = DEFAULT_CURRENCY,
+    isSingle,
     minimalBid,
     auctionDuration,
     web3Provider,
@@ -50,6 +51,7 @@ export function* setOnAuctionSaga({
       type: actionTypes.APPROVE_NFT,
       payload: {
         id: internalId,
+        isSingle,
         web3Provider,
       },
     });

@@ -21,6 +21,7 @@ export function* setOnSaleSaga({
     id,
     internalId,
     currency = DEFAULT_CURRENCY,
+    isSingle,
     price,
     amount,
     web3Provider,
@@ -39,6 +40,7 @@ export function* setOnSaleSaga({
       type: actionTypes.APPROVE_NFT,
       payload: {
         id: internalId,
+        isSingle,
         web3Provider,
       },
     });
