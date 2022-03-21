@@ -1,6 +1,7 @@
 import nftsActionTypes from 'store/nfts/actionTypes';
 import profileActionTypes from 'store/profile/actionsTypes';
 import userActionTypes from 'store/user/actionTypes';
+import collectionsActionTypes from 'store/collections/actionTypes';
 import { RequestStatus } from 'types/store';
 
 import { UIState } from 'types';
@@ -11,7 +12,7 @@ const initialState: UIState = {
   [nftsActionTypes.GET_CATEGORIES]: RequestStatus.INIT,
   [userActionTypes.GET_TOKEN_BALANCE]: RequestStatus.INIT,
   [nftsActionTypes.CREATE_TOKEN]: RequestStatus.INIT,
-  [nftsActionTypes.CREATE_COLLECTION]: RequestStatus.INIT,
+  [collectionsActionTypes.CREATE_COLLECTION]: RequestStatus.INIT,
   [profileActionTypes.GET_PROFILE]: RequestStatus.INIT,
   [userActionTypes.EDIT_PROFILE_INFO]: RequestStatus.INIT,
 };

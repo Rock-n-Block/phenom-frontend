@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import nftSelector from 'store/nfts/selectors';
+import collectionsSelector from 'store/collections/selectors';
 
 import BigNumber from 'bignumber.js';
 import { omit } from 'lodash';
@@ -36,7 +36,7 @@ type Props = {
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory);
   const { t } = useTranslation('Explore');
-  const collections = useShallowSelector(nftSelector.getProp('collections'));
+  const collections = useShallowSelector(collectionsSelector.getProp('collections'))
   const [checkedFilters, setCheckedFilters] = useState<any>({});
   const [orderBy, setOrderBy] = useState<any>('');
   const [appliedFilters, setAppliedFilters] = useState<any>({});
