@@ -5,7 +5,7 @@ import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
 
 import { contractsConfig, ContractsNames } from 'config';
-import { nftAbi } from 'config/abi';
+import { erc721Abi, erc1155Abi } from 'config/abi';
 import { isMainnet } from 'config/constants';
 
 import { Chains, Modals } from 'types';
@@ -15,7 +15,7 @@ import actionTypes from '../actionTypes';
 
 export function* approveNftSaga({
   type,
-  payload: { id, web3Provider },
+  payload: { id, isSingle, web3Provider },
 }: ReturnType<typeof approveNft>) {
   yield put(apiActions.request(type));
 
@@ -24,16 +24,19 @@ export function* approveNftSaga({
   const myAddress = yield select(userSelector.getProp('address'));
   try {
     const nftAddress =
-      contractsConfig.contracts[ContractsNames.nft][isMainnet ? 'mainnet' : 'testnet'].address[
-        Chains.bsc
-      ];
+      contractsConfig.contracts[isSingle ? ContractsNames.erc721 : ContractsNames.erc1155][
+        isMainnet ? 'mainnet' : 'testnet'
+      ].address[Chains.bsc];
     const marketpalceAddress =
       contractsConfig.contracts[ContractsNames.marketpalce][isMainnet ? 'mainnet' : 'testnet']
         .address[Chains.bsc];
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const nftContract = yield new web3Provider.eth.Contract(nftAbi, nftAddress);
+    const nftContract = yield new web3Provider.eth.Contract(
+      isSingle ? erc721Abi : erc1155Abi,
+      nftAddress,
+    );
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -47,7 +50,7 @@ export function* approveNftSaga({
       setActiveModal({
         activeModal: Modals.ApprovePending,
         open: true,
-        txHash: ''
+        txHash: '',
       }),
     );
 
@@ -59,7 +62,7 @@ export function* approveNftSaga({
       setActiveModal({
         activeModal: Modals.none,
         open: false,
-        txHash: ''
+        txHash: '',
       }),
     );
 
@@ -70,7 +73,7 @@ export function* approveNftSaga({
       setActiveModal({
         activeModal: Modals.ApproveRejected,
         open: true,
-        txHash: ''
+        txHash: '',
       }),
     );
 

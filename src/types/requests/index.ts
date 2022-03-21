@@ -46,6 +46,7 @@ export type ApproveReq = {
 
 export type ApproveNftReq = {
   id: number | string;
+  isSingle: boolean;
   web3Provider: Web3;
 };
 
@@ -65,6 +66,7 @@ export type SetOnAuctionPreReq = {
   id: number | string;
   internalId: number | string;
   minimalBid: number | string;
+  isSingle: boolean;
   currency?: string;
   end_auction?: number;
   auctionDuration?: number;
@@ -83,6 +85,7 @@ export type SetOnSalePreReq = {
   id: number | string;
   internalId: number | string;
   price: number | string;
+  isSingle: boolean;
   currency?: string;
   amount?: number | string;
   web3Provider: Web3;
