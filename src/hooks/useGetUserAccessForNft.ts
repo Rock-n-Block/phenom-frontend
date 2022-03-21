@@ -5,7 +5,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
   const isOwner = React.useMemo(() => {
     if (userId && nft && nft.owners) {
       return !!nft.owners.find((owner: Ownership) => {
-        return owner.url === userId;
+        return String(owner.url) === String(userId);
       });
     }
     return false;

@@ -71,7 +71,7 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0].value);
-  const [modalType, setModalType] = useState(Modals.ChooseSeller);
+  const [modalType, setModalType] = useState(Modals.none);
 
   const handleSetModalType = useCallback((newModalType: Modals) => {
     setModalType(newModalType);
