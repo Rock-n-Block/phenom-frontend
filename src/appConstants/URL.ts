@@ -21,4 +21,5 @@ export default {
   verificateBet: (id: number | string) => `/store/token/${id}/verificate_bet/`,
   trackTransaction: 'store/track_transaction',
   editProfile: '/account/self/',
+  trendingCollections: '/store/trending_collections/'
 };

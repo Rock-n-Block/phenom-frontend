@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import apiActions from 'store/api/actions';
-import actionTypes from 'store/nfts/actionTypes';
+import actionTypes from 'store/collections/actionTypes';
 import uiSelector from 'store/ui/selectors';
 
 import { Field, Form, FormikProps } from 'formik';

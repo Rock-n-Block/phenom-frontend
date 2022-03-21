@@ -1,4 +1,5 @@
 import { NftsState, ProfileState } from './store';
+import { CollectionsState } from './store/collections';
 import { ModalsInitialState } from './store/modals';
 import { UserState } from './store/user';
 
@@ -49,6 +50,7 @@ export type State = {
   modals: ModalsInitialState;
   nfts: NftsState;
   profile: ProfileState;
+  collections: CollectionsState;
 };
 
 export interface IOwner extends Omit<IBaseInfo, 'address'> {
