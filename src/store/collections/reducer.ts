@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CollectionsState, IBaseInfo, TrendingCollection } from 'types';
+import { Collection, CollectionsState, IBaseInfo, TrendingCollection } from 'types';
 
 const initialState: CollectionsState = {
   collections: [],
@@ -21,7 +21,7 @@ export const collectionsReducer = createSlice({
       ...state,
       trendingCollections: action.payload,
     }),
-    setTopCollections: (state, action: PayloadAction<IBaseInfo[]>) => ({
+    setTopCollections: (state, action: PayloadAction<Collection[]>) => ({
       ...state,
       topCollections: action.payload,
     }),

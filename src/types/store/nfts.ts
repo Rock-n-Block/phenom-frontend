@@ -54,4 +54,5 @@ export type NftsState = {
   detailedNft: TNullable<TokenFull>;
   totalPages: number;
   categories: TNullable<TResponseCategories>;
+  trending: TokenFull[]
 };

@@ -83,4 +83,11 @@ export default {
       url: URL.endAuction(data.id),
     });
   },
+  trendingTokens(data: {category: string}) {
+    return ajax({
+      method: 'get',
+      url: URL.trendingTokens,
+      data,
+    });
+  },
 };

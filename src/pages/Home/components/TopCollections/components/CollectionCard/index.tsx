@@ -12,7 +12,7 @@ interface IProps {
   avatar: string;
   id: number;
   name: string;
-  price: string;
+  price: string | number;
   profitIncrease?: string | number;
   className?: string;
 }

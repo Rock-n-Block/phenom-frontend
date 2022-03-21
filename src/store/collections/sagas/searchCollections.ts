@@ -18,7 +18,7 @@ export function* searchCollectionsSaga({
   yield put(apiActions.request(type));
 
   try {
-    const { data } = yield call(baseApi.searchNfts, requestData);
+    const { data } = yield call(baseApi.searchCollections, requestData);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const collections = yield select(collectionsSelector.getProp('collections'));
