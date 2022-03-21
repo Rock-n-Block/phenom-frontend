@@ -11,6 +11,7 @@ import { Chains } from 'types';
 
 import { getTokenBalance } from '../actions';
 import actionTypes from '../actionTypes';
+import { getTokenAmountDisplay } from 'utils';
 
 export function* getTokenBalanceSaga({
   type,
@@ -30,10 +31,13 @@ export function* getTokenBalanceSaga({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const balance = yield call(tokenContract.methods.balanceOf(address).call);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const decimals = yield call(tokenContract.methods.decimals().call);
       if (myAddress === address) {
-        yield put(updateWallet({ balance }));
+        yield put(updateWallet({ balance: getTokenAmountDisplay(balance, decimals) }));
       } else {
-        yield put(updateProfile({ balance }));
+        yield put(updateProfile({ balance: getTokenAmountDisplay(balance, decimals) }));
       }
     }
 
