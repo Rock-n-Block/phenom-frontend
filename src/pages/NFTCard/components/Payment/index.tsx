@@ -32,7 +32,7 @@ import {
 } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { Modals, Standart, TokenFull } from 'types';
+import { Modals, ModalState, Standart, TokenFull } from 'types';
 
 import {
   DollarIcon,
@@ -44,6 +44,7 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
+import { useModals } from 'hooks';
 
 interface IPayment {
   nft: TokenFull;
@@ -83,15 +84,19 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0]);
-  const [modalType, setModalType] = useState(Modals.none);
 
-  const handleSetModalType = useCallback((newModalType: Modals) => {
-    setModalType(newModalType);
-  }, []);
+  const { modalType, closeModals, activateModals } = useModals();
+
+  const handleSetModalType = useCallback(
+    (state: ModalState) => {
+      activateModals(state);
+    },
+    [activateModals],
+  );
 
   const handleCloseModal = useCallback(() => {
-    setModalType(Modals.none);
-  }, []);
+    closeModals();
+  }, [closeModals]);
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -127,7 +132,11 @@ const Payment: VFC<IPayment> = ({
         handleBuy(nft?.sellers?.[0].url || 0);
       }
       if (!isSingle) {
-        handleSetModalType(Modals.ChooseSeller);
+        handleSetModalType({
+          activeModal: Modals.ChooseSeller,
+          open: true,
+          txHash: '',
+        });
       }
     },
     [handleBuy, handleSetModalType, nft.sellers],
@@ -359,7 +368,13 @@ const Payment: VFC<IPayment> = ({
                       color="dark"
                       className={cx(styles.button, styles.transfer)}
                       suffixIcon={iconTransfer}
-                      onClick={() => handleSetModalType(Modals.Transfer)}
+                      onClick={() =>
+                        handleSetModalType({
+                          activeModal: Modals.Transfer,
+                          open: true,
+                          txHash: '',
+                        })
+                      }
                     >
                       Transfer
                     </Button>
@@ -583,7 +598,13 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(Modals.Transfer)}
+                    onClick={() =>
+                      handleSetModalType({
+                        activeModal: Modals.Transfer,
+                        open: true,
+                        txHash: '',
+                      })
+                    }
                   >
                     Transfer
                   </Button>
