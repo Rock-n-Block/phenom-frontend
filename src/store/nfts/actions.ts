@@ -5,6 +5,7 @@ import {
   ApproveNftReq,
   ApproveReq,
   BidReq,
+  BurnTokenReq,
   BuyReq,
   CreateTokenRequest,
   EndAucReq,
@@ -15,6 +16,7 @@ import {
   SetOnAuctionPreReq,
   SetOnSalePreReq,
   TrackTransactionReq,
+  TransferTokenReq,
 } from 'types/requests';
 
 import actionTypes from './actionTypes';
@@ -34,3 +36,5 @@ export const like = createAction<LikeReq>(actionTypes.LIKE);
 export const endAuction = createAction<EndAucReq>(actionTypes.END_AUCTION);
 export const trackTransaction = createAction<TrackTransactionReq>(actionTypes.TRACK_TRANSACTION);
 export const getTrending = createAction<GetTrendingNftsReq>(actionTypes.GET_TRENDING);
+export const transfer = createAction<TransferTokenReq>(actionTypes.TRANSFER);
+export const burn = createAction<BurnTokenReq>(actionTypes.BURN);

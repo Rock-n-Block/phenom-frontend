@@ -161,6 +161,19 @@ export type SearchNftReq = {
   min_price?: string | number;
 };
 
+export type TransferTokenReq = {
+  id: number | string;
+  address: string;
+  amount?: number | string;
+  web3Provider: Web3;
+};
+
+export type BurnTokenReq = {
+  id: number | string;
+  amount?: string | number;
+  web3Provider: Web3;
+}
+
 export type SearchCollectionsReq = {
   type: string;
   page: number;

@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { bid, buy, endAuction, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
+import {
+  bid,
+  buy,
+  endAuction,
+  removeFromSale,
+  setOnAuction,
+  setOnSale,
+  transfer,
+} from 'store/nfts/actions';
 
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
@@ -11,7 +19,6 @@ import {
   ApprovePendingModal,
   ApproveRejectedModal,
   Avatar,
-  BurnModal,
   Button,
   DefaultInput,
   QuantityInput,
@@ -25,7 +32,7 @@ import {
 } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { Modals, TokenFull } from 'types';
+import { Modals, ModalState, Standart, TokenFull } from 'types';
 
 import {
   DollarIcon,
@@ -37,6 +44,7 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
+import { useModals } from 'hooks';
 
 interface IPayment {
   nft: TokenFull;
@@ -76,15 +84,19 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0]);
-  const [modalType, setModalType] = useState(Modals.none);
 
-  const handleSetModalType = useCallback((newModalType: Modals) => {
-    setModalType(newModalType);
-  }, []);
+  const { modalType, closeModals, activateModals } = useModals();
+
+  const handleSetModalType = useCallback(
+    (state: ModalState) => {
+      activateModals(state);
+    },
+    [activateModals],
+  );
 
   const handleCloseModal = useCallback(() => {
-    setModalType(Modals.none);
-  }, []);
+    closeModals();
+  }, [closeModals]);
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -120,7 +132,11 @@ const Payment: VFC<IPayment> = ({
         handleBuy(nft?.sellers?.[0].url || 0);
       }
       if (!isSingle) {
-        handleSetModalType(Modals.ChooseSeller);
+        handleSetModalType({
+          activeModal: Modals.ChooseSeller,
+          open: true,
+          txHash: '',
+        });
       }
     },
     [handleBuy, handleSetModalType, nft.sellers],
@@ -193,11 +209,24 @@ const Payment: VFC<IPayment> = ({
     dispatch(
       removeFromSale({
         id: nft?.id,
-        currency: nft?.currency?.symbol || DEFAULT_CURRENCY,
         web3Provider: walletService.Web3(),
       }),
     );
   }, [nft, dispatch, walletService]);
+
+  const handleTransfer = useCallback(
+    (address: string, amount?: string | number) => {
+      dispatch(
+        transfer({
+          id: nft?.id || 0,
+          address,
+          amount,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    },
+    [dispatch, nft.id, walletService],
+  );
 
   useEffect(() => {
     let timeInterval: any;
@@ -270,7 +299,7 @@ const Payment: VFC<IPayment> = ({
           )}
           {nft?.price && (
             <Text weight="semibold" color="blue" className={styles.price}>
-              {nft?.price} PHENOM
+              {nft?.price} {nft?.currency?.symbol || DEFAULT_CURRENCY}
             </Text>
           )}
           {nft?.usdPrice && (
@@ -334,14 +363,22 @@ const Payment: VFC<IPayment> = ({
             !isListing && (
               <div className={cx(styles.choose, styles.chooseInside)}>
                 {isOwner && (
-                  <Button
-                    color="dark"
-                    className={cx(styles.button, styles.transfer)}
-                    suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(Modals.Transfer)}
-                  >
-                    Transfer
-                  </Button>
+                  <>
+                    <Button
+                      color="dark"
+                      className={cx(styles.button, styles.transfer)}
+                      suffixIcon={iconTransfer}
+                      onClick={() =>
+                        handleSetModalType({
+                          activeModal: Modals.Transfer,
+                          open: true,
+                          txHash: '',
+                        })
+                      }
+                    >
+                      Transfer
+                    </Button>
+                  </>
                 )}
                 {isUserCanEndAuction && (
                   <Button
@@ -561,7 +598,13 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(Modals.Transfer)}
+                    onClick={() =>
+                      handleSetModalType({
+                        activeModal: Modals.Transfer,
+                        open: true,
+                        txHash: '',
+                      })
+                    }
                   >
                     Transfer
                   </Button>
@@ -586,9 +629,12 @@ const Payment: VFC<IPayment> = ({
         </div>
       )}
 
-      <TransferModal visible={modalType === Modals.Transfer} onClose={() => handleCloseModal()} />
-
-      <BurnModal visible={modalType === Modals.Burn} onClose={() => handleCloseModal()} />
+      <TransferModal
+        visible={modalType === Modals.Transfer}
+        onClose={() => handleCloseModal()}
+        isMultiple={nft?.standart === Standart.ERC1155}
+        onSend={handleTransfer}
+      />
 
       <SellersModal
         visible={modalType === Modals.ChooseSeller}
