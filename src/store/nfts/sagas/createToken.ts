@@ -41,18 +41,29 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
           }),
         );
         yield put(apiActions.success(type));
-      } catch (e) {
+      } catch (e: any) {
         yield call(baseApi.removeReject, {
           id: token.id,
           owner: token.creator.url,
         });
-        yield put(
-          setActiveModal({
-            activeModal: Modals.SendRejected,
-            open: true,
-            txHash: '',
-          }),
-        );
+
+        if (e.code === 4001) {
+          yield put(
+            setActiveModal({
+              activeModal: Modals.SendRejected,
+              open: true,
+              txHash: '',
+            }),
+          );
+        } else {
+          yield put(
+            setActiveModal({
+              activeModal: Modals.SendError,
+              open: true,
+              txHash: '',
+            }),
+          );
+        }
 
         yield put(apiActions.error(type, e));
       }

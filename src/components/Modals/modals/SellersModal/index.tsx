@@ -14,9 +14,16 @@ type ISellersModal = {
   onClose: (value: boolean) => void;
   sellers?: Ownership[];
   handleChooseSeller: (id: string | number) => void;
+  onSend?: () => void;
 };
 
-const SellersModal: VFC<ISellersModal> = ({ visible, onClose, sellers, handleChooseSeller }) => {
+const SellersModal: VFC<ISellersModal> = ({
+  visible,
+  onClose,
+  sellers,
+  handleChooseSeller,
+  onSend,
+}) => {
   return (
     <Modal visible={visible} onClose={onClose} title={`Sellers (${sellers?.length})`}>
       <div className={styles.sellers}>
@@ -39,7 +46,9 @@ const SellersModal: VFC<ISellersModal> = ({ visible, onClose, sellers, handleCho
             </div>
           ))}
       </div>
-      <Button className={styles.button}>Send</Button>
+      <Button onClick={onSend} className={styles.button}>
+        Send
+      </Button>
     </Modal>
   );
 };

@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 import styles from './ScrollToTop.module.scss';

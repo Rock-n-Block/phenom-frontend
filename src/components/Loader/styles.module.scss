@@ -11,8 +11,23 @@
 }
 
 .loader {
-  @include transition;
-  animation: spin 1.5s infinite linear;
+  background: conic-gradient(
+    from 0 at 50% 50%,
+    $color-accent 0deg,
+    $color-accent,
+    rgba(12, 7, 253, 0)
+  );
+  position: relative;;
+  animation: spin 1.5s infinite ease-in-out;
+}
+
+.loader:after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  background-color: $color-accent;
+  transform: translateX(-50%);
 }
 
 .loader:before {
@@ -34,6 +49,11 @@
     width: 84px;
     height: 84px;
   }
+  .loader:after{
+    width: 10px;
+    height: 8px;
+    border-radius: 8px;
+  }
 }
 
 .size_medium {
@@ -44,6 +64,11 @@
   .loader:before {
     width: 42px;
     height: 42px;
+  }
+  .loader:after{
+    width: 5px;
+    height: 4px;
+    border-radius: 4px;
   }
 }
 
@@ -56,6 +81,11 @@
     width: 21px;
     height: 21px;
   }
+  .loader:after{
+    width: 4px;
+    height: 2px;
+    border-radius: 2px;
+  }
 }
 
 .color_white:before {
@@ -66,22 +96,20 @@
   background: $color-light;
 }
 
-.color_dark:before{
+.color_dark:before {
   background: $color-dark;
 }
 
 @keyframes spin {
-  from {
+  0% {
+    filter: hue-rotate(0deg);
     transform: rotate(0deg);
-    background: conic-gradient($color-accent, rgba(12, 7, 253, 0));
   }
-  to {
+  50% {
+    filter: hue-rotate(90deg);
+  }
+  100% {
     transform: rotate(360deg);
-    background: conic-gradient(
-      from 0 at 50% 50%,
-      $color-accent 20deg,
-      rgba(255, 60, 0, 0.479) 10deg,
-      rgba(12, 7, 253, 0) 340deg
-    );
+    filter: hue-rotate(0deg);
   }
 }

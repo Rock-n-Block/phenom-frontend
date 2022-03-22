@@ -42,10 +42,10 @@ const TextGenerator: FC<PropsWithChildren<Props>> = ({
   children,
   className,
   style = {},
-  size = 's',
+  size = 'inherit',
   color = 'black',
   align = 'left',
-  weight = 'normal',
+  weight = 'inherit',
   elRef,
   description,
 }) =>

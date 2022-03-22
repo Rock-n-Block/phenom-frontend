@@ -1,6 +1,6 @@
 import { Chains, IConnectWallet, IContracts } from 'types';
 
-import { erc20Abi, marketPlaceAbi, erc721Abi, erc1155Abi } from './abi';
+import { erc20Abi, erc721Abi, erc1155Abi, marketPlaceAbi } from './abi';
 import { isMainnet } from './constants';
 
 export const chains: {
@@ -11,6 +11,7 @@ export const chains: {
       [key: string]: any;
     };
     img?: any;
+    scanner?: string;
   };
 } = {
   'Binance-Smart-Chain': {
@@ -33,6 +34,7 @@ export const chains: {
         },
       }, */
     },
+    scanner: isMainnet ? 'https://bscscan.com/' : 'https://testnet.bscscan.com/',
   },
 };
 

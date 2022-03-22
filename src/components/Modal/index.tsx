@@ -35,18 +35,18 @@ const Modal: React.FC<any> = ({
     };
   }, [escFunction]);
 
-  const disableBodyScroll = () => {
+  const disableBodyScroll = useCallback(() => {
     document.body.style.overflow = 'hidden';
-  };
-  const enableBodyScroll = () => {
+  }, []);
+  const enableBodyScroll = useCallback(() => {
     document.body.style.overflow = 'unset';
-  };
+  }, []);
   useEffect(() => {
     if (visible) {
       disableBodyScroll();
     }
     return () => enableBodyScroll();
-  }, [visible]);
+  }, [disableBodyScroll, enableBodyScroll, visible]);
 
   return createPortal(
     visible && (

@@ -4,15 +4,19 @@ import { Loader, Modal, Text } from 'components';
 
 import styles from './styles.module.scss';
 
-type ISendPendingModal = {
+type IApprovePendingModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
+  withSteps?: boolean;
 };
 
-const SendPendingModal: VFC<ISendPendingModal> = ({ visible, onClose }) => {
+const ApprovePendingModal: VFC<IApprovePendingModal> = ({ visible, onClose, withSteps = true }) => {
   const title = (
-    <Text align="center">
-      STEP 2/2 <Text color="blue">SEND</Text>
+    <Text align="center" size="xl" weight="bold">
+      {withSteps && 'STEP 1/2 '}
+      <Text tag="span" color="blue">
+        APPROVE
+      </Text>
     </Text>
   );
 
@@ -22,13 +26,10 @@ const SendPendingModal: VFC<ISendPendingModal> = ({ visible, onClose }) => {
         <Loader />
       </div>
       <Text size="xl" weight="semibold" align="center" className={styles.subtitle}>
-        Please press &quotSend&quot button in metamask extension
-      </Text>
-      <Text align="center" className={styles.text}>
-        Your USDT will be transferred from your wallet to the contract address.
+        Please press &quot;Approve&quot; button in metamask extension
       </Text>
     </Modal>
   );
 };
 
-export default SendPendingModal;
+export default ApprovePendingModal;
