@@ -13,6 +13,8 @@ const LIKE = 'LIKE' as const;
 const END_AUCTION = 'END_AUCTION' as const;
 const TRACK_TRANSACTION = 'TRACK_TRANSACTION' as const;
 const GET_TRENDING = 'GET_TRENDING' as const;
+const TRANSFER = 'TRANSFER' as const;
+const BURN = 'BURN' as const;
 
 export default {
   GET_CATEGORIES,
@@ -30,4 +32,6 @@ export default {
   END_AUCTION,
   TRACK_TRANSACTION,
   GET_TRENDING,
+  TRANSFER,
+  BURN,
 };

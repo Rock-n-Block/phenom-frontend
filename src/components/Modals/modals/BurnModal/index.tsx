@@ -8,7 +8,7 @@ type IBurnModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
   isMultiple?: boolean;
-  onBurn?: () => void;
+  onBurn: (amount: number | string) => void;
 };
 
 const BurnModal: VFC<IBurnModal> = ({ visible, onClose, isMultiple, onBurn }) => {
@@ -31,11 +31,12 @@ const BurnModal: VFC<IBurnModal> = ({ visible, onClose, isMultiple, onBurn }) =>
           value={inputValue}
           setValue={handleInputChange}
           placeholder="Input text"
+          type="number"
         />
       ) : (
         <></>
       )}
-      <Button color="burn" onClick={onBurn} className={styles.button}>
+      <Button color="burn" onClick={() => onBurn(inputValue)} className={styles.button}>
         Burn
       </Button>
     </Modal>

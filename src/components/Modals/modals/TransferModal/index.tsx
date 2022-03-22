@@ -7,14 +7,20 @@ import styles from './styles.module.scss';
 type ITransferModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
-  onSend?: () => void;
+  isMultiple?: boolean;
+  onSend: (address: string, amount: string | number) => void;
 };
 
-const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend }) => {
+const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultiple }) => {
   const [inputValue, setInputValue] = useState('');
+  const [amountValue, setAmountValue] = useState('');
 
   const handleInputChange = useCallback((value: string) => {
     setInputValue(value);
+  }, []);
+
+  const handleAmountChange = useCallback((value: string) => {
+    setAmountValue(value);
   }, []);
 
   return (
@@ -26,7 +32,22 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend }) => {
         setValue={handleInputChange}
         placeholder="Input address"
       />
-      <Button onClick={onSend} className={styles.button}>
+      {isMultiple ? (
+        <DefaultInput
+          name="amount"
+          label="Amount"
+          value={amountValue}
+          setValue={handleAmountChange}
+          placeholder="Input text"
+          type="number"
+        />
+      ) : (
+        <></>
+      )}
+      <Button
+        onClick={() => onSend(inputValue.trim(), amountValue.trim())}
+        className={styles.button}
+      >
         Send
       </Button>
     </Modal>

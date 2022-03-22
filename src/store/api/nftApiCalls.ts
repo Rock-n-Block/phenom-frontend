@@ -86,10 +86,18 @@ export default {
       data,
     });
   },
-  transfer(data: { id: string | number; address: string; amount: string | number }) {
+  transfer(data: { id: string | number; address: string; amount?: string | number }) {
     return ajax({
       method: 'post',
       url: URL.transfer(data.id),
+      data
+    });
+  },
+  burn(data: { id: string | number; amount?: string | number }) {
+    return ajax({
+      method: 'post',
+      url: URL.burn(data.id),
+      data
     });
   },
 };
