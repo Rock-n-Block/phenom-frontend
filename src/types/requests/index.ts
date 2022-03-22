@@ -159,6 +159,7 @@ export type SearchNftReq = {
   collections?: string[];
   max_price?: string | number;
   min_price?: string | number;
+  text?: string
 };
 
 export type TransferTokenReq = {

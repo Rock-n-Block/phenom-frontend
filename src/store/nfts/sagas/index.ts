@@ -8,6 +8,7 @@ import createTokenSaga from './createToken';
 import getCategoriesSaga from './getCategories';
 import getDetailedNftSaga from './getDetailedNft';
 import like from './like';
+import presearchNftsSaga from './presearchNfts';
 import removeFromSale from './removeFromSale';
 import searchNftsSaga from './searchNfts';
 import searchTrendingSaga from './searchTrending';
@@ -17,6 +18,7 @@ import transferSaga from './transfer';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
+  yield fork(presearchNftsSaga);
   yield fork(searchNftsSaga);
   yield fork(searchTrendingSaga);
   yield fork(buy);
