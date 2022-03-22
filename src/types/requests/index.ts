@@ -116,7 +116,7 @@ export type GetDetailedNftReq = {
 };
 
 export type GetTrendingNftsReq = {
-  type: string;
+  category?: string | number;
 };
 
 export type BuyReq = {
@@ -164,6 +164,10 @@ export type SearchNftReq = {
 export type SearchCollectionsReq = {
   type: string;
   page: number;
+};
+
+export type SearchTrendingsReq = {
+  category?: string | number;
 };
 
 export type SearchNftAction = {

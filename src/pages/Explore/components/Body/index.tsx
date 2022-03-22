@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { getCategories, searchNfts } from 'store/nfts/actions';
+import { searchNfts } from 'store/nfts/actions';
 import actionTypes from 'store/nfts/actionTypes';
 import { clearNfts } from 'store/nfts/reducer';
 import nftSelector from 'store/nfts/selectors';
@@ -32,20 +32,12 @@ interface IBody {
 const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag }) => {
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
-  const totalPages = useShallowSelector(nftSelector.getProp('totalNftsPages'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const { [actionTypes.SEARCH_NFTS]: nftsRequestStatus } = useShallowSelector(uiSelector.getUI);
   const { t } = useLanguage();
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({});
   const dispatch = useDispatch();
-
-  const handleGetCategories = useCallback(() => {
-    dispatch(getCategories({}));
-  }, [dispatch]);
-
-  useEffect(() => {
-    handleGetCategories();
-  }, [handleGetCategories]);
 
   const handleSearchNfts = useCallback(
     (

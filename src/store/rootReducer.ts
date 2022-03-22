@@ -1,3 +1,4 @@
+import collections from './collections/reducer';
 import modals from './modals/reducer';
 import nfts from './nfts/reducer';
 import profile from './profile/reducer';
@@ -10,4 +11,5 @@ export default {
   ui,
   profile,
   modals,
+  collections,
 };

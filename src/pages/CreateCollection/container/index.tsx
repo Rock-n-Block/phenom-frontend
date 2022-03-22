@@ -1,7 +1,7 @@
 import { useMemo, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { createCollection } from 'store/nfts/actions';
+import { createCollection } from 'store/collections/actions';
 import userSelector from 'store/user/selectors';
 
 import { withFormik } from 'formik';

@@ -129,7 +129,9 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         newTokenForm.append(
           'details',
           JSON.stringify(
-            values.properties.filter((p) => p.name && p.type).map((p) => ({ [p.name]: p.type })),
+            values.properties
+              .filter((p) => p.name && p.type)
+              .map((p) => ({ display_type: 'properties', trait_type: p.name, value: p.type })),
           ),
         );
       }

@@ -6,12 +6,11 @@ import {
   ApproveReq,
   BidReq,
   BuyReq,
-  CreateCollectionAction,
   CreateTokenRequest,
   EndAucReq,
   GetDetailedNftReq,
+  GetTrendingNftsReq,
   LikeReq,
-  SearchCollectionAction,
   SearchNftAction,
   SetOnAuctionPreReq,
   SetOnSalePreReq,
@@ -23,10 +22,6 @@ import actionTypes from './actionTypes';
 export const getCategories = createAction<any>(actionTypes.GET_CATEGORIES);
 export const createToken = createAction<CreateTokenRequest>(actionTypes.CREATE_TOKEN);
 export const searchNfts = createAction<SearchNftAction>(actionTypes.SEARCH_NFTS);
-export const searchCollections = createAction<SearchCollectionAction>(
-  actionTypes.SEARCH_COLLECTIONS,
-);
-export const createCollection = createAction<CreateCollectionAction>(actionTypes.CREATE_COLLECTION);
 export const getDetailedNft = createAction<GetDetailedNftReq>(actionTypes.GET_DETAILED_NFT);
 export const buy = createAction<BuyReq>(actionTypes.BUY);
 export const approve = createAction<ApproveReq>(actionTypes.APPROVE);
@@ -38,3 +33,4 @@ export const removeFromSale = createAction<any>(actionTypes.REMOVE_FROM_SALE);
 export const like = createAction<LikeReq>(actionTypes.LIKE);
 export const endAuction = createAction<EndAucReq>(actionTypes.END_AUCTION);
 export const trackTransaction = createAction<TrackTransactionReq>(actionTypes.TRACK_TRANSACTION);
+export const getTrending = createAction<GetTrendingNftsReq>(actionTypes.GET_TRENDING);

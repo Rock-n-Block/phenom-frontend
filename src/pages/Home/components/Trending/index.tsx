@@ -1,6 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { getTrending } from 'store/nfts/actions';
+import { clearTrending } from 'store/nfts/reducer';
+import nftsSelector from 'store/nfts/selectors';
 
 import cx from 'classnames';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
@@ -10,33 +16,25 @@ import { ArtCard, H2, Text } from 'components';
 
 import { TitleDropdown } from './components';
 
-import { useWindowSize } from 'hooks';
+import { DEFAULT_CURRENCY } from 'appConstants';
+import { useShallowSelector, useWindowSize } from 'hooks';
+import { Category, CategoryName } from 'types';
 
 import 'swiper/swiper.less';
-import mock from 'mock';
 
 import 'swiper/swiper.scss';
 import 'swiper/swiper-bundle.css';
 import styles from './styles.module.scss';
-import { useTranslation } from 'react-i18next';
-// import { storeApi } from 'services';
-// import { routes } from 'appConstants';
-
-const nftTags = [
-  { title: 'All categories' },
-  { title: 'Rooms' },
-  { title: 'Area' },
-  { title: 'Buildings ' },
-  { title: 'Skins ' },
-];
 
 type Props = {
   className?: string;
 };
 const Trending: FC<Props> = ({ className }) => {
+  const categories = useShallowSelector(nftsSelector.getProp('categories'));
+  const nfts = useShallowSelector(nftsSelector.getProp('trending'));
+  const dispatch = useDispatch();
   const { t } = useTranslation('Home');
-  const [title, setTitle] = useState<any>({ title: 'All categories' });
-  const [nfts, setNfts] = useState<any[]>([]);
+  const [title, setTitle] = useState<any>({ name: CategoryName.allCategories, id: 0 });
   const [numberOfSlide, setNumberOfSlide] = useState(3);
   const { width } = useWindowSize();
   const prevRef = useRef(null);
@@ -55,61 +53,41 @@ const Trending: FC<Props> = ({ className }) => {
   }, [width]);
 
   const fetchTrendingNfts = useCallback(() => {
-    setNfts([
-      {
-        artId: '0342348',
-        name: 'Nft name',
-        price: '54266.7',
-        img: mock.trending,
-        asset: 'PHETA',
-        author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: mock.user,
-        authorId: 1,
-        bids: [1],
-        isAuction: true,
-        USD_price: 22.03,
-      },
-      {
-        artId: '0342348',
-        name: 'Nft name',
-        price: '54266.7',
-        img: mock.trending,
-        asset: 'PHETA',
-        author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: mock.user,
-        authorId: 1,
-        isAuction: false,
-        USD_price: 22.03,
-      },
-      {
-        artId: '0342348',
-        name: 'Nft name',
-        price: '54266.7',
-        img: mock.trending,
-        asset: 'PHETA',
-        author: '0xc78CD789D1483189C919A8d4dd22004CFD867Eb4',
-        authorAvatar: mock.user,
-        authorId: 1,
-        bids: [],
-        isAuction: true,
-        USD_price: 22.03,
-      },
-    ]);
-    // storeApi
-    //   .getTrendingCollections(title.title === 'All NFTs' ? '' : title.title)
-    //   .then(({ data }: any) => setNfts(data.filter((col: any) => !col.is_default)))
-    //   .catch((err: any) => console.log('error', err));
-  }, []);
+    dispatch(
+      getTrending({
+        category: title.name === CategoryName.allCategories ? '' : title?.id,
+      }),
+    );
+  }, [dispatch, title]);
 
   useEffect(() => {
     fetchTrendingNfts();
   }, [fetchTrendingNfts]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearTrending());
+    },
+    [dispatch],
+  );
   return (
     <div className={styles.wrapper}>
       <div className={cx(styles.notableDrops, className)}>
         <H2 weight="bold" className={styles.title} align="center">
           {t('Trending.TrendingIn')}{' '}
-          {nftTags.length && <TitleDropdown value={title} setValue={setTitle} options={nftTags} />}
+          {categories?.length && (
+            <TitleDropdown
+              value={title}
+              setValue={setTitle}
+              options={[
+                { name: CategoryName.allCategories, id: 0 },
+                ...categories.map((category: Category) => ({
+                  id: category.id || 0,
+                  name: category.name || '',
+                })),
+              ]}
+            />
+          )}
         </H2>
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 2 })}>
@@ -148,35 +126,33 @@ const Trending: FC<Props> = ({ className }) => {
                 >
                   {nfts.map((nft) => {
                     const {
-                      artId,
+                      id,
                       name,
                       price,
-                      img,
-                      asset,
-                      author,
-                      authorAvatar,
-                      authorId,
+                      media,
+                      currency,
+                      creator,
                       bids,
-                      isAuction,
-                      USD_price,
+                      isAucSelling,
+                      usdPrice,
                     } = nft;
                     return (
-                      <SwiperSlide key={nft.id}>
+                      <SwiperSlide key={id}>
                         <Link to="/" className={styles.drop}>
                           <ArtCard
-                            artId={artId}
+                            artId={id || 0}
                             name={name}
                             price={price}
-                            imageMain={img}
-                            asset={asset}
-                            author={author}
-                            authorAvatar={authorAvatar}
-                            authorId={authorId}
+                            imageMain={media || ''}
+                            asset={currency?.symbol || DEFAULT_CURRENCY}
+                            author={creator?.name || ''}
+                            authorAvatar={creator?.avatar || ''}
+                            authorId={creator?.id || 0}
                             bids={bids}
-                            isAuction={isAuction}
-                            USD_price={USD_price}
-                            likeAction={(id: any) => {
-                              return id;
+                            isAuction={isAucSelling}
+                            USD_price={usdPrice}
+                            likeAction={(idValue: any) => {
+                              return idValue;
                             }}
                           />
                         </Link>
@@ -187,33 +163,25 @@ const Trending: FC<Props> = ({ className }) => {
               </>
             ) : (
               nfts.map((nft) => {
-                const {
-                  artId,
-                  name,
-                  price,
-                  img,
-                  asset,
-                  author,
-                  authorAvatar,
-                  authorId,
-                  bids,
-                  isAuction,
-                  USD_price,
-                } = nft;
+                const { id, name, price, media, currency, creator, bids, isAucSelling, usdPrice } =
+                  nft;
                 return (
-                  <Link key={nft.id} to="/" className={cx(styles.drop, styles.dropDouble)}>
+                  <Link key={id} to="/" className={cx(styles.drop, styles.dropDouble)}>
                     <ArtCard
-                      artId={artId}
+                      artId={id || 0}
                       name={name}
                       price={price}
-                      imageMain={img}
-                      asset={asset}
-                      author={author}
-                      authorAvatar={authorAvatar}
-                      authorId={authorId}
+                      imageMain={media || ''}
+                      asset={currency?.symbol || DEFAULT_CURRENCY}
+                      author={creator?.name || ''}
+                      authorAvatar={creator?.avatar || ''}
+                      authorId={creator?.id || 0}
                       bids={bids}
-                      isAuction={isAuction}
-                      USD_price={USD_price}
+                      isAuction={isAucSelling}
+                      USD_price={usdPrice}
+                      likeAction={(idValue: any) => {
+                        return idValue;
+                      }}
                     />
                   </Link>
                 );
@@ -222,7 +190,7 @@ const Trending: FC<Props> = ({ className }) => {
           </div>
         ) : (
           <Text size="xl" align="center">
-            {t('Trending.NoItems')}
+            There is no trending tokens in this category.
           </Text>
         )}
       </div>

@@ -41,10 +41,10 @@ export default {
       },
     });
   },
-  removeFromSale(data: { id: string | number }) {
+  removeFromSale(data: { id: string | number; currency: string }) {
     return ajax({
       method: 'post',
-      url: URL.setOnAuction(data.id),
+      url: URL.setOnSale(data.id),
       data: {
         selling: false,
         ...data,
@@ -81,6 +81,19 @@ export default {
     return ajax({
       method: 'post',
       url: URL.endAuction(data.id),
+    });
+  },
+  trendingTokens(data: { category: string }) {
+    return ajax({
+      method: 'get',
+      url: URL.trendingTokens,
+      data,
+    });
+  },
+  transfer(data: { id: string | number; address: string; amount: string | number }) {
+    return ajax({
+      method: 'post',
+      url: URL.transfer(data.id),
     });
   },
 };

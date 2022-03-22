@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+import nftsSelector from 'store/nfts/selectors';
+
 import cx from 'classnames';
-import mock from 'mock';
 
 import { Text } from 'components';
 
 import { routes } from 'appConstants';
+import { useShallowSelector } from 'hooks';
 
 import { categories } from 'assets/img';
 
@@ -16,14 +18,8 @@ type Props = {
   className?: string;
 };
 
-const tags = [
-  { title: 'Rooms', image: mock.categories.img1 },
-  { title: 'Area', image: mock.categories.img2 },
-  { title: 'Buildings ', image: mock.categories.img3 },
-  { title: 'Skins', image: mock.categories.img4 },
-];
-
 const Categories: FC<Props> = ({ className }) => {
+  const tags = useShallowSelector(nftsSelector.getProp('categories'));
   return (
     <div className={cx(styles.categories, className)}>
       <div className={styles.gradient}>
@@ -35,12 +31,12 @@ const Categories: FC<Props> = ({ className }) => {
         </Text>
       </div>
       <div className={styles.box}>
-        {tags.length ? (
+        {tags?.length ? (
           tags.map((tag: any) => (
-            <Link className={styles.tag} to={routes.explore.filter(tag.title)}>
+            <Link className={styles.tag} to={routes.explore.filter(tag.name)}>
               <img alt="category" className={styles.image} src={tag.image} />
               <Text className={styles.text} weight="bold">
-                {tag.title}
+                {tag.name}
               </Text>
             </Link>
           ))

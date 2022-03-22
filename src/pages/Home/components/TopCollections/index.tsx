@@ -1,35 +1,50 @@
 /* eslint-disable react/no-array-index-key */
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { getTopCollections } from 'store/collections/actions';
+import { clearTopCollections } from 'store/collections/reducer';
+import collectionsSelector from 'store/collections/selectors';
+import userSelector from 'store/user/selectors';
 
 import BigNumber from 'bignumber.js';
 import cx from 'classnames';
-import mock from 'mock';
 
 import { Text } from 'components';
 
 import { CollectionCard } from './components';
 
-// import { useFetchTopCollections } from 'hooks';
+import { useShallowSelector } from 'hooks';
+
 import styles from './styles.module.scss';
 
 type Props = {
   className?: string;
 };
 
-const collections = [
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-  { collection: { avatar: mock.topCollection, id: 0, name: 'Collection Name' }, price: '23' },
-];
-
 const TopCollections: FC<Props> = ({ className }) => {
-  // const { collections } = useFetchTopCollections(period);
+  const chain = useShallowSelector(userSelector.getProp('chain'));
+  const dispatch = useDispatch();
+  const collections = useShallowSelector(collectionsSelector.getProp('topCollections'));
+
+  const handleFetchTopCollections = useCallback(() => {
+    dispatch(
+      getTopCollections({
+        network: chain,
+      }),
+    );
+  }, [chain, dispatch]);
+
+  useEffect(() => {
+    handleFetchTopCollections();
+  }, [handleFetchTopCollections]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearTopCollections());
+    },
+    [dispatch],
+  );
   return (
     <div className={cx(styles.topCollections, className)}>
       <Text
@@ -52,11 +67,15 @@ const TopCollections: FC<Props> = ({ className }) => {
             {collections.map((collection, index) => (
               <CollectionCard
                 key={index}
-                avatar={collection.collection.avatar}
-                id={collection.collection.id}
+                avatar={collection?.avatar || ''}
+                id={collection?.url || 0}
                 index={index + 1}
-                name={collection.collection.name}
-                price={new BigNumber(collection.price).isEqualTo(0) ? '< $0.01' : collection.price}
+                name={collection?.name || ''}
+                price={
+                  new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
+                    ? '< $0.01'
+                    : collection?.floorPrice || 0
+                }
               />
             ))}
           </ol>

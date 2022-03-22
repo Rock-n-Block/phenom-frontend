@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { searchCollections } from 'store/nfts/actions';
-import { clearCollections } from 'store/nfts/reducer';
+import { searchCollections } from 'store/collections/actions';
+import { clearCollections } from 'store/collections/reducer';
 import nftSelector from 'store/nfts/selectors';
 
 import { useLanguage } from 'context';

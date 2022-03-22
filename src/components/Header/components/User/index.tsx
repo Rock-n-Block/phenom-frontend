@@ -93,7 +93,7 @@ const UserBody: FC<IUserBody> = ({ user, disconnect }) => {
           </Link>
         </div>
         <div className={styles.balance}>
-          <Text color="blue">{user.balance} PHETA</Text>
+          <Text color="blue">{user.balance} PHENOM</Text>
         </div>
         <div className={styles.address}>
           <Clipboard value={user.address} />
@@ -237,7 +237,7 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
             <Text>{user.displayName || generateUsername(user.id)}</Text>
           </Link>
           <div className={styles.balance}>
-            <Text color="blue">{user.balance} PHETA</Text>
+            <Text color="blue">{user.balance} PHENOM</Text>
           </div>
         </div>
         <div className={styles.userItem}>

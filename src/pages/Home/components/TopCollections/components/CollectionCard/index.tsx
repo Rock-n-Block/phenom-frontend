@@ -12,7 +12,7 @@ interface IProps {
   avatar: string;
   id: number;
   name: string;
-  price: string;
+  price: string | number;
   profitIncrease?: string | number;
   className?: string;
 }
@@ -45,7 +45,7 @@ const CollectionCard: FC<IProps> = ({
           {t('TopCollections.FloorPrice')}:
           <Text size="xs" color="blue" weight="bold" className={styles.price}>
             {' '}
-            {price} PHETA
+            {price} PHENOM
           </Text>
         </Text>
       </div>
