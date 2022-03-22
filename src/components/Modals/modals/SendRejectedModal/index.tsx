@@ -9,12 +9,22 @@ import styles from './styles.module.scss';
 type ISendRejectedModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
+  withSteps?: boolean;
+  onSendAgain?: () => void;
 };
 
-const SendRejectedModal: VFC<ISendRejectedModal> = ({ visible, onClose }) => {
+const SendRejectedModal: VFC<ISendRejectedModal> = ({
+  visible,
+  onClose,
+  withSteps = true,
+  onSendAgain,
+}) => {
   const title = (
-    <Text align="center">
-      STEP 2/2 <Text color="blue">SEND</Text>
+    <Text align="center" size="xl" weight="bold">
+      {withSteps && 'STEP 2/2 '}
+      <Text tag="span" color="blue">
+        SEND
+      </Text>
     </Text>
   );
 
@@ -23,11 +33,11 @@ const SendRejectedModal: VFC<ISendRejectedModal> = ({ visible, onClose }) => {
       <div className={styles.icon}>
         <img src={iconError} alt="error" />
       </div>
-      <Text size="xl" weight="semibold" align="center" className={styles.subtitle}>
+      <Text tag="h5" weight="semibold" align="center" className={styles.subtitle}>
         You rejected Send transaction in Metamask. Press Send again to start over or close this
         window.
       </Text>
-      <Button className={styles.button} padding="small">
+      <Button onClick={onSendAgain} className={styles.button} padding="small">
         Send again
       </Button>
     </Modal>

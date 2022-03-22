@@ -9,7 +9,7 @@ import { Loader } from 'components';
 import styles from './styles.module.scss';
 
 type Props = {
-  color?: 'outline' | 'dark' | 'light' | 'transparent';
+  color?: 'outline' | 'dark' | 'light' | 'transparent' | 'burn';
   padding?: 'small' | 'medium' | 'large' | 'extra-large' | string;
   size?: any;
   isFullWidth?: boolean;

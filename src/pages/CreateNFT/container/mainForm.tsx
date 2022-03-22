@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import apiActions from 'store/api/actions';
+import { setModalProps } from 'store/modals/reducer';
 import createActionTypes from 'store/nfts/actionTypes';
 import nftSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
@@ -42,16 +43,19 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
   const [isClearing, setIsClearing] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const {
     [actionTypes.GET_SELF_COLLECTION]: gettingCollectionsRequest,
     [createActionTypes.CREATE_TOKEN]: creatingToken,
   } = useShallowSelector(uiSelector.getUI);
+
   const onSubmitClick = useCallback(
     (vals: any) => {
       validateForm(vals);
       handleSubmit();
+      dispatch(setModalProps({ onAgain: handleSubmit }));
     },
-    [handleSubmit, validateForm],
+    [dispatch, handleSubmit, validateForm],
   );
 
   const handleSetFieldValue = useCallback(

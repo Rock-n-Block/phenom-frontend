@@ -1,8 +1,10 @@
 import { VFC } from 'react';
 
 import modalsSelector from 'store/ui/selectors';
+import userSelector from 'store/user/selectors';
 
 import { Clipboard, Modal, Text } from 'components';
+import { chains } from 'config';
 
 import { useShallowSelector } from 'hooks';
 
@@ -13,13 +15,18 @@ import styles from './styles.module.scss';
 type ISendSuccessModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
+  withSteps?: boolean;
 };
 
-const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose }) => {
+const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps = true }) => {
   const txHash = useShallowSelector(modalsSelector.getProp('txHash'));
+  const chain = useShallowSelector(userSelector.getProp('chain'));
   const title = (
-    <Text align="center">
-      STEP 2/2 <Text color="blue">SEND</Text>
+    <Text align="center" size="xl" weight="bold">
+      {withSteps && 'STEP 2/2 '}
+      <Text tag="span" color="blue">
+        SEND
+      </Text>
     </Text>
   );
 
@@ -34,7 +41,7 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose }) => {
       <Text align="center" className={styles.text}>
         It takes some time for transaction to get confirmed.
       </Text>
-      <Clipboard className={styles.clipboard} value={`https://bscscan.com/tx/${txHash}`} />
+      <Clipboard className={styles.clipboard} value={`${chains[chain].scanner}tx/${txHash}`} />
     </Modal>
   );
 };

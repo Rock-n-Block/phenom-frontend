@@ -15,6 +15,7 @@ interface INFTList {
   sortBy?: TSort;
   auction?: boolean;
   className?: string;
+  emptyMsg?: string;
   onSortClick?: (sort: TSort) => void;
   onLoadMore?: () => void;
   onAuctionClick?: () => void;
@@ -27,9 +28,11 @@ interface INFTList {
  * @param {TSort} [sortBy] - initial sort type
  * @param {boolean} [auction] - initial auction selector
  * @param {string} [className] - wrapper class name
+ * @param {string} [emptyMsg] - message which will be displayed when the count of the elements equals zero
+ * @default 'There in no elements'
  * @param {(sort: TSort) => void} [onSortClick] - callback which will be called when sort element has been selected
  * @param {() => void} [onLoadMore] - callback which will be called when load button has been pushed
- *  @param {() => void} [onAuctionClick] - callback which will be called when load auction checkbox has been clicked
+ * @param {() => void} [onAuctionClick] - callback which will be called when load auction checkbox has been clicked
  * @returns
  */
 const NFTList: VFC<INFTList> = ({
@@ -38,6 +41,7 @@ const NFTList: VFC<INFTList> = ({
   sortBy,
   auction,
   className,
+  emptyMsg = 'There in no elements',
   onSortClick,
   onLoadMore,
   onAuctionClick,
@@ -65,7 +69,7 @@ const NFTList: VFC<INFTList> = ({
         className={styles['nft-list__body__content']}
         style={{ gridTemplateColumns: `repeat(auto-fill,minmax(${minSize}px,1fr))` }}
       >
-        {elements.map((el) => el)}
+        {elements.length ? elements.map((el) => el) : emptyMsg}
       </div>
       <div className={styles['nft-list__body__load-more']}>
         {onLoadMore && (

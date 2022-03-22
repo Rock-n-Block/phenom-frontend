@@ -1,5 +1,9 @@
 @import 'src/styles/helpers';
 
+:root{
+  --close-size: 32px;
+}
+
 .modal {
   position: fixed;
   z-index: 1000;
@@ -17,6 +21,7 @@
   opacity: 0;
 
   animation: showModal 0.4s forwards;
+  background: rgba($color-dark-2, 0.7);
 
   // @include m {
   //   padding: 32px 16px;
@@ -39,15 +44,14 @@
   z-index: 2;
 
   margin: auto;
-  padding: 32px;
+  padding: 39px 32px;
 
   width: 100%;
   max-width: 450px;
 
-  border-radius: 20px;
+  border-radius: 30px;
 
   background: $color-light-3;
-  // background: $color-bg;
 }
 
 .title {
@@ -56,21 +60,22 @@
 
 .close {
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: calc(var(--close-size) * 1.5);
+  right: calc(var(--close-size) * 1.5);
+  transform: translate(50%, -50%);
   @include flexbox;
 
-  width: 42px;
-  height: 42px;
+  width: var(--close-size);
+  height: var(--close-size);
 
   // background: $color-neutral-0;
   // border: 1px solid $color-actions-light-pink;
   // border-radius: $border-radius;
 
   img {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.2s;
+    width: calc(var(--close-size) / 2);
+    height: calc(var(--close-size) / 2);
+    @include transition;
   }
 
   &:hover {

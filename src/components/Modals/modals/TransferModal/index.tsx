@@ -1,14 +1,16 @@
-import { Button, DefaultInput, Modal } from 'components';
 import { useCallback, useState, VFC } from 'react';
+
+import { Button, DefaultInput, Modal } from 'components';
 
 import styles from './styles.module.scss';
 
 type ITransferModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
+  onSend?: () => void;
 };
 
-const TransferModal: VFC<ITransferModal> = ({ visible, onClose }) => {
+const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = useCallback((value: string) => {
@@ -22,9 +24,11 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose }) => {
         label="Name"
         value={inputValue}
         setValue={handleInputChange}
-        placeholder="Input text"
+        placeholder="Input address"
       />
-      <Button className={styles.button}>Send</Button>
+      <Button onClick={onSend} className={styles.button}>
+        Send
+      </Button>
     </Modal>
   );
 };

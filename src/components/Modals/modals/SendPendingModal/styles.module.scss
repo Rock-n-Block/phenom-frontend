@@ -1,0 +1,32 @@
+@import 'src/styles/helpers.scss';
+
+.container{
+  margin: 0 auto;
+  max-width: 332px;
+}
+
+.icon {
+  margin-top: 36px;
+  margin-bottom: 24px;
+  @include flexbox;
+}
+
+.subtitle {
+  margin-bottom: 20px;
+}
+
+.button {
+  text-transform: uppercase;
+  margin: 0 auto;
+  margin-top: 24px;
+}
+
+.clipboard {
+  margin: 0 auto;
+  border: 1px solid $color-dark;
+  margin-top: 20px;
+}
+
+.text{
+  line-height: 20px;
+}
