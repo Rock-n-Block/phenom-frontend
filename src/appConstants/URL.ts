@@ -13,6 +13,7 @@ export default {
   getTokenById: (id: string | number) => `/store/token/${id}/`,
   setOnAuction: (id: string | number) => `/store/token/${id}/set_on_auction/`,
   setOnSale: (id: string | number) => `/store/token/${id}/set_on_sale/`,
+  removeFromSale: (id: string | number) => `/store/token/${id}/remove_from_sale/`,
   buy: 'store/buy/',
   bid: 'store/bids/make_bid/',
   like: '/account/self/like/',
@@ -24,5 +25,6 @@ export default {
   trendingCollections: '/store/trending_collections/',
   trendingTokens: '/store/trending_tokens/',
   topCollections: '/activity/top-collections/',
-  transfer: (id: number | string) => `/store/token/${id}/transfer`,
+  transfer: (id: number | string) => `/store/token/${id}/transfer/`,
+  burn: (id: number | string) => `/store/token/${id}/burn/`,
 };

@@ -2,6 +2,7 @@
 import { fork } from 'redux-saga/effects';
 
 import bid from './bid';
+import burnSaga from './burn';
 import buy from './buy';
 import createTokenSaga from './createToken';
 import getCategoriesSaga from './getCategories';
@@ -12,6 +13,7 @@ import searchNftsSaga from './searchNfts';
 import searchTrendingSaga from './searchTrending';
 import setOnAuctionSaga from './setOnAuction';
 import setOnSaleSaga from './setOnSale';
+import transferSaga from './transfer';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
@@ -25,4 +27,6 @@ export default function* nftSagas() {
   yield fork(like);
   yield fork(setOnSaleSaga);
   yield fork(setOnAuctionSaga);
+  yield fork(transferSaga);
+  yield fork(burnSaga);
 }

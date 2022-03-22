@@ -3,7 +3,15 @@ import { useCallback, useEffect, useState, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
 import modalSelector from 'store/modals/selectors';
-import { bid, buy, endAuction, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
+import {
+  bid,
+  buy,
+  endAuction,
+  removeFromSale,
+  setOnAuction,
+  setOnSale,
+  transfer,
+} from 'store/nfts/actions';
 
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
@@ -13,7 +21,6 @@ import {
   ApprovePendingModal,
   ApproveRejectedModal,
   Avatar,
-  BurnModal,
   Button,
   DefaultInput,
   QuantityInput,
@@ -25,10 +32,11 @@ import {
   Text,
   TransferModal,
 } from 'components';
+import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { useModals, useShallowSelector } from 'hooks';
-import { Modals, TokenFull } from 'types';
+import { Modals, Standart, TokenFull } from 'types';
 
 import {
   DollarIcon,
@@ -40,7 +48,6 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 interface IPayment {
   nft: TokenFull;
@@ -207,11 +214,24 @@ const Payment: VFC<IPayment> = ({
     dispatch(
       removeFromSale({
         id: nft?.id,
-        currency: nft?.currency?.symbol || DEFAULT_CURRENCY,
         web3Provider: walletService.Web3(),
       }),
     );
   }, [nft, dispatch, walletService]);
+
+  const handleTransfer = useCallback(
+    (address: string, amount?: string | number) => {
+      dispatch(
+        transfer({
+          id: nft?.id || 0,
+          address,
+          amount,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    },
+    [dispatch, nft.id, walletService],
+  );
 
   useEffect(() => {
     let timeInterval: any;
@@ -284,7 +304,7 @@ const Payment: VFC<IPayment> = ({
           )}
           {nft?.price && (
             <Text weight="semibold" color="blue" className={styles.price}>
-              {nft?.price} PHENOM
+              {nft?.price} {nft?.currency?.symbol || DEFAULT_CURRENCY}
             </Text>
           )}
           {nft?.usdPrice && (
@@ -600,9 +620,12 @@ const Payment: VFC<IPayment> = ({
         </div>
       )}
 
-      <TransferModal visible={modalType === Modals.Transfer} onClose={() => closeModals()} />
-
-      <BurnModal visible={modalType === Modals.Burn} onClose={() => closeModals()} />
+      <TransferModal
+        visible={modalType === Modals.Transfer}
+        onClose={() => closeModals()}
+        isMultiple={nft?.standart === Standart.ERC1155}
+        onSend={handleTransfer}
+      />
 
       <SellersModal
         visible={modalType === Modals.ChooseSeller}
