@@ -47,23 +47,13 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
           owner: token.creator.url,
         });
 
-        if (e.code === 4001) {
-          yield put(
-            setActiveModal({
-              activeModal: Modals.SendRejected,
-              open: true,
-              txHash: '',
-            }),
-          );
-        } else {
-          yield put(
-            setActiveModal({
-              activeModal: Modals.SendError,
-              open: true,
-              txHash: '',
-            }),
-          );
-        }
+        yield put(
+          setActiveModal({
+            activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
+            open: true,
+            txHash: '',
+          }),
+        );
 
         yield put(apiActions.error(type, e));
       }

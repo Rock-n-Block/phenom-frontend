@@ -2,6 +2,7 @@
 export enum Modals {
   ApprovePending = 'ApprovePending',
   ApproveRejected = 'ApproveRejected',
+  ApproveError = 'ApproveError',
   SendPending = 'SendPending',
   SendRejected = 'SendRejected',
   SendSuccess = 'SendSuccess',

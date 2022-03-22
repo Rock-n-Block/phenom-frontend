@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
+import modalSelector from 'store/modals/selectors';
 import {
   bid,
   buy,
@@ -30,9 +32,11 @@ import {
   Text,
   TransferModal,
 } from 'components';
+import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { Modals, ModalState, Standart, TokenFull } from 'types';
+import { useModals, useShallowSelector } from 'hooks';
+import { Modals, Standart, TokenFull } from 'types';
 
 import {
   DollarIcon,
@@ -44,7 +48,6 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-import { useModals } from 'hooks';
 
 interface IPayment {
   nft: TokenFull;
@@ -84,19 +87,9 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0]);
+  const { modalType, closeModals, changeModalType } = useModals();
 
-  const { modalType, closeModals, activateModals } = useModals();
-
-  const handleSetModalType = useCallback(
-    (state: ModalState) => {
-      activateModals(state);
-    },
-    [activateModals],
-  );
-
-  const handleCloseModal = useCallback(() => {
-    closeModals();
-  }, [closeModals]);
+  const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -121,6 +114,7 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(setModalProps({ onApprove: () => handleBuy(sellerId) }));
       }
     },
     [nft, dispatch, walletService],
@@ -132,14 +126,10 @@ const Payment: VFC<IPayment> = ({
         handleBuy(nft?.sellers?.[0].url || 0);
       }
       if (!isSingle) {
-        handleSetModalType({
-          activeModal: Modals.ChooseSeller,
-          open: true,
-          txHash: '',
-        });
+        changeModalType(Modals.ChooseSeller);
       }
     },
-    [handleBuy, handleSetModalType, nft.sellers],
+    [handleBuy, changeModalType, nft.sellers],
   );
 
   const handleEndAuction = useCallback(() => {
@@ -167,6 +157,11 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
+          }),
+        );
       }
     },
     [nft, dispatch, walletService],
@@ -186,6 +181,11 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleSetOnSale(price, currency, amount),
+          }),
+        );
       }
     },
     [nft, dispatch, walletService],
@@ -199,6 +199,11 @@ const Payment: VFC<IPayment> = ({
           amount,
           currency,
           web3Provider: walletService.Web3(),
+        }),
+      );
+      dispatch(
+        setModalProps({
+          onApprove: () => handleBid(amount, currency),
         }),
       );
     },
@@ -363,22 +368,14 @@ const Payment: VFC<IPayment> = ({
             !isListing && (
               <div className={cx(styles.choose, styles.chooseInside)}>
                 {isOwner && (
-                  <>
-                    <Button
-                      color="dark"
-                      className={cx(styles.button, styles.transfer)}
-                      suffixIcon={iconTransfer}
-                      onClick={() =>
-                        handleSetModalType({
-                          activeModal: Modals.Transfer,
-                          open: true,
-                          txHash: '',
-                        })
-                      }
-                    >
-                      Transfer
-                    </Button>
-                  </>
+                  <Button
+                    color="dark"
+                    className={cx(styles.button, styles.transfer)}
+                    suffixIcon={iconTransfer}
+                    onClick={() => changeModalType(Modals.Transfer)}
+                  >
+                    Transfer
+                  </Button>
                 )}
                 {isUserCanEndAuction && (
                   <Button
@@ -598,13 +595,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() =>
-                      handleSetModalType({
-                        activeModal: Modals.Transfer,
-                        open: true,
-                        txHash: '',
-                      })
-                    }
+                    onClick={() => changeModalType(Modals.Transfer)}
                   >
                     Transfer
                   </Button>
@@ -631,37 +622,39 @@ const Payment: VFC<IPayment> = ({
 
       <TransferModal
         visible={modalType === Modals.Transfer}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
         isMultiple={nft?.standart === Standart.ERC1155}
         onSend={handleTransfer}
       />
 
       <SellersModal
         visible={modalType === Modals.ChooseSeller}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
         sellers={nft?.sellers}
         handleChooseSeller={handleBuy}
       />
 
       <ApprovePendingModal
         visible={modalType === Modals.ApprovePending}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
       />
+
+      <ApproveErrorModal
+        visible={modalType === Modals.ApproveError}
+        onClose={() => closeModals()}
+      />
+
       <ApproveRejectedModal
         visible={modalType === Modals.ApproveRejected}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
+        onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
-      <SendPendingModal
-        visible={modalType === Modals.SendPending}
-        onClose={() => handleCloseModal()}
-      />
-      <SendSuccessModal
-        visible={modalType === Modals.SendSuccess}
-        onClose={() => handleCloseModal()}
-      />
+      <SendPendingModal visible={modalType === Modals.SendPending} onClose={() => closeModals()} />
+      <SendSuccessModal visible={modalType === Modals.SendSuccess} onClose={() => closeModals()} />
       <SendRejectedModal
         visible={modalType === Modals.SendRejected}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
+        onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
     </>
   );

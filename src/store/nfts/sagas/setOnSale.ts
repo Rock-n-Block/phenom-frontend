@@ -17,24 +17,16 @@ import { getDetailedNftSaga } from './getDetailedNft';
 
 export function* setOnSaleSaga({
   type,
-  payload: {
-    id,
-    internalId,
-    currency = DEFAULT_CURRENCY,
-    isSingle,
-    price,
-    amount,
-    web3Provider,
-  },
+  payload: { id, internalId, currency = DEFAULT_CURRENCY, isSingle, price, amount, web3Provider },
 }: ReturnType<typeof setOnSale>) {
   yield put(apiActions.request(type));
   let requestData: Partial<SetOnSaleReq> = {};
-    requestData = {
-      price,
-      currency,
-      amount
-    };
-  
+  requestData = {
+    price,
+    currency,
+    amount,
+  };
+
   try {
     yield call(approveNftSaga, {
       type: actionTypes.APPROVE_NFT,
@@ -68,8 +60,14 @@ export function* setOnSaleSaga({
     });
 
     yield put(apiActions.success(type));
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }

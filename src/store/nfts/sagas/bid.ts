@@ -1,6 +1,4 @@
 /* eslint-disable max-len */
-import { toast } from 'react-toastify';
-
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
@@ -63,9 +61,14 @@ export function* bidNftSaga({
       }),
     );
     yield put(apiActions.success(type));
-  } catch (err) {
-    console.log(err);
-    toast.error('Something went wrong');
+  } catch (err: any) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }
