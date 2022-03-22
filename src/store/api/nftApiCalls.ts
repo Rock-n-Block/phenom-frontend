@@ -41,14 +41,10 @@ export default {
       },
     });
   },
-  removeFromSale(data: { id: string | number; currency: string }) {
+  removeFromSale(data: { id: string | number }) {
     return ajax({
       method: 'post',
-      url: URL.setOnSale(data.id),
-      data: {
-        selling: false,
-        ...data,
-      },
+      url: URL.removeFromSale(data.id),
     });
   },
   setOnAuction(data: SetOnAuctionReq) {

@@ -187,7 +187,6 @@ const Payment: VFC<IPayment> = ({
     dispatch(
       removeFromSale({
         id: nft?.id,
-        currency: nft?.currency?.symbol || DEFAULT_CURRENCY,
         web3Provider: walletService.Web3(),
       }),
     );
