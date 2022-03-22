@@ -60,6 +60,10 @@ const NFTCard: VFC = () => {
     };
   }, [dispatch, id]);
 
+  useEffect(() => {
+    console.log(detailedNft)
+  }, [detailedNft])
+
   return (
     <div className={styles.nftCard}>
       {skeletonLoader || !detailedNft ? (
@@ -70,7 +74,7 @@ const NFTCard: VFC = () => {
             <>
               <div className={styles.left}>
                 <div className={styles.nftCardImgWrapper}>
-                  {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
+                  {(detailedNft?.isAucSelling || detailedNft?.isTimedAucSelling) && (
                     <div className={styles.auction}>
                       <Text color="white">Auction</Text>
                     </div>
@@ -128,11 +132,11 @@ const NFTCard: VFC = () => {
                 name={detailedNft?.name}
                 likeCount={detailedNft?.likeCount || 0}
                 artId={detailedNft?.id || +id}
-                inStockNumber={detailedNft?.in_stock_number}
+                inStockNumber={detailedNft?.available}
                 isLiked={detailedNft?.isLiked}
               />
               <div className={styles.nftCardImgWrapper}>
-                {(detailedNft?.isAucSelling || detailedNft?.is_timed_auc_selling) && (
+                {(detailedNft?.isAucSelling || detailedNft?.isTimedAucSelling) && (
                   <div className={styles.auction}>
                     <Text color="white">Auction</Text>
                   </div>

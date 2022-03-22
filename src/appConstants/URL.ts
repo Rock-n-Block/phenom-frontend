@@ -24,4 +24,5 @@ export default {
   trendingCollections: '/store/trending_collections/',
   trendingTokens: '/store/trending_tokens/',
   topCollections: '/activity/top-collections/',
+  transfer: (id: number | string) => `/store/token/${id}/transfer`,
 };
