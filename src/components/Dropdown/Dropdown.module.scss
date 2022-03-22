@@ -81,7 +81,17 @@
 
   white-space: nowrap;
   text-overflow: ellipsis;
+  @include transition;
   // text-transform: uppercase;
+  &.placeholder{
+    opacity: 0.32;
+    color: $color-dark-2;
+  }
+  &:hover{
+    &.placeholder{
+      opacity: 1;
+    }
+  }
 }
 
 .arrow {

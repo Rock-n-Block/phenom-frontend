@@ -1,5 +1,6 @@
-import { Button, DefaultInput, Modal, Text } from 'components';
 import { useCallback, useState, VFC } from 'react';
+
+import { Button, DefaultInput, Modal, Text } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -7,9 +8,10 @@ type IBurnModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
   isMultiple?: boolean;
+  onBurn?: () => void;
 };
 
-const BurnModal: VFC<IBurnModal> = ({ visible, onClose, isMultiple }) => {
+const BurnModal: VFC<IBurnModal> = ({ visible, onClose, isMultiple, onBurn }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = useCallback((value: string) => {
@@ -33,7 +35,9 @@ const BurnModal: VFC<IBurnModal> = ({ visible, onClose, isMultiple }) => {
       ) : (
         <></>
       )}
-      <Button className={styles.button}>Burn</Button>
+      <Button color="burn" onClick={onBurn} className={styles.button}>
+        Burn
+      </Button>
     </Modal>
   );
 };

@@ -5,10 +5,11 @@ export enum Modals {
   SendPending = 'SendPending',
   SendRejected = 'SendRejected',
   SendSuccess = 'SendSuccess',
+  SendError = 'SendError',
   Transfer = 'Transfer',
   ChooseSeller = 'ChooseSeller',
   Burn = 'Burn',
-  none = '',
+  none = 'none',
 }
 
 export interface ModalState {
@@ -17,6 +18,11 @@ export interface ModalState {
   open: boolean;
 }
 
+export interface ModalProps {
+  [key: string]: any;
+}
+
 export type ModalsInitialState = {
   modalState: ModalState;
+  modalProps: ModalProps;
 };

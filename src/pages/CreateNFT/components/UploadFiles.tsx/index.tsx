@@ -211,7 +211,7 @@ const UploadNFT: VFC<ICreateNFT> = ({ type, setMediaFile, setPreviewFile, onBlur
         )}
         <div
           className={cn(styles['upload-nft__wrapper__body-preview'], {
-            [styles['preview-active']]: fileList.length > 0,
+            [styles['preview-active']]: fileList.length > 0 && previewType !== 'audio',
           })}
         >
           {' '}

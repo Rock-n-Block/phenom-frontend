@@ -105,9 +105,15 @@ const Dropdown: FC<IDropdownProps> = ({
           onClick={onHeadClick}
         >
           {isWritable ? (
-            <input value={value ? value[drawBy] : ''} className={styles.input} />
+            <input
+              value={value ? value[drawBy] : ''}
+              placeholder={placeholder}
+              className={styles.input}
+            />
           ) : (
-            <div className={styles.selection}>{value ? value[drawBy] : placeholder}</div>
+            <div className={cn(styles.selection, { [styles.placeholder]: placeholder && !value })}>
+              {value ? value[drawBy] : placeholder}
+            </div>
           )}
           <img alt="open dropdown" src={iconArrowDownGray} className={styles.arrow} />
         </div>

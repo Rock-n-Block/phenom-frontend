@@ -20,8 +20,16 @@
     background: transparent;
     font-size: 14px;
     line-height: 24px;
-    &::placeholder{
+    &::placeholder {
+      opacity: 0.32;
+      color: $color-dark-2;
+      @include transition;
       @include gilroy;
+    }
+    &:hover {
+      &::placeholder {
+        opacity: 1;
+      }
     }
     @include transition;
     &-container {
@@ -47,7 +55,7 @@
       @include transition;
       &.sub-info-active {
         max-width: clamp(30px, 100%, 150px);
-        overflow:visible;
+        overflow: visible;
       }
     }
   }
@@ -77,9 +85,9 @@
   }
 }
 
-@include large-mobile{
-  .default-input__body{
-    &-input{
+@include large-mobile {
+  .default-input__body {
+    &-input {
       padding: 14px;
     }
   }

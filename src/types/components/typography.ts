@@ -14,7 +14,8 @@ enum Values {
   purple,
   blue,
   green,
-  yellow
+  yellow,
+  error,
 }
 
 enum SizeValues {

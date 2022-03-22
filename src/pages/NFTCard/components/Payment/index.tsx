@@ -7,19 +7,25 @@ import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
 import moment from 'moment';
 
-import { Avatar, Button, DefaultInput, QuantityInput, Selector, Text } from 'components';
+import {
+  ApprovePendingModal,
+  ApproveRejectedModal,
+  Avatar,
+  BurnModal,
+  Button,
+  DefaultInput,
+  QuantityInput,
+  Selector,
+  SellersModal,
+  SendPendingModal,
+  SendRejectedModal,
+  SendSuccessModal,
+  Text,
+  TransferModal,
+} from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { Modals, TokenFull } from 'types';
-
-import ApprovePendingModal from '../modals/ApprovePendingModal';
-import ApproveRejectedModal from '../modals/ApproveRejectedModal';
-import BurnModal from '../modals/BurnModal';
-import SellersModal from '../modals/SellersModal';
-import SendPendingModal from '../modals/SendPendingModal';
-import SendRejectedModal from '../modals/SendRejectedModal';
-import SendSuccessModal from '../modals/SendSuccessModal';
-import TransferModal from '../modals/TransferModal';
 
 import {
   DollarIcon,

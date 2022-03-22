@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Modals, ModalState, ModalsInitialState } from 'types';
+
+import { ModalProps, Modals, ModalsInitialState, ModalState } from 'types';
 
 const initialState: ModalsInitialState = {
   modalState: {
@@ -7,6 +8,7 @@ const initialState: ModalsInitialState = {
     txHash: '',
     open: false,
   },
+  modalProps: {},
 };
 
 export const modalsReducer = createSlice({
@@ -19,7 +21,12 @@ export const modalsReducer = createSlice({
         ...action.payload,
       },
     }),
-
+    setModalProps: (state, action: PayloadAction<ModalProps>) => ({
+      ...state,
+      modalProps: {
+        ...action.payload,
+      },
+    }),
     closeModal: (state) => ({
       ...state,
       modalState: {
@@ -27,10 +34,11 @@ export const modalsReducer = createSlice({
         txHash: '',
         open: false,
       },
+      modalProps: {},
     }),
   },
 });
 
-export const { setActiveModal } = modalsReducer.actions;
+export const { setActiveModal, closeModal, setModalProps } = modalsReducer.actions;
 
 export default modalsReducer.reducer;

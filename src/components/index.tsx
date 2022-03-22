@@ -28,3 +28,4 @@ export { default as Clipboard } from './Clipboard';
 export { default as NFTList } from './NFTList';
 export * from './Typography';
 export * from './Preview';
+export * from './Modals';

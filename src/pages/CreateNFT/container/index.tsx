@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
+import modalsSelector from 'store/modals/selectors';
 import { createToken, getCategories } from 'store/nfts/actions';
 import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
@@ -9,9 +10,12 @@ import { useWalletConnectContext } from 'context';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { SendPendingModal, SendRejectedModal, SendSuccessModal } from 'components';
+import SendErrorModal from 'components/Modals/modals/SendErrorModal';
+
 import { createValidator, getExtension, getFileGroup, TAvailableExtensions } from 'appConstants';
-import { useShallowSelector } from 'hooks';
-import { Category, Collection, Tag } from 'types';
+import { useModals, useShallowSelector } from 'hooks';
+import { Category, Collection, Modals, Tag } from 'types';
 
 import MainForm from './mainForm';
 
@@ -47,12 +51,15 @@ export interface IMainForm extends ICreateForm {
 const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
+  const modalProps = useShallowSelector(modalsSelector.getProp('modalProps'));
 
   const { walletService } = useWalletConnectContext();
 
   const onReloadClick = useCallback(() => {
     dispatch(getSelfCollections({ network: chain }));
   }, [chain, dispatch]);
+
+  const { modalType, closeModals } = useModals();
 
   const clearForm = useMemo<ICreateForm>(
     () => ({
@@ -147,7 +154,33 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     },
     displayName: 'create-nft',
   })(MainForm);
-  return <FormWithFormik onRefresh={onReloadClick} type={type} />;
+  return (
+    <>
+      <FormWithFormik onRefresh={onReloadClick} type={type} />{' '}
+      <SendPendingModal
+        withSteps={false}
+        visible={modalType === Modals.SendPending}
+        onClose={() => closeModals()}
+      />
+      <SendSuccessModal
+        withSteps={false}
+        visible={modalType === Modals.SendSuccess}
+        onClose={() => closeModals()}
+      />
+      <SendRejectedModal
+        withSteps={false}
+        visible={modalType === Modals.SendRejected}
+        onClose={() => closeModals()}
+        onSendAgain={'onAgain' in modalProps ? modalProps.onAgain : () => {}}
+      />
+      <SendErrorModal
+        withSteps={false}
+        visible={modalType === Modals.SendError}
+        onClose={() => closeModals}
+        onTryAgain={'onAgain' in modalProps ? modalProps.onAgain : () => {}}
+      />
+    </>
+  );
 };
 
 export default CreateFormContainer;
