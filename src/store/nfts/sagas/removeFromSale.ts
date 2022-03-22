@@ -7,11 +7,14 @@ import { removeFromSale } from '../actions';
 import actionTypes from '../actionTypes';
 import { getDetailedNftSaga } from './getDetailedNft';
 
-export function* removeFromSaleSaga({ type, payload: { id } }: ReturnType<typeof removeFromSale>) {
+export function* removeFromSaleSaga({
+  type,
+  payload: { id, currency },
+}: ReturnType<typeof removeFromSale>) {
   yield put(apiActions.request(type));
 
   try {
-    yield call(baseApi.removeFromSale, { id });
+    yield call(baseApi.removeFromSale, { id, currency });
 
     yield call(getDetailedNftSaga, {
       type: actionTypes.GET_DETAILED_NFT,

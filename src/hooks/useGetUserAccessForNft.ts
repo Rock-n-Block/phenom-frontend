@@ -15,7 +15,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
     if (userId && nft) {
       if (
         nft.standart === 'ERC721' &&
-        (nft.isSelling || nft.isAucSelling || nft.is_timed_auc_selling) &&
+        (nft.isSelling || nft.isAucSelling || nft.isTimedAucSelling) &&
         isOwner
       ) {
         return true;
@@ -57,7 +57,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
   }, [nft, userId, isOwner]);
 
   const isUserCanEnterInAuction = React.useMemo(() => {
-    if (userId && nft && (nft.isAucSelling || nft?.is_timed_auc_selling) && nft.available !== 0) {
+    if (userId && nft && (nft.isAucSelling || nft?.isTimedAucSelling) && nft.available !== 0) {
       if (nft.standart === 'ERC721' && !isOwner) {
         return true;
       }
@@ -70,7 +70,7 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
       userId &&
       nft &&
       nft.isAucSelling &&
-      !nft.is_timed_auc_selling &&
+      !nft.isTimedAucSelling &&
       nft.bids?.length &&
       isOwner
     ) {

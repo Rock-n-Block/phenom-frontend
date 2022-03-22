@@ -26,7 +26,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
           placeholder="Min"
           subInfo={
             <Text color="blue" align="right">
-              PHETA
+              PHENOM
             </Text>
           }
           type="number"
@@ -40,7 +40,7 @@ const PriceFilter: FC<Props> = ({ className, minPrice, maxPrice, changePrice }) 
           placeholder="Max"
           subInfo={
             <Text color="blue" align="right">
-              PHETA
+              PHENOM
             </Text>
           }
           type="number"
