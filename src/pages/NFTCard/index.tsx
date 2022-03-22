@@ -61,8 +61,8 @@ const NFTCard: VFC = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    console.log(detailedNft)
-  }, [detailedNft])
+    console.log(detailedNft);
+  }, [detailedNft]);
 
   return (
     <div className={styles.nftCard}>
@@ -161,7 +161,7 @@ const NFTCard: VFC = () => {
                 />
               )}
               <PropsAndDescr
-                properties={Object.entries(detailedNft?.properties)}
+                properties={detailedNft?.properties}
                 description={detailedNft?.description}
               />
 
