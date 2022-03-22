@@ -157,7 +157,7 @@ const NFTCard: VFC = () => {
                 />
               )}
               <PropsAndDescr
-                properties={detailedNft?.properties}
+                properties={Object.entries(detailedNft?.properties)}
                 description={detailedNft?.description}
               />
 

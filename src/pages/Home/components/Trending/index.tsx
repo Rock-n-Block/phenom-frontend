@@ -190,7 +190,7 @@ const Trending: FC<Props> = ({ className }) => {
           </div>
         ) : (
           <Text size="xl" align="center">
-            {t('Trending.NoItems')}
+            There is no trending tokens in this category.
           </Text>
         )}
       </div>
