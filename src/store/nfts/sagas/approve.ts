@@ -23,13 +23,6 @@ export function* approveSaga({
   const myAddress = yield select(userSelector.getProp('address'));
 
   try {
-    yield put(
-      setActiveModal({
-        activeModal: Modals.ApprovePending,
-        open: true,
-        txHash: ''
-      }),
-    );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const tokenContract = yield new web3Provider.eth.Contract(erc20Abi, tokenAddress);
@@ -39,30 +32,40 @@ export function* approveSaga({
     const allowance = yield call(tokenContract.methods.allowance(myAddress, spender).call);
 
     if (+allowance < +amount) {
-      yield call(tokenContract.methods.approve(spender, amount).send, {
-        from: myAddress,
-      });
-    }
-    yield put(
-      setActiveModal({
-        activeModal: Modals.none,
-        open: false,
-        txHash: ''
-      }),
-    );
+      yield put(
+        setActiveModal({
+          activeModal: Modals.ApprovePending,
+          open: true,
+          txHash: '',
+        }),
+      );
+      try {
+        yield call(tokenContract.methods.approve(spender, amount).send, {
+          from: myAddress,
+        });
+        yield put(
+          setActiveModal({
+            activeModal: Modals.none,
+            open: false,
+            txHash: '',
+          }),
+        );
+        yield put(apiActions.success(type));
+      } catch (e: any) {
+        yield put(
+          setActiveModal({
+            activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
+            open: true,
+            txHash: '',
+          }),
+        );
 
-    yield put(apiActions.success(type));
+        yield put(apiActions.error(type, e));
+      }
+    }
   } catch (err: any) {
-    console.log(err);
-    yield put(
-      setActiveModal({
-        activeModal: Modals.ApproveRejected,
-        open: true,
-        txHash: ''
-      }),
-    );
+    // allowance error
     yield put(apiActions.error(type, err));
-    throw new Error(err);
   }
 }
 

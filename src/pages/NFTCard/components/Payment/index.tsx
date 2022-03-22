@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
+import modalSelector from 'store/modals/selectors';
 import { bid, buy, endAuction, removeFromSale, setOnAuction, setOnSale } from 'store/nfts/actions';
 
 import cx from 'classnames';
@@ -25,6 +27,7 @@ import {
 } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
+import { useShallowSelector } from 'hooks';
 import { Modals, TokenFull } from 'types';
 
 import {
@@ -37,6 +40,7 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
+import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 interface IPayment {
   nft: TokenFull;
@@ -78,6 +82,8 @@ const Payment: VFC<IPayment> = ({
   const [hoursTime, setHoursTime] = useState(hours[0]);
   const [modalType, setModalType] = useState(Modals.none);
 
+  const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
+
   const handleSetModalType = useCallback((newModalType: Modals) => {
     setModalType(newModalType);
   }, []);
@@ -109,6 +115,7 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(setModalProps({ onApprove: () => handleBuy(sellerId) }));
       }
     },
     [nft, dispatch, walletService],
@@ -151,6 +158,11 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
+          }),
+        );
       }
     },
     [nft, dispatch, walletService],
@@ -170,6 +182,11 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
+        dispatch(
+          setModalProps({
+            onApprove: () => handleSetOnSale(price, currency, amount),
+          }),
+        );
       }
     },
     [nft, dispatch, walletService],
@@ -183,6 +200,11 @@ const Payment: VFC<IPayment> = ({
           amount,
           currency,
           web3Provider: walletService.Web3(),
+        }),
+      );
+      dispatch(
+        setModalProps({
+          onApprove: () => handleBid(amount, currency),
         }),
       );
     },
@@ -601,9 +623,16 @@ const Payment: VFC<IPayment> = ({
         visible={modalType === Modals.ApprovePending}
         onClose={() => handleCloseModal()}
       />
+
+      <ApproveErrorModal
+        visible={modalType === Modals.ApproveError}
+        onClose={() => handleCloseModal()}
+      />
+
       <ApproveRejectedModal
         visible={modalType === Modals.ApproveRejected}
         onClose={() => handleCloseModal()}
+        onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
       <SendPendingModal
         visible={modalType === Modals.SendPending}
@@ -616,6 +645,7 @@ const Payment: VFC<IPayment> = ({
       <SendRejectedModal
         visible={modalType === Modals.SendRejected}
         onClose={() => handleCloseModal()}
+        onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
     </>
   );

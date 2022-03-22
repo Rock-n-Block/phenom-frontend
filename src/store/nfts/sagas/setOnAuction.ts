@@ -79,8 +79,14 @@ export function* setOnAuctionSaga({
     });
 
     yield put(apiActions.success(type));
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    yield put(
+      setActiveModal({
+        activeModal: err.code === 1 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }

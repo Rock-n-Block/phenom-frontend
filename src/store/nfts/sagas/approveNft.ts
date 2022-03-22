@@ -67,11 +67,10 @@ export function* approveNftSaga({
     );
 
     yield put(apiActions.success(type));
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
     yield put(
       setActiveModal({
-        activeModal: Modals.ApproveRejected,
+        activeModal: err.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
         open: true,
         txHash: '',
       }),
