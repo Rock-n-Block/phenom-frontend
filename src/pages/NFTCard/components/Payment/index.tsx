@@ -312,7 +312,7 @@ const Payment: VFC<IPayment> = ({
                 suffixIcon={nft?.isAucSelling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
                 onClick={
                   nft?.isAucSelling || nft?.is_timed_auc_selling
-                    ? () => handleBid(bidValue, nft?.currency.symbol || 'PHETA')
+                    ? () => handleBid(bidValue, nft?.currency?.symbol || DEFAULT_CURRENCY)
                     : () => handlePreBuy(nft?.standart === 'ERC721')
                 }
               >
@@ -500,7 +500,7 @@ const Payment: VFC<IPayment> = ({
                       onClick={() =>
                         handleSetOnSale(
                           priceValue,
-                          nft?.currency.symbol || DEFAULT_CURRENCY,
+                          nft?.currency?.symbol || DEFAULT_CURRENCY,
                           +quantity,
                         )
                       }
@@ -516,7 +516,7 @@ const Payment: VFC<IPayment> = ({
                     onClick={() =>
                       handleSetOnAuction(
                         priceValue,
-                        nft?.currency.symbol || DEFAULT_CURRENCY,
+                        nft?.currency?.symbol || DEFAULT_CURRENCY,
                         hoursTime,
                       )
                     }
