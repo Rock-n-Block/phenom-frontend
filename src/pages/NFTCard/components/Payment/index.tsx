@@ -44,9 +44,9 @@ interface IPayment {
 }
 
 const hours = [
-  { value: 43200, label: '12 h' },
-  { value: 86400, label: '24 h' },
-  { value: 172800, label: '48 h' },
+  { value: 43200, label: '12 h', key: 12 },
+  { value: 86400, label: '24 h', key: 24 },
+  { value: 172800, label: '48 h', key: 48 },
 ];
 
 const Payment: VFC<IPayment> = ({
@@ -69,7 +69,7 @@ const Payment: VFC<IPayment> = ({
   const [isFixedPrice, setIsFixedPrice] = useState(false);
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
-  const [hoursTime, setHoursTime] = useState(hours[0].value);
+  const [hoursTime, setHoursTime] = useState(hours[0]);
   const [modalType, setModalType] = useState(Modals.none);
 
   const handleSetModalType = useCallback((newModalType: Modals) => {
@@ -88,7 +88,7 @@ const Payment: VFC<IPayment> = ({
     setIsFixedPrice(!isFixedPrice);
   }, [isFixedPrice]);
 
-  const handleChangeHours = useCallback((value: number) => {
+  const handleChangeHours = useCallback((value) => {
     setHoursTime(value);
   }, []);
 
@@ -312,7 +312,7 @@ const Payment: VFC<IPayment> = ({
                 suffixIcon={nft?.isAucSelling || nft?.is_timed_auc_selling ? iconPlaceBid : ''}
                 onClick={
                   nft?.isAucSelling || nft?.is_timed_auc_selling
-                    ? () => handleBid(bidValue, nft?.currency.symbol || 'PHETA')
+                    ? () => handleBid(bidValue, nft?.currency?.symbol || DEFAULT_CURRENCY)
                     : () => handlePreBuy(nft?.standart === 'ERC721')
                 }
               >
@@ -453,28 +453,35 @@ const Payment: VFC<IPayment> = ({
                       className={styles.switch}
                     />
 
-                    <div className={styles.hours}>
-                      {hours.map(({ label, value }) => (
-                        <div
-                          className={cx(styles.hour, { [styles.hourActive]: value === hoursTime })}
-                          onClick={() => handleChangeHours(value)}
-                          onKeyDown={() => {}}
-                          tabIndex={0}
-                          role="button"
-                        >
-                          <Text
-                            size="m"
-                            weight="semibold"
-                            className={cx(styles.hourLabel, {
-                              [styles.hourLabelActive]: value === hoursTime,
+                    {isTimedAuction ? (
+                      <div className={styles.hours}>
+                        {hours.map((hour) => (
+                          <div
+                            className={cx(styles.hour, {
+                              [styles.hourActive]: hour.key === hoursTime.key,
                             })}
-                            align="center"
+                            onClick={() => handleChangeHours(hour)}
+                            onKeyDown={() => {}}
+                            tabIndex={0}
+                            role="button"
                           >
-                            {label}
-                          </Text>
-                        </div>
-                      ))}
-                    </div>
+                            <Text
+                              size="m"
+                              weight="semibold"
+                              className={cx(styles.hourLabel, {
+                                [styles.hourLabelActive]: hour.key === hoursTime.key,
+                              })}
+                              color={hour.key === hoursTime.key ? 'white' : 'dark'}
+                              align="center"
+                            >
+                              {hour.label}
+                            </Text>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 )}
                 {nft?.price ? (
@@ -500,7 +507,7 @@ const Payment: VFC<IPayment> = ({
                       onClick={() =>
                         handleSetOnSale(
                           priceValue,
-                          nft?.currency.symbol || DEFAULT_CURRENCY,
+                          nft?.currency?.symbol || DEFAULT_CURRENCY,
                           +quantity,
                         )
                       }
@@ -516,8 +523,8 @@ const Payment: VFC<IPayment> = ({
                     onClick={() =>
                       handleSetOnAuction(
                         priceValue,
-                        nft?.currency.symbol || DEFAULT_CURRENCY,
-                        hoursTime,
+                        nft?.currency?.symbol || DEFAULT_CURRENCY,
+                        hoursTime.value,
                       )
                     }
                   >

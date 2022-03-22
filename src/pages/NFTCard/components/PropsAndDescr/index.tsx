@@ -18,10 +18,10 @@ const PropsAndDescr: VFC<IPropsAndDescr> = ({ properties, description }) => {
             Properties
           </Text>
           <div className={styles.propertiesList}>
-            {properties.map(({ label, value }) => (
+            {properties.map(({ traitType, value }) => (
               <div className={styles.propertiesItem}>
                 <Text color="blue" className={styles.label}>
-                  {label}
+                  {traitType}
                 </Text>
                 <Text className={styles.value}>{value}</Text>
               </div>
