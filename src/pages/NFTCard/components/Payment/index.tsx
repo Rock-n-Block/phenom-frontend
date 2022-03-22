@@ -27,7 +27,7 @@ import {
 } from 'components';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { useShallowSelector } from 'hooks';
+import { useModals, useShallowSelector } from 'hooks';
 import { Modals, TokenFull } from 'types';
 
 import {
@@ -80,17 +80,9 @@ const Payment: VFC<IPayment> = ({
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0]);
-  const [modalType, setModalType] = useState(Modals.none);
+  const { modalType, closeModals, changeModalType } = useModals();
 
   const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
-
-  const handleSetModalType = useCallback((newModalType: Modals) => {
-    setModalType(newModalType);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setModalType(Modals.none);
-  }, []);
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -127,10 +119,10 @@ const Payment: VFC<IPayment> = ({
         handleBuy(nft?.sellers?.[0].url || 0);
       }
       if (!isSingle) {
-        handleSetModalType(Modals.ChooseSeller);
+        changeModalType(Modals.ChooseSeller);
       }
     },
-    [handleBuy, handleSetModalType, nft.sellers],
+    [handleBuy, changeModalType, nft.sellers],
   );
 
   const handleEndAuction = useCallback(() => {
@@ -360,7 +352,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(Modals.Transfer)}
+                    onClick={() => changeModalType(Modals.Transfer)}
                   >
                     Transfer
                   </Button>
@@ -583,7 +575,7 @@ const Payment: VFC<IPayment> = ({
                     color="dark"
                     className={cx(styles.button, styles.transfer)}
                     suffixIcon={iconTransfer}
-                    onClick={() => handleSetModalType(Modals.Transfer)}
+                    onClick={() => changeModalType(Modals.Transfer)}
                   >
                     Transfer
                   </Button>
@@ -608,43 +600,37 @@ const Payment: VFC<IPayment> = ({
         </div>
       )}
 
-      <TransferModal visible={modalType === Modals.Transfer} onClose={() => handleCloseModal()} />
+      <TransferModal visible={modalType === Modals.Transfer} onClose={() => closeModals()} />
 
-      <BurnModal visible={modalType === Modals.Burn} onClose={() => handleCloseModal()} />
+      <BurnModal visible={modalType === Modals.Burn} onClose={() => closeModals()} />
 
       <SellersModal
         visible={modalType === Modals.ChooseSeller}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
         sellers={nft?.sellers}
         handleChooseSeller={handleBuy}
       />
 
       <ApprovePendingModal
         visible={modalType === Modals.ApprovePending}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
       />
 
       <ApproveErrorModal
         visible={modalType === Modals.ApproveError}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
       />
 
       <ApproveRejectedModal
         visible={modalType === Modals.ApproveRejected}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
         onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
-      <SendPendingModal
-        visible={modalType === Modals.SendPending}
-        onClose={() => handleCloseModal()}
-      />
-      <SendSuccessModal
-        visible={modalType === Modals.SendSuccess}
-        onClose={() => handleCloseModal()}
-      />
+      <SendPendingModal visible={modalType === Modals.SendPending} onClose={() => closeModals()} />
+      <SendSuccessModal visible={modalType === Modals.SendSuccess} onClose={() => closeModals()} />
       <SendRejectedModal
         visible={modalType === Modals.SendRejected}
-        onClose={() => handleCloseModal()}
+        onClose={() => closeModals()}
         onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
     </>

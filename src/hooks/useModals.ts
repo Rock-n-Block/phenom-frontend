@@ -10,6 +10,7 @@ import { useShallowSelector } from 'hooks';
 type TUseModalReturn = {
   modalType: Modals;
   closeModals: () => void;
+  changeModalType: (type: Modals) => void;
   activateModals: (state: ModalState) => void;
 };
 
@@ -37,6 +38,19 @@ function useModals(props?: TUseModalProps): TUseModalReturn {
     dispatch(closeModal());
   }, [dispatch]);
 
+  const changeModalType = useCallback(
+    (type: Modals) => {
+      dispatch(
+        setActiveModal({
+          activeModal: type,
+          open: true,
+          txHash: modal.txHash,
+        }),
+      );
+    },
+    [dispatch, modal.txHash],
+  );
+
   const activateModals = useCallback(
     (state: ModalState) => {
       dispatch(setActiveModal(state));
@@ -44,7 +58,7 @@ function useModals(props?: TUseModalProps): TUseModalReturn {
     [dispatch],
   );
 
-  return { modalType: modal.activeModal, closeModals, activateModals };
+  return { modalType: modal.activeModal, changeModalType, closeModals, activateModals };
 }
 
 export default useModals;
