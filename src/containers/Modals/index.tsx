@@ -37,7 +37,7 @@ const ModalsComponent = () => {
       <SendRejectedModal
         visible={modalType === Modals.SendRejected}
         onClose={() => closeModals()}
-        onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
+        onSendAgain={'onSendAgain' in modalProps ? modalProps.onSendAgain : undefined}
       />
     </>
   );

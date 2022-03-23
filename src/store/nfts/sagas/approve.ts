@@ -59,13 +59,14 @@ export function* approveSaga({
         //     txHash: '',
         //   }),
         // );
-        throw new TypeError(e)
         yield put(apiActions.error(type, e));
+        throw new TypeError(e)
       }
     }
   } catch (err: any) {
     // allowance error
     yield put(apiActions.error(type, err));
+    throw new TypeError(err)
   }
 }
 

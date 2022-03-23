@@ -633,7 +633,7 @@ const Payment: VFC<IPayment> = ({
         sellers={nft?.sellers}
         handleChooseSeller={handleBuy}
       />
-{/* 
+      {/* 
       <ApprovePendingModal
         visible={modalType === Modals.ApprovePending}
         onClose={() => closeModals()}
