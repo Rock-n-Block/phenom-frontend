@@ -20,6 +20,10 @@
   margin-bottom: 48px;
 }
 
+.noResults{
+  @include flexbox;
+}
+
 .load {
   @include flexbox(center, center);
   margin-bottom: 80px;
