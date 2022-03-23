@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 
-import modalsSelector from 'store/ui/selectors';
+import modalsSelector from 'store/modals/selectors';
 import userSelector from 'store/user/selectors';
 
 import { Clipboard, Modal, Text } from 'components';
@@ -19,7 +19,7 @@ type ISendSuccessModal = {
 };
 
 const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps = true }) => {
-  const txHash = useShallowSelector(modalsSelector.getProp('txHash'));
+  const activeModal = useShallowSelector(modalsSelector.getProp('modalState'));
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const title = (
     <Text align="center" size="xl" weight="bold">
@@ -41,7 +41,11 @@ const SendSuccessModal: VFC<ISendSuccessModal> = ({ visible, onClose, withSteps 
       <Text align="center" className={styles.text}>
         It takes some time for transaction to get confirmed.
       </Text>
-      <Clipboard className={styles.clipboard} value={`${chains[chain].scanner}tx/${txHash}`} />
+      {activeModal.txHash ? (
+        <Clipboard className={styles.clipboard} value={`${chains[chain].scanner}tx/${activeModal.txHash}`} />
+      ) : (
+        <></>
+      )}
     </Modal>
   );
 };

@@ -52,14 +52,14 @@ export function* approveSaga({
         );
         yield put(apiActions.success(type));
       } catch (e: any) {
-        yield put(
-          setActiveModal({
-            activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
-            open: true,
-            txHash: '',
-          }),
-        );
-
+        // yield put(
+        //   setActiveModal({
+        //     activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
+        //     open: true,
+        //     txHash: '',
+        //   }),
+        // );
+        throw new TypeError(e)
         yield put(apiActions.error(type, e));
       }
     }

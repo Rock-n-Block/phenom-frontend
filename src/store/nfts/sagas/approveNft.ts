@@ -78,7 +78,7 @@ export function* approveNftSaga({
     );
 
     yield put(apiActions.error(type, err));
-    throw new Error('Approve Error');
+    throw new Error(err);
   }
 }
 
