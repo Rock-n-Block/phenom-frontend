@@ -3,6 +3,8 @@ import { useCallback, useState, VFC } from 'react';
 import { Button, DefaultInput, Modal } from 'components';
 
 import styles from './styles.module.scss';
+import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
 
 type ITransferModal = {
   visible: boolean;
@@ -14,6 +16,7 @@ type ITransferModal = {
 const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultiple }) => {
   const [inputValue, setInputValue] = useState('');
   const [amountValue, setAmountValue] = useState('');
+  const dispatch = useDispatch();
 
   const handleInputChange = useCallback((value: string) => {
     setInputValue(value);
@@ -22,6 +25,12 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
   const handleAmountChange = useCallback((value: string) => {
     setAmountValue(value);
   }, []);
+
+  dispatch(
+    setModalProps({
+      onSendAgain: () => onSend(inputValue.trim(), amountValue.trim()),
+    }),
+  );
 
   return (
     <Modal visible={visible} onClose={onClose} title="Transfer">
