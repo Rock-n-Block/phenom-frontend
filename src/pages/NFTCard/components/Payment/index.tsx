@@ -114,7 +114,7 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
-        dispatch(setModalProps({ onApprove: () => handleBuy(sellerId) }));
+        dispatch(setModalProps({ onApprove: handleBuy(sellerId) }));
       }
     },
     [nft, dispatch, walletService],
@@ -147,6 +147,11 @@ const Payment: VFC<IPayment> = ({
     (minimalBid: number | string, currency: string, auctionDuration?: number) => () => {
       if (nft) {
         dispatch(
+          setModalProps({
+            onApprove: handleSetOnAuction(minimalBid, currency, auctionDuration),
+          }),
+        );
+        dispatch(
           setOnAuction({
             id: nft?.id || 0,
             internalId: nft.internalId || 0,
@@ -155,11 +160,6 @@ const Payment: VFC<IPayment> = ({
             isSingle: nft?.standart === 'ERC721',
             auctionDuration,
             web3Provider: walletService.Web3(),
-          }),
-        );
-        dispatch(
-          setModalProps({
-            onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
           }),
         );
       }
@@ -183,7 +183,7 @@ const Payment: VFC<IPayment> = ({
         );
         dispatch(
           setModalProps({
-            onApprove: () => handleSetOnSale(price, currency, amount),
+            onApprove: handleSetOnSale(price, currency, amount),
           }),
         );
       }
@@ -203,7 +203,7 @@ const Payment: VFC<IPayment> = ({
       );
       dispatch(
         setModalProps({
-          onApprove: () => handleBid(amount, currency),
+          onApprove: handleBid(amount, currency),
         }),
       );
     },
