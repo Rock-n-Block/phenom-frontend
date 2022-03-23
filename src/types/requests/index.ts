@@ -148,7 +148,7 @@ export type GetProfileInfoReq = {
 };
 
 export type SearchNftReq = {
-  type: string;
+  type: 'items' | 'collections' | 'users';
   page: number;
   on_timed_auc_sale?: boolean;
   on_auc_sale?: boolean;
@@ -159,6 +159,10 @@ export type SearchNftReq = {
   collections?: string[];
   max_price?: string | number;
   min_price?: string | number;
+  on_sale?: boolean;
+  sold_by?: string | number;
+  bids_by?: string | number;
+  owner?: string | number;
 };
 
 export type TransferTokenReq = {
@@ -216,6 +220,12 @@ export type EditProfile = Pick<
 export type RequestWithNetwork = {
   network: string;
 };
+
+export type GetLikedNFTsRequest = {
+  page: number | string;
+  userId: number | string;
+  shouldConcat?: boolean;
+} & RequestWithNetwork;
 
 export type CreateCollectionAction = {
   collection: FormData;

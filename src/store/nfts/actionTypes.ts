@@ -15,6 +15,7 @@ const TRACK_TRANSACTION = 'TRACK_TRANSACTION' as const;
 const GET_TRENDING = 'GET_TRENDING' as const;
 const TRANSFER = 'TRANSFER' as const;
 const BURN = 'BURN' as const;
+const GET_LIKED = 'GET_LIKED' as const;
 
 export default {
   GET_CATEGORIES,
@@ -34,4 +35,5 @@ export default {
   GET_TRENDING,
   TRANSFER,
   BURN,
+  GET_LIKED,
 };

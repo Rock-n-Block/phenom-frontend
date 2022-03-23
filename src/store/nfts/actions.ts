@@ -10,6 +10,7 @@ import {
   CreateTokenRequest,
   EndAucReq,
   GetDetailedNftReq,
+  GetLikedNFTsRequest,
   GetTrendingNftsReq,
   LikeReq,
   SearchNftAction,
@@ -38,3 +39,4 @@ export const trackTransaction = createAction<TrackTransactionReq>(actionTypes.TR
 export const getTrending = createAction<GetTrendingNftsReq>(actionTypes.GET_TRENDING);
 export const transfer = createAction<TransferTokenReq>(actionTypes.TRANSFER);
 export const burn = createAction<BurnTokenReq>(actionTypes.BURN);
+export const getLikedNFTs = createAction<GetLikedNFTsRequest>(actionTypes.GET_LIKED);

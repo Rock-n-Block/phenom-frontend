@@ -6,6 +6,8 @@ import {
   TrackTransactionReq,
 } from 'types/requests';
 
+import accountApiCalls from './accountApiCalls';
+import activityApiCalls from './activityApiCalls';
 import ajax from './ajax';
 import createApiCalls from './createApiCalls';
 import NftApiCalls from './nftApiCalls';
@@ -16,13 +18,6 @@ export const baseApi = {
     return ajax({
       method: 'get',
       url: URL.getTrendingNfts,
-      params,
-    });
-  },
-  getTopCollections(params: { network: string }) {
-    return ajax({
-      method: 'get',
-      url: URL.topCollections,
       params,
     });
   },
@@ -71,4 +66,6 @@ export const baseApi = {
   ...createApiCalls,
   ...profileApiCalls,
   ...NftApiCalls,
+  ...activityApiCalls,
+  ...accountApiCalls,
 };
