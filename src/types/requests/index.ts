@@ -181,6 +181,8 @@ export type BurnTokenReq = {
 export type SearchCollectionsReq = {
   type: string;
   page: number;
+  owner?: string | number;
+  creator?: string | number;
 };
 
 export type SearchTrendingsReq = {

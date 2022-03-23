@@ -2,8 +2,9 @@ import { setNfts, setTotalPages } from '../reducer';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
+import nftSelector from 'store/nfts/selectors';
 
-import { camelize, snakeize } from 'utils/camelize';
+import { camelize } from 'utils/camelize';
 
 import { TokenFull } from 'types';
 
@@ -14,7 +15,7 @@ export function* getLikedNFTsSaga({ type, payload }: ReturnType<typeof getLikedN
   yield put(apiActions.request(type));
   const { userId, network, page, shouldConcat } = payload;
   try {
-    const { data } = yield call(baseApi.searchNfts, snakeize({ userId, network, page }));
+    const { data } = yield call(baseApi.getLikedNFTs, { userId, network, page });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const nfts = yield select(nftSelector.getProp('nfts'));

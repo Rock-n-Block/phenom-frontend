@@ -153,7 +153,7 @@ const Dropdown: FC<IDropdownProps> = ({
                       [styles.selectioned]: option[drawBy] === value ? value[drawBy] : '',
                     })}
                     onClick={() => handleClick(option)}
-                    key={`dropdown_option_${option[returnBy]}`}
+                    key={`dropdown_option_${option[drawBy]}`}
                   >
                     {option.icon}
                     <Text className={styles.text} tag="span">

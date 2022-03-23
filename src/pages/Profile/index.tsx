@@ -2,6 +2,7 @@ import { useEffect, useMemo, VFC } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
+import collectionsSelector from 'store/collections/selectors';
 import nftSelector from 'store/nfts/selectors';
 import { getProfileById } from 'store/profile/actions';
 import profileSelector from 'store/profile/selectors';
@@ -10,7 +11,7 @@ import userSelector from 'store/user/selectors';
 import cn from 'classnames';
 import { useWalletConnectContext } from 'context';
 
-import { Avatar, Button, Clipboard, TabBar, Text } from 'components';
+import { ArtCardSkeleton, Avatar, Button, Clipboard, TabBar, Text } from 'components';
 import { generateUsername } from 'utils';
 
 import { routes } from 'appConstants';
@@ -30,8 +31,12 @@ const Profile: VFC = () => {
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const { walletService } = useWalletConnectContext();
-  const { avatar, balance, displayName, address, bio, instagram, twitter, site, collections } =
+  const { avatar, balance, displayName, address, bio, instagram, twitter, site } =
     useShallowSelector(profileSelector.getProfile);
+
+  const { collections, totalPages: totalCollections } = useShallowSelector(
+    collectionsSelector.getCollections,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,6 +44,12 @@ const Profile: VFC = () => {
       dispatch(getProfileById({ id: userId, web3Provider: walletService.Web3() }));
     }
   }, [dispatch, userId, walletService]);
+
+  const NFTsCardsSkeleton = useMemo(
+    // eslint-disable-next-line react/no-array-index-key
+    () => new Array(6).fill(0).map((_, k) => <ArtCardSkeleton key={k} />),
+    [],
+  );
 
   const Tabs = useMemo<TBarOption[]>(
     () => [
@@ -157,6 +168,7 @@ const Profile: VFC = () => {
                 id={userId}
                 pages={totalPages}
                 cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
               />
             }
           />
@@ -169,6 +181,7 @@ const Profile: VFC = () => {
                 key="for-sale"
                 fetchName="forSale"
                 cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
               />
             }
           />
@@ -181,6 +194,7 @@ const Profile: VFC = () => {
                 pages={totalPages}
                 fetchName="sold"
                 cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
               />
             }
           />
@@ -193,6 +207,7 @@ const Profile: VFC = () => {
                 id={userId}
                 pages={totalPages}
                 cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
               />
             }
           />
@@ -206,12 +221,21 @@ const Profile: VFC = () => {
                 fetchName="favorites"
                 withAuction
                 cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
               />
             }
           />
           <Route
             path="collections"
-            element={<Collections key="collections" cardsData={collections} />}
+            element={
+              <Collections
+                id={userId}
+                pages={totalCollections}
+                key="collections"
+                cardsData={collections}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
           />
         </Routes>
       </div>
