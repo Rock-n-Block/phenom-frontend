@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import modalsSelector from 'store/modals/selectors';
+// import modalsSelector from 'store/modals/selectors';
 import { createToken, getCategories } from 'store/nfts/actions';
 import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
@@ -10,12 +10,12 @@ import { useWalletConnectContext } from 'context';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { SendPendingModal, SendRejectedModal, SendSuccessModal } from 'components';
-import SendErrorModal from 'components/Modals/modals/SendErrorModal';
+// import { SendPendingModal, SendRejectedModal, SendSuccessModal } from 'components';
+// import SendErrorModal from 'components/Modals/modals/SendErrorModal';
 
 import { createValidator, getExtension, getFileGroup, TAvailableExtensions } from 'appConstants';
-import { useModals, useShallowSelector } from 'hooks';
-import { Category, Collection, Modals, Tag } from 'types';
+import { useShallowSelector } from 'hooks';
+import { Category, Collection, Tag } from 'types';
 
 import MainForm from './mainForm';
 
@@ -51,7 +51,7 @@ export interface IMainForm extends ICreateForm {
 const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
-  const modalProps = useShallowSelector(modalsSelector.getProp('modalProps'));
+  // const modalProps = useShallowSelector(modalsSelector.getProp('modalProps'));
 
   const { walletService } = useWalletConnectContext();
 
@@ -59,7 +59,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     dispatch(getSelfCollections({ network: chain }));
   }, [chain, dispatch]);
 
-  const { modalType, closeModals } = useModals();
+  // const { modalType, closeModals } = useModals();
 
   const clearForm = useMemo<ICreateForm>(
     () => ({
@@ -159,7 +159,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   return (
     <>
       <FormWithFormik onRefresh={onReloadClick} type={type} />{' '}
-      <SendPendingModal
+      {/* <SendPendingModal
         withSteps={false}
         visible={modalType === Modals.SendPending}
         onClose={() => closeModals()}
@@ -180,7 +180,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         visible={modalType === Modals.SendError}
         onClose={() => closeModals}
         onTryAgain={'onAgain' in modalProps ? modalProps.onAgain : () => {}}
-      />
+      /> */}
     </>
   );
 };

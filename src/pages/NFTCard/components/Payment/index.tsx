@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
-import modalSelector from 'store/modals/selectors';
+// import modalSelector from 'store/modals/selectors';
 import {
   bid,
   buy,
@@ -18,24 +18,24 @@ import { useWalletConnectContext } from 'context';
 import moment from 'moment';
 
 import {
-  ApprovePendingModal,
-  ApproveRejectedModal,
+  // ApprovePendingModal,
+  // ApproveRejectedModal,
   Avatar,
   Button,
   DefaultInput,
   QuantityInput,
   Selector,
   SellersModal,
-  SendPendingModal,
-  SendRejectedModal,
-  SendSuccessModal,
+  // SendPendingModal,
+  // SendRejectedModal,
+  // SendSuccessModal,
   Text,
   TransferModal,
 } from 'components';
-import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
+// import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { useModals, useShallowSelector } from 'hooks';
+import { useModals } from 'hooks';
 import { Modals, Standart, TokenFull } from 'types';
 
 import {
@@ -89,7 +89,7 @@ const Payment: VFC<IPayment> = ({
   const [hoursTime, setHoursTime] = useState(hours[0]);
   const { modalType, closeModals, changeModalType } = useModals();
 
-  const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
+  // const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
 
   const handleList = useCallback(() => {
     setIsListing(true);
@@ -114,7 +114,7 @@ const Payment: VFC<IPayment> = ({
             web3Provider: walletService.Web3(),
           }),
         );
-        dispatch(setModalProps({ onApprove: () => handleBuy(sellerId) }));
+        dispatch(setModalProps({ onApprove: handleBuy(sellerId) }));
       }
     },
     [nft, dispatch, walletService],
@@ -147,6 +147,11 @@ const Payment: VFC<IPayment> = ({
     (minimalBid: number | string, currency: string, auctionDuration?: number) => () => {
       if (nft) {
         dispatch(
+          setModalProps({
+            onApprove: handleSetOnAuction(minimalBid, currency, auctionDuration),
+          }),
+        );
+        dispatch(
           setOnAuction({
             id: nft?.id || 0,
             internalId: nft.internalId || 0,
@@ -155,11 +160,6 @@ const Payment: VFC<IPayment> = ({
             isSingle: nft?.standart === 'ERC721',
             auctionDuration,
             web3Provider: walletService.Web3(),
-          }),
-        );
-        dispatch(
-          setModalProps({
-            onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
           }),
         );
       }
@@ -183,7 +183,7 @@ const Payment: VFC<IPayment> = ({
         );
         dispatch(
           setModalProps({
-            onApprove: () => handleSetOnSale(price, currency, amount),
+            onApprove: handleSetOnSale(price, currency, amount),
           }),
         );
       }
@@ -203,7 +203,7 @@ const Payment: VFC<IPayment> = ({
       );
       dispatch(
         setModalProps({
-          onApprove: () => handleBid(amount, currency),
+          onApprove: handleBid(amount, currency),
         }),
       );
     },
@@ -633,7 +633,7 @@ const Payment: VFC<IPayment> = ({
         sellers={nft?.sellers}
         handleChooseSeller={handleBuy}
       />
-
+      {/* 
       <ApprovePendingModal
         visible={modalType === Modals.ApprovePending}
         onClose={() => closeModals()}
@@ -655,7 +655,7 @@ const Payment: VFC<IPayment> = ({
         visible={modalType === Modals.SendRejected}
         onClose={() => closeModals()}
         onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
-      />
+      /> */}
     </>
   );
 };

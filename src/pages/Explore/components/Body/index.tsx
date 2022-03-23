@@ -11,7 +11,7 @@ import cx from 'classnames';
 import { useLanguage } from 'context';
 import { debounce } from 'lodash';
 
-import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent } from 'components';
+import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent, Text } from 'components';
 import { ITab } from 'components/TabLookingComponent';
 
 import { Filters } from './components';
@@ -125,7 +125,11 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
 
         <div ref={pageChangeScrollAnchor} />
         <div className={styles.filterResults}>
-          <div className={cx(styles.cards)}>
+          <div
+            className={cx(styles.cards, {
+              [styles.noResults]: !isNftsLoading && nftCards.length === 0,
+            })}
+          >
             {isNftsLoading && nftCards.length === 0 ? (
               <>
                 <ArtCardSkeleton />
@@ -139,31 +143,48 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
                 <ArtCardSkeleton />
               </>
             ) : (
-              nftCards.map((artCard: any) => {
-                if (isNftsLoading && currentPage === 1) {
-                  return <ArtCardSkeleton />;
-                }
-                const { id, name, price, media, currency, creator, bids, isAuction, USD_price } =
-                  artCard;
-                return (
-                  <ArtCard
-                    artId={id}
-                    name={name}
-                    price={price}
-                    imageMain={media}
-                    asset={currency?.symbol || DEFAULT_CURRENCY}
-                    author={creator?.name || creator?.address}
-                    authorAvatar={creator?.avatar}
-                    authorId={creator?.id}
-                    bids={bids}
-                    isAuction={isAuction}
-                    USD_price={USD_price}
-                    likeAction={() => {
-                      return id;
-                    }}
-                  />
-                );
-              })
+              <>
+                {nftCards.length === 0 ? (
+                  <Text align="center" tag="h3" weight="semibold">
+                    No searching results
+                  </Text>
+                ) : (
+                  nftCards.map((artCard: any) => {
+                    if (isNftsLoading && currentPage === 1) {
+                      return <ArtCardSkeleton />;
+                    }
+                    const {
+                      id,
+                      name,
+                      price,
+                      media,
+                      currency,
+                      creator,
+                      bids,
+                      isAuction,
+                      USD_price,
+                    } = artCard;
+                    return (
+                      <ArtCard
+                        artId={id}
+                        name={name}
+                        price={price}
+                        imageMain={media}
+                        asset={currency?.symbol || DEFAULT_CURRENCY}
+                        author={creator?.name || creator?.address}
+                        authorAvatar={creator?.avatar}
+                        authorId={creator?.id}
+                        bids={bids}
+                        isAuction={isAuction}
+                        USD_price={USD_price}
+                        likeAction={() => {
+                          return id;
+                        }}
+                      />
+                    );
+                  })
+                )}
+              </>
             )}
             {isNftsLoading && currentPage >= 2 && (
               <>

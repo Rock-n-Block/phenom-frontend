@@ -163,6 +163,7 @@ export type SearchNftReq = {
   sold_by?: string | number;
   bids_by?: string | number;
   owner?: string | number;
+  text?: string
 };
 
 export type TransferTokenReq = {

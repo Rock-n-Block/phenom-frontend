@@ -51,6 +51,7 @@ export interface INft {
 
 export type NftsState = {
   nfts: TokenFull[];
+  presearchedNfts: TokenFull[];
   detailedNft: TNullable<TokenFull>;
   totalPages: number;
   categories: TNullable<TResponseCategories>;

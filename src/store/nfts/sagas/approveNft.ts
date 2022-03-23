@@ -15,7 +15,7 @@ import actionTypes from '../actionTypes';
 
 export function* approveNftSaga({
   type,
-  payload: { id, isSingle, web3Provider },
+  payload: { isSingle, web3Provider },
 }: ReturnType<typeof approveNft>) {
   yield put(apiActions.request(type));
 
@@ -37,11 +37,12 @@ export function* approveNftSaga({
       isSingle ? erc721Abi : erc1155Abi,
       nftAddress,
     );
-
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const approvedContractAddress = yield call(nftContract.methods.getApproved(id).call);
-    if (approvedContractAddress === marketpalceAddress) {
+    const isApproved = yield call(
+      nftContract.methods.isApprovedForAll(myAddress, marketpalceAddress).call,
+    );
+    if (isApproved) {
       yield put(apiActions.success(type));
       return;
     }
@@ -54,7 +55,7 @@ export function* approveNftSaga({
       }),
     );
 
-    yield call(nftContract.methods.approve(marketpalceAddress, id).send, {
+    yield call(nftContract.methods.setApprovalForAll(marketpalceAddress, true).send, {
       from: myAddress,
     });
 
@@ -68,16 +69,16 @@ export function* approveNftSaga({
 
     yield put(apiActions.success(type));
   } catch (err: any) {
-    yield put(
-      setActiveModal({
-        activeModal: err.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
-        open: true,
-        txHash: '',
-      }),
-    );
+    // yield put(
+    //   setActiveModal({
+    //     activeModal: err.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
+    //     open: true,
+    //     txHash: '',
+    //   }),
+    // );
 
     yield put(apiActions.error(type, err));
-    throw new Error('Approve Error');
+    throw new Error(err);
   }
 }
 

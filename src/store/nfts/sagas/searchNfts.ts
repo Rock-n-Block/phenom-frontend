@@ -11,7 +11,7 @@ import { TokenFull } from 'types';
 import { searchNfts } from '../actions';
 import actionTypes from '../actionTypes';
 
-export function* searchCollectionsSaga({
+export function* searchNftsSaga({
   type,
   payload: { requestData, shouldConcat },
 }: ReturnType<typeof searchNfts>) {
@@ -36,5 +36,5 @@ export function* searchCollectionsSaga({
 }
 
 export default function* listener() {
-  yield takeLatest(actionTypes.SEARCH_NFTS, searchCollectionsSaga);
+  yield takeLatest(actionTypes.SEARCH_NFTS, searchNftsSaga);
 }

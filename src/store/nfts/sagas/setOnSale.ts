@@ -41,7 +41,7 @@ export function* setOnSaleSaga({
       id,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      ...snakeize(requestData),
+      ...snakeize(requestData), 
     });
 
     yield put(
@@ -61,13 +61,13 @@ export function* setOnSaleSaga({
 
     yield put(apiActions.success(type));
   } catch (err: any) {
-    // yield put(
-    //   setActiveModal({
-    //     activeModal: err?.code === 4001 ? Modals.SendRejected : Modals.SendError,
-    //     open: true,
-    //     txHash: '',
-    //   }),
-    // );
+    yield put(
+      setActiveModal({
+        activeModal: err?.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        open: true,
+        txHash: '',
+      }),
+    );
     yield put(apiActions.error(type, err));
   }
 }

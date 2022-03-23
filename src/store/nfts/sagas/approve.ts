@@ -52,20 +52,21 @@ export function* approveSaga({
         );
         yield put(apiActions.success(type));
       } catch (e: any) {
-        yield put(
-          setActiveModal({
-            activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
-            open: true,
-            txHash: '',
-          }),
-        );
-
+        // yield put(
+        //   setActiveModal({
+        //     activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
+        //     open: true,
+        //     txHash: '',
+        //   }),
+        // );
         yield put(apiActions.error(type, e));
+        throw new TypeError(e)
       }
     }
   } catch (err: any) {
     // allowance error
     yield put(apiActions.error(type, err));
+    throw new TypeError(err)
   }
 }
 

@@ -1,5 +1,9 @@
 @import 'src/styles/helpers.scss';
 
+.propsAndDescr {
+  width: 100%;
+}
+
 .properties {
   &List {
     @include flexbox(flex-start, flex-start);
@@ -33,8 +37,8 @@
   }
 }
 
-@include small-tablet{
-  .propertiesItem{
+@include small-tablet {
+  .propertiesItem {
     min-width: 124px;
     margin-right: 12px;
     margin-bottom: 12px;

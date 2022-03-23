@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { getCategories } from 'store/nfts/actions';
 
-import { RoutesPage } from 'containers';
+import { Modals, RoutesPage } from 'containers';
 
 import { Header } from 'components';
 
@@ -37,6 +37,7 @@ export const App: FC = () => {
         closeButton={false}
       />
       <Header />
+      <Modals />
       <RoutesPage />
     </>
   );
