@@ -18,7 +18,7 @@ import { Filters } from './components';
 
 import { DEBOUNCE_DELAY_100, DEFAULT_CURRENCY } from 'appConstants';
 import { useShallowSelector } from 'hooks';
-import { RequestStatus, Tag, TNullable } from 'types';
+import { RequestStatus, Tag, TNullable, TokenFull } from 'types';
 import { SearchNftReq } from 'types/requests';
 
 import styles from './styles.module.scss';
@@ -149,7 +149,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
                     No searching results
                   </Text>
                 ) : (
-                  nftCards.map((artCard: any) => {
+                  nftCards.map((artCard: TokenFull) => {
                     if (isNftsLoading && currentPage === 1) {
                       return <ArtCardSkeleton />;
                     }
@@ -161,25 +161,22 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
                       currency,
                       creator,
                       bids,
-                      isAuction,
-                      USD_price,
+                      isAucSelling,
+                      usdPrice,
                     } = artCard;
                     return (
                       <ArtCard
-                        artId={id}
+                        artId={id || 0}
                         name={name}
                         price={price}
-                        imageMain={media}
+                        imageMain={media || ''}
                         asset={currency?.symbol || DEFAULT_CURRENCY}
-                        author={creator?.name || creator?.address}
-                        authorAvatar={creator?.avatar}
+                        author={creator?.name || creator?.address || ''}
+                        authorAvatar={creator?.avatar || ''}
                         authorId={creator?.id}
                         bids={bids}
-                        isAuction={isAuction}
-                        USD_price={USD_price}
-                        likeAction={() => {
-                          return id;
-                        }}
+                        isAuction={isAucSelling}
+                        USD_price={usdPrice}
                       />
                     );
                   })

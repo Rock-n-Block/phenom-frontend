@@ -105,7 +105,7 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             options={collections.map((collection: any) => ({
               value: collection.name,
               media: collection.avatar,
-              label: collection.id,
+              label: collection.url,
             }))}
             checkedFilters={checkedFilters}
             keyName="collection"

@@ -4,5 +4,6 @@ export { default as Explore } from './Explore';
 export { CreateNFT } from './CreateNFT';
 export { default as NFTCard } from './NFTCard';
 export { default as Profile } from './Profile';
+export { default as Collection } from './Collection';
 export { EditProfile } from './EditProfile';
 export { default as NotFoundPage } from './NotFoundPage';

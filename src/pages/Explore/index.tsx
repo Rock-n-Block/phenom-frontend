@@ -31,7 +31,7 @@ const Explore: VFC = () => {
   const { tags, activeTag, handleSetActiveTag } = useGetTags(activeCategoryName, categories);
 
   const handleSearchCollections = useCallback(() => {
-    const requestData = { type: 'collections', page: 1 };
+    const requestData: any = { type: 'collections', page: 1 };
     dispatch(searchCollections({ requestData }));
   }, [dispatch]);
 
