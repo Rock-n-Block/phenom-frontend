@@ -7,6 +7,7 @@ const initialState: CollectionsState = {
   trendingCollections: [],
   topCollections: [],
   totalPages: 0,
+  singleCollection: null,
 };
 
 export const collectionsReducer = createSlice({
@@ -16,6 +17,10 @@ export const collectionsReducer = createSlice({
     setCollections: (state, action: PayloadAction<Collection[]>) => ({
       ...state,
       collections: action.payload,
+    }),
+    setSingleCollection: (state, action: PayloadAction<Collection>) => ({
+      ...state,
+      singleCollection: action.payload,
     }),
     setTrendingCollections: (state, action: PayloadAction<TrendingCollection[]>) => ({
       ...state,
@@ -32,6 +37,10 @@ export const collectionsReducer = createSlice({
     clearCollections: (state) => ({
       ...state,
       collections: [],
+    }),
+    clearSingleCollection: (state) => ({
+      ...state,
+      singleCollection: null,
     }),
     clearTrendingCollections: (state) => ({
       ...state,
@@ -52,6 +61,8 @@ export const {
   clearTrendingCollections,
   clearTopCollections,
   setTotalPages,
+  setSingleCollection,
+  clearSingleCollection,
 } = collectionsReducer.actions;
 
 export default collectionsReducer.reducer;

@@ -43,6 +43,13 @@ export const baseApi = {
       params,
     });
   },
+  searchSingleCollection(data: { id: string | number; network: string }) {
+    return ajax({
+      method: 'get',
+      url: URL.getSingleCollection(data.id),
+      params: { network: data.network },
+    });
+  },
   searchTrendingCollections(params: SearchTrendingsReq) {
     return ajax({
       method: 'get',

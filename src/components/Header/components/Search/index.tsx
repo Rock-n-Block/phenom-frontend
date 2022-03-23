@@ -44,7 +44,7 @@ const Search: VFC<Props> = ({ className, classNameDropdown, isOpen, handleSetIsO
 
   const fetchSearchedNfts = useCallback(
     (text: string) => {
-      const requestData = {
+      const requestData: any = {
         type: 'items',
         text,
         page: 1,

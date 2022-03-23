@@ -8,6 +8,7 @@ import { useLanguage } from 'context';
 // import { GuardedRoute } from 'components';
 // import { observer } from 'mobx-react-lite';
 import {
+  Collection,
   Create,
   CreateNFT,
   EditProfile,
@@ -128,6 +129,15 @@ const RoutesPage = () => {
           <Page
             classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
             component={<NFTCard />}
+          />
+        }
+      />
+      <Route
+        path={routes.collection.root}
+        element={
+          <Page
+            classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+            component={<Collection />}
           />
         }
       />
