@@ -2,6 +2,8 @@ import { useEffect, useMemo, VFC } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
+import collectionsSelector from 'store/collections/selectors';
+import nftSelector from 'store/nfts/selectors';
 import { getProfileById } from 'store/profile/actions';
 import profileSelector from 'store/profile/selectors';
 import userSelector from 'store/user/selectors';
@@ -9,14 +11,14 @@ import userSelector from 'store/user/selectors';
 import cn from 'classnames';
 import { useWalletConnectContext } from 'context';
 
-import { Avatar, Button, Clipboard, TabBar, Text } from 'components';
+import { ArtCardSkeleton, Avatar, Button, Clipboard, TabBar, Text } from 'components';
 import { generateUsername } from 'utils';
 
 import { routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { TBarOption } from 'types';
 
-import { nftCards, profile } from './mock';
+import { profile } from './mock';
 import { AboutMe, Collections, Preview } from './Tabs';
 
 import { iconEdit } from 'assets/img';
@@ -26,15 +28,28 @@ import styles from './styles.module.scss';
 const Profile: VFC = () => {
   const { userId } = useParams();
   const id = useShallowSelector(userSelector.getProp('id'));
+  const nfts = useShallowSelector(nftSelector.getProp('nfts'));
+  const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const { walletService } = useWalletConnectContext();
-  const { avatar, balance, displayName, address, bio, instagram, twitter, site, collections } =
+  const { avatar, balance, displayName, address, bio, instagram, twitter, site } =
     useShallowSelector(profileSelector.getProfile);
+
+  const { collections, totalPages: totalCollections } = useShallowSelector(
+    collectionsSelector.getCollections,
+  );
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (userId) {
       dispatch(getProfileById({ id: userId, web3Provider: walletService.Web3() }));
     }
   }, [dispatch, userId, walletService]);
+
+  const NFTsCardsSkeleton = useMemo(
+    // eslint-disable-next-line react/no-array-index-key
+    () => new Array(6).fill(0).map((_, k) => <ArtCardSkeleton key={k} />),
+    [],
+  );
 
   const Tabs = useMemo<TBarOption[]>(
     () => [
@@ -144,17 +159,83 @@ const Profile: VFC = () => {
               />
             }
           />
-          <Route path="owned" element={<Preview key="owned" cardsData={nftCards} />} />
-          <Route path="for-sale" element={<Preview key="for-sale" cardsData={nftCards} />} />
-          <Route path="sold" element={<Preview key="sold" cardsData={nftCards} />} />
-          <Route path="bided" element={<Preview key="bided" cardsData={nftCards} />} />
+          <Route
+            path="owned"
+            element={
+              <Preview
+                key="owned"
+                fetchName="owned"
+                id={userId}
+                pages={totalPages}
+                cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
+          />
+          <Route
+            path="for-sale"
+            element={
+              <Preview
+                id={userId}
+                pages={totalPages}
+                key="for-sale"
+                fetchName="forSale"
+                cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
+          />
+          <Route
+            path="sold"
+            element={
+              <Preview
+                key="sold"
+                id={userId}
+                pages={totalPages}
+                fetchName="sold"
+                cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
+          />
+          <Route
+            path="bided"
+            element={
+              <Preview
+                key="bided"
+                fetchName="bided"
+                id={userId}
+                pages={totalPages}
+                cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
+          />
           <Route
             path="favorites"
-            element={<Preview key="favorites" withAuction cardsData={nftCards} />}
+            element={
+              <Preview
+                key="favorites"
+                id={userId}
+                pages={totalPages}
+                fetchName="favorites"
+                withAuction
+                cardsData={nfts}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
           />
           <Route
             path="collections"
-            element={<Collections key="collections" cardsData={collections} />}
+            element={
+              <Collections
+                id={userId}
+                pages={totalCollections}
+                key="collections"
+                cardsData={collections}
+                skeleton={NFTsCardsSkeleton}
+              />
+            }
           />
         </Routes>
       </div>

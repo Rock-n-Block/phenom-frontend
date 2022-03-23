@@ -1,4 +1,4 @@
-import { ReactElement, VFC } from 'react';
+import { FormEvent, ReactElement, useCallback, VFC } from 'react';
 
 import cn from 'classnames';
 import { useLanguage } from 'context';
@@ -16,10 +16,22 @@ interface INFTList {
   auction?: boolean;
   className?: string;
   emptyMsg?: string;
+  pages?: number;
+  currentPage?: number;
+  isLoading?: boolean;
   onSortClick?: (sort: TSort) => void;
-  onLoadMore?: () => void;
+  onLoadMore?: (page: number) => void;
   onAuctionClick?: () => void;
 }
+
+const isLoadMoreActive = (
+  current: number | undefined,
+  amount: number | undefined,
+  loadMoreFunc?: (page: number) => void,
+) => {
+  return loadMoreFunc && !(current === undefined) && !(amount === undefined) && current < amount;
+};
+
 /**
  *
  * @param {ReactElement[]} elements - list of UI components
@@ -42,11 +54,25 @@ const NFTList: VFC<INFTList> = ({
   auction,
   className,
   emptyMsg = 'There in no elements',
+  pages,
+  currentPage,
+  isLoading = false,
   onSortClick,
   onLoadMore,
   onAuctionClick,
 }) => {
   const { t } = useLanguage();
+
+  const onLoadMoreHandler = useCallback(
+    (e: FormEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (currentPage) {
+        onLoadMore?.(currentPage + 1);
+      }
+    },
+    [currentPage, onLoadMore],
+  );
+
   // for further modifications (change size of cards)
   const minSize = 300;
   return (
@@ -72,8 +98,14 @@ const NFTList: VFC<INFTList> = ({
         {elements.length ? elements.map((el) => el) : emptyMsg}
       </div>
       <div className={styles['nft-list__body__load-more']}>
-        {onLoadMore && (
-          <Button color="outline" onClick={() => onLoadMore()}>
+        {isLoadMoreActive(currentPage, pages, onLoadMore) && (
+          <Button
+            loading={isLoading}
+            loaderColor="purple"
+            loaderSize="small"
+            color="outline"
+            onClick={onLoadMoreHandler}
+          >
             {t('Explore:Filters.LoadMore')}
           </Button>
         )}

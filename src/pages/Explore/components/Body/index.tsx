@@ -19,6 +19,7 @@ import { Filters } from './components';
 import { DEBOUNCE_DELAY_100, DEFAULT_CURRENCY } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { RequestStatus, Tag, TNullable } from 'types';
+import { SearchNftReq } from 'types/requests';
 
 import styles from './styles.module.scss';
 
@@ -48,7 +49,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
       page: number,
       shouldConcat?: boolean,
     ) => {
-      const requestData = {
+      const requestData: SearchNftReq = {
         type: 'items',
         categories: category?.id,
         tags: activetags ? +activetags : undefined,

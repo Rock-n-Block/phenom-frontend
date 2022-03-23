@@ -1,8 +1,7 @@
-import { IBaseInfo } from 'types';
 import { Collection, TrendingCollection } from 'types/api';
 
 export type CollectionsState = {
-  collections: IBaseInfo[];
+  collections: Collection[];
   trendingCollections: TrendingCollection[];
   topCollections: Collection[];
   totalPages: number;

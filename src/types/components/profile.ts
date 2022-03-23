@@ -15,9 +15,11 @@ export interface IProfile {
   description: string;
 }
 
+export type TSortDirs = 'asc' | 'desc' | null;
+
 export type TSort = {
   field: string | null;
-  dir: 'asc' | 'desc' | null;
+  dir: TSortDirs;
   name: string;
 };
 

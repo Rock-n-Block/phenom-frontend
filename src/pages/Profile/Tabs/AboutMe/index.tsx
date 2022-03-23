@@ -34,11 +34,11 @@ const getSocialIcon = (name: TAvailableSocials) => {
 
 interface ISocialItem {
   type: TAvailableSocials;
-  value: string;
+  value: string | undefined | null;
 }
 
 const SocialItem: VFC<ISocialItem> = ({ type, value }) => {
-  const { copyStatus, copy } = useClipboard(value, 2000);
+  const { copyStatus, copy } = useClipboard(value || '', 2000);
   return (
     <button className={styles['social-item__wrapper']} type="button" onClick={copy}>
       <span className={cn(styles['social-item__wrapper__icon-copy'])}>
@@ -60,18 +60,13 @@ const AboutMe: VFC<IAboutMe> = ({ socials, description, name }) => {
   return (
     <section className={styles['about-me__wrapper']}>
       <div className={styles['about-me__wrapper__socials']}>
-        {Object.entries(socials).filter(
-          ([key, value], idx) =>
-            value && (
-              <SocialItem
-                type={key as TAvailableSocials}
-                value={value}
-                // TODO remove this
-                key={`${idx * Math.random()}`}
-              />
-            ),
-        )}
-        {Object.entries(socials).filter(([, value]) => value).length === 0 && `${name} doesn't left social networks 😣`}
+        {Object.entries(socials)
+          .filter(([, value]) => value)
+          .map(([key, value]) => (
+            <SocialItem type={key as TAvailableSocials} value={value} key={key} />
+          ))}
+        {Object.entries(socials).filter(([, value]) => value).length === 0 &&
+          `${name} doesn't left social networks 😣`}
       </div>
       <div className={styles['about-me__wrapper__description']}>
         <Text color="dark" size="s">
