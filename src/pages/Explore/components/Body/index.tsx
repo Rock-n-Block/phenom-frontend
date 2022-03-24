@@ -165,6 +165,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
                       usdPrice,
                       isLiked,
                       likeCount,
+                      available
                     } = artCard;
                     return (
                       <ArtCard
@@ -181,6 +182,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
                         USD_price={usdPrice}
                         isLiked={isLiked}
                         likesNumber={likeCount}
+                        inStockNumber={available}
                       />
                     );
                   })

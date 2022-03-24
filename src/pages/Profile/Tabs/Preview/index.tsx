@@ -100,6 +100,7 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           authorId={card.creator.id}
           isLiked={card.isLiked}
           likesNumber={card.likeCount}
+          inStockNumber={card.available}
         />
       ));
   }, [auction, cardsData, sortBy]);
