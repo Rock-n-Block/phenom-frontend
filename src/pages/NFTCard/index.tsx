@@ -60,10 +60,6 @@ const NFTCard: VFC = () => {
     };
   }, [dispatch, id]);
 
-  useEffect(() => {
-    console.log(detailedNft);
-  }, [detailedNft]);
-
   return (
     <div className={styles.nftCard}>
       {skeletonLoader || !detailedNft ? (

@@ -115,6 +115,11 @@ export type GetDetailedNftReq = {
   id: number | string;
 };
 
+export type GetSingleCollectionReq = {
+  id: number | string;
+  network: string;
+};
+
 export type GetTrendingNftsReq = {
   category?: string | number;
 };
@@ -158,7 +163,7 @@ export type SearchNftReq = {
   items_per_page?: number;
   categories?: number | string;
   tags?: number;
-  collections?: string[];
+  collections?: string;
   max_price?: string | number;
   min_price?: string | number;
   on_sale?: boolean;
@@ -182,7 +187,7 @@ export type BurnTokenReq = {
 }
 
 export type SearchCollectionsReq = {
-  type: string;
+  type: "items" | "collections" | "users";
   page: number;
   owner?: string | number;
   creator?: string | number;

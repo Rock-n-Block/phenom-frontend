@@ -29,6 +29,7 @@ const storeURLs = {
   verificateBet: (id: number | string) => `/store/token/${id}/verificate_bet/`,
   transfer: (id: number | string) => `/store/token/${id}/transfer/`,
   burn: (id: number | string) => `/store/token/${id}/burn/`,
+  getSingleCollection: (id: number | string) => `/store/collection/${id}/`,
   getLiked: (id: number | string) => `/account/${id}/liked/`,
 };
 
