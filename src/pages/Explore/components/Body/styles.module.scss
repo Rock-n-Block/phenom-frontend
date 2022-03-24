@@ -2,6 +2,12 @@
 
 .container {
   @include container;
+  .anchor{
+    height: 0;
+  }
+  .filterResults{
+    margin-top: -20px;
+  }
 }
 
 .categories {

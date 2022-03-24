@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { useLanguage } from 'context';
 
 import { Button, Checkbox, Dropdown } from 'components';
+import { Text } from 'components/Typography';
 
 import { TAvailableSorts, TSort } from 'types';
 
@@ -93,9 +94,17 @@ const NFTList: VFC<INFTList> = ({
       </div>
       <div
         className={styles['nft-list__body__content']}
-        style={{ gridTemplateColumns: `repeat(auto-fill,minmax(${minSize}px,1fr))` }}
+        style={{
+          gridTemplateColumns:
+            elements.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+        }}
       >
-        {elements.length ? elements.map((el) => el) : emptyMsg}
+        {elements.length !== 0 && elements.map((el) => el)}
+        {elements.length === 0 && (
+          <Text size="xl" align="center" weight="bold">
+            {emptyMsg}
+          </Text>
+        )}
       </div>
       <div className={styles['nft-list__body__load-more']}>
         {isLoadMoreActive(currentPage, pages, onLoadMore) && (
