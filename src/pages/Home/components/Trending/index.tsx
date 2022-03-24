@@ -151,9 +151,6 @@ const Trending: FC<Props> = ({ className }) => {
                             bids={bids}
                             isAuction={isAucSelling}
                             USD_price={usdPrice}
-                            likeAction={(idValue: any) => {
-                              return idValue;
-                            }}
                           />
                         </Link>
                       </SwiperSlide>
@@ -179,9 +176,6 @@ const Trending: FC<Props> = ({ className }) => {
                       bids={bids}
                       isAuction={isAucSelling}
                       USD_price={usdPrice}
-                      likeAction={(idValue: any) => {
-                        return idValue;
-                      }}
                     />
                   </Link>
                 );

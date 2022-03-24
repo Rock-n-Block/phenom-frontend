@@ -2,23 +2,20 @@ import { useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { searchNfts } from 'store/nfts/actions';
-import actionTypes from 'store/nfts/actionTypes';
 import { clearNfts } from 'store/nfts/reducer';
 import nftSelector from 'store/nfts/selectors';
-import uiSelector from 'store/ui/selectors';
 
-import cx from 'classnames';
-import { useLanguage } from 'context';
 import { debounce } from 'lodash';
 
-import { ArtCard, ArtCardSkeleton, Button, TabLookingComponent, Text } from 'components';
+import { ArtCardSkeleton, TabLookingComponent } from 'components';
 import { ITab } from 'components/TabLookingComponent';
+import { mapSortToRequest } from 'utils';
 
-import { Filters } from './components';
+import { Filters, NFTPreviewer } from './components';
 
-import { DEBOUNCE_DELAY_100, DEFAULT_CURRENCY } from 'appConstants';
+import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { useShallowSelector } from 'hooks';
-import { RequestStatus, Tag, TNullable, TokenFull } from 'types';
+import { Tag, TAvailableSorts, TNullable, TSort } from 'types';
 import { SearchNftReq } from 'types/requests';
 
 import styles from './styles.module.scss';
@@ -34,10 +31,8 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
-  const { [actionTypes.SEARCH_NFTS]: nftsRequestStatus } = useShallowSelector(uiSelector.getUI);
-  const { t } = useLanguage();
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<any>({});
   const dispatch = useDispatch();
 
   const handleSearchNfts = useCallback(
@@ -58,7 +53,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuctionOnly,
-        order_by: filtersData?.orderBy?.label,
+        order_by: mapSortToRequest(filtersData?.orderBy),
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
@@ -103,9 +98,18 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
     [handleSetActiveTag],
   );
 
-  const isNftsLoading = useMemo(
-    () => nftsRequestStatus === RequestStatus.REQUEST,
-    [nftsRequestStatus],
+  const handleAuctionChange = useCallback((isAuctionOnly: boolean) => {
+    setFilters((prev: any) => ({ ...prev, isAuctionOnly }));
+  }, []);
+
+  const handleSortChange = useCallback((sort: TSort) => {
+    setFilters((prev: any) => ({ ...prev, orderBy: sort }));
+  }, []);
+
+  const NFTsCardsSkeleton = useMemo(
+    // eslint-disable-next-line react/no-array-index-key
+    () => new Array(6).fill(0).map((_, k) => <ArtCardSkeleton key={k} />),
+    [],
   );
 
   return (
@@ -122,87 +126,19 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
 
       <div className={styles.container}>
         <Filters filterCategory={activeCategory} onFiltersChange={setFilters} />
-
-        <div ref={pageChangeScrollAnchor} />
+        <div className={styles.anchor} ref={pageChangeScrollAnchor} />
         <div className={styles.filterResults}>
-          <div
-            className={cx(styles.cards, {
-              [styles.noResults]: !isNftsLoading && nftCards.length === 0,
-            })}
-          >
-            {isNftsLoading && nftCards.length === 0 ? (
-              <>
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-              </>
-            ) : (
-              <>
-                {nftCards.length === 0 ? (
-                  <Text align="center" tag="h3" weight="semibold">
-                    No searching results
-                  </Text>
-                ) : (
-                  nftCards.map((artCard: TokenFull) => {
-                    if (isNftsLoading && currentPage === 1) {
-                      return <ArtCardSkeleton />;
-                    }
-                    const {
-                      id,
-                      name,
-                      price,
-                      media,
-                      currency,
-                      creator,
-                      bids,
-                      isAucSelling,
-                      usdPrice,
-                    } = artCard;
-                    return (
-                      <ArtCard
-                        artId={id || 0}
-                        name={name}
-                        price={price}
-                        imageMain={media || ''}
-                        asset={currency?.symbol || DEFAULT_CURRENCY}
-                        author={creator?.name || creator?.address || ''}
-                        authorAvatar={creator?.avatar || ''}
-                        authorId={creator?.id}
-                        bids={bids}
-                        isAuction={isAucSelling}
-                        USD_price={usdPrice}
-                      />
-                    );
-                  })
-                )}
-              </>
-            )}
-            {isNftsLoading && currentPage >= 2 && (
-              <>
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-                <ArtCardSkeleton />
-              </>
-            )}
-          </div>
+          <NFTPreviewer
+            cardsData={nftCards}
+            pages={totalPages}
+            onLoadMore={() => handleLoadMore(currentPage, true)}
+            skeleton={NFTsCardsSkeleton}
+            auction={filters?.isAuctionOnly}
+            setAuction={handleAuctionChange}
+            sortBy={filters?.orderBy || TAvailableSorts[0]}
+            setSortBy={handleSortChange}
+          />
         </div>
-        {currentPage < totalPages && (
-          <div className={styles.load}>
-            <Button
-              color="outline"
-              className={styles.loadBtn}
-              onClick={() => handleLoadMore(currentPage + 1)}
-            >
-              {t('Explore:Filters.LoadMore')}
-            </Button>
-          </div>
-        )}
       </div>
     </>
   );

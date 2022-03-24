@@ -6,12 +6,17 @@ import { baseApi } from 'store/api/apiRequestBuilder';
 import { like } from '../actions';
 import actionTypes from '../actionTypes';
 
-export function* likeSaga({ type, payload: { id } }: ReturnType<typeof like>) {
+export function* likeSaga({
+  type,
+  payload: { id, successCallback, errorCallback },
+}: ReturnType<typeof like>) {
   yield put(apiActions.request(type));
   try {
     yield call(baseApi.like, { id });
+    successCallback?.();
   } catch (err) {
     console.log(err);
+    errorCallback?.();
     yield put(apiActions.error(type, err));
   }
 }

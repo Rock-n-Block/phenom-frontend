@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { presearchNfts } from 'store/nfts/actions';
+import actionTypes from 'store/nfts/actionTypes';
 import nftSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
 
@@ -12,18 +13,18 @@ import cx from 'classnames';
 import { debounce } from 'lodash';
 
 import { Button, H5, TextInput } from 'components';
+import Loader from 'components/Loader';
 
 import { SearchTag } from './components';
 
 import { DEBOUNCE_DELAY_100, routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
+import { RequestStatus } from 'types';
+import { SearchNftReq } from 'types/requests';
 
 import { iconSearch } from 'assets/img';
 
 import styles from './styles.module.scss';
-import actionTypes from 'store/nfts/actionTypes';
-import { RequestStatus } from 'types';
-import Loader from 'components/Loader';
 
 type Props = {
   className?: string;
@@ -44,7 +45,7 @@ const Search: VFC<Props> = ({ className, classNameDropdown, isOpen, handleSetIsO
 
   const fetchSearchedNfts = useCallback(
     (text: string) => {
-      const requestData: any = {
+      const requestData: SearchNftReq = {
         type: 'items',
         text,
         page: 1,
@@ -107,7 +108,7 @@ const Search: VFC<Props> = ({ className, classNameDropdown, isOpen, handleSetIsO
             <>
               <ul className={styles.searchResults}>
                 {isLoading ? (
-                  <Loader size='medium' />
+                  <Loader size="medium" />
                 ) : (
                   nfts.slice(0, 5).map((nft: any, index: number) => {
                     const { media, name, id } = nft;

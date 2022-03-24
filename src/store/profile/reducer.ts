@@ -22,6 +22,7 @@ const initialState: ProfileState = {
   site: undefined,
   twitter: undefined,
   url: undefined,
+  email: undefined,
   balance: '0',
   collections: [],
 };

@@ -1,4 +1,11 @@
-import { CSSProperties, FC, PropsWithChildren, RefObject, SyntheticEvent } from 'react';
+import {
+  CSSProperties,
+  FC,
+  PropsWithChildren,
+  ReactElement,
+  RefObject,
+  SyntheticEvent,
+} from 'react';
 import { Link } from 'react-router-dom';
 
 import cx from 'classnames';
@@ -17,7 +24,7 @@ type Props = {
   onClick?: (event: any) => void;
   type?: 'button' | 'submit';
   disabled?: boolean;
-  icon?: string;
+  icon?: string | ReactElement;
   suffixIcon?: string;
   loading?: boolean;
   onMouseLeave?: (event: any) => void;
@@ -111,7 +118,11 @@ const Button: FC<PropsWithChildren<Props>> = ({
             : style
         }
       >
-        {icon && <img src={icon} className={styles.icon} alt="" />}
+        {typeof icon === 'string' ? (
+          <img src={icon} className={styles.icon} alt="" />
+        ) : (
+          <span>{icon}</span>
+        )}
         {children}
         {suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />}
       </Link>
@@ -161,7 +172,11 @@ const Button: FC<PropsWithChildren<Props>> = ({
         <Loader className={styles.loader} size={loaderSize} backgroundColor={loaderColor} />
       ) : (
         <>
-          {icon && <img src={icon} className={styles.icon} alt="" />}
+          {typeof icon === 'string' ? (
+            <img src={icon} className={styles.icon} alt="" />
+          ) : (
+            <span>{icon}</span>
+          )}
           {children}
           {suffixIcon && <img src={suffixIcon} className={styles.suffixIcon} alt="" />}
         </>
