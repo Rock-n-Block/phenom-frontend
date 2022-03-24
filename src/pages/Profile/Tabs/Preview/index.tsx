@@ -1,15 +1,15 @@
 import { ReactElement, useCallback, useEffect, useMemo, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { getLikedNFTs, searchNfts } from 'store/nfts/actions';
+import { searchNfts } from 'store/nfts/actions';
 import nftActionsTypes from 'store/nfts/actionTypes';
 import uiSelector from 'store/ui/selectors';
-import userSelector from 'store/user/selectors';
 
 import { ArtCard, NFTList } from 'components';
+import { mapSortToRequest } from 'utils';
 
 import { useShallowSelector } from 'hooks';
-import { RequestStatus, TAvailableSorts, TokenFull, TSort, TSortDirs } from 'types';
+import { RequestStatus, TAvailableSorts, TokenFull, TSort } from 'types';
 
 type TFetchNames = 'owned' | 'forSale' | 'sold' | 'bided' | 'favorites';
 interface IPreviewProfileNFTs {
@@ -20,41 +20,6 @@ interface IPreviewProfileNFTs {
   withAuction?: boolean;
   fetchName: TFetchNames;
 }
-
-const sortMap = {
-  price: 'price',
-  date: 'createdAt',
-} as const;
-
-const sortCallback = (field: keyof typeof sortMap, dir: TSortDirs) => {
-  return (a: TokenFull, b: TokenFull) => {
-    const f = sortMap[field];
-    switch (dir) {
-      case 'asc': {
-        if (field === 'date') {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return new Date(a[f]).getTime() - new Date(b[f]).getTime();
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return a[f] - b[f];
-      }
-      case 'desc': {
-        if (field === 'date') {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return new Date(b[f]).getTime() - new Date(a[f]).getTime();
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return b[f] - a[f];
-      }
-      default:
-        return 0;
-    }
-  };
-};
 
 const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
   cardsData,
@@ -68,25 +33,13 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
   const [sortBy, setSortBy] = useState(TAvailableSorts[0]);
   const [auction, setAuction] = useState(false);
 
-  const network = useShallowSelector(userSelector.getProp('chain'));
   const { [nftActionsTypes.GET_LIKED]: fetchingLiked, [nftActionsTypes.SEARCH_NFTS]: fetchingNFT } =
     useShallowSelector(uiSelector.getUI);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const elements = useMemo(() => {
-    const sorted = [...cardsData];
-    const { field, dir } = sortBy;
-    if (field && dir) {
-      sorted.sort(sortCallback(field as any, dir));
-    }
-    return sorted
-      .filter((e) => {
-        if (auction) {
-          return e.isAucSelling;
-        }
-        return e;
-      })
-      .map((card) => (
+  const elements = useMemo(
+    () =>
+      cardsData.map((card) => (
         <ArtCard
           key={card.id}
           artId={String(card.id)}
@@ -102,20 +55,44 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           likesNumber={card.likeCount}
           inStockNumber={card.available}
         />
-      ));
-  }, [auction, cardsData, sortBy]);
+      )),
+    [cardsData],
+  );
+
+  useEffect(() => {
+    setSortBy(TAvailableSorts[0]);
+    setAuction(false);
+  }, [fetchName]);
 
   const fetchNFTs = useCallback(
     (name: TFetchNames, page: number, shouldConcat = false) => {
       switch (name) {
         case 'owned': {
-          dispatch(searchNfts({ requestData: { owner: id, type: 'items', page }, shouldConcat }));
+          dispatch(
+            searchNfts({
+              requestData: {
+                owner: id,
+                type: 'items',
+                page,
+                on_auc_sale: auction,
+                order_by: mapSortToRequest(sortBy),
+              },
+              shouldConcat,
+            }),
+          );
           break;
         }
         case 'forSale': {
           dispatch(
             searchNfts({
-              requestData: { owner: id, type: 'items', page, on_sale: true },
+              requestData: {
+                owner: id,
+                type: 'items',
+                page,
+                on_sale: true,
+                on_auc_sale: auction,
+                order_by: mapSortToRequest(sortBy),
+              },
               shouldConcat,
             }),
           );
@@ -124,7 +101,14 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
         case 'sold': {
           dispatch(
             searchNfts({
-              requestData: { owner: id, type: 'items', page, sold_by: id },
+              requestData: {
+                owner: id,
+                type: 'items',
+                page,
+                sold_by: id,
+                on_auc_sale: auction,
+                order_by: mapSortToRequest(sortBy),
+              },
               shouldConcat,
             }),
           );
@@ -133,7 +117,14 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
         case 'bided': {
           dispatch(
             searchNfts({
-              requestData: { owner: id, type: 'items', page, bids_by: id },
+              requestData: {
+                owner: id,
+                type: 'items',
+                page,
+                bids_by: id,
+                on_auc_sale: auction,
+                order_by: mapSortToRequest(sortBy),
+              },
               shouldConcat,
             }),
           );
@@ -141,10 +132,15 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
         }
         case 'favorites': {
           dispatch(
-            getLikedNFTs({
-              userId: id,
-              page,
-              network,
+            searchNfts({
+              requestData: {
+                owner: id,
+                type: 'items',
+                page,
+                liked_by: id,
+                on_auc_sale: auction,
+                order_by: mapSortToRequest(sortBy),
+              },
               shouldConcat,
             }),
           );
@@ -154,7 +150,7 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           break;
       }
     },
-    [dispatch, id, network],
+    [auction, dispatch, id, sortBy],
   );
 
   useEffect(() => {

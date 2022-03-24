@@ -80,7 +80,12 @@ const NFTList: VFC<INFTList> = ({
     <section className={cn(styles[orientation], styles['nft-list__body'], className)}>
       <div className={styles['nft-list__body__sort']}>
         {onAuctionClick && (
-          <Checkbox value={auction || false} onChange={onAuctionClick} content="Auction" />
+          <Checkbox
+            disabled={isLoading}
+            value={auction || false}
+            onChange={onAuctionClick}
+            content="Auction"
+          />
         )}
         {onSortClick && (
           <Dropdown

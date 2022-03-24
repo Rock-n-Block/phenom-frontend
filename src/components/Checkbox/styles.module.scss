@@ -8,6 +8,11 @@
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  @include transition;
+  &.disabled {
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
 }
 
 .input {
@@ -65,8 +70,7 @@
     width: 8px;
     height: 8px;
 
-    background: url('../../assets/img/icons/check.svg')
-      no-repeat 50% 50% / 100% auto;
+    background: url('../../assets/img/icons/check.svg') no-repeat 50% 50% / 100% auto;
     opacity: 0;
 
     transition: opacity 0.2s;
@@ -83,8 +87,8 @@
   transition: 0.4s ease;
 }
 
-@include small-mobile{
-  .tick{
+@include small-mobile {
+  .tick {
     margin-right: 6px;
-  }  
+  }
 }

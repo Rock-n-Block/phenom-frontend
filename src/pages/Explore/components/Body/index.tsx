@@ -9,12 +9,13 @@ import { debounce } from 'lodash';
 
 import { ArtCardSkeleton, TabLookingComponent } from 'components';
 import { ITab } from 'components/TabLookingComponent';
+import { mapSortToRequest } from 'utils';
 
 import { Filters, NFTPreviewer } from './components';
 
 import { DEBOUNCE_DELAY_100 } from 'appConstants';
 import { useShallowSelector } from 'hooks';
-import { Tag, TNullable } from 'types';
+import { Tag, TAvailableSorts, TNullable, TSort } from 'types';
 import { SearchNftReq } from 'types/requests';
 
 import styles from './styles.module.scss';
@@ -31,7 +32,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<any>({});
   const dispatch = useDispatch();
 
   const handleSearchNfts = useCallback(
@@ -52,7 +53,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuctionOnly,
-        order_by: filtersData?.orderBy?.label,
+        order_by: mapSortToRequest(filtersData?.orderBy),
       };
       dispatch(searchNfts({ requestData, shouldConcat }));
     },
@@ -97,6 +98,14 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
     [handleSetActiveTag],
   );
 
+  const handleAuctionChange = useCallback((isAuctionOnly: boolean) => {
+    setFilters((prev: any) => ({ ...prev, isAuctionOnly }));
+  }, []);
+
+  const handleSortChange = useCallback((sort: TSort) => {
+    setFilters((prev: any) => ({ ...prev, orderBy: sort }));
+  }, []);
+
   const NFTsCardsSkeleton = useMemo(
     // eslint-disable-next-line react/no-array-index-key
     () => new Array(6).fill(0).map((_, k) => <ArtCardSkeleton key={k} />),
@@ -124,6 +133,10 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
             pages={totalPages}
             onLoadMore={() => handleLoadMore(currentPage, true)}
             skeleton={NFTsCardsSkeleton}
+            auction={filters?.isAuctionOnly}
+            setAuction={handleAuctionChange}
+            sortBy={filters?.orderBy || TAvailableSorts[0]}
+            setSortBy={handleSortChange}
           />
         </div>
       </div>

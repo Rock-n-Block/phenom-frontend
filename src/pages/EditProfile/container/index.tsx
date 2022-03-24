@@ -46,7 +46,7 @@ const CreateFormContainer: VFC = () => {
         instagram: profile.instagram || '',
         twitter: profile.twitter || '',
         site: profile.site || '',
-        email: '',
+        email: profile.email || '',
       },
       description: profile.bio || '',
     }),
@@ -55,6 +55,7 @@ const CreateFormContainer: VFC = () => {
       profile.address,
       profile.bio,
       profile.displayName,
+      profile.email,
       profile.instagram,
       profile.site,
       profile.twitter,
@@ -118,6 +119,7 @@ const CreateFormContainer: VFC = () => {
       newProfileForm.append('site', values.socials.site);
       newProfileForm.append('twitter', values.socials.twitter);
       newProfileForm.append('instagram', values.socials.instagram);
+      newProfileForm.append('email', values.socials.email);
       dispatch(editProfileInfo(newProfileForm as EditProfile));
     },
     validateOnChange: true,

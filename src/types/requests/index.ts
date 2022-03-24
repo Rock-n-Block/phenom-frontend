@@ -169,6 +169,7 @@ export type SearchNftReq = {
   on_sale?: boolean;
   sold_by?: string | number;
   bids_by?: string | number;
+  liked_by?: string | number;
   owner?: string | number;
   text?: string;
 };

@@ -10,17 +10,29 @@ interface ICheckboxProps {
   value: boolean;
   onChange?: any;
   id?: string;
+  disabled?: boolean;
 }
 
-const Checkbox: FC<ICheckboxProps> = ({ className, content, value, onChange, id = '' }) => {
+const Checkbox: FC<ICheckboxProps> = ({
+  className,
+  disabled,
+  content,
+  value,
+  onChange,
+  id = '',
+}): JSX.Element => {
   return (
-    <label htmlFor={`toogle_${content}-${id}`} className={cn(styles.checkbox, className)}>
+    <label
+      htmlFor={`toogle_${content}-${id}`}
+      className={cn(styles.checkbox, className, { [styles.disabled]: disabled })}
+    >
       <input
         id={`toogle_${content}-${id}`}
         className={styles.input}
         type="checkbox"
         onChange={onChange}
         checked={value}
+        disabled={disabled}
       />
       <span className={styles.inner}>
         <span className={styles.tick} />

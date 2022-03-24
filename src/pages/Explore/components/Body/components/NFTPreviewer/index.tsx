@@ -6,76 +6,35 @@ import uiSelector from 'store/ui/selectors';
 import { ArtCard, NFTList } from 'components';
 
 import { useShallowSelector } from 'hooks';
-import { RequestStatus, TAvailableSorts, TokenFull, TSort, TSortDirs } from 'types';
+import { RequestStatus, TokenFull, TSort } from 'types';
 
 interface IPreviewExploreNFTs {
   cardsData: TokenFull[];
   pages: number;
   skeleton?: ReactElement[];
+  auction?: boolean;
+  setAuction?: (value: boolean) => void;
+  sortBy?: TSort;
+  setSortBy?: (sort: TSort) => void;
   onLoadMore?: () => void;
 }
-
-const sortMap = {
-  price: 'price',
-  date: 'createdAt',
-} as const;
-
-const sortCallback = (field: keyof typeof sortMap, dir: TSortDirs) => {
-  return (a: TokenFull, b: TokenFull) => {
-    const f = sortMap[field];
-    switch (dir) {
-      case 'asc': {
-        if (field === 'date') {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return new Date(a[f]).getTime() - new Date(b[f]).getTime();
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return a[f] - b[f];
-      }
-      case 'desc': {
-        if (field === 'date') {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          return new Date(b[f]).getTime() - new Date(a[f]).getTime();
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return b[f] - a[f];
-      }
-      default:
-        return 0;
-    }
-  };
-};
 
 const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
   cardsData,
   skeleton = [],
   pages,
+  auction,
+  setAuction,
+  sortBy,
+  setSortBy,
   onLoadMore,
 }) => {
-  const [sortBy, setSortBy] = useState(TAvailableSorts[0]);
-  const [auction, setAuction] = useState(false);
-
   const { [nftActionsTypes.SEARCH_NFTS]: fetchingNFT } = useShallowSelector(uiSelector.getUI);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const elements = useMemo(() => {
-    const sorted = [...cardsData];
-    const { field, dir } = sortBy;
-    if (field && dir) {
-      sorted.sort(sortCallback(field as any, dir));
-    }
-    return sorted
-      .filter((e) => {
-        if (auction) {
-          return e.isAucSelling;
-        }
-        return e;
-      })
-      .map((card) => (
+  const elements = useMemo(
+    () =>
+      cardsData.map((card) => (
         <ArtCard
           key={card.id}
           artId={String(card.id)}
@@ -91,10 +50,11 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
           likesNumber={card.likeCount}
           inStockNumber={card.available}
         />
-      ));
-  }, [auction, cardsData, sortBy]);
+      )),
+    [cardsData],
+  );
 
-  const onSortClick = useCallback((sort: TSort) => setSortBy(sort), []);
+  const onSortClick = useCallback((sort: TSort) => setSortBy?.(sort), [setSortBy]);
   const onLoadMoreClick = useCallback(
     (page: number | number) => {
       onLoadMore?.();
@@ -102,7 +62,7 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
     },
     [onLoadMore],
   );
-  const onAuctionClick = useCallback(() => setAuction(!auction), [auction]);
+  const onAuctionClick = useCallback(() => setAuction?.(!auction), [auction, setAuction]);
 
   return (
     <NFTList
