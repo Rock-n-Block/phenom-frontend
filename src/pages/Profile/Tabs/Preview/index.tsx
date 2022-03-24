@@ -98,6 +98,8 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           author={card.creator.name || ''}
           authorAvatar={card.creator.avatar || ''}
           authorId={card.creator.id}
+          isLiked={card.isLiked}
+          likesNumber={card.likeCount}
         />
       ));
   }, [auction, cardsData, sortBy]);

@@ -1,21 +1,19 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 // import { PinkHeart } from 'assets/img';
 import cx from 'classnames';
 
-import { ArtCardAuthor, Button, H4, Text } from 'components';
+import { ArtCardAuthor, H4, Text } from 'components';
+import LikeButton from 'components/LikeButton';
+import Loader from 'components/Loader';
 // import { IBidder } from 'typings';
-import { numberFormatter, sliceString, toFixed } from 'utils';
+import { sliceString, toFixed } from 'utils';
 
 import { routes } from 'appConstants';
 
-import { iconHeart } from 'assets/img';
-
 import styles from './styles.module.scss';
-import Loader from 'components/Loader';
 
 type Props = {
   type?: 'Padded' | 'Contained' | 'Covered';
@@ -39,7 +37,6 @@ type Props = {
   isCollection?: boolean;
   bids?: any[];
   isLiked?: boolean;
-  likeAction?: (id: string | number) => Promise<any>;
 };
 
 const ArtCard: FC<Props> = ({
@@ -64,15 +61,10 @@ const ArtCard: FC<Props> = ({
   isCollection,
   bids,
   isLiked = false,
-  likeAction,
 }) => {
-  const [isLike, setIsLike] = useState(isLiked);
-  const [likesCount, setLikesCount] = useState(likesNumber || (isLiked ? 1 : 0));
-
   const wrapRef = useRef<HTMLAnchorElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const offset = 2.5;
-
   const onMouseOver = useCallback(() => {
     if (wrapRef.current && imgRef.current) {
       const div = wrapRef.current;
@@ -90,37 +82,6 @@ const ArtCard: FC<Props> = ({
       };
     }
   }, [imgRef, wrapRef]);
-
-  const handleLike = useCallback(() => {
-    if (!likeAction) {
-      return;
-    }
-    // setIsLikePending(true);
-    if (isLike) {
-      likeAction(artId)
-        .then(() => {
-          // setLikesCount((prevValue) => prevValue - 1);
-          setLikesCount(isLiked ? likesNumber - 1 : likesNumber);
-          setIsLike(!isLike);
-          toast.success('Dislike submitted');
-        })
-        .catch((error: any) => {
-          console.error('Dislike error', error);
-          toast.success('Dislike error');
-        });
-    } else {
-      likeAction(artId)
-        .then(() => {
-          setLikesCount(isLiked ? likesNumber : likesNumber + 1);
-          setIsLike(!isLike);
-          toast.success('Like submitted');
-        })
-        .catch((error: any) => {
-          console.error('Like error', error);
-          toast.success('Like error');
-        });
-    }
-  }, [artId, isLike, isLiked, likeAction, likesNumber]);
 
   return (
     <div className={cx(styles.artCard, className)}>
@@ -195,19 +156,7 @@ const ArtCard: FC<Props> = ({
           <div className={styles.flexContainer}>
             {authorId && <ArtCardAuthor id={authorId} avatar={authorAvatar} name={author} />}
           </div>
-          {likeAction && (
-            <div className={cx(styles.flexContainer, styles.artCardSmallLikes)}>
-              <Button
-                className={cx(styles.artCardHeart, { [styles.artCardHeartActive]: isLike })}
-                onClick={handleLike}
-                icon={iconHeart}
-                color="transparent"
-              />
-              <Text id="none" weight="bold">
-                {numberFormatter(likesCount, 3)}
-              </Text>
-            </div>
-          )}
+          <LikeButton isLiked={isLiked} likesNumber={likesNumber} artId={artId} />
         </div>
       </div>
     </div>

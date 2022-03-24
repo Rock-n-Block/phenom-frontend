@@ -1,0 +1,14 @@
+@import '/src/styles/helpers.scss';
+
+.like {
+  &Wrapper {
+    @include flexbox(center, flex-start, row);
+  }
+  &Btn{
+      flex: 0 0 24px;
+      margin-right: 5px;
+  }
+  &Count{
+      min-width: 10px;
+  }
+}

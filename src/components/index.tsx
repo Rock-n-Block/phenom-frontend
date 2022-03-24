@@ -26,6 +26,7 @@ export { default as Loader } from './Loader';
 export { default as TabBar } from './TabBar';
 export { default as Clipboard } from './Clipboard';
 export { default as NFTList } from './NFTList';
+export { default as LikeButton } from './LikeButton';
 export * from './Typography';
 export * from './Preview';
 export * from './Modals';

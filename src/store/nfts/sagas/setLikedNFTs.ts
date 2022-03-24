@@ -20,7 +20,6 @@ export function* getLikedNFTsSaga({ type, payload }: ReturnType<typeof getLikedN
     // @ts-ignore
     const nfts = yield select(nftSelector.getProp('nfts'));
     const camelizedResult = camelize(data.results) as TokenFull[];
-
     yield put(setNfts(shouldConcat ? [...nfts, ...camelizedResult] : camelizedResult));
     yield put(setTotalPages(data.total_pages));
 

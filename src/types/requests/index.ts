@@ -128,6 +128,8 @@ export type BuyReq = {
 
 export type LikeReq = {
   id: number | string;
+  successCallback?: () => void;
+  errorCallback?: () => void;
 };
 
 export type EndAucReq = {
@@ -163,7 +165,7 @@ export type SearchNftReq = {
   sold_by?: string | number;
   bids_by?: string | number;
   owner?: string | number;
-  text?: string
+  text?: string;
 };
 
 export type TransferTokenReq = {
