@@ -20,7 +20,7 @@ import styles from './styles.module.scss';
 
 const types = [
   { value: 'Single NFT', label: 'ERC721' },
-  { value: 'Multiple NFT', label: 'ERC721' },
+  { value: 'Multiple NFT', label: 'ERC1155' },
 ];
 
 type Props = {

@@ -50,6 +50,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
         tags: activetags ? +activetags : undefined,
         page,
         collections: filtersData?.collections?.join(','),
+        standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
         on_auc_sale: filtersData?.isAuctionOnly,

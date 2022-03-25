@@ -24,6 +24,7 @@ import {
   Button,
   DefaultInput,
   QuantityInput,
+  QuantityModal,
   Selector,
   SellersModal,
   // SendPendingModal,
@@ -81,9 +82,10 @@ const Payment: VFC<IPayment> = ({
   const [quantity, setQuantity] = useState('1');
   const [bidValue, setBidValue] = useState('');
   const [time, setTime] = useState<any>();
+  const [modalSellerId, setModalSellerId] = useState('0');
   const [days, setDays] = useState(0);
   const [isListing, setIsListing] = useState(false);
-  const [isFixedPrice, setIsFixedPrice] = useState(false);
+  const [isFixedPrice, setIsFixedPrice] = useState(true);
   const [priceValue, setPriceValue] = useState('');
   const [isTimedAuction, setIsTimedAuction] = useState(true);
   const [hoursTime, setHoursTime] = useState(hours[0]);
@@ -103,18 +105,46 @@ const Payment: VFC<IPayment> = ({
     setHoursTime(value);
   }, []);
 
+  const handleSetSeller = useCallback(
+    (amount: string | number) => {
+      dispatch(
+        buy({
+          id: nft?.id || 0,
+          amount: amount || 0,
+          sellerId: modalSellerId,
+          web3Provider: walletService.Web3(),
+        }),
+      );
+    },
+    [dispatch, modalSellerId, nft.id, walletService],
+  );
+
+  const handleChooseSeller = useCallback(
+    (id: string) => {
+      setModalSellerId(id);
+
+      changeModalType(Modals.ChooseQuantity);
+    },
+    [changeModalType],
+  );
+
   const handleBuy = useCallback(
-    (sellerId: string | number) => {
+    (sellerId: string | number, amount?: string | number) => {
       if (nft) {
         dispatch(
           buy({
             id: nft?.id || 0,
-            amount: nft?.price || 0,
+            amount: amount || 0,
             sellerId,
             web3Provider: walletService.Web3(),
           }),
         );
-        dispatch(setModalProps({ onApprove: handleBuy(sellerId) }));
+        dispatch(
+          setModalProps({
+            onApprove: () => handleBuy(sellerId, amount),
+            onSendAgain: () => handleBuy(sellerId, amount),
+          }),
+        );
       }
     },
     [nft, dispatch, walletService],
@@ -123,13 +153,13 @@ const Payment: VFC<IPayment> = ({
   const handlePreBuy = useCallback(
     (isSingle: boolean) => {
       if (isSingle) {
-        handleBuy(nft?.sellers?.[0].url || 0);
+        handleBuy(nft?.owners?.[0].url || 0);
       }
       if (!isSingle) {
         changeModalType(Modals.ChooseSeller);
       }
     },
-    [handleBuy, changeModalType, nft.sellers],
+    [handleBuy, changeModalType, nft.owners],
   );
 
   const handleEndAuction = useCallback(() => {
@@ -422,53 +452,57 @@ const Payment: VFC<IPayment> = ({
         <div className={styles.ownerList}>
           {isListing ? (
             <>
-              <div className={styles.sellType}>
-                <div
-                  className={cx(styles.type, { [styles.typeActive]: isFixedPrice })}
-                  onClick={handleChangeType}
-                  tabIndex={0}
-                  onKeyDown={() => {}}
-                  role="button"
-                >
-                  <div className={styles.iconWrapper}>
-                    <DollarIcon className={styles.icon} />
-                  </div>
-                  <Text
-                    size="xl"
-                    weight="semibold"
-                    className={styles.typeTitle}
-                    color={isFixedPrice ? 'white' : 'black'}
+              {nft?.standart === 'ERC721' ? (
+                <div className={styles.sellType}>
+                  <div
+                    className={cx(styles.type, { [styles.typeActive]: isFixedPrice })}
+                    onClick={handleChangeType}
+                    tabIndex={0}
+                    onKeyDown={() => {}}
+                    role="button"
                   >
-                    Fixed price
-                  </Text>
-                  <Text align="center" color="middleGray" className={styles.typeText}>
-                    Sell at fixed price
-                  </Text>
-                </div>
-                <div
-                  className={cx(styles.type, { [styles.typeActive]: !isFixedPrice })}
-                  onClick={handleChangeType}
-                  tabIndex={0}
-                  onKeyDown={() => {}}
-                  role="button"
-                >
-                  <div className={styles.iconWrapper}>
-                    <PlaceBidIcon className={styles.icon} />
+                    <div className={styles.iconWrapper}>
+                      <DollarIcon className={styles.icon} />
+                    </div>
+                    <Text
+                      size="xl"
+                      weight="semibold"
+                      className={styles.typeTitle}
+                      color={isFixedPrice ? 'white' : 'black'}
+                    >
+                      Fixed price
+                    </Text>
+                    <Text align="center" color="middleGray" className={styles.typeText}>
+                      Sell at fixed price
+                    </Text>
                   </div>
-                  <Text
-                    size="xl"
-                    weight="semibold"
-                    className={styles.typeTitle}
-                    color={!isFixedPrice ? 'white' : 'black'}
-                    align="center"
+                  <div
+                    className={cx(styles.type, { [styles.typeActive]: !isFixedPrice })}
+                    onClick={handleChangeType}
+                    tabIndex={0}
+                    onKeyDown={() => {}}
+                    role="button"
                   >
-                    Open for bids
-                  </Text>
-                  <Text align="center" color="middleGray" className={styles.typeText}>
-                    Sell through Auction
-                  </Text>
+                    <div className={styles.iconWrapper}>
+                      <PlaceBidIcon className={styles.icon} />
+                    </div>
+                    <Text
+                      size="xl"
+                      weight="semibold"
+                      className={styles.typeTitle}
+                      color={!isFixedPrice ? 'white' : 'black'}
+                      align="center"
+                    >
+                      Open for bids
+                    </Text>
+                    <Text align="center" color="middleGray" className={styles.typeText}>
+                      Sell through Auction
+                    </Text>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
               <div className={styles.createLot}>
                 <Text>{isFixedPrice ? 'Price' : 'Minimum bid'}</Text>
                 <DefaultInput
@@ -535,7 +569,7 @@ const Payment: VFC<IPayment> = ({
                           setValue={setQuantity}
                           name="quantity"
                           writeable
-                          maxAmount={nft?.available}
+                          maxAmount={nft?.totalSupply}
                           minAmount={1}
                           inputClassName={styles.quantityInput}
                         />
@@ -563,26 +597,42 @@ const Payment: VFC<IPayment> = ({
                     </Button>
                   </div>
                 ) : (
-                  <Button
-                    padding="medium"
-                    className={styles.createLotBtn}
-                    disabled={!priceValue}
-                    onClick={
-                      isFixedPrice
-                        ? handleSetOnSale(
-                            priceValue,
-                            nft?.currency?.symbol || DEFAULT_CURRENCY,
-                            +quantity,
-                          )
-                        : handleSetOnAuction(
-                            priceValue,
-                            nft?.currency?.symbol || DEFAULT_CURRENCY,
-                            hoursTime.value,
-                          )
+                  <div>
+                    {
+                      // TODO: проверить не конфликтует quantity для покупки с quantity для выставления на продажу
+                      nft?.standart === 'ERC1155' && (
+                        <QuantityInput
+                          value={quantity}
+                          setValue={setQuantity}
+                          name="quantity"
+                          writeable
+                          maxAmount={nft?.totalSupply}
+                          minAmount={1}
+                          inputClassName={styles.quantityInput}
+                        />
+                      )
                     }
-                  >
-                    Create lot
-                  </Button>
+                    <Button
+                      padding="medium"
+                      className={styles.createLotBtn}
+                      disabled={!priceValue}
+                      onClick={
+                        isFixedPrice
+                          ? handleSetOnSale(
+                              priceValue,
+                              nft?.currency?.symbol || DEFAULT_CURRENCY,
+                              +quantity,
+                            )
+                          : handleSetOnAuction(
+                              priceValue,
+                              nft?.currency?.symbol || DEFAULT_CURRENCY,
+                              isTimedAuction ? hoursTime.value : undefined,
+                            )
+                      }
+                    >
+                      Create lot
+                    </Button>
+                  </div>
                 )}
               </div>
             </>
@@ -631,7 +681,14 @@ const Payment: VFC<IPayment> = ({
         visible={modalType === Modals.ChooseSeller}
         onClose={() => closeModals()}
         sellers={nft?.sellers}
-        handleChooseSeller={handleBuy}
+        handleChooseSeller={handleChooseSeller}
+      />
+
+      <QuantityModal
+        visible={modalType === Modals.ChooseQuantity}
+        onClose={() => closeModals()}
+        tokenName={nft?.name || ''}
+        onSend={handleSetSeller}
       />
       {/* 
       <ApprovePendingModal

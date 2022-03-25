@@ -20,7 +20,7 @@ export function* searchTrendingSaga({
   try {
     const { data } = yield call(baseApi.trendingTokens, requestData);
 
-    const camelizedResult = camelize(data.results) as TokenFull[];
+    const camelizedResult = camelize(data) as TokenFull[];
 
     yield put(setTrending(camelizedResult));
 

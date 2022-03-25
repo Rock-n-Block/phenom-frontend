@@ -4,6 +4,7 @@ import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
+import { toast } from 'react-toastify';
 
 import { contractsConfig, ContractsNames } from 'config';
 import { isMainnet } from 'config/constants';
@@ -26,14 +27,6 @@ export function* buySaga({
   // @ts-ignore
   const address = yield select(userSelector.getProp('address'));
   try {
-    yield put(
-      setActiveModal({
-        activeModal: Modals.SendPending,
-        open: true,
-        txHash: '',
-      }),
-    );
-
     const marketpalceAddress =
       contractsConfig.contracts[ContractsNames.marketpalce][isMainnet ? 'mainnet' : 'testnet']
         .address[Chains.bsc];
@@ -61,37 +54,45 @@ export function* buySaga({
       }),
     );
 
-    const { data } = yield call(baseApi.buy, { id, amount, sellerId });
+    const { data } = yield call(baseApi.buy, { id, tokenAmount: amount, sellerId });
 
-    const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
-      ...data.initial_tx,
-      from: address,
-    });
+    if (data.initial_tx) {
+      const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
+        ...data.initial_tx,
+        from: address,
+      });
 
-    yield call(baseApi.trackTransaction, {
-      tx_hash: String(transactionHash),
-      token: id,
-      ownership: sellerId,
-      amount,
-    });
+      yield call(baseApi.trackTransaction, {
+        tx_hash: String(transactionHash),
+        token: id,
+        ownership: sellerId,
+        amount,
+      });
 
-    yield call(getDetailedNftSaga, {
-      type: actionTypes.GET_DETAILED_NFT,
-      payload: {
-        id,
-      },
-    });
+      yield call(getDetailedNftSaga, {
+        type: actionTypes.GET_DETAILED_NFT,
+        payload: {
+          id,
+        },
+      });
 
-    yield put(
-      setActiveModal({
-        activeModal: Modals.SendSuccess,
-        open: true,
-        txHash: transactionHash,
-      }),
-    );
+      yield put(
+        setActiveModal({
+          activeModal: Modals.SendSuccess,
+          open: true,
+          txHash: transactionHash,
+        }),
+      );
 
-    yield put(apiActions.success(type));
+      yield put(apiActions.success(type));
+    } else {
+      toast.error('Something went wrong');
+    }
   } catch (e: any) {
+    // yield call(baseApi.removeReject, {
+    //   id,
+    //   owner: sellerId,
+    // });
     yield put(
       setActiveModal({
         activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
