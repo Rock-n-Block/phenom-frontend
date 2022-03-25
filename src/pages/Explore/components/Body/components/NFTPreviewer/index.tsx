@@ -7,6 +7,7 @@ import { ArtCard, NFTList } from 'components';
 
 import { useShallowSelector } from 'hooks';
 import { RequestStatus, TokenFull, TSort } from 'types';
+import { DEFAULT_CURRENCY } from 'appConstants';
 
 interface IPreviewExploreNFTs {
   cardsData: TokenFull[];
@@ -42,7 +43,7 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
           name={card.name}
           price={card.price}
           USD_price={card.usdPrice}
-          asset=""
+          asset={card.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator.name || ''}
           authorAvatar={card.creator.avatar || ''}
           authorId={card.creator.id}
