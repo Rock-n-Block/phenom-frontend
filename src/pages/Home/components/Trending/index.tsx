@@ -183,9 +183,11 @@ const Trending: FC<Props> = ({ className }) => {
             )}
           </div>
         ) : (
-          <Text size="xl" align="center">
-            There is no trending tokens in this category
-          </Text>
+          <div className={styles.noItems}>
+            <Text size="xl" align="center">
+              There is no trending tokens in this category
+            </Text>
+          </div>
         )}
       </div>
     </div>
