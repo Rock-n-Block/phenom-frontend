@@ -24,6 +24,10 @@
   position: relative;
 }
 
+.noItems{
+  pad: 0 16px;
+}
+
 .row {
   @include large-tablet {
     flex-direction: column;

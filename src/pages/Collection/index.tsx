@@ -86,7 +86,7 @@ const Collection = () => {
           name={card.name}
           price={card.price}
           imageMain={card.media || ''}
-          asset={card.currency?.symbol || DEFAULT_CURRENCY}
+          asset={card?.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator?.name || card.creator?.address || ''}
           authorAvatar={card.creator?.avatar || ''}
           authorId={card.creator?.id}

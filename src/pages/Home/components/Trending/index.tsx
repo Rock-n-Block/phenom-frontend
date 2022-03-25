@@ -135,6 +135,8 @@ const Trending: FC<Props> = ({ className }) => {
                       bids,
                       isAucSelling,
                       usdPrice,
+                      likeCount,
+                      isLiked
                     } = nft;
                     return (
                       <SwiperSlide key={id}>
@@ -151,6 +153,8 @@ const Trending: FC<Props> = ({ className }) => {
                             bids={bids}
                             isAuction={isAucSelling}
                             USD_price={usdPrice}
+                            likesNumber={likeCount}
+                            isLiked={isLiked}
                           />
                         </Link>
                       </SwiperSlide>
@@ -160,8 +164,19 @@ const Trending: FC<Props> = ({ className }) => {
               </>
             ) : (
               nfts.map((nft) => {
-                const { id, name, price, media, currency, creator, bids, isAucSelling, usdPrice } =
-                  nft;
+                const {
+                  id,
+                  name,
+                  price,
+                  media,
+                  currency,
+                  creator,
+                  bids,
+                  isAucSelling,
+                  usdPrice,
+                  likeCount,
+                  isLiked
+                } = nft;
                 return (
                   <Link key={id} to="/" className={cx(styles.drop, styles.dropDouble)}>
                     <ArtCard
@@ -176,6 +191,8 @@ const Trending: FC<Props> = ({ className }) => {
                       bids={bids}
                       isAuction={isAucSelling}
                       USD_price={usdPrice}
+                      likesNumber={likeCount}
+                      isLiked={isLiked}
                     />
                   </Link>
                 );
@@ -183,9 +200,11 @@ const Trending: FC<Props> = ({ className }) => {
             )}
           </div>
         ) : (
-          <Text size="xl" align="center">
-            There is no trending tokens in this category
-          </Text>
+          <div className={styles.noItems}>
+            <Text size="xl" align="center">
+              There is no trending tokens in this category
+            </Text>
+          </div>
         )}
       </div>
     </div>
