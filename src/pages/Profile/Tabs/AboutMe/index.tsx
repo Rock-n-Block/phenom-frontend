@@ -59,20 +59,28 @@ const SocialItem: VFC<ISocialItem> = ({ type, value }) => {
 const AboutMe: VFC<IAboutMe> = ({ socials, description, name }) => {
   return (
     <section className={styles['about-me__wrapper']}>
-      <div className={styles['about-me__wrapper__socials']}>
-        {Object.entries(socials)
-          .filter(([, value]) => value)
-          .map(([key, value]) => (
-            <SocialItem type={key as TAvailableSocials} value={value} key={key} />
-          ))}
-        {Object.entries(socials).filter(([, value]) => value).length === 0 &&
-          `${name} doesn't left social networks 😣`}
-      </div>
-      <div className={styles['about-me__wrapper__description']}>
-        <Text color="dark" size="s">
-          {description.length ? description : `${name} doesn't left bio 😣`}
+      {Object.entries(socials).filter(([, value]) => value).length === 0 && !description.length ? (
+        <Text className={styles['empty-profile']} size="xl" align="center" weight="bold">
+          Nothing here yet 😣
         </Text>
-      </div>
+      ) : (
+        <>
+          <div className={styles['about-me__wrapper__socials']}>
+            {Object.entries(socials)
+              .filter(([, value]) => value)
+              .map(([key, value]) => (
+                <SocialItem type={key as TAvailableSocials} value={value} key={key} />
+              ))}
+            {Object.entries(socials).filter(([, value]) => value).length === 0 &&
+              `${name} doesn't left social networks 😣`}
+          </div>
+          <div className={styles['about-me__wrapper__description']}>
+            <Text color="dark" size="s">
+              {description.length ? description : `${name} doesn't left bio 😣`}
+            </Text>
+          </div>
+        </>
+      )}
     </section>
   );
 };

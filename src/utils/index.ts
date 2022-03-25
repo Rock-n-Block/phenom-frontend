@@ -14,3 +14,4 @@ export * from './checkMinMax';
 export * from './validateStatus';
 export * from './formatTokenAmount';
 export * from './convertFilterValuesForBackend';
+export * from './mapSortToRequest';

@@ -32,7 +32,7 @@ const Profile: VFC = () => {
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const { walletService } = useWalletConnectContext();
-  const { avatar, displayName, address, bio, instagram, twitter, site } = useShallowSelector(
+  const { avatar, displayName, address, bio, instagram, twitter, site, email } = useShallowSelector(
     profileSelector.getProfile,
   );
 
@@ -167,7 +167,7 @@ const Profile: VFC = () => {
             element={
               <AboutMe
                 name={displayName || generateUsername(id)}
-                socials={{ instagram, twitter, site }}
+                socials={{ instagram, twitter, site, email }}
                 description={bio || ''}
               />
             }

@@ -1,8 +1,14 @@
 @import 'src/styles/helpers.scss';
 
 .filtersLabels {
-  min-height: 64px;
+  height: auto;
+  max-height: 0;
   height: 100%;
+  overflow: hidden;
+  @include transition;
+  &.active{
+    max-height: 64px;
+  }
 }
 
 .sorting {

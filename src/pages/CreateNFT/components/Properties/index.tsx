@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import { Button, DefaultInput, DeletePreview, Text } from 'components';
 
+import { createValidator } from 'appConstants';
 import { TSingleProp } from 'types';
 
 import styles from './styles.module.scss';
@@ -52,6 +53,7 @@ const SingleProp: VFC<EditableProp> = ({
           setValue={(v: string) => setField('name', v, id)}
           error={error?.name}
           onBlur={onBlur}
+          max={createValidator.properties.max}
         />
         <DefaultInput
           name={`property${type}${id}`}
@@ -63,6 +65,7 @@ const SingleProp: VFC<EditableProp> = ({
           labelClassName={styles['single-prop__body-inputs__label']}
           setValue={(v: string) => setField('type', v, id)}
           error={error?.type}
+          max={createValidator.properties.max}
         />
       </div>
       <DeletePreview onClick={() => onDeleteClick(id)} />

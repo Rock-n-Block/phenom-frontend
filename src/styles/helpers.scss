@@ -148,11 +148,11 @@ $transition-delay: 0s;
   $function: $transition-timing-function,
   $delay: $transition-delay,
   $property: all,
-  $next: false,
+  $next: false
 ) {
-  @if ($next){
+  @if ($next) {
     transition: $property $duration $function $delay, $next;
-  }@else{
+  } @else {
     transition: $property $duration $function $delay;
   }
 }
@@ -287,4 +287,25 @@ $transition-delay: 0s;
 
 #add-black {
   color: $color-dark-svg;
+}
+
+.heart-icon {
+  width: 20px;
+  height: 17px;
+  #border {
+    fill: $color-dark;
+    @include transition();
+  }
+  #inner {
+    fill: transparent;
+    @include transition();
+  }
+  &.active-heart {
+    #border {
+      fill: $color-error;
+    }
+    #inner {
+      fill: $color-error;
+    }
+  }
 }

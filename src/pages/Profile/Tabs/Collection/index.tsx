@@ -20,7 +20,7 @@ interface IPreviewProfileCollections {
 
 const PreviewProfileCollections: VFC<IPreviewProfileCollections> = ({
   cardsData,
-  skeleton,
+  skeleton = [],
   id,
   pages,
 }) => {
@@ -63,7 +63,7 @@ const PreviewProfileCollections: VFC<IPreviewProfileCollections> = ({
 
   return (
     <NFTList
-      elements={skeleton || elements}
+      elements={fetchingCollections === RequestStatus.REQUEST ? skeleton : elements}
       isLoading={fetchingCollections === RequestStatus.REQUEST}
       currentPage={currentPage}
       pages={pages}

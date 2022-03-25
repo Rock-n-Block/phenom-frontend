@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import collectionsSelector from 'store/collections/selectors';
 
 import BigNumber from 'bignumber.js';
+import cn from 'classnames';
 import { omit } from 'lodash';
 
-import { Button, Checkbox, Dropdown } from 'components';
+import { Button } from 'components';
 import { convertFilterValuesForBackend } from 'utils';
 
 import { MenuFilter, PriceFilter } from './components';
@@ -21,12 +22,6 @@ const types = [
   { value: 'Single NFT', label: 'ERC721' },
   { value: 'Multiple NFT', label: 'ERC1155' },
 ];
-const sortings = [
-  { value: 'Price: Low to High', label: '-price' },
-  { value: 'Price: High to Low', label: 'price' },
-  { value: 'Date: Last', label: '-date' },
-  { value: 'Date: New', label: 'date' },
-];
 
 type Props = {
   filterCategory: any;
@@ -36,16 +31,10 @@ type Props = {
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory);
   const { t } = useTranslation('Explore');
-  const collections = useShallowSelector(collectionsSelector.getProp('collections'))
+  const collections = useShallowSelector(collectionsSelector.getProp('collections'));
   const [checkedFilters, setCheckedFilters] = useState<any>({});
-  const [orderBy, setOrderBy] = useState<any>('');
   const [appliedFilters, setAppliedFilters] = useState<any>({});
-  const [isAuctionOnly, setIsAuctionOnly] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
-
-  const handleToggleAuction = useCallback(() => {
-    setIsAuctionOnly(!isAuctionOnly);
-  }, [isAuctionOnly]);
 
   const handleClearFIlters = useCallback(() => {
     setCheckedFilters({});
@@ -94,8 +83,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   }, [checkedFilters, isApplied]);
 
   useEffect(() => {
-    onFiltersChange({ ...convertFilterValuesForBackend(appliedFilters), isAuctionOnly, orderBy });
-  }, [appliedFilters, isAuctionOnly, onFiltersChange, orderBy]);
+    onFiltersChange({ ...convertFilterValuesForBackend(appliedFilters) });
+  }, [appliedFilters, onFiltersChange]);
   return (
     <>
       <div className={styles.filters}>
@@ -143,7 +132,11 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
           {t('Filters.Apply')}
         </Button>
       </div>
-      <div className={styles.filtersLabels}>
+      <div
+        className={cn(styles.filtersLabels, {
+          [styles.active]: !!Object.keys(appliedFilters).length,
+        })}
+      >
         {!!Object.keys(appliedFilters).length && (
           <Labels
             setDefaultFilters={handleClearFIlters}
@@ -154,17 +147,6 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             clearMinMax={() => handleMinMaxPrice('', '')}
           />
         )}
-      </div>
-      <div className={styles.sorting}>
-        <Checkbox value={isAuctionOnly} onChange={handleToggleAuction} content="Auction" />
-        <Dropdown
-          className={styles.sortingDropdown}
-          options={sortings}
-          value={orderBy || { value: 'Sort by' }}
-          drawBy="value"
-          returnBy="value"
-          setValue={(value: string) => setOrderBy(value)}
-        />
       </div>
     </>
   );

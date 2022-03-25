@@ -16,6 +16,7 @@ const initialState: UIState = {
   [profileActionTypes.GET_PROFILE]: RequestStatus.INIT,
   [userActionTypes.EDIT_PROFILE_INFO]: RequestStatus.INIT,
   [nftsActionTypes.GET_LIKED]: RequestStatus.INIT,
+  [nftsActionTypes.LIKE]: RequestStatus.INIT,
 };
 
 const uiReducer = getUIReducer(initialState);

@@ -28,4 +28,5 @@ export interface User {
     site?: string;
     twitter?: string;
     url?: string;
+    email?: string;
 }
