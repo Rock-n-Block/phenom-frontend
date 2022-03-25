@@ -28,11 +28,13 @@ import styles from './styles.module.scss';
 const Profile: VFC = () => {
   const { userId } = useParams();
   const id = useShallowSelector(userSelector.getProp('id'));
+  const balance = useShallowSelector(userSelector.getProp('balance'));
   const nfts = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
   const { walletService } = useWalletConnectContext();
-  const { avatar, balance, displayName, address, bio, instagram, twitter, site, email } =
-    useShallowSelector(profileSelector.getProfile);
+  const { avatar, displayName, address, bio, instagram, twitter, site, email } = useShallowSelector(
+    profileSelector.getProfile,
+  );
 
   const { collections, totalPages: totalCollections } = useShallowSelector(
     collectionsSelector.getCollections,
@@ -111,17 +113,28 @@ const Profile: VFC = () => {
         >
           {displayName || generateUsername(id)}
         </Text>
-        <Text className={styles['profile-page__wrapper-info__balance']} color="lightGray" size="s">
-          Balance
-        </Text>
-        <Text
-          className={styles['profile-page__wrapper-info__balance-amount']}
-          color="blue"
-          size="xxl"
-          weight="medium"
-        >
-          {balance} {profile.currency}
-        </Text>
+        {String(id) === String(userId) ? (
+          <>
+            <Text
+              className={styles['profile-page__wrapper-info__balance']}
+              color="lightGray"
+              size="s"
+            >
+              Balance
+            </Text>
+            <Text
+              className={styles['profile-page__wrapper-info__balance-amount']}
+              color="blue"
+              size="xxl"
+              weight="medium"
+            >
+              {balance} {profile.currency}
+            </Text>
+          </>
+        ) : (
+          <></>
+        )}
+
         <Clipboard
           className={styles['profile-page__wrapper-info__address']}
           value={address || ''}

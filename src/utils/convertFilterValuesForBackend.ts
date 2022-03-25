@@ -14,7 +14,7 @@ export const convertFilterValuesForBackend = (filters: any) => {
     }
 
     if (backendLabel === 'standart') {
-      acc['standart'] = acc?.['standart'] ? [...acc?.['standart'], filterValue] : [filterValue];
+      acc['standart'] = acc?.['standart'] ? [...acc?.['standart'], label] : [label];
 
       return acc;
     }

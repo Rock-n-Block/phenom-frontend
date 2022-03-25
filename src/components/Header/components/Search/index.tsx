@@ -90,7 +90,7 @@ const Search: VFC<Props> = ({ className, classNameDropdown, isOpen, handleSetIsO
         <TextInput
           onChange={handleSearch}
           value={inputValue}
-          placeholder="NFT Name, username"
+          placeholder="NFT Name"
           // type="text"
           className={cx(styles.searchInput, { [styles.closed]: !isOpen })}
           icon={width > 768 ? iconSearch : iconBtn}

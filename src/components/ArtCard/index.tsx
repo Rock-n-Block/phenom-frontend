@@ -109,7 +109,7 @@ const ArtCard: FC<Props> = ({
           Id: {artId}
         </Text>
         <div className={cx(styles.flexContainer, styles.column)}>
-          {price && (
+          {price ? (
             <>
               {!isAuction && (
                 <Text weight="bold" color="lightGray" className={styles.price}>
@@ -136,6 +136,8 @@ const ArtCard: FC<Props> = ({
                 {`${toFixed(price, 3)} ${asset}`}{' '}
               </Text>
             </>
+          ) : (
+            <div className={styles.empty}> </div>
           )}
           <div className={cx(styles.bottom, { [styles.bottomRight]: !price })}>
             {USD_price && (

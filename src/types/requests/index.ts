@@ -172,6 +172,7 @@ export type SearchNftReq = {
   liked_by?: string | number;
   owner?: string | number;
   text?: string;
+  standart?: string;
 };
 
 export type TransferTokenReq = {
@@ -214,8 +215,8 @@ export type SearchCollectionAction = {
 };
 
 export type RemoveRejectAction = {
-  id: number;
-  owner: number;
+  id: number | string;
+  owner: number | string;
 };
 
 export type getProfileByIdRequest = {
