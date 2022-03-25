@@ -416,7 +416,6 @@ const ThreePreview: VFC<IThreePreview> = ({
       switch (threeType) {
         case 'glf':
         case 'glb': {
-          console.log(src);
           GLLoader(src).then((newModel) => {
             newModel.scene.traverse((obj: THREE.Object3D<THREE.Event>) => {
               if ((obj as THREE.Mesh).isMesh) {

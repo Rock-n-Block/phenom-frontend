@@ -31,8 +31,6 @@ const NFTCard: VFC = () => {
   const detailedNft = useShallowSelector(nftsSelector.getProp('detailedNft'));
   const userId = useShallowSelector(userSelector.getProp('id'));
 
-  console.log(detailedNft);
-
   const { [actionTypes.GET_DETAILED_NFT]: getDetailedNftRequestStatus } = useShallowSelector(
     uiSelector.getUI,
   );
