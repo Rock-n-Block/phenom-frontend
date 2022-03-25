@@ -6,3 +6,4 @@ export { default as SendPendingModal } from './SendPendingModal';
 export { default as SendRejectedModal } from './SendRejectedModal';
 export { default as SendSuccessModal } from './SendSuccessModal';
 export { default as TransferModal } from './TransferModal';
+export { default as QuantityModal } from './QuantityModal';

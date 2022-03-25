@@ -63,7 +63,7 @@ export function* setOnSaleSaga({
   } catch (err: any) {
     yield put(
       setActiveModal({
-        activeModal: err?.code === 4001 ? Modals.SendRejected : Modals.SendError,
+        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
         open: true,
         txHash: '',
       }),

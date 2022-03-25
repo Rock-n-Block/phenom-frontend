@@ -80,7 +80,7 @@ const CollectionCard: VFC<ICollectionCard> = ({
           className={styles['collection-card__wrapper__info-subtitle']}
         >
           Floor price:{' '}
-          <span className={styles['marked-text']}>{collection.floorPrice || 0} PHENOM</span>
+          <span className={styles['marked-text']}>{collection.floorPrice || 0} PHETA</span>
         </Text>
       </div>
     </div>

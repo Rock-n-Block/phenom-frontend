@@ -9,6 +9,7 @@ export enum Modals {
   SendError = 'SendError',
   Transfer = 'Transfer',
   ChooseSeller = 'ChooseSeller',
+  ChooseQuantity = 'ChooseQuantity',
   Burn = 'Burn',
   none = 'none',
 }
@@ -17,6 +18,8 @@ export interface ModalState {
   activeModal: Modals;
   txHash: string;
   open: boolean;
+  seller?: string | number;
+  amount?: string | number
 }
 
 export interface ModalProps {

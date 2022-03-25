@@ -38,7 +38,6 @@
 
 .sellType {
   margin-top: 16px;
-  margin-bottom: 20px;
   @include flexbox(flex-start, space-between);
 }
 
@@ -92,6 +91,7 @@
 }
 
 .createLot {
+  margin-top: 20px;
   background: rgba($color-light-4, 0.4);
   border-radius: 20px;
   padding: 32px;

@@ -82,7 +82,7 @@ export function* setOnAuctionSaga({
   } catch (err: any) {
     yield put(
       setActiveModal({
-        activeModal: err.code === 1 ? Modals.SendRejected : Modals.SendError,
+        activeModal: err === 1 ? Modals.SendRejected : Modals.SendError,
         open: true,
         txHash: '',
       }),
