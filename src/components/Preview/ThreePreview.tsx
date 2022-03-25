@@ -210,7 +210,7 @@ const ThreePreview: VFC<IThreePreview> = ({
 
     if (wrapRef?.current) {
       sceneWidth = wrapRef.current.clientWidth;
-      sceneHeight = wrapRef.current.clientWidth;
+      sceneHeight = wrapRef.current.clientHeight;
     }
 
     if (camera && renderer) {
@@ -416,6 +416,7 @@ const ThreePreview: VFC<IThreePreview> = ({
       switch (threeType) {
         case 'glf':
         case 'glb': {
+          console.log(src);
           GLLoader(src).then((newModel) => {
             newModel.scene.traverse((obj: THREE.Object3D<THREE.Event>) => {
               if ((obj as THREE.Mesh).isMesh) {

@@ -21,7 +21,7 @@ const PropsAndDescr: VFC<IPropsAndDescr> = ({ properties, description }) => {
             {properties.map(({ traitType, value }) => (
               <div className={styles.propertiesItem}>
                 <Text color="blue" className={styles.label}>
-                  {traitType}
+                  {traitType.split('.')[0]}
                 </Text>
                 <Text className={styles.value}>{value}</Text>
               </div>

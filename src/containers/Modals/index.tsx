@@ -1,3 +1,5 @@
+import { VFC } from 'react';
+
 import modalSelector from 'store/modals/selectors';
 
 import {
@@ -12,7 +14,7 @@ import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 import { useModals, useShallowSelector } from 'hooks';
 import { Modals } from 'types';
 
-const ModalsComponent = () => {
+const ModalsComponent: VFC = () => {
   const { modalType, closeModals } = useModals();
   const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
   return (
@@ -32,9 +34,18 @@ const ModalsComponent = () => {
         onClose={() => closeModals()}
         onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
-      <SendPendingModal visible={modalType === Modals.SendPending} onClose={() => closeModals()} />
-      <SendSuccessModal visible={modalType === Modals.SendSuccess} onClose={() => closeModals()} />
+      <SendPendingModal
+        withSteps={'withSteps' in modalProps ? modalProps.withSteps : true}
+        visible={modalType === Modals.SendPending}
+        onClose={() => closeModals()}
+      />
+      <SendSuccessModal
+        withSteps={'withSteps' in modalProps ? modalProps.withSteps : true}
+        visible={modalType === Modals.SendSuccess}
+        onClose={() => closeModals()}
+      />
       <SendRejectedModal
+        withSteps={'withSteps' in modalProps ? modalProps.withSteps : true}
         visible={modalType === Modals.SendRejected}
         onClose={() => closeModals()}
         onSendAgain={'onSendAgain' in modalProps ? modalProps.onSendAgain : undefined}

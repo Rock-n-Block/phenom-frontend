@@ -84,7 +84,7 @@ const UserBody: FC<IUserBody> = ({ user, disconnect }) => {
       <div className={styles.head}>
         <div className={styles.top}>
           <Link to={routes.profile.link(user.id || 0, 'about-me')} className={styles.avatar}>
-            <Avatar size={30} withShadow={false} id={user.address} avatar={user.avatar} />
+            <Avatar size={30} withShadow={false} id={user.id || 0} avatar={user.avatar} />
             <Text>{user.displayName || generateUsername(user.id)}</Text>
           </Link>
           <Link to={routes.profile.edit} className={styles.edit}>
@@ -233,7 +233,7 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
       <div className={styles.userButtons}>
         <div className={styles.userItem}>
           <Link to={routes.profile.link(user?.id || 0, 'about-me')} className={styles.avatar}>
-            <Avatar size={30} withShadow={false} id={user.address} avatar={user.avatar} />
+            <Avatar size={30} withShadow={false} id={user.id || 0} avatar={user.avatar} />
             <Text>{user.displayName || generateUsername(user.id)}</Text>
           </Link>
           <div className={styles.balance}>

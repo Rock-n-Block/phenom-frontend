@@ -180,6 +180,7 @@ const Profile: VFC = () => {
                 pages={totalPages}
                 key="for-sale"
                 fetchName="forSale"
+                withAuction
                 cardsData={nfts}
                 skeleton={NFTsCardsSkeleton}
               />
