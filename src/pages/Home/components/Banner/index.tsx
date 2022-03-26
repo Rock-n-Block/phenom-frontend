@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { Button, Text } from 'components';
 
 import { routes } from 'appConstants';
+import { CategoryName } from 'types';
 
 import { metaverse } from 'assets/img';
 
 import styles from './styles.module.scss';
-import { CategoryName } from 'types';
 
 const Banner: FC = () => {
   const { t } = useTranslation('Home');
@@ -22,7 +22,7 @@ const Banner: FC = () => {
         <Text
           tag="h1"
           align="center"
-          weight="bold"
+          weight="semibold"
           className={styles.title}
           id="PhenomMetaverseMarketplace"
         >
