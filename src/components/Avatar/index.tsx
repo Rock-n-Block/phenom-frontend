@@ -30,23 +30,27 @@ const Avatar: FC<IProps> = ({
   className,
 }) => {
   return (
-    <Link
-      to={
-        isCollection ? routes.collection.link(id || '') : routes.profile.link(id || '', 'about-me')
-      }
-      className={cn(styles.avatar, className, {
-        [styles.withAnim]: withAnim,
-        [styles.withShadow]: withShadow,
-      })}
-    >
-      <FallbackImage
-        src={avatar}
-        className={styles.avatarImg}
-        errorSrc={NullAvatarSrc}
-        width={size}
-        height={size}
-      />
-    </Link>
+    <div className={cn(styles.wrapper, className)}>
+      <Link
+        to={
+          isCollection
+            ? routes.collection.link(id || '')
+            : routes.profile.link(id || '', 'about-me')
+        }
+        className={cn(styles.avatar, {
+          [styles.withAnim]: withAnim,
+          [styles.withShadow]: withShadow,
+        })}
+      >
+        <FallbackImage
+          src={avatar}
+          className={styles.avatarImg}
+          errorSrc={NullAvatarSrc}
+          width={size}
+          height={size}
+        />
+      </Link>
+    </div>
   );
 };
 export default Avatar;

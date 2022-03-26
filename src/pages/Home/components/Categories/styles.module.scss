@@ -20,6 +20,7 @@
   @include flexbox(center, flex-start);
   flex-direction: column;
   overflow: hidden;
+  @include transition;
   .ellipse{
     transform: translateY(-32%) scale(-1, 1);
   }
@@ -75,4 +76,10 @@
 
 .image {
   width: 100%;
+}
+
+@include large-mobile{
+  .gradient{
+    opacity: 0;
+  }
 }

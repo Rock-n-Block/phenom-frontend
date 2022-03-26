@@ -7,5 +7,7 @@
 }
 
 @include large-mobile{
-  padding: 0 15px;
+  .home{
+    padding: 0 15px;
+  }
 }
