@@ -31,7 +31,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
-  const [currentPage, setCurrentPage] = useState(1);
+  const [, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<any>({});
   const dispatch = useDispatch();
 
@@ -82,7 +82,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
       pageChangeScrollAnchor.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     isInitRender.current = false;
-  }, [currentPage]);
+  }, []);
 
   useEffect(
     () => () => {
@@ -113,6 +113,14 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
     [],
   );
 
+  const onLoadMoreClick = useCallback(
+    (p: number) => {
+      setCurrentPage(p);
+      handleLoadMore(p, true);
+    },
+    [handleLoadMore],
+  );
+
   return (
     <>
       {tags && tags.length !== 0 && (
@@ -132,7 +140,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
           <NFTPreviewer
             cardsData={nftCards}
             pages={totalPages}
-            onLoadMore={() => handleLoadMore(currentPage, true)}
+            onLoadMore={onLoadMoreClick}
             skeleton={NFTsCardsSkeleton}
             auction={filters?.isAuctionOnly}
             setAuction={handleAuctionChange}

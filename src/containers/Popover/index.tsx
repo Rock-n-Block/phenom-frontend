@@ -15,6 +15,8 @@ export interface IPopoverContext {
   setShowOnHover?: (value: boolean) => void;
   position?: TPosition;
   setPosition?: (value: TPosition) => void;
+  topOffset?: string;
+  setTopOffset?: (offset: string) => void;
 }
 
 export const PopoverContext = createContext<IPopoverContext | undefined>(undefined);
@@ -28,16 +30,19 @@ interface IPopoverProps {
   className?: string;
   showOnHover?: boolean;
   position?: TPosition;
+  topOffset?: string;
 }
 
 const Popover: FC<IPopoverProps> & IPopover = ({
   className,
   showOnHover = true,
   position = 'right',
+  topOffset = '10px',
   children,
 }) => {
   const [visible, setVisible] = useState(false);
   const [bodyPosition, setBodyPosition] = useState<TPosition>(position);
+  const [bodyOffset, setBodyOffset] = useState(topOffset);
   const [hoverShow, setHoverShow] = useState(showOnHover);
 
   const onMouseOver = useCallback(() => {
@@ -61,6 +66,8 @@ const Popover: FC<IPopoverProps> & IPopover = ({
         setPosition: setBodyPosition,
         showOnHover: hoverShow,
         setShowOnHover: setHoverShow,
+        topOffset: bodyOffset,
+        setTopOffset: setBodyOffset,
       }}
     >
       <div

@@ -53,7 +53,7 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     (vals: any) => {
       validateForm(vals);
       handleSubmit();
-      dispatch(setModalProps({ onAgain: handleSubmit }));
+      dispatch(setModalProps({ onAgain: handleSubmit, withSteps: false }));
     },
     [dispatch, handleSubmit, validateForm],
   );

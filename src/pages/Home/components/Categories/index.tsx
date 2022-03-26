@@ -26,7 +26,7 @@ const Categories: FC<Props> = ({ className }) => {
         <img src={categories} className={styles.metaverse} alt="categories" />
       </div>
       <div className={styles.title}>
-        <Text tag="h2" weight="bold" align="center" id="Categories">
+        <Text tag="h2" weight="semibold" align="center" id="Categories">
           Categories
         </Text>
       </div>
@@ -35,7 +35,7 @@ const Categories: FC<Props> = ({ className }) => {
           tags.map((tag: any) => (
             <Link className={styles.tag} to={routes.explore.filter(tag.name)}>
               <img alt="category" className={styles.image} src={tag.image} />
-              <Text className={styles.text} weight="bold">
+              <Text className={styles.text} weight="semibold">
                 {tag.name}
               </Text>
             </Link>

@@ -8,7 +8,16 @@ const usePopover = () => {
     throw new Error('This component must be used within a <Popover> component.');
   }
 
-  const { visible, setVisible, showOnHover, setShowOnHover, position, setPosition } = context;
+  const {
+    visible,
+    setVisible,
+    showOnHover,
+    setShowOnHover,
+    position,
+    setPosition,
+    topOffset,
+    setTopOffset,
+  } = context;
 
   const changePopoverVisibility = () => setVisible(!visible);
 
@@ -18,6 +27,8 @@ const usePopover = () => {
     visible,
     showOnHover,
     position,
+    topOffset,
+    setTopOffset,
     setVisible,
     changePopoverVisibility,
     closePopover,

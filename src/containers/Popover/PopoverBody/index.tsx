@@ -12,18 +12,20 @@ export interface IPopoverBody {
 }
 
 const PopoverBody: FC<IPopoverBody> = ({ className, children }) => {
-  const { visible, closePopover, position } = usePopover();
+  const { visible, closePopover, position, topOffset } = usePopover();
 
   if (!visible) {
     return null;
   }
   return (
-    <div className={cn(styles.body, className, styles[position || 'right'])}>
-      <OutsideClickHandler onOutsideClick={closePopover}>
-        {/* <div className={styles.triangle} /> */}
-        {children}
-      </OutsideClickHandler>
-    </div>
+    <section
+      className={cn(styles.wrapper, styles[position || 'right'])}
+      style={{ paddingTop: topOffset }}
+    >
+      <div className={cn(styles.body, className)}>
+        <OutsideClickHandler onOutsideClick={closePopover}>{children}</OutsideClickHandler>
+      </div>
+    </section>
   );
 };
 export default PopoverBody;

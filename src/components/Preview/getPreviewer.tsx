@@ -13,9 +13,9 @@ export type TProps = {
   threeD: IThreePreview;
 };
 
-const getPreviewer = (src: string, props: TProps) => {
+const getPreviewer = (src: string, props: TProps, format?: string) => {
   const extension = getExtension(src) as TAvailableExtensions;
-  const previewType = getFileGroup(extension);
+  const previewType = format || getFileGroup(extension);
   if (previewType) {
     switch (previewType) {
       case 'audio':

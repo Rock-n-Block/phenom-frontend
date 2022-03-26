@@ -73,7 +73,6 @@ const NFTList: VFC<INFTList> = ({
     },
     [currentPage, onLoadMore],
   );
-
   // for further modifications (change size of cards)
   const minSize = 300;
   return (

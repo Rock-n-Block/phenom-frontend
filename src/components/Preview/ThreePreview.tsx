@@ -210,7 +210,7 @@ const ThreePreview: VFC<IThreePreview> = ({
 
     if (wrapRef?.current) {
       sceneWidth = wrapRef.current.clientWidth;
-      sceneHeight = wrapRef.current.clientWidth;
+      sceneHeight = wrapRef.current.clientHeight;
     }
 
     if (camera && renderer) {

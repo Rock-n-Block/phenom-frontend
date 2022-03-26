@@ -21,6 +21,7 @@
 
 .subtitle {
   max-width: 475px;
+  line-height: 24px;  
 }
 
 .gradient {
@@ -28,7 +29,7 @@
   line-height: 517px;
   letter-spacing: -0.07em;
   position: absolute;
-  z-index: -1;
+  z-index: -2;
   top: 0;
   left: 0;
   margin-left: auto;
