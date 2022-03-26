@@ -8,6 +8,7 @@
   &List {
     @include flexbox(flex-start, flex-start);
     flex-wrap: wrap;
+    width: 100%;
   }
 
   &Item {
@@ -20,6 +21,7 @@
     margin-right: 16px;
     margin-bottom: 16px;
     @include shadow-3;
+    max-width: 100%;
   }
 }
 

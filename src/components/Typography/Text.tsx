@@ -33,6 +33,7 @@ type Props = {
   weight?: Weight;
   elRef?: RefObject<any>;
   description?: string;
+  title?: string;
 };
 
 const isDebug = false;
@@ -48,6 +49,7 @@ const TextGenerator: FC<PropsWithChildren<Props>> = ({
   weight = 'inherit',
   elRef,
   description,
+  title,
 }) =>
   createElement(
     tag,
@@ -55,6 +57,7 @@ const TextGenerator: FC<PropsWithChildren<Props>> = ({
       style,
       ref: elRef,
       description,
+      title,
       className: cx(
         styles.text,
         styles[`type_${tag}`],
