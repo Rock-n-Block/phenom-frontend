@@ -17,6 +17,8 @@
     }
   }
   &.withShadow {
+    padding: 10px;
+    margin: -10px;
     .avatar {
       &Img {
         @include shadow-3;
@@ -24,6 +26,11 @@
     }
   }
 }
+
+.wrapper{
+  @include flexbox(center, center);
+}
+
 .verified {
   position: absolute;
   right: 0;

@@ -34,7 +34,11 @@ const Banner: FC = () => {
           and also earn rewards for their activity.
         </Text>
         <div className={styles.bannerBtn}>
-          <Button href={routes.explore.filter(CategoryName.allCategories)} padding="extra-large">
+          <Button
+            className={styles.btn}
+            href={routes.explore.filter(CategoryName.allCategories)}
+            padding="extra-large"
+          >
             {t('Banner.Explore')}
           </Button>
         </div>
