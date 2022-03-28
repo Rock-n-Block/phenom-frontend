@@ -41,15 +41,15 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
           artId={String(card.id)}
           imageMain={card.media || ''}
           name={card.name}
-          price={card.price}
-          USD_price={card.usdPrice}
+          price={card.price || card.highestBid?.amount || card.minimalBid}
+          USD_price={card.usdPrice || card.highestBidUsd || card.minimalBidUsd || 0}
+          inStockNumber={card.available}
           asset={card.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator.name || ''}
           authorAvatar={card.creator.avatar || ''}
           authorId={card.creator.id}
           isLiked={card.isLiked}
           likesNumber={card.likeCount}
-          inStockNumber={card.available}
         />
       )),
     [cardsData],
