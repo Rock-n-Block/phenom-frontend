@@ -33,6 +33,7 @@ export interface ICreateForm {
   category: Category | null;
   subcategory: Tag | null;
   properties: TProperty[];
+  withCollection: boolean;
   collections: Collection[];
   media: File[] | null;
   preview: File[] | null;
@@ -67,7 +68,8 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       description: '',
       category: null,
       subcategory: null,
-      properties: [{ id: 0, name: '', type: '' }],
+      properties: [],
+      withCollection: false,
       collections: [],
       media: null,
       preview: null,
@@ -98,19 +100,19 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
         .max(createValidator.name.max, 'Too long!')
         .required(),
       description: Yup.string().max(createValidator.description.max, 'Too long!'),
-      collections: Yup.array().length(1).required(),
+      collections: Yup.array().when('withCollection', {
+        is: true,
+        then: Yup.array().length(1).required(),
+      }),
       category: Yup.object().nullable(true).required('category is required'),
       subcategory: Yup.object().nullable(true).required('subcategory is required'),
       properties: Yup.array()
         .of(
-          Yup.object()
-            .shape({
-              id: Yup.number(),
-              name: Yup.string().min(createValidator.properties.name).required('name is required'),
-              type: Yup.string().min(createValidator.properties.type).required('type is required'),
-            })
-            .notRequired()
-            .default(undefined),
+          Yup.object({
+            id: Yup.number(),
+            name: Yup.string().required('name is required'),
+            type: Yup.string().required('type is required'),
+          }).notRequired(),
         )
         .test('unique', 'all types must be unique', (val) => {
           const setFields = new Set(val?.map((v) => `${v.name}${v.type}`));

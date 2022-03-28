@@ -4,15 +4,31 @@
   margin-bottom: 54px;
   &__title {
     margin-bottom: 14px;
-    @include flexbox(center, space-between);
+    @include flexbox(center, flex-start);
+    .selector-btn {
+      margin-right: 10px;
+    }
     .fetching-button {
+      margin-left: auto;
       @include transition;
+      &.fetching-effect {
+        animation: fetching 2s ease-in-out forwards infinite;
+      }
       &:disabled {
         filter: hue-rotate(90deg);
         opacity: 0.5;
         cursor: not-allowed;
-        animation: fetching 2s ease-in-out forwards infinite;
       }
+    }
+  }
+  &__body{
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    @include transition;
+    &.collections-active{
+      max-height: 1000px;
+      overflow-y: auto;
     }
   }
   &__add {
@@ -21,7 +37,11 @@
       width: 100%;
       padding: 18px 24px;
       background: rgba($color-light-4, 0.5);
+      filter: grayscale(1);
+      opacity: 0.5;
+      pointer-events: none;
       @include flexbox(center, center);
+      @include transition;
       &__detail {
         margin-left: 26px;
         width: 24px;
@@ -32,6 +52,11 @@
         font-size: 24px;
         font-weight: normal;
         @include flexbox(center, center);
+      }
+      &.collections-active{
+        opacity: 1;
+        filter: none;
+        cursor: pointer;
       }
       &:hover {
         .collection-section__wrapper {

@@ -65,8 +65,6 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     [setFieldValue],
   );
 
-  console.log(errors);
-
   const onCancelClick = useCallback(() => {
     handleReset();
     setIsClearing(true);
@@ -88,6 +86,8 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
       dispatch(apiActions.reset(createActionTypes.CREATE_TOKEN));
     }
   }, [creatingToken, dispatch, id, navigate]);
+
+  console.log(errors);
 
   return (
     <Form className={styles['create-nft-form___wrapper']}>
@@ -180,7 +180,9 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         name="properties"
         render={() => (
           <Properties
-            initProps={values.properties}
+            initProps={
+              values.properties.length ? values.properties : [{ id: 0, name: '', type: '' }]
+            }
             onBlur={handleBlur('properties')}
             isClearing={isClearing}
             setProps={
@@ -196,6 +198,8 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         name="collections"
         render={() => (
           <Collections
+            isCollectionsAdded={values.withCollection}
+            setIsCollectionsAdded={(value: boolean) => setFieldValue('withCollection', value)}
             isClearing={isClearing}
             initCollections={collections.filter((c) => c.standart === getStandard(values.type))}
             onRefresh={values.onReload}

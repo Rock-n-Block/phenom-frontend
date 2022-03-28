@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, ReactElement, SetStateAction, useCallback, VFC } from 'react';
+import { FormEvent, ReactElement, useCallback, VFC } from 'react';
 
 import cn from 'classnames';
 
@@ -12,8 +12,9 @@ type TLabels = {
 interface ISwitch {
   name: string;
   checked: boolean;
-  setChecked: Dispatch<SetStateAction<boolean>>;
+  setChecked: (state: boolean) => void;
   labels?: TLabels;
+  className?: string;
   trackClassName?: string;
   thumbClassName?: string;
 }
@@ -23,6 +24,7 @@ const Switch: VFC<ISwitch> = ({
   setChecked,
   name,
   labels,
+  className,
   thumbClassName,
   trackClassName,
 }) => {
@@ -35,7 +37,7 @@ const Switch: VFC<ISwitch> = ({
     [checked, setChecked],
   );
   return (
-    <div className={cn(styles['default-switch__body'])}>
+    <div className={cn(styles['default-switch__body'], className)}>
       <label
         className={cn(styles['default-switch__body-area'], {
           [styles['switch-active']]: checked,

@@ -88,9 +88,10 @@ const Properties: VFC<IProperties> = ({
   const onDelete = useCallback(
     (id: number) => {
       const newProperties = properties.filter((p) => p.id !== id);
+      setProps(newProperties);
       setProperties(newProperties);
     },
-    [properties],
+    [properties, setProps],
   );
 
   useEffect(() => {
@@ -113,11 +114,12 @@ const Properties: VFC<IProperties> = ({
             addableProp,
             ...properties.slice(addablePropId + 1),
           ];
+          setProps(newProperties);
           setProperties(newProperties);
         }
       }
     },
-    [properties],
+    [properties, setProps],
   );
 
   const checkPropsValid = useCallback((props: TSingleProp[]) => {
@@ -168,11 +170,6 @@ const Properties: VFC<IProperties> = ({
       setErrors(validation);
     }
   }, [checkPropsValid, properties]);
-
-  useEffect(() => {
-    setProps(properties);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [properties]);
 
   return (
     <section className={cn(styles['properties-wrapper'], className)}>

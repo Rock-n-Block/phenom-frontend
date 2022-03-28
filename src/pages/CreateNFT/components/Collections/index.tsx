@@ -1,7 +1,9 @@
 import { FormEvent, useCallback, useEffect, useState, VFC } from 'react';
 import { Link } from 'react-router-dom';
 
-import { CollectionCard, Text } from 'components';
+import cn from 'classnames';
+
+import { CollectionCard, Switch, Text } from 'components';
 
 import { Collection } from 'types';
 
@@ -12,6 +14,8 @@ import styles from './styles.module.scss';
 interface ICollections {
   initCollections: Collection[];
   setSelectedCollection: (collections: Collection[]) => void;
+  isCollectionsAdded: boolean;
+  setIsCollectionsAdded: (state: boolean) => void;
   onRefresh?: () => void;
   fetching?: boolean;
   onBlur?: (e: FormEvent<HTMLDivElement>) => void;
@@ -21,6 +25,8 @@ interface ICollections {
 const Collections: VFC<ICollections> = ({
   initCollections,
   setSelectedCollection,
+  isCollectionsAdded,
+  setIsCollectionsAdded,
   onRefresh,
   fetching = false,
   onBlur,
@@ -63,13 +69,19 @@ const Collections: VFC<ICollections> = ({
   return (
     <section className={styles['collection-section__wrapper']}>
       <div className={styles['collection-section__wrapper__title']}>
+        <Switch
+          name="is-collection-added"
+          checked={isCollectionsAdded}
+          setChecked={setIsCollectionsAdded}
+          className={styles['selector-btn']}
+        />
         <Text tag="h4" weight="medium">
           Add collection
         </Text>
         {onRefresh && (
           <button
-            disabled={fetching}
-            className={styles['fetching-button']}
+            disabled={fetching || !isCollectionsAdded}
+            className={cn(styles['fetching-button'], { [styles['fetching-effect']]: fetching })}
             type="button"
             onClick={onRefresh}
             title="refresh"
@@ -78,7 +90,11 @@ const Collections: VFC<ICollections> = ({
           </button>
         )}
       </div>
-      <div className={styles['collection-section__wrapper__body']}>
+      <div
+        className={cn(styles['collection-section__wrapper__body'], {
+          [styles['collections-active']]: isCollectionsAdded,
+        })}
+      >
         {collections.map((c) => (
           <CollectionCard
             key={c.url}
@@ -90,12 +106,18 @@ const Collections: VFC<ICollections> = ({
           />
         ))}
       </div>
-      <Link to="/create/collection" className={styles['collection-section__wrapper__add-body']}>
-        <Text weight="bold" size="s">
-          Create new collection
-        </Text>
-        <span className={styles['collection-section__wrapper__add-body__detail']}>&#43;</span>
-      </Link>
+      {isCollectionsAdded && (
+        <Link
+          to="/create/collection"
+          className={cn(styles['collection-section__wrapper__add-body'])}
+        >
+          <Text weight="bold" size="s">
+            Create new collection
+          </Text>
+
+          <span className={styles['collection-section__wrapper__add-body__detail']}>&#43;</span>
+        </Link>
+      )}
     </section>
   );
 };
