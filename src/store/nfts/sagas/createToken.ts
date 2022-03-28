@@ -42,7 +42,7 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
         );
         yield put(apiActions.success(type));
       } catch (e: any) {
-        yield call(baseApi.removeReject, {
+        yield call(baseApi.mintReject, {
           id: token.id,
           owner: token.creator.url,
         });

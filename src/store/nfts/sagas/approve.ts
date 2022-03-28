@@ -11,6 +11,7 @@ import { Modals } from 'types';
 
 import { approve } from '../actions';
 import actionTypes from '../actionTypes';
+import BigNumber from 'bignumber.js';
 
 export function* approveSaga({
   type,
@@ -40,9 +41,15 @@ export function* approveSaga({
         }),
       );
       try {
-        yield call(tokenContract.methods.approve(spender, amount).send, {
-          from: myAddress,
-        });
+        yield call(
+          tokenContract.methods.approve(
+            spender,
+            new BigNumber(amount).plus(new BigNumber(allowance)).toString(),
+          ).send,
+          {
+            from: myAddress,
+          },
+        );
         yield put(
           setActiveModal({
             activeModal: Modals.none,
@@ -52,21 +59,22 @@ export function* approveSaga({
         );
         yield put(apiActions.success(type));
       } catch (e: any) {
-        yield put(
-          setActiveModal({
-            activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
-            open: true,
-            txHash: '',
-          }),
-        );
+        // debugger
+        // yield put(
+        //   setActiveModal({
+        //     activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,
+        //     open: true,
+        //     txHash: '',
+        //   }),
+        // );
         yield put(apiActions.error(type, e));
-        throw new Error(e.code)
+        throw e.code;
       }
     }
   } catch (err: any) {
     // allowance error
     yield put(apiActions.error(type, err));
-    throw new Error(err)
+    throw err;
   }
 }
 

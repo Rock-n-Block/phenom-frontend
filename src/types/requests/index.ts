@@ -214,7 +214,7 @@ export type SearchCollectionAction = {
   shouldConcat?: boolean;
 };
 
-export type RemoveRejectAction = {
+export type RejectAction = {
   id: number | string;
   owner: number | string;
 };

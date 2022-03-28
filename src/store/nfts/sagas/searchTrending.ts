@@ -15,10 +15,9 @@ export function* searchTrendingSaga({
   payload: { category },
 }: ReturnType<typeof getTrending>) {
   yield put(apiActions.request(type));
-  const requestData = { category: String(category) };
 
   try {
-    const { data } = yield call(baseApi.trendingTokens, requestData);
+    const { data } = yield call(baseApi.trendingTokens, { category });
 
     const camelizedResult = camelize(data) as TokenFull[];
 
