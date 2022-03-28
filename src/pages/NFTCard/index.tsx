@@ -14,7 +14,7 @@ import { Loader, Text } from 'components';
 import { NameAndLike, OwnersAndCreators, Payment, PropsAndDescr } from './components';
 
 import { useGetUserAccessForNft, useShallowSelector, useWindowSize } from 'hooks';
-import { RequestStatus } from 'types';
+import { Ownership, RequestStatus } from 'types';
 
 import styles from './styles.module.scss';
 
@@ -95,6 +95,11 @@ const NFTCard: VFC = () => {
                   artId={detailedNft?.id || +id}
                   inStockNumber={detailedNft?.available}
                   isLiked={detailedNft?.isLiked}
+                  youOwn={
+                    detailedNft?.owners?.filter(
+                      (owner: Ownership) => String(owner.url) === String(userId),
+                    )[0]?.sellingQuantity
+                  }
                 />
                 {(isUserCanEndAuction ||
                   isUserCanBuyNft ||
@@ -130,6 +135,11 @@ const NFTCard: VFC = () => {
                 artId={detailedNft?.id || +id}
                 inStockNumber={detailedNft?.available}
                 isLiked={detailedNft?.isLiked}
+                youOwn={
+                  detailedNft?.owners?.filter(
+                    (owner: Ownership) => String(owner.url) === String(userId),
+                  )[0]?.sellingQuantity
+                }
               />
               <div className={styles.nftCardImgWrapper}>
                 {(detailedNft?.isAucSelling || detailedNft?.isTimedAucSelling) && (

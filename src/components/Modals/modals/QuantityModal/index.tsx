@@ -1,10 +1,11 @@
 import { useCallback, useState, VFC } from 'react';
 
-import { Button, DefaultInput, Modal } from 'components';
-
-import styles from './styles.module.scss';
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
+
+import { Button, Modal, QuantityInput } from 'components';
+
+import styles from './styles.module.scss';
 
 type IQuantityModal = {
   visible: boolean;
@@ -15,7 +16,7 @@ type IQuantityModal = {
 };
 
 const QuantityModal: VFC<IQuantityModal> = ({ visible, onClose, onSend, tokenName, max }) => {
-  const [amountValue, setAmountValue] = useState('');
+  const [amountValue, setAmountValue] = useState('1');
   const dispatch = useDispatch();
 
   const handleAmountChange = useCallback((value: string) => {
@@ -24,24 +25,23 @@ const QuantityModal: VFC<IQuantityModal> = ({ visible, onClose, onSend, tokenNam
 
   dispatch(
     setModalProps({
-      onSendAgain: () => onSend(amountValue.trim()),
+      onSendAgain: () => onSend(amountValue),
     }),
   );
 
   return (
     <Modal visible={visible} onClose={onClose} title={`You are about to buy ${tokenName}`}>
-      <DefaultInput
+      <QuantityInput
         name="amount"
         label="Amount"
         value={amountValue}
         setValue={handleAmountChange}
         placeholder="Input text"
-        type="number"
-        min={1}
-        max={max}
+        minAmount={1}
+        maxAmount={Number(max) || 1}
       />
 
-      <Button onClick={() => onSend(amountValue.trim())} className={styles.button}>
+      <Button onClick={() => onSend(amountValue)} className={styles.button}>
         Send
       </Button>
     </Modal>

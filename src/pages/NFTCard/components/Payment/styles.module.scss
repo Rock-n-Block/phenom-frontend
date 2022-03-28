@@ -114,12 +114,12 @@
 
 .switch {
   margin-top: 16px;
-  width: 70%;
+  width: 60%;
 }
 
 .hours {
   margin-top: 24px;
-  width: 70%;
+  width: 60%;
   @include flexbox(flex-start, space-between);
 }
 

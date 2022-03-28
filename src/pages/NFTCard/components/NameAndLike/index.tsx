@@ -18,6 +18,7 @@ type INameAndLike = {
   likeCount: number;
   isLiked?: boolean;
   inStockNumber?: number;
+  youOwn?: string | number;
 };
 
 const NameAndLike: VFC<INameAndLike> = ({
@@ -26,6 +27,7 @@ const NameAndLike: VFC<INameAndLike> = ({
   likeCount,
   isLiked = false,
   inStockNumber,
+  youOwn,
 }) => {
   const [isLike, setIsLike] = useState(isLiked);
   const [likesNumber, setLikesNumber] = useState(likeCount);
@@ -70,8 +72,15 @@ const NameAndLike: VFC<INameAndLike> = ({
           Id: {artId}
         </Text>
         {inStockNumber ? (
-          <Text color="middleGray" weight="semibold" size="m">
+          <Text color="middleGray" weight="semibold" size="m" className={styles.bottomItem}>
             In stock: {inStockNumber}
+          </Text>
+        ) : (
+          <></>
+        )}
+        {youOwn ? (
+          <Text color="middleGray" weight="semibold" size="m">
+            You own: {youOwn}
           </Text>
         ) : (
           <></>

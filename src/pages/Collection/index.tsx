@@ -84,7 +84,7 @@ const Collection = () => {
           key={card.id}
           artId={card.id || 0}
           name={card.name}
-          price={card.price}
+          price={card.price || card.highestBid?.amount || card.minimalBid}
           imageMain={card.media || ''}
           asset={card?.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator?.name || card.creator?.address || ''}
@@ -92,7 +92,8 @@ const Collection = () => {
           authorId={card.creator?.id}
           bids={card.bids}
           isAuction={card.isAucSelling}
-          USD_price={card.usdPrice}
+          USD_price={card.usdPrice || card.highestBidUsd || card.minimalBidUsd || 0}
+          inStockNumber={card.available}
         />
       )),
     [nfts],

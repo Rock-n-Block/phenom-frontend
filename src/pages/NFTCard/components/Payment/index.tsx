@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
-// import modalSelector from 'store/modals/selectors';
 import {
   bid,
   buy,
@@ -18,8 +17,6 @@ import { useWalletConnectContext } from 'context';
 import moment from 'moment';
 
 import {
-  // ApprovePendingModal,
-  // ApproveRejectedModal,
   Avatar,
   Button,
   DefaultInput,
@@ -27,13 +24,9 @@ import {
   QuantityModal,
   Selector,
   SellersModal,
-  // SendPendingModal,
-  // SendRejectedModal,
-  // SendSuccessModal,
   Text,
   TransferModal,
 } from 'components';
-// import ApproveErrorModal from 'components/Modals/modals/ApproveErrorModal';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { useModals } from 'hooks';
@@ -91,8 +84,6 @@ const Payment: VFC<IPayment> = ({
   const [hoursTime, setHoursTime] = useState(hours[0]);
   const { modalType, closeModals, changeModalType } = useModals();
 
-  // const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
-
   const handleList = useCallback(() => {
     setIsListing(true);
   }, []);
@@ -119,20 +110,17 @@ const Payment: VFC<IPayment> = ({
     [dispatch, modalSellerId, nft.id, walletService],
   );
 
+  const handleSetChooseQuantityModal = useCallback(() => {
+    changeModalType(Modals.ChooseQuantity);
+  }, [changeModalType]);
+
   const handleChooseSeller = useCallback(
     (id: string) => {
       setModalSellerId(id);
-      // if (nft?.sellers) {
-      //   dispatch(
-      //     setModalProps({
-      //       maxAmount:
-      //         nft?.sellers?.filter((seller: any) => seller?.id === id)[0]?.sellingQuantity || 1,
-      //     }),
-      //   );
-      // }
-      changeModalType(Modals.ChooseQuantity);
+
+      handleSetChooseQuantityModal();
     },
-    [changeModalType],
+    [handleSetChooseQuantityModal],
   );
 
   const handleBuy = useCallback(
@@ -685,30 +673,11 @@ const Payment: VFC<IPayment> = ({
         onClose={() => closeModals()}
         tokenName={nft?.name || ''}
         onSend={handleSetSeller}
+        max={
+          nft?.sellers?.filter((seller: any) => seller.url === modalSellerId)[0]?.sellingQuantity ||
+          1
+        }
       />
-      {/* 
-      <ApprovePendingModal
-        visible={modalType === Modals.ApprovePending}
-        onClose={() => closeModals()}
-      />
-
-      <ApproveErrorModal
-        visible={modalType === Modals.ApproveError}
-        onClose={() => closeModals()}
-      />
-
-      <ApproveRejectedModal
-        visible={modalType === Modals.ApproveRejected}
-        onClose={() => closeModals()}
-        onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
-      />
-      <SendPendingModal visible={modalType === Modals.SendPending} onClose={() => closeModals()} />
-      <SendSuccessModal visible={modalType === Modals.SendSuccess} onClose={() => closeModals()} />
-      <SendRejectedModal
-        visible={modalType === Modals.SendRejected}
-        onClose={() => closeModals()}
-        onSendAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
-      /> */}
     </>
   );
 };

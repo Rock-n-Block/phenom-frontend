@@ -8,6 +8,7 @@ import uiSelector from 'store/ui/selectors';
 import { ArtCard, NFTList } from 'components';
 import { mapSortToRequest } from 'utils';
 
+import { DEFAULT_CURRENCY } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { RequestStatus, TAvailableSorts, TokenFull, TSort } from 'types';
 
@@ -45,9 +46,9 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           artId={String(card.id)}
           imageMain={card.media || ''}
           name={card.name}
-          price={card.price}
-          USD_price={card.usdPrice}
-          asset=""
+          price={card.price || card.highestBid?.amount || card.minimalBid}
+          USD_price={card.usdPrice || card.highestBidUsd || card.minimalBidUsd || 0}
+          asset={card.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator.name || ''}
           authorAvatar={card.creator.avatar || ''}
           authorId={card.creator.id}
