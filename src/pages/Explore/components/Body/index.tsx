@@ -31,7 +31,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
   const pageChangeScrollAnchor = useRef<TNullable<HTMLDivElement>>(null);
   const nftCards = useShallowSelector(nftSelector.getProp('nfts'));
   const totalPages = useShallowSelector(nftSelector.getProp('totalPages'));
-  const [, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<any>({});
   const dispatch = useDispatch();
 
@@ -146,6 +146,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
             setAuction={handleAuctionChange}
             sortBy={filters?.orderBy || TAvailableSorts[0]}
             setSortBy={handleSortChange}
+            currentPage={currentPage}
           />
         </div>
       </div>

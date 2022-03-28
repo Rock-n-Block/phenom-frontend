@@ -112,7 +112,10 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
             .notRequired()
             .default(undefined),
         )
-        .compact((o) => !((o.name && !o.type) || (!o.name && o.type))),
+        .test('unique', 'all types must be unique', (val) => {
+          const setFields = new Set(val?.map((v) => `${v.name}${v.type}`));
+          return setFields.size === val?.length;
+        }),
       quantity: Yup.string()
         .test('count', 'not enough', (val) => Number(val) >= createValidator.quantity)
         .required(),

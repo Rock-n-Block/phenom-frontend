@@ -53,7 +53,7 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     (vals: any) => {
       validateForm(vals);
       handleSubmit();
-      dispatch(setModalProps({ onAgain: handleSubmit, withSteps: false }));
+      dispatch(setModalProps({ onAgain: handleSubmit, onApprove: handleSubmit, withSteps: false }));
     },
     [dispatch, handleSubmit, validateForm],
   );
@@ -64,6 +64,8 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     },
     [setFieldValue],
   );
+
+  console.log(errors);
 
   const onCancelClick = useCallback(() => {
     handleReset();
