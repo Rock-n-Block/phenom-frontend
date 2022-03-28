@@ -1,5 +1,5 @@
 import { DEFAULT_CURRENCY, URL } from 'appConstants';
-import { SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
+import { RejectAction, SetOnAuctionReq, SetOnSaleReq } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -79,11 +79,11 @@ export default {
       url: URL.endAuction(data.id),
     });
   },
-  trendingTokens(data: { category: string }) {
+  trendingTokens(params: { category?: string | number }) {
     return ajax({
       method: 'get',
       url: URL.trendingTokens,
-      data,
+      params,
     });
   },
   transfer(data: { id: string | number; address: string; amount?: string | number }) {
@@ -98,6 +98,13 @@ export default {
       method: 'post',
       url: URL.burn(data.id),
       data
+    });
+  },
+  buyReject({ id, owner }: RejectAction) {
+    return ajax({
+      method: 'post',
+      url: URL.buyReject,
+      data: { id, owner },
     });
   },
 };

@@ -54,9 +54,13 @@ const Trending: FC<Props> = ({ className }) => {
 
   const fetchTrendingNfts = useCallback(() => {
     dispatch(
-      getTrending({
-        category: title.name === CategoryName.allCategories ? '' : title?.id,
-      }),
+      getTrending(
+        title.name !== CategoryName.allCategories
+          ? {
+              category: title?.id,
+            }
+          : {},
+      ),
     );
   }, [dispatch, title]);
 
@@ -129,22 +133,28 @@ const Trending: FC<Props> = ({ className }) => {
                       id,
                       name,
                       price,
+                      highestBid,
+                      minimalBid,
                       media,
                       currency,
                       creator,
                       bids,
                       isAucSelling,
                       usdPrice,
+                      highestBidUsd,
+                      minimalBidUsd,
                       likeCount,
-                      isLiked
+                      isLiked,
+                      available,
                     } = nft;
                     return (
                       <SwiperSlide key={id}>
                         <Link to="/" className={styles.drop}>
                           <ArtCard
                             artId={id || 0}
+                            inStockNumber={available}
                             name={name}
-                            price={price}
+                            price={price || highestBid?.amount || minimalBid}
                             imageMain={media || ''}
                             asset={currency?.symbol || DEFAULT_CURRENCY}
                             author={creator?.name || ''}
@@ -152,7 +162,7 @@ const Trending: FC<Props> = ({ className }) => {
                             authorId={creator?.id || 0}
                             bids={bids}
                             isAuction={isAucSelling}
-                            USD_price={usdPrice}
+                            USD_price={usdPrice || highestBidUsd || minimalBidUsd || 0}
                             likesNumber={likeCount}
                             isLiked={isLiked}
                           />
@@ -168,21 +178,27 @@ const Trending: FC<Props> = ({ className }) => {
                   id,
                   name,
                   price,
+                  highestBid,
+                  minimalBid,
                   media,
                   currency,
                   creator,
                   bids,
                   isAucSelling,
                   usdPrice,
+                  highestBidUsd,
+                  minimalBidUsd,
                   likeCount,
-                  isLiked
+                  isLiked,
+                  available,
                 } = nft;
                 return (
                   <Link key={id} to="/" className={cx(styles.drop, styles.dropDouble)}>
                     <ArtCard
                       artId={id || 0}
+                      inStockNumber={available}
                       name={name}
-                      price={price}
+                      price={price || highestBid?.amount || minimalBid}
                       imageMain={media || ''}
                       asset={currency?.symbol || DEFAULT_CURRENCY}
                       author={creator?.name || ''}
@@ -190,7 +206,7 @@ const Trending: FC<Props> = ({ className }) => {
                       authorId={creator?.id || 0}
                       bids={bids}
                       isAuction={isAucSelling}
-                      USD_price={usdPrice}
+                      USD_price={usdPrice || highestBidUsd || minimalBidUsd || 0}
                       likesNumber={likeCount}
                       isLiked={isLiked}
                     />

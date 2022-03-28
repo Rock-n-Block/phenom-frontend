@@ -122,7 +122,14 @@ const Payment: VFC<IPayment> = ({
   const handleChooseSeller = useCallback(
     (id: string) => {
       setModalSellerId(id);
-
+      // if (nft?.sellers) {
+      //   dispatch(
+      //     setModalProps({
+      //       maxAmount:
+      //         nft?.sellers?.filter((seller: any) => seller?.id === id)[0]?.sellingQuantity || 1,
+      //     }),
+      //   );
+      // }
       changeModalType(Modals.ChooseQuantity);
     },
     [changeModalType],
@@ -356,17 +363,6 @@ const Payment: VFC<IPayment> = ({
         )} */}
           {(isUserCanBuyNft || isUserCanEnterInAuction) && (
             <div className={styles.priceBids}>
-              {nft?.standart === 'ERC1155' && (
-                <QuantityInput
-                  value={quantity}
-                  setValue={setQuantity}
-                  name="quantity"
-                  writeable
-                  maxAmount={nft?.available}
-                  minAmount={1}
-                  inputClassName={styles.quantityInput}
-                />
-              )}
               {(nft?.isAucSelling || nft?.isTimedAucSelling) && (
                 <DefaultInput
                   name="bid"

@@ -1,6 +1,6 @@
 import { URL } from 'appConstants';
 import { createTokenResponse, Token } from 'types';
-import { CreateCollectionAction, RemoveRejectAction } from 'types/requests';
+import { CreateCollectionAction, RejectAction } from 'types/requests';
 
 import ajax from './ajax';
 
@@ -20,10 +20,10 @@ export default {
       data: collection,
     });
   },
-  removeReject({ id, owner }: RemoveRejectAction) {
+  mintReject({ id, owner }: RejectAction) {
     return ajax({
       method: 'post',
-      url: URL.removeReject,
+      url: URL.mintReject,
       data: { id, owner },
     });
   },

@@ -27,7 +27,7 @@ const SellersModal: VFC<ISellersModal> = ({ visible, onClose, sellers, handleCho
                 <Avatar id={seller.url || 0} avatar={seller.avatar || mock.user} />
                 <div className="">
                   <div className={styles.itemName}>{seller?.name}</div>
-                  <div className={styles.itemQuantity}>{`${seller.quantity} token`}</div>
+                  <div className={styles.itemQuantity}>{`${seller.sellingQuantity} token`}</div>
                 </div>
               </div>
               <div className={styles.itemWrapper}>

@@ -62,13 +62,23 @@ export function* bidNftSaga({
     );
     yield put(apiActions.success(type));
   } catch (err: any) {
-    yield put(
-      setActiveModal({
-        activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
-        open: true,
-        txHash: '',
-      }),
-    );
+    if (typeof err === 'number') {
+      yield put(
+        setActiveModal({
+          activeModal: err === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    } else {
+      yield put(
+        setActiveModal({
+          activeModal: err.code === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
     yield put(apiActions.error(type, err));
   }
 }
