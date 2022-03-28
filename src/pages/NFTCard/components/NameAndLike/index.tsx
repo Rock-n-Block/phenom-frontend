@@ -71,16 +71,16 @@ const NameAndLike: VFC<INameAndLike> = ({
         <Text color="middleGray" weight="semibold" size="m" className={styles.bottomItem}>
           Id: {artId}
         </Text>
-        {inStockNumber ? (
+        {youOwn ? (
           <Text color="middleGray" weight="semibold" size="m" className={styles.bottomItem}>
-            In stock: {inStockNumber}
+            You own: {youOwn}
           </Text>
         ) : (
           <></>
         )}
-        {youOwn ? (
+        {inStockNumber ? (
           <Text color="middleGray" weight="semibold" size="m">
-            You own: {youOwn}
+            In stock: {inStockNumber}
           </Text>
         ) : (
           <></>
