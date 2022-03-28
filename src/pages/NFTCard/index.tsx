@@ -98,7 +98,7 @@ const NFTCard: VFC = () => {
                   youOwn={
                     detailedNft?.owners?.filter(
                       (owner: Ownership) => String(owner.url) === String(userId),
-                    )[0]?.sellingQuantity
+                    )[0]?.quantity
                   }
                 />
                 {(isUserCanEndAuction ||
@@ -138,7 +138,7 @@ const NFTCard: VFC = () => {
                 youOwn={
                   detailedNft?.owners?.filter(
                     (owner: Ownership) => String(owner.url) === String(userId),
-                  )[0]?.sellingQuantity
+                  )[0]?.quantity
                 }
               />
               <div className={styles.nftCardImgWrapper}>
