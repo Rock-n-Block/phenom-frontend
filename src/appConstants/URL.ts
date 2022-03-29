@@ -19,7 +19,7 @@ const storeURLs = {
   createNewCollection: '/store/create_collection/',
   buy: 'store/buy/',
   bid: 'store/bids/make_bid/',
-  trackTransaction: 'store/track_transaction',
+  trackTransaction: 'store/track_transaction/',
   mintReject: '/store/mint-reject/',
   buyReject: '/store/buy-reject/',
   getTokenById: (id: string | number) => `/store/token/${id}/`,
