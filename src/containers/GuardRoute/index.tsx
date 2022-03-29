@@ -10,6 +10,7 @@ import { State, UserState } from 'types';
 
 export const requirements = {
   logged: ({ isLogged }: { isLogged: boolean }) => isLogged,
+  whitelisted: ({ isWhitelisted }: { isWhitelisted: boolean }) => isWhitelisted,
 } as const;
 
 export type TRequirements = keyof typeof requirements;
@@ -22,7 +23,10 @@ interface IGuardRoute {
 
 const GuardRoute: FC<IGuardRoute> = ({ require, children, name }) => {
   const { address } = useShallowSelector<State, UserState>(userSelector.getUser);
-  if (require.every((req) => requirements[req]({ isLogged: address.length !== 0 }))) {
+  const { isWhitelisted } = useShallowSelector<State, UserState>(userSelector.getUser);
+  if (
+    require.every((req) => requirements[req]({ isLogged: address.length !== 0, isWhitelisted }))
+  ) {
     return children;
   }
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

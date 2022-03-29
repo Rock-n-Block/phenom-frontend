@@ -10,6 +10,7 @@ export type UserState = {
   chain: string;
   displayName: string;
   collections: Collection[];
+  isWhitelisted: boolean
 };
 
 export type LoginReq = {

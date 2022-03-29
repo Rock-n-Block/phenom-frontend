@@ -101,7 +101,7 @@ const Trending: FC<Props> = ({ className }) => {
                 <div ref={nextRef} className="swiper-button-next" />
                 <Swiper
                   spaceBetween={30}
-                  centeredSlides
+                  // centeredSlides
                   navigation={{
                     prevEl: prevRef.current,
                     nextEl: nextRef.current,

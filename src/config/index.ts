@@ -1,6 +1,6 @@
 import { Chains, IConnectWallet, IContracts } from 'types';
 
-import { erc20Abi, erc721Abi, erc1155Abi, marketPlaceAbi } from './abi';
+import { erc20Abi, erc721Abi, erc1155Abi, marketPlaceAbi, whitelistAbi } from './abi';
 import { isMainnet } from './constants';
 
 export const chains: {
@@ -56,6 +56,7 @@ export enum ContractsNames {
   marketpalce = 'marketpalce',
   erc721 = 'erc721',
   erc1155 = 'erc1155',
+  whitelist = 'whitelist',
 }
 
 export type IContractsNames = keyof typeof ContractsNames;
@@ -64,6 +65,20 @@ export const contractsConfig: IContracts = {
   names: Object.keys(ContractsNames),
   decimals: 18,
   contracts: {
+    [ContractsNames.whitelist]: {
+      testnet: {
+        address: {
+          [Chains.bsc]: '0x3F79F1DEDc1596179d8fCfd62270eCCC344C6517',
+        },
+        abi: whitelistAbi,
+      },
+      mainnet: {
+        address: {
+          [Chains.bsc]: '',
+        },
+        abi: whitelistAbi,
+      },
+    },
     [ContractsNames.token]: {
       testnet: {
         address: {
