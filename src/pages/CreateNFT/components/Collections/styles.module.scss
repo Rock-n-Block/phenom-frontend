@@ -27,6 +27,7 @@
     overflow: hidden;
     @include transition;
     &.collections-active{
+      padding: 3px;
       max-height: 1000px;
       overflow-y: auto;
     }

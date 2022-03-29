@@ -8,9 +8,17 @@ type ISendPendingModal = {
   visible: boolean;
   onClose: (value: boolean) => void;
   withSteps?: boolean;
+  subtitleText?: string;
+  subMessageText?: string;
 };
 
-const SendPendingModal: VFC<ISendPendingModal> = ({ visible, onClose, withSteps = true }) => {
+const SendPendingModal: VFC<ISendPendingModal> = ({
+  visible,
+  onClose,
+  withSteps = true,
+  subtitleText = 'Please press "Send" button in MetaMask extension',
+  subMessageText = 'Your USDT will be transferred from your wallet to the contract address.',
+}) => {
   const title = (
     <Text className={styles.title} align="center" size="xl" weight="bold">
       {withSteps && 'STEP 2/2 '}
@@ -31,12 +39,16 @@ const SendPendingModal: VFC<ISendPendingModal> = ({ visible, onClose, withSteps 
       <div className={styles.icon}>
         <Loader />
       </div>
-      <Text tag="h4" weight="semibold" align="center" className={styles.subtitle}>
-        Please press &quot;Send&quot; button in MetaMask extension
-      </Text>
-      <Text align="center" className={styles.text}>
-        Your USDT will be transferred from your wallet to the contract address.
-      </Text>
+      {subtitleText && (
+        <Text tag="h4" weight="semibold" align="center" className={styles.subtitle}>
+          {subtitleText}
+        </Text>
+      )}
+      {subMessageText && (
+        <Text align="center" className={styles.text}>
+          {subMessageText}
+        </Text>
+      )}
     </Modal>
   );
 };

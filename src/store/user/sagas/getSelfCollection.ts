@@ -4,6 +4,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { error, request, success } from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 
+import { camelize } from 'utils/camelize';
+
 import { getSelfCollections } from '../actions';
 import actionTypes from '../actionTypes';
 
@@ -12,7 +14,7 @@ export function* getSelfCollectionsSaga({ type, payload }: ReturnType<typeof get
   try {
     const { data } = yield call(baseApi.getSelfCollections, payload);
 
-    yield put(updateCollections({ collections: data.results }));
+    yield put(updateCollections({ collections: camelize(data.results) }));
 
     yield put(success(type));
   } catch (err) {

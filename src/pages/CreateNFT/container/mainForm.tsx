@@ -53,7 +53,15 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     (vals: any) => {
       validateForm(vals);
       handleSubmit();
-      dispatch(setModalProps({ onAgain: handleSubmit, onApprove: handleSubmit, withSteps: false }));
+      dispatch(
+        setModalProps({
+          onSendAgain: handleSubmit,
+          onApprove: handleSubmit,
+          withSteps: false,
+          subMessageText: '',
+          subtitleText: 'In progress',
+        }),
+      );
     },
     [dispatch, handleSubmit, validateForm],
   );
@@ -86,8 +94,6 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
       dispatch(apiActions.reset(createActionTypes.CREATE_TOKEN));
     }
   }, [creatingToken, dispatch, id, navigate]);
-
-  console.log(errors);
 
   return (
     <Form className={styles['create-nft-form___wrapper']}>

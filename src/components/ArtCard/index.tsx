@@ -140,10 +140,12 @@ const ArtCard: FC<Props> = ({
             <div className={styles.empty}> </div>
           )}
           <div className={cx(styles.bottom, { [styles.bottomRight]: !price })}>
-            {USD_price && (
+            {USD_price ? (
               <Text id="none" weight="bold" color="lightGray">
                 $ {USD_price}
               </Text>
+            ) : (
+              <></>
             )}
             {!bids?.length ? (
               <Text color="middleGray" weight="semibold" size="m">

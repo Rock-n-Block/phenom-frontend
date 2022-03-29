@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
+import { toast } from 'react-toastify';
+
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
-import { toast } from 'react-toastify';
 
 import { contractsConfig, ContractsNames } from 'config';
 import { isMainnet } from 'config/constants';
@@ -89,17 +90,27 @@ export function* buySaga({
       toast.error('Something went wrong');
     }
   } catch (e: any) {
-    // yield call(baseApi.removeReject, {
-    //   id,
-    //   owner: sellerId,
-    // });
-    yield put(
-      setActiveModal({
-        activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
-        open: true,
-        txHash: '',
-      }),
-    );
+    yield call(baseApi.buyReject, {
+      id,
+      owner: sellerId,
+    });
+    if (typeof e === 'number') {
+      yield put(
+        setActiveModal({
+          activeModal: e === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    } else {
+      yield put(
+        setActiveModal({
+          activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
+          open: true,
+          txHash: '',
+        }),
+      );
+    }
 
     yield put(apiActions.error(type, e));
   }

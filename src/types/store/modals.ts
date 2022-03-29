@@ -19,7 +19,7 @@ export interface ModalState {
   txHash: string;
   open: boolean;
   seller?: string | number;
-  amount?: string | number
+  amount?: string | number;
 }
 
 export interface ModalProps {

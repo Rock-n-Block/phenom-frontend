@@ -54,6 +54,7 @@ const Collections: VFC<ICollections> = ({
   useEffect(() => {
     setCollections(initCollections);
   }, [initCollections]);
+
   const setIsSelected = useCallback(
     (collection: Collection) => {
       if (isSelected(collection.url)) {
@@ -65,6 +66,16 @@ const Collections: VFC<ICollections> = ({
     },
     [isSelected, selected],
   );
+
+  useEffect(() => {
+    if (!selected.length) {
+      const defaultCollection = collections.find((c) => c.isDefault);
+      if (defaultCollection) {
+        setIsSelected(defaultCollection);
+      }
+    }
+  }, [collections, selected, setIsSelected]);
+
 
   return (
     <section className={styles['collection-section__wrapper']}>

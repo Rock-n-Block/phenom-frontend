@@ -156,6 +156,8 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       newTokenForm.append('total_supply', values.type === 'Multiple' ? values.quantity : '1');
       if (values.collections && values.collections[0]) {
         newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
+      } else {
+        newTokenForm.append('collection', JSON.stringify(1));
       }
       if (values.subcategory) {
         newTokenForm.append('tags', JSON.stringify(values.subcategory.id));
