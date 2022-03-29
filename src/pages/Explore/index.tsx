@@ -8,6 +8,8 @@ import nftSelector from 'store/nfts/selectors';
 
 import { useLanguage } from 'context';
 
+import { Loader } from 'components';
+
 import { Body, Title } from './components';
 
 import { useGetTags, useShallowSelector } from 'hooks';
@@ -48,7 +50,7 @@ const Explore: VFC = () => {
 
   const { hasNamespaceLoaded } = useLanguage();
   if (!hasNamespaceLoaded('Explore')) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   return (

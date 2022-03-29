@@ -93,6 +93,10 @@
   }
 }
 
+.invisible{
+  opacity: 0;
+}
+
 @include large-mobile {
   .load-file__wrapper {
     min-height: 0;
