@@ -246,7 +246,7 @@ const Profile: VFC = () => {
                 id={userId}
                 pages={totalCollections}
                 key="collections"
-                cardsData={collections}
+                cardsData={collections.filter((c) => !c.isDefault)}
                 skeleton={NFTsCardsSkeleton}
               />
             }
