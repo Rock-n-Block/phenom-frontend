@@ -32,7 +32,7 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
   extensions = imagesFormats,
   reqMaxSize = maxSize,
   className,
-  onBlur
+  onBlur,
 }) => {
   const [idx] = useState(String(Date.now() * Math.random()));
   const [filesOver, setFilesOver] = useState<boolean>(false);
@@ -174,10 +174,18 @@ const UploadAvatar: VFC<IUploadAvatar> = ({
             ref={inputRef}
             onBlur={onBlur}
           />
-          <div className={styles['upload-avatar__wrapper__body-icon']}>
+          <div
+            className={cn(styles['upload-avatar__wrapper__body-icon'], {
+              [styles.invisible]: fileURL,
+            })}
+          >
             <ImageSVG />
           </div>
-          <div className={styles['upload-avatar__wrapper__body-title']}>
+          <div
+            className={cn(styles['upload-avatar__wrapper__body-title'], {
+              [styles.invisible]: fileURL,
+            })}
+          >
             <Text color="dark" weight="medium">
               Upload file
             </Text>
