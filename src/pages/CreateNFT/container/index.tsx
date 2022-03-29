@@ -126,9 +126,6 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       const newTokenForm = new FormData();
       newTokenForm.append('name', values.name);
       newTokenForm.append('description', values.description);
-      if (values.collections.length !== 0) {
-        newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
-      }
       if (values.properties.length !== 0) {
         newTokenForm.append(
           'details',
@@ -155,12 +152,10 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       }
       newTokenForm.append('total_supply', values.type === 'Multiple' ? values.quantity : '1');
       if (values.collections && values.collections[0]) {
-        newTokenForm.append('collection', JSON.stringify(values.collections[0].url));
-      } else {
-        newTokenForm.append('collection', JSON.stringify(1));
+        newTokenForm.append('collection', String(values.collections[0].url));
       }
       if (values.subcategory) {
-        newTokenForm.append('tags', JSON.stringify(values.subcategory.id));
+        newTokenForm.append('tags', String(values.subcategory.id));
       }
       dispatch(createToken({ token: newTokenForm as any, web3: walletService.Web3() }));
     },
