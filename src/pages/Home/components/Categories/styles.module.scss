@@ -24,7 +24,7 @@
   .ellipse{
     transform: translateY(-32%) scale(-1, 1);
   }
-  .metaverse{
+  .metaverse {
     max-width: 100%;
   }
 }
@@ -78,6 +78,11 @@
   width: 100%;
 }
 
+@include small-tablet {
+  .metaverse {
+    display: none;
+  }
+}
 @include large-mobile{
   .gradient{
     opacity: 0;

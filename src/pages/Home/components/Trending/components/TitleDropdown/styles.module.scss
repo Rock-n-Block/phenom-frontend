@@ -101,3 +101,11 @@
     margin-right: 10px;
   }
 }
+
+@include middle-mobile {
+  .titleDropdown {
+    .blueValue {
+      font-size: 24px;
+    }
+  }
+}

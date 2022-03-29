@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, VFC } from 'react';
+import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
@@ -276,9 +276,11 @@ const Payment: VFC<IPayment> = ({
 
     return () => clearInterval(timeInterval);
   }, [nft]);
+
+  const nftPrice = useMemo(() => nft?.price || nft?.highestBid?.amount || nft?.minimalBid, [nft]);
   return (
     <>
-      {(nft?.price || nft?.minimalBid) && (
+      {nftPrice && (
         <div className={styles.userBuy}>
           {nft?.isTimedAucSelling && (
             <div className={styles.timedAuc}>
@@ -327,14 +329,14 @@ const Payment: VFC<IPayment> = ({
               Price
             </Text>
           )}
-          {nft?.price && (
+          {nftPrice && (
             <Text weight="semibold" color="blue" className={styles.price}>
-              {nft?.price} {nft?.currency?.symbol || DEFAULT_CURRENCY}
+              {nftPrice} {nft?.currency?.symbol || DEFAULT_CURRENCY}
             </Text>
           )}
-          {nft?.usdPrice && (
+          {(nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd) && (
             <Text color="middleGray" size="m" className={styles.usdPrice}>
-              ${nft?.usdPrice}
+              ${nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd}
             </Text>
           )}
           {nft?.highestBid && (

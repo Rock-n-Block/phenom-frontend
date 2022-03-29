@@ -24,7 +24,7 @@
   position: relative;
 }
 
-.noItems{
+.noItems {
   pad: 0 16px;
 }
 
@@ -55,4 +55,12 @@
   height: 588px;
   width: 100%;
   max-width: 1082px;
+}
+
+@include middle-mobile {
+  .notableDrops {
+    .title {
+      font-size: 24px;
+    }
+  }
 }

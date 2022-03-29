@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
-import { login, updateUserInfo } from 'store/user/actions';
+import { checkWhitelist, login, updateUserInfo } from 'store/user/actions';
 import { disconnectWalletState, updateChain, updateProvider } from 'store/user/reducer';
 import userSelector from 'store/user/selectors';
 
@@ -68,6 +68,8 @@ const WalletConnectContext: FC = ({ children }) => {
           const accountInfo: any = await WalletConnect.current.getAccount();
           if (key?.length && address === accountInfo?.address) {
             dispatch(updateUserInfo({ web3Provider: WalletConnect.current.Web3() }));
+
+            dispatch(checkWhitelist({ web3Provider: WalletConnect.current.Web3() }));
             return;
           }
 
@@ -77,6 +79,8 @@ const WalletConnectContext: FC = ({ children }) => {
             );
             dispatch(updateProvider({ provider: accountInfo.type }));
             dispatch(updateChain({ chain }));
+
+            dispatch(checkWhitelist({ web3Provider: WalletConnect.current.Web3() }));
           }
 
           setCurrentSubscriber(sub);
