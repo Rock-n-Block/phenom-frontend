@@ -19,43 +19,43 @@ const Footers: React.FC = () => {
           </div>
           <div className={styles.links}>
             <div className={styles.linkBlock}>
-              <Link to="https://twitter.com/MetaversePhenom">
+              <a href="https://twitter.com/MetaversePhenom">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Twitter</Text>
                 </Button>
-              </Link>
-              <Link to="https://www.instagram.com/phenom.metaverse/">
+              </a>
+              <a href="https://www.instagram.com/phenom.metaverse/">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Instagram</Text>
                 </Button>
-              </Link>
-              <Link to="https://t.me/phenom_metaverse">
+              </a>
+              <a href="https://t.me/phenom_metaverse">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Telegram channel</Text>
                 </Button>
-              </Link>
-              <Link to="https://t.me/+noh1Ida1YckzNGVk">
+              </a>
+              <a href="https://t.me/+noh1Ida1YckzNGVk">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Telegram public chat</Text>
                 </Button>
-              </Link>
+              </a>
             </div>
             <div className={styles.linkBlock}>
-              <Link to="https://www.youtube.com/channel/UCUts37ohrTSwobJ5JqHfUbg">
+              <a href="https://www.youtube.com/channel/UCUts37ohrTSwobJ5JqHfUbg">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Youtube</Text>
                 </Button>
-              </Link>
-              <Link to="https://medium.com/@metaverse.phenom">
+              </a>
+              <a href="https://medium.com/@metaverse.phenom">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Medium</Text>
                 </Button>
-              </Link>
-              <Link to="https://discord.gg/2Pdv3Gpdf5">
+              </a>
+              <a href="https://discord.gg/2Pdv3Gpdf5">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Discord</Text>
                 </Button>
-              </Link>
+              </a>
             </div>
             <div className={styles.linkBlock}>
               <Link to="/">
