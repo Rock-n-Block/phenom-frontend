@@ -327,14 +327,15 @@ const Payment: VFC<IPayment> = ({
               Price
             </Text>
           )}
-          {nft?.price && (
+          {(nft?.price || nft?.highestBid?.amount || nft?.minimalBid) && (
             <Text weight="semibold" color="blue" className={styles.price}>
-              {nft?.price} {nft?.currency?.symbol || DEFAULT_CURRENCY}
+              {nft?.price || nft?.highestBid?.amount || nft?.minimalBid}{' '}
+              {nft?.currency?.symbol || DEFAULT_CURRENCY}
             </Text>
           )}
-          {nft?.usdPrice && (
+          {(nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd) && (
             <Text color="middleGray" size="m" className={styles.usdPrice}>
-              ${nft?.usdPrice}
+              ${nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd}
             </Text>
           )}
           {nft?.highestBid && (

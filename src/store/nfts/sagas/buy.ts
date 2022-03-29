@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
+import { toast } from 'react-toastify';
+
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
-import { toast } from 'react-toastify';
 
 import { contractsConfig, ContractsNames } from 'config';
 import { isMainnet } from 'config/constants';

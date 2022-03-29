@@ -86,6 +86,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
   const navigate = useNavigate();
   const { width } = useWindowSize();
   const { address } = useShallowSelector<State, UserState>(userSelector.getUser);
+  const { isWhitelisted } = useShallowSelector<State, UserState>(userSelector.getUser);
 
   const location = useLocation();
 
@@ -105,7 +106,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
         active: location.pathname.includes(routes.create.root),
         title: 'Create',
         isNested: false,
-        guarded: ['logged'] as TRequirements[],
+        guarded: ['logged', 'whitelisted'] as TRequirements[],
       },
     ],
     [location.pathname, width],
@@ -121,7 +122,9 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
   return (
     <div className={cx(styles.headerNavigation, className)}>
       {nav.map(({ url, title, active, disabled, isNested, internalLinks, guarded }) => {
-        if (!guarded.every((g) => requirements[g]({ isLogged: address.length !== 0 }))) {
+        if (
+          !guarded.every((g) => requirements[g]({ isLogged: address.length !== 0, isWhitelisted }))
+        ) {
           return null;
         }
         if (isNested && !disabled) {
