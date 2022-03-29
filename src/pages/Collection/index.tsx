@@ -13,14 +13,14 @@ import uiSelector from 'store/ui/selectors';
 import userSelector from 'store/user/selectors';
 
 import { ArtCard, ArtCardSkeleton, NFTList, Text } from 'components';
+import { sliceString } from 'utils';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { RequestStatus, TokenFull } from 'types';
+import { GetSingleCollectionReq } from 'types/requests';
 
 import styles from './styles.module.scss';
-import { GetSingleCollectionReq } from 'types/requests';
-import { sliceString } from 'utils';
 
 const Collection = () => {
   const dispatch = useDispatch();
@@ -111,16 +111,16 @@ const Collection = () => {
           <div className={styles.avatarWrapper}>
             <img src={collection?.avatar} alt="collection" className={styles.avatar} />
           </div>
-          <Text className={styles.name} tag="h1" weight="semibold">
+          <Text className={styles.name} tag="h2" weight="semibold">
             {collection?.name}
           </Text>
-          <Text tag="span" className={styles.creator}>
+          <Text tag="span" weight="medium" className={styles.creator}>
             Created by{' '}
             <Text color="blue" tag="span">
               {collection?.creator?.displayName || sliceString(collection?.creator?.name || '')}
             </Text>
           </Text>
-          <Text tag="span">
+          <Text tag="span" weight="medium" className={styles.info}>
             Items
             <Text tag="span" color="blue">
               {' '}

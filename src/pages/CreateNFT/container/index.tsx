@@ -12,7 +12,6 @@ import * as Yup from 'yup';
 
 // import { SendPendingModal, SendRejectedModal, SendSuccessModal } from 'components';
 // import SendErrorModal from 'components/Modals/modals/SendErrorModal';
-
 import { createValidator, getExtension, getFileGroup, TAvailableExtensions } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { Category, Collection, Tag } from 'types';
@@ -131,7 +130,11 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
           JSON.stringify(
             values.properties
               .filter((p) => p.name && p.type)
-              .map((p) => ({ display_type: 'properties', trait_type: p.name, value: p.type })),
+              .map((p, k) => ({
+                display_type: 'properties',
+                trait_type: `${p.name}.${k}`,
+                value: p.type,
+              })),
           ),
         );
       }
@@ -158,29 +161,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   })(MainForm);
   return (
     <>
-      <FormWithFormik onRefresh={onReloadClick} type={type} />{' '}
-      {/* <SendPendingModal
-        withSteps={false}
-        visible={modalType === Modals.SendPending}
-        onClose={() => closeModals()}
-      />
-      <SendSuccessModal
-        withSteps={false}
-        visible={modalType === Modals.SendSuccess}
-        onClose={() => closeModals()}
-      />
-      <SendRejectedModal
-        withSteps={false}
-        visible={modalType === Modals.SendRejected}
-        onClose={() => closeModals()}
-        onSendAgain={'onAgain' in modalProps ? modalProps.onAgain : () => {}}
-      />
-      <SendErrorModal
-        withSteps={false}
-        visible={modalType === Modals.SendError}
-        onClose={() => closeModals}
-        onTryAgain={'onAgain' in modalProps ? modalProps.onAgain : () => {}}
-      /> */}
+      <FormWithFormik onRefresh={onReloadClick} type={type} />
     </>
   );
 };

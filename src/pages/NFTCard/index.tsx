@@ -9,7 +9,13 @@ import nftsSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
 import userSelector from 'store/user/selectors';
 
-import { Loader, Text } from 'components';
+import cn from 'classnames';
+
+import { getPreviewer, Loader, Text } from 'components';
+import { IAudioPreview } from 'components/Preview/AudioPreview';
+import { IImagePreview } from 'components/Preview/ImagePreview';
+import { IThreePreview } from 'components/Preview/ThreePreview';
+import { IVideoPreview } from 'components/Preview/VideoPreview';
 
 import { NameAndLike, OwnersAndCreators, Payment, PropsAndDescr } from './components';
 
@@ -46,6 +52,40 @@ const NFTCard: VFC = () => {
     isUserCanChangePrice,
   } = useGetUserAccessForNft(detailedNft, String(userId));
 
+  const props = useMemo(() => {
+    const AudioProps: IAudioPreview = {
+      src: detailedNft?.animation || '',
+      previewSrc: detailedNft?.media || '',
+      audioType: 'mp3',
+    };
+    const VideoProps: IVideoPreview = {
+      src: detailedNft?.animation || '',
+      previewSrc: detailedNft?.media || '',
+      videoType: 'mp4',
+    };
+    const ImageProps: IImagePreview & { previewSrc: string } = {
+      src: detailedNft?.media || '',
+      previewSrc: '',
+    };
+    const IThreeProps: IThreePreview & { previewSrc: string } = {
+      src: detailedNft?.animation || '',
+      name: 'three-preview',
+      threeType: 'glb',
+      previewSrc: detailedNft?.media || '',
+    };
+    return {
+      audio: AudioProps,
+      video: VideoProps,
+      image: ImageProps,
+      threeD: IThreeProps,
+    };
+  }, [detailedNft]);
+
+  const { PreviewComponent, previewType } = useMemo(
+    () => getPreviewer(detailedNft?.media || '', props, detailedNft?.format || 'image'),
+    [detailedNft, props],
+  );
+
   useEffect(() => {
     if (id) {
       dispatch(
@@ -69,14 +109,18 @@ const NFTCard: VFC = () => {
           {isDesktop ? (
             <>
               <div className={styles.left}>
-                <div className={styles.nftCardImgWrapper}>
+                <div
+                  className={cn(styles.nftCardImgWrapper, {
+                    [styles.threeD]: previewType === 'threeD',
+                  })}
+                >
                   {(detailedNft?.isAucSelling || detailedNft?.isTimedAucSelling) && (
                     <div className={styles.auction}>
                       <Text color="white">Auction</Text>
                     </div>
                   )}
                   {detailedNft?.media ? (
-                    <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
+                    PreviewComponent
                   ) : (
                     <div className={styles.noImage}>
                       <Loader backgroundColor="purple" />
@@ -141,13 +185,17 @@ const NFTCard: VFC = () => {
                   )[0]?.quantity
                 }
               />
-              <div className={styles.nftCardImgWrapper}>
+              <div
+                className={cn(styles.nftCardImgWrapper, {
+                  [styles.threeD]: previewType === 'threeD',
+                })}
+              >
                 {(detailedNft?.isAucSelling || detailedNft?.isTimedAucSelling) && (
                   <div className={styles.auction}>
                     <Text color="white">Auction</Text>
                   </div>
                 )}
-                <img src={detailedNft?.media} alt="nftCard" className={styles.nftCardImg} />
+                {PreviewComponent}
               </div>
               {(isUserCanEndAuction ||
                 isUserCanBuyNft ||

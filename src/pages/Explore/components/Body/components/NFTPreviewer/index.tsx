@@ -17,7 +17,7 @@ interface IPreviewExploreNFTs {
   setAuction?: (value: boolean) => void;
   sortBy?: TSort;
   setSortBy?: (sort: TSort) => void;
-  onLoadMore?: () => void;
+  onLoadMore?: (page: number) => void;
 }
 
 const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
@@ -57,8 +57,8 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
 
   const onSortClick = useCallback((sort: TSort) => setSortBy?.(sort), [setSortBy]);
   const onLoadMoreClick = useCallback(
-    (page: number | number) => {
-      onLoadMore?.();
+    (page: number) => {
+      onLoadMore?.(page);
       setCurrentPage(page);
     },
     [onLoadMore],
@@ -67,7 +67,7 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
 
   return (
     <NFTList
-      elements={fetchingNFT === RequestStatus.REQUEST ? skeleton : elements}
+      elements={fetchingNFT === RequestStatus.REQUEST ? [...elements, ...skeleton] : elements}
       sortBy={sortBy}
       onSortClick={onSortClick}
       onLoadMore={onLoadMoreClick}

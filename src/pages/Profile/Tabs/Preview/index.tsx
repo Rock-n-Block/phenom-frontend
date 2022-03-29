@@ -173,7 +173,7 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
     <NFTList
       elements={
         fetchingLiked === RequestStatus.REQUEST || fetchingNFT === RequestStatus.REQUEST
-          ? skeleton
+          ? [...elements, ...skeleton]
           : elements
       }
       sortBy={sortBy}

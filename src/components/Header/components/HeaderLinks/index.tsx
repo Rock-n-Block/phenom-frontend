@@ -73,7 +73,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
             color="transparent"
             onClick={() => handleTagClick(tag.title as CategoryName)}
           >
-            <Text color="black" size="m" weight="bold" className={styles.linktext}>
+            <Text color="black" size="m" weight="semibold" className={styles.linktext}>
               {tag.title}
             </Text>
           </Button>
@@ -134,7 +134,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
                 <Text
                   className={cx(styles.linkTitle, styles.uppercase)}
                   size="m"
-                  weight="bold"
+                  weight="semibold"
                   color={active ? 'purple' : 'black'}
                 >
                   {title}
@@ -160,7 +160,7 @@ const HeaderLinks: FC<IHeaderLinksProps> = ({ className, toggleMenu }) => {
               className={cx(styles.linkBtn, { [styles.active]: active })}
             >
               <Text
-                weight="bold"
+                weight="semibold"
                 size="m"
                 color={active ? 'purple' : 'black'}
                 className={styles.uppercase}

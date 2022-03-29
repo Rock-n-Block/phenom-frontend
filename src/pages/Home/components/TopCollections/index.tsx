@@ -50,7 +50,7 @@ const TopCollections: FC<Props> = ({ className }) => {
       <Text
         tag="h2"
         id="TopCollections.TopCollections"
-        weight="bold"
+        weight="semibold"
         className={styles.title}
         align="center"
       >

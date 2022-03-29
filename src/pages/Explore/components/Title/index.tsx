@@ -12,7 +12,7 @@ interface ITitle {
 
 const Title: VFC<ITitle> = ({ activeCategory }) => {
   return (
-    <Text tag="h1" id="Skins" align="center" className={styles.title}>
+    <Text tag="h1" id="Skins" align="center" weight="semibold" className={styles.title}>
       {activeCategory}
     </Text>
   );

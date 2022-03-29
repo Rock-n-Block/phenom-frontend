@@ -1,6 +1,6 @@
 import { VFC } from 'react';
 
-import { Text } from 'components';
+import { EllipsisText, Text } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -19,12 +19,18 @@ const PropsAndDescr: VFC<IPropsAndDescr> = ({ properties, description }) => {
           </Text>
           <div className={styles.propertiesList}>
             {properties.map(({ traitType, value }) => (
-              <div className={styles.propertiesItem}>
-                <Text color="blue" className={styles.label}>
-                  {traitType}
-                </Text>
-                <Text className={styles.value}>{value}</Text>
-              </div>
+              <p className={styles.propertiesItem}>
+                <EllipsisText>
+                  <Text color="blue" title={traitType.split('.')[0]} className={styles.label}>
+                    {traitType.split('.')[0]}
+                  </Text>
+                </EllipsisText>
+                <EllipsisText>
+                  <Text className={styles.value} title={value}>
+                    {value}
+                  </Text>
+                </EllipsisText>
+              </p>
             ))}
           </div>
         </div>

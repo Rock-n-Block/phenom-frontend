@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
@@ -26,6 +27,7 @@ const WCContext = createContext({} as IWalletConnext);
 const WalletConnectContext: FC = ({ children }) => {
   const [currentSubscriber, setCurrentSubscriber] = useState<Subscription>();
   const WalletConnect = useRef<WalletService>(new WalletService());
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     address,
@@ -101,7 +103,8 @@ const WalletConnectContext: FC = ({ children }) => {
     dispatch(disconnectWalletState());
     WalletConnect.current.resetConnect();
     currentSubscriber?.unsubscribe();
-  }, [currentSubscriber, dispatch]);
+    navigate('/');
+  }, [currentSubscriber, dispatch, navigate]);
 
   useEffect(() => {
     if (WalletProvider) {

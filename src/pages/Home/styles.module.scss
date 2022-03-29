@@ -3,4 +3,11 @@
 .home{
   width: 100%;
   overflow: hidden;
+  padding:0 30px;
+}
+
+@include large-mobile{
+  .home{
+    padding: 0 15px;
+  }
 }

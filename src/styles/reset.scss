@@ -185,3 +185,14 @@ html {
     transition: none !important;
   }
 }
+
+textarea,
+select,
+input{
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 600000s 600000s;
+  }
+}

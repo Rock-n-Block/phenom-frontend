@@ -11,6 +11,9 @@
     &Wrapper {
       position: relative;
       max-width: 436px;
+      &.threeD {
+        height: 436px;
+      }
     }
   }
 }
@@ -43,6 +46,18 @@
   margin: 0 auto;
 }
 
-.loader{
+.loader {
   margin: 0 auto;
+}
+
+@include large-tablet {
+  .nftCard {
+    &Img {
+      &Wrapper {
+        &.threeD {
+          height: 220px;
+        }
+      }
+    }
+  }
 }

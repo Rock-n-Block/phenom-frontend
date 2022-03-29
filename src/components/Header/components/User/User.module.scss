@@ -98,6 +98,7 @@
     margin-top: 8px;
   }
 
+  @include transition;
   &:hover {
     background-color: $color-purple;
   }
@@ -304,6 +305,7 @@
   .option {
     padding: 8px 0;
     height: 40px;
+    @include transition;
   }
 }
 

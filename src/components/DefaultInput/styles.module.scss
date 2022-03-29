@@ -36,6 +36,7 @@
       border-radius: 12px;
       color: $color-dark;
       box-sizing: border-box;
+      overflow: hidden;
       @include border-like-shadow;
       @include flexbox(center);
       @include transition;

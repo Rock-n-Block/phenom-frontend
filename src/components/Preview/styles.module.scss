@@ -3,6 +3,8 @@
 .image-preview__wrapper {
   width: 100%;
   height: 100%;
+  border-radius: 30px;
+  overflow: hidden;
   &-image {
     width: 100%;
     height: 100%;
@@ -13,6 +15,8 @@
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 30px;
+  overflow: hidden;
   &-loader {
     position: absolute;
     width: 100%;
@@ -38,6 +42,8 @@
 .video-preview__wrapper {
   width: 100%;
   height: 100%;
+  border-radius: 30px;
+  overflow: hidden;
   &-video {
     width: 100%;
     height: 100%;
@@ -49,6 +55,8 @@
   width: 100%;
   height: 100%;
   position: relative;
+  border-radius: 30px;
+  overflow: hidden;
   @include flexbox($direction: column);
   &-audio{
       margin-top: 22px;
