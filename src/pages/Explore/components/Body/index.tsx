@@ -53,7 +53,7 @@ const Body: VFC<IBody> = ({ activeCategory, tags, activeTag, handleSetActiveTag 
         standart: filtersData?.standart?.join(','),
         max_price: filtersData?.maxPrice,
         min_price: filtersData?.minPrice,
-        on_auc_sale: filtersData?.isAuctionOnly || '',
+        on_auc_sale: filtersData?.isAuctionOnly || undefined,
         order_by: mapSortToRequest(filtersData?.orderBy),
       };
       dispatch(searchNfts({ requestData, shouldConcat }));

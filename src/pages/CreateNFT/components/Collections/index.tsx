@@ -68,14 +68,8 @@ const Collections: VFC<ICollections> = ({
   );
 
   useEffect(() => {
-    if (!selected.length) {
-      const defaultCollection = collections.find((c) => c.isDefault);
-      if (defaultCollection) {
-        setIsSelected(defaultCollection);
-      }
-    }
-  }, [collections, selected, setIsSelected]);
-
+    setSelected([]);
+  }, [isCollectionsAdded]);
 
   return (
     <section className={styles['collection-section__wrapper']}>
@@ -106,16 +100,18 @@ const Collections: VFC<ICollections> = ({
           [styles['collections-active']]: isCollectionsAdded,
         })}
       >
-        {collections.map((c) => (
-          <CollectionCard
-            key={c.url}
-            collection={c}
-            selectable
-            setIsSelected={setIsSelected}
-            isSelected={isSelected(+c.url)}
-            onBlur={onBlur}
-          />
-        ))}
+        {collections
+          .filter((c) => !c.isDefault)
+          .map((c) => (
+            <CollectionCard
+              key={c.url}
+              collection={c}
+              selectable
+              setIsSelected={setIsSelected}
+              isSelected={isSelected(+c.url)}
+              onBlur={onBlur}
+            />
+          ))}
       </div>
       {isCollectionsAdded && (
         <Link

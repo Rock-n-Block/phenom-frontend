@@ -51,6 +51,7 @@ export interface IMainForm extends ICreateForm {
 const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
+  const collections = useShallowSelector(userSelector.getProp('collections'));
   // const modalProps = useShallowSelector(modalsSelector.getProp('modalProps'));
 
   const { walletService } = useWalletConnectContext();
@@ -153,6 +154,11 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       newTokenForm.append('total_supply', values.type === 'Multiple' ? values.quantity : '1');
       if (values.collections && values.collections[0]) {
         newTokenForm.append('collection', String(values.collections[0].url));
+      } else {
+        const defaultCollection = collections.find((c) => c.isDefault);
+        if (defaultCollection) {
+          newTokenForm.append('collection', String(defaultCollection.url));
+        }
       }
       if (values.subcategory) {
         newTokenForm.append('tags', String(values.subcategory.id));
