@@ -23,11 +23,14 @@ const QuantityModal: VFC<IQuantityModal> = ({ visible, onClose, onSend, tokenNam
     setAmountValue(value);
   }, []);
 
-  dispatch(
-    setModalProps({
-      onSendAgain: () => onSend(amountValue),
-    }),
-  );
+  const handleSend = useCallback(() => {
+    onSend(amountValue);
+    dispatch(
+      setModalProps({
+        onSendAgain: () => onSend(amountValue),
+      }),
+    );
+  }, [amountValue, dispatch, onSend]);
 
   return (
     <Modal visible={visible} onClose={onClose} title={`You are about to buy ${tokenName}`}>
@@ -41,7 +44,7 @@ const QuantityModal: VFC<IQuantityModal> = ({ visible, onClose, onSend, tokenNam
         maxAmount={Number(max) || 1}
       />
 
-      <Button onClick={() => onSend(amountValue)} className={styles.button}>
+      <Button onClick={handleSend} className={styles.button}>
         Send
       </Button>
     </Modal>

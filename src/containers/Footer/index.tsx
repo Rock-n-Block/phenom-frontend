@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Button, Logo, Text } from 'components';
 
-// import { routes } from 'appConstants';
-
 import styles from './styles.module.scss';
-// import { userApi } from 'services';
 
 const Footers: React.FC = () => {
   return (
@@ -22,26 +19,41 @@ const Footers: React.FC = () => {
           </div>
           <div className={styles.links}>
             <div className={styles.linkBlock}>
-              <Link to="/">
+              <Link to="https://twitter.com/MetaversePhenom">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Twitter</Text>
                 </Button>
               </Link>
-              <Link to="/">
+              <Link to="https://www.instagram.com/phenom.metaverse/">
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Instagram</Text>
                 </Button>
               </Link>
-            </div>
-            <div className={styles.linkBlock}>
-              <Link to="/">
+              <Link to="https://t.me/phenom_metaverse">
                 <Button padding="0" className={styles.button} color="transparent">
-                  <Text color="white">Telegram</Text>
+                  <Text color="white">Telegram channel</Text>
                 </Button>
               </Link>
-              <Link to="/">
+              <Link to="https://t.me/+noh1Ida1YckzNGVk">
                 <Button padding="0" className={styles.button} color="transparent">
-                  <Text color="white">Facebook</Text>
+                  <Text color="white">Telegram public chat</Text>
+                </Button>
+              </Link>
+            </div>
+            <div className={styles.linkBlock}>
+              <Link to="https://www.youtube.com/channel/UCUts37ohrTSwobJ5JqHfUbg">
+                <Button padding="0" className={styles.button} color="transparent">
+                  <Text color="white">Youtube</Text>
+                </Button>
+              </Link>
+              <Link to="https://medium.com/@metaverse.phenom">
+                <Button padding="0" className={styles.button} color="transparent">
+                  <Text color="white">Medium</Text>
+                </Button>
+              </Link>
+              <Link to="https://discord.gg/2Pdv3Gpdf5">
+                <Button padding="0" className={styles.button} color="transparent">
+                  <Text color="white">Discord</Text>
                 </Button>
               </Link>
             </div>
@@ -53,14 +65,18 @@ const Footers: React.FC = () => {
               </Link>
               <Link to="/">
                 <Button padding="0" className={styles.button} color="transparent">
-                  <Text color="green" className={styles.docs}>Documents</Text>
+                  <Text color="green" className={styles.docs}>
+                    Documents
+                  </Text>
                 </Button>
               </Link>
             </div>
           </div>
         </div>
         <div className={styles.copyrightBlock}>
-          <Text className={styles.copyrightBlockItem} color="white">PhenomMetaverse©{new Date().getFullYear()}</Text>
+          <Text className={styles.copyrightBlockItem} color="white">
+            PhenomMetaverse©{new Date().getFullYear()}
+          </Text>
           <div className={styles.privacy}>
             <Link to="/">
               <Button padding="0" className={styles.button} color="transparent">

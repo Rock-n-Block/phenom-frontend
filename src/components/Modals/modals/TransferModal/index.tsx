@@ -1,10 +1,11 @@
 import { useCallback, useState, VFC } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { setModalProps } from 'store/modals/reducer';
+
 import { Button, DefaultInput, Modal } from 'components';
 
 import styles from './styles.module.scss';
-import { useDispatch } from 'react-redux';
-import { setModalProps } from 'store/modals/reducer';
 
 type ITransferModal = {
   visible: boolean;
@@ -26,10 +27,17 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
     setAmountValue(value);
   }, []);
 
-  dispatch(
-    setModalProps({
-      onSendAgain: () => onSend(inputValue.trim(), amountValue.trim()),
-    }),
+
+  const handleTransfer = useCallback(
+    (name: string, amount: string) => {
+      onSend(name, amount);
+      dispatch(
+        setModalProps({
+          onSendAgain: () => onSend(name, amount),
+        }),
+      );
+    },
+    [dispatch, onSend],
   );
 
   return (
@@ -54,7 +62,7 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
         <></>
       )}
       <Button
-        onClick={() => onSend(inputValue.trim(), amountValue.trim())}
+        onClick={() => handleTransfer(inputValue.trim(), amountValue.trim())}
         className={styles.button}
       >
         Send
