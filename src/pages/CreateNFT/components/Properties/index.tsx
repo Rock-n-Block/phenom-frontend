@@ -88,9 +88,10 @@ const Properties: VFC<IProperties> = ({
   const onDelete = useCallback(
     (id: number) => {
       const newProperties = properties.filter((p) => p.id !== id);
+      setProps(newProperties);
       setProperties(newProperties);
     },
-    [properties],
+    [properties, setProps],
   );
 
   useEffect(() => {
@@ -113,11 +114,12 @@ const Properties: VFC<IProperties> = ({
             addableProp,
             ...properties.slice(addablePropId + 1),
           ];
+          setProps(newProperties);
           setProperties(newProperties);
         }
       }
     },
-    [properties],
+    [properties, setProps],
   );
 
   const checkPropsValid = useCallback((props: TSingleProp[]) => {
@@ -131,6 +133,13 @@ const Properties: VFC<IProperties> = ({
       if (!p.type.length) {
         err.id = p.id;
         err.type = 'Field is required';
+      }
+      const sameProp = props.find(
+        (np) => np.name === p.name && np.type === p.type && np.id !== p.id,
+      );
+      if (sameProp) {
+        err.id = sameProp.id;
+        err.type = 'Type should be unique';
       }
       if (err.id !== null) {
         res.push(err);
@@ -161,11 +170,6 @@ const Properties: VFC<IProperties> = ({
       setErrors(validation);
     }
   }, [checkPropsValid, properties]);
-
-  useEffect(() => {
-    setProps(properties);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [properties]);
 
   return (
     <section className={cn(styles['properties-wrapper'], className)}>

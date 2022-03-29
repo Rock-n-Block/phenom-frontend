@@ -17,6 +17,7 @@ import { Modals } from 'types';
 const ModalsComponent: VFC = () => {
   const { modalType, closeModals } = useModals();
   const modalProps = useShallowSelector(modalSelector.getProp('modalProps'));
+
   return (
     <>
       <ApprovePendingModal
@@ -35,6 +36,16 @@ const ModalsComponent: VFC = () => {
         onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
       <SendPendingModal
+        subMessageText={
+          'subMessageText' in modalProps
+            ? modalProps.subMessageText
+            : 'Your USDT will be transferred from your wallet to the contract address.'
+        }
+        subtitleText={
+          'subtitleText' in modalProps
+            ? modalProps.subtitleText
+            : 'Please press "Send" button in MetaMask extension'
+        }
         withSteps={'withSteps' in modalProps ? modalProps.withSteps : true}
         visible={modalType === Modals.SendPending}
         onClose={() => closeModals()}

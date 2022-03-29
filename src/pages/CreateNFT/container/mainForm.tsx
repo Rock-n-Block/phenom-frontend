@@ -53,7 +53,15 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
     (vals: any) => {
       validateForm(vals);
       handleSubmit();
-      dispatch(setModalProps({ onAgain: handleSubmit, withSteps: false }));
+      dispatch(
+        setModalProps({
+          onSendAgain: handleSubmit,
+          onApprove: handleSubmit,
+          withSteps: false,
+          subMessageText: '',
+          subtitleText: 'In progress',
+        }),
+      );
     },
     [dispatch, handleSubmit, validateForm],
   );
@@ -178,7 +186,9 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         name="properties"
         render={() => (
           <Properties
-            initProps={values.properties}
+            initProps={
+              values.properties.length ? values.properties : [{ id: 0, name: '', type: '' }]
+            }
             onBlur={handleBlur('properties')}
             isClearing={isClearing}
             setProps={
@@ -194,6 +204,8 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
         name="collections"
         render={() => (
           <Collections
+            isCollectionsAdded={values.withCollection}
+            setIsCollectionsAdded={(value: boolean) => setFieldValue('withCollection', value)}
             isClearing={isClearing}
             initCollections={collections.filter((c) => c.standart === getStandard(values.type))}
             onRefresh={values.onReload}

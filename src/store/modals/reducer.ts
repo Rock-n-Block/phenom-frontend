@@ -34,7 +34,6 @@ export const modalsReducer = createSlice({
         txHash: '',
         open: false,
       },
-      modalProps: {},
     }),
   },
 });

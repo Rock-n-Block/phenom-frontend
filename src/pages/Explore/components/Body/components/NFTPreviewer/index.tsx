@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useMemo, useState, VFC } from 'react';
+import { ReactElement, useCallback, useMemo, VFC } from 'react';
 
 import nftActionsTypes from 'store/nfts/actionTypes';
 import uiSelector from 'store/ui/selectors';
@@ -12,6 +12,7 @@ import { DEFAULT_CURRENCY } from 'appConstants';
 interface IPreviewExploreNFTs {
   cardsData: TokenFull[];
   pages: number;
+  currentPage: number;
   skeleton?: ReactElement[];
   auction?: boolean;
   setAuction?: (value: boolean) => void;
@@ -24,6 +25,7 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
   cardsData,
   skeleton = [],
   pages,
+  currentPage,
   auction,
   setAuction,
   sortBy,
@@ -31,7 +33,6 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
   onLoadMore,
 }) => {
   const { [nftActionsTypes.SEARCH_NFTS]: fetchingNFT } = useShallowSelector(uiSelector.getUI);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const elements = useMemo(
     () =>
@@ -59,7 +60,6 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
   const onLoadMoreClick = useCallback(
     (page: number) => {
       onLoadMore?.(page);
-      setCurrentPage(page);
     },
     [onLoadMore],
   );

@@ -12,17 +12,17 @@ import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* createTokenSaga({ type, payload }: ReturnType<typeof createToken>) {
+  yield put(
+    setActiveModal({
+      activeModal: Modals.SendPending,
+      open: true,
+      txHash: '',
+    }),
+  );
   yield put(apiActions.request(type));
 
   try {
     const { data } = yield call(baseApi.createNewToken, payload.token);
-    yield put(
-      setActiveModal({
-        activeModal: Modals.SendPending,
-        open: true,
-        txHash: '',
-      }),
-    );
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const address = yield select(userSelector.getProp('address'));
@@ -46,7 +46,6 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
           id: token.id,
           owner: token.creator.url,
         });
-
         yield put(
           setActiveModal({
             activeModal: e.code === 4001 ? Modals.SendRejected : Modals.SendError,
@@ -59,12 +58,11 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
       }
     } else {
       toast.error('Something went wrong');
-      // Object.values(data).forEach((err) => {
-      //   toast.error(err as any);
-      // });
+      yield put(apiActions.error(type));
     }
   } catch (err) {
     toast.error('Something went wrong');
+    yield put(apiActions.error(type, err));
     console.log(err);
   }
 }
