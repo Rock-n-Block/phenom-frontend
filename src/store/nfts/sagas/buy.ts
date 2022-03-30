@@ -7,6 +7,8 @@ import { baseApi } from 'store/api/apiRequestBuilder';
 import { setActiveModal } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
 
+import BigNumber from 'bignumber.js';
+
 import { contractsConfig, ContractsNames } from 'config';
 import { isMainnet } from 'config/constants';
 import { getTokenAmount } from 'utils';
@@ -20,7 +22,7 @@ import { getDetailedNftSaga } from './getDetailedNft';
 
 export function* buySaga({
   type,
-  payload: { id, amount, sellerId, web3Provider },
+  payload: { id, amount, tokenAmount, sellerId, web3Provider },
 }: ReturnType<typeof buy>) {
   yield put(apiActions.request(type));
 
@@ -41,7 +43,9 @@ export function* buySaga({
       type: actionTypes.APPROVE,
       payload: {
         web3Provider,
-        amount: getTokenAmount(amount),
+        amount: getTokenAmount(
+          new BigNumber(amount).times(new BigNumber(tokenAmount || 1)).toFixed(),
+        ),
         spender: marketpalceAddress,
         tokenAddress,
       },
@@ -55,7 +59,7 @@ export function* buySaga({
       }),
     );
 
-    const { data } = yield call(baseApi.buy, { id, tokenAmount: amount, sellerId });
+    const { data } = yield call(baseApi.buy, { id, tokenAmount, sellerId });
 
     if (data.initial_tx) {
       const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {

@@ -128,20 +128,21 @@ const Payment: VFC<IPayment> = ({
   );
 
   const handleBuy = useCallback(
-    (sellerId?: string | number, amount?: string | number) => {
+    (amount?: string | number, sellerId?: string | number, tokenAmount?: string | number) => {
       if (nft) {
         dispatch(
           buy({
             id: nft?.id || 0,
             amount: amount || 0,
+            tokenAmount,
             sellerId,
             web3Provider: walletService.Web3(),
           }),
         );
         dispatch(
           setModalProps({
-            onApprove: () => handleBuy(sellerId, amount),
-            onSendAgain: () => handleBuy(sellerId, amount),
+            onApprove: () => handleBuy(sellerId, amount, tokenAmount),
+            onSendAgain: () => handleBuy(sellerId, amount, tokenAmount),
           }),
         );
       }
@@ -152,13 +153,13 @@ const Payment: VFC<IPayment> = ({
   const handlePreBuy = useCallback(
     (isSingle: boolean) => {
       if (isSingle) {
-        handleBuy();
+        handleBuy(nft?.price);
       }
       if (!isSingle) {
         changeModalType(Modals.ChooseSeller);
       }
     },
-    [handleBuy, changeModalType],
+    [handleBuy, nft.price, changeModalType],
   );
 
   const handleEndAuction = useCallback(() => {

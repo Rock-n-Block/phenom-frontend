@@ -127,6 +127,7 @@ export type GetTrendingNftsReq = {
 export type BuyReq = {
   id: number | string;
   amount: number | string;
+  tokenAmount?: string | number;
   sellerId?: number | string;
   web3Provider: Web3;
 };
