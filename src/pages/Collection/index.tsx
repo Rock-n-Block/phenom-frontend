@@ -107,7 +107,7 @@ const Collection = () => {
     [],
   );
   return (
-    <>
+    <section className={styles.body}>
       <div className={styles.head}>
         <div className={styles.detail} />
         <div className={styles.collection}>
@@ -146,7 +146,7 @@ const Collection = () => {
         onLoadMore={onLoadMoreClick}
         className={cn(styles.cards, { [styles.empty]: elements.length === 0 })}
       />
-    </>
+    </section>
   );
 };
 
