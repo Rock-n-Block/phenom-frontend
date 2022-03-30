@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import { useLanguage } from 'context';
 
-import { Text } from 'components';
+import { Loader, Text } from 'components';
 
 import { CreateCard } from 'pages/Create/components';
 
@@ -21,7 +21,7 @@ type TSingleOption = {
 type TCreateOption = TSingleOption[];
 
 const CreatePage: VFC = () => {
-  const { isReady } = useLanguage();
+  const { hasNamespaceLoaded } = useLanguage();
   const path = useLocation().pathname;
 
   const options: TCreateOption = useMemo(
@@ -56,8 +56,17 @@ const CreatePage: VFC = () => {
     ],
     [path],
   );
+
+  if (!hasNamespaceLoaded('Create')) {
+    return <Loader className="preload-page" />;
+  }
+
   return (
-    <div className={cn(styles['create-page__wrapper'], { [styles['loading-page']]: !isReady })}>
+    <div
+      className={cn(styles['create-page__wrapper'], {
+        [styles['loading-page']]: !hasNamespaceLoaded('Create'),
+      })}
+    >
       <section className={styles['create-menu__wrapper']}>
         <Text
           tag="h1"
