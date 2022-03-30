@@ -51,6 +51,8 @@ const PreviewExploreNFTs: VFC<IPreviewExploreNFTs> = ({
           authorId={card.creator.id}
           isLiked={card.isLiked}
           likesNumber={card.likeCount}
+          isAuction={card.isAucSelling || card.isTimedAucSelling}
+          bids={card.bids}
         />
       )),
     [cardsData],
