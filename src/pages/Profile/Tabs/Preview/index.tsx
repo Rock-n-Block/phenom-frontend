@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { searchNfts } from 'store/nfts/actions';
@@ -22,6 +22,8 @@ interface IPreviewProfileNFTs {
   fetchName: TFetchNames;
 }
 
+const fetchDelay = 1000 * 60;
+
 const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
   cardsData,
   skeleton = [],
@@ -37,6 +39,8 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
   const { [nftActionsTypes.GET_LIKED]: fetchingLiked, [nftActionsTypes.SEARCH_NFTS]: fetchingNFT } =
     useShallowSelector(uiSelector.getUI);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchTimer = useRef<NodeJS.Timer | null>(null);
 
   const elements = useMemo(
     () =>
@@ -105,7 +109,6 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           dispatch(
             searchNfts({
               requestData: {
-                owner: id,
                 type: 'items',
                 page,
                 sold_by: id,
@@ -121,7 +124,6 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           dispatch(
             searchNfts({
               requestData: {
-                owner: id,
                 type: 'items',
                 page,
                 bids_by: id,
@@ -159,6 +161,12 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
   useEffect(() => {
     setCurrentPage(1);
     fetchNFTs(fetchName, 1);
+    fetchTimer.current = setInterval(() => {
+      fetchNFTs(fetchName, 1);
+    }, fetchDelay);
+    return () => {
+      if (fetchTimer.current) clearInterval(fetchTimer.current);
+    };
   }, [fetchNFTs, fetchName]);
 
   const onSortClick = useCallback((sort: TSort) => setSortBy(sort), []);

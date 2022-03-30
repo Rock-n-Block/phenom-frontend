@@ -8,10 +8,15 @@
     flex: 0 0 30%;
   }
   &__description {
+    max-width: 550px;
     flex: 0 0 clamp(320px, 100%, 550px);
     line-height: 24px;
+    span,
+    p {
+      word-break: break-all;
+    }
   }
-  .empty-profile{
+  .empty-profile {
     width: 100%;
   }
 }
@@ -68,8 +73,8 @@
   }
 }
 
-@include large-mobile{
-  .about-me__wrapper{
+@include large-mobile {
+  .about-me__wrapper {
     padding-top: 40px;
   }
 }

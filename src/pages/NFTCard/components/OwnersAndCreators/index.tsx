@@ -5,14 +5,14 @@ import { sliceString } from 'utils';
 
 import { CollectionCard } from 'pages/Home/components/TopCollections/components';
 
-import { Ownership } from 'types';
+import { CollectionSlim, Ownership } from 'types';
 
 import styles from './styles.module.scss';
 
 type IOwnersAndCreators = {
   creator: any;
   owners: Array<any>;
-  collection: any;
+  collection: CollectionSlim | null;
 };
 
 const OwnersAndCreators: VFC<IOwnersAndCreators> = ({ creator, owners, collection }) => {
@@ -37,16 +37,18 @@ const OwnersAndCreators: VFC<IOwnersAndCreators> = ({ creator, owners, collectio
         </div>
       </div>
 
-      <div className={styles.collection}>
-        <Text>Collection</Text>
-        <CollectionCard
-          avatar={collection.avatar}
-          id={collection.url}
-          name={collection.name}
-          price={collection.price}
-          className={styles.collectionCard}
-        />
-      </div>
+      {collection && (
+        <div className={styles.collection}>
+          <Text>Collection</Text>
+          <CollectionCard
+            avatar={collection.avatar || ''}
+            id={collection.url || 0}
+            name={collection.name || ''}
+            price={null}
+            className={styles.collectionCard}
+          />
+        </div>
+      )}
     </div>
   );
 };

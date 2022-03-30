@@ -42,5 +42,8 @@
 }
 
 .cards {
+  .empty{
+    margin-top: 0;
+  }
   @include container;
 }

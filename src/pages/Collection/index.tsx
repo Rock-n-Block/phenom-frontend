@@ -12,6 +12,8 @@ import nftsSelector from 'store/nfts/selectors';
 import uiSelector from 'store/ui/selectors';
 import userSelector from 'store/user/selectors';
 
+import cn from 'classnames';
+
 import { ArtCard, ArtCardSkeleton, NFTList, Text } from 'components';
 import { sliceString } from 'utils';
 
@@ -142,7 +144,7 @@ const Collection = () => {
         currentPage={currentPage}
         pages={totalPages}
         onLoadMore={onLoadMoreClick}
-        className={styles.cards}
+        className={cn(styles.cards, { [styles.empty]: elements.length === 0 })}
       />
     </>
   );
