@@ -3,13 +3,13 @@
 .item {
   @include flexbox(center, space-between);
   & + & {
-    margin-top: 10px;
+    margin-top: 24px;
   }
 
   font-size: 16px;
   line-height: 26px;
   &Wrapper {
-    @include flexbox(flex-start, center);
+    @include flexbox;
     @include middle-tablet {
       justify-content: flex-start;
     }
@@ -25,6 +25,9 @@
       max-width: 100%;
     }
   }
+  &Info {
+    margin-left: 16px;
+  }
   &Name {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -33,6 +36,7 @@
   }
   &Quantity {
     color: $color-dark-3;
+    line-height: 12px;
   }
 
   .currency {

@@ -4,7 +4,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'classnames';
 
-import { H3 } from 'components';
+import { H4 } from 'components';
 
 import { iconCross } from 'assets/img';
 
@@ -54,7 +54,7 @@ const Modal: React.FC<any> = ({
         <div className={cn(styles.outer, outerClassName)} style={{ maxWidth }}>
           <OutsideClickHandler onOutsideClick={onClose}>
             <div className={cn(styles.container, containerClassName)}>
-              {title ? <H3 className={styles.title}>{title}</H3> : null}
+              {title ? <H4 className={styles.title}>{title}</H4> : null}
               {children}
               <button type="button" className={styles.close} onClick={onClose}>
                 <img src={iconCross} width={16} height={16} alt="close" />
