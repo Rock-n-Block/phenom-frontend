@@ -11,13 +11,13 @@ import BigNumber from 'bignumber.js';
 import cx from 'classnames';
 
 import { Text } from 'components';
+import { toFixed } from 'utils';
 
 import { CollectionCard } from './components';
 
 import { useShallowSelector } from 'hooks';
 
 import styles from './styles.module.scss';
-import { toFixed } from 'utils';
 
 type Props = {
   className?: string;
