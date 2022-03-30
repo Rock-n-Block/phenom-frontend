@@ -64,7 +64,9 @@ const TopCollections: FC<Props> = ({ className }) => {
           <ol
             className={styles.collectionsWrapper}
             style={{
-              gridTemplateColumns: `repeat(${collections.length > 3 ? 3 : collections.length}, 1fr)`,
+              gridTemplateColumns: `repeat(${
+                collections.length > 3 ? 3 : collections.length
+              }, 1fr)`,
             }}
           >
             {collections

@@ -30,7 +30,7 @@ export interface Token {
     hasDigitalKey: boolean;
     highestBid?: Bid;
     highestBidUsd?: number;
-    id: number;
+    id?: number;
     isAucSelling: boolean;
     isLiked?: boolean;
     isSelling?: boolean;

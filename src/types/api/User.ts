@@ -16,6 +16,7 @@ export interface User {
     createdAt?: string;
     customUrl?: string;
     displayName?: string;
+    email?: string;
     facebook?: string;
     followers?: UserFollow[];
     followersCount?: number;
@@ -28,5 +29,4 @@ export interface User {
     site?: string;
     twitter?: string;
     url?: string;
-    email?: string;
 }
