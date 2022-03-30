@@ -4,6 +4,7 @@
   width: 100%;
   position: relative;
   margin-bottom: 40px;
+  @include flexbox(center, flex-start, column);
 }
 
 .head {
