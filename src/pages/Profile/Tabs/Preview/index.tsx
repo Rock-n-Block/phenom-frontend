@@ -139,7 +139,6 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           dispatch(
             searchNfts({
               requestData: {
-                owner: id,
                 type: 'items',
                 page,
                 liked_by: id,
