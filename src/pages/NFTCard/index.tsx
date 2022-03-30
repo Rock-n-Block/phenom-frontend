@@ -223,7 +223,7 @@ const NFTCard: VFC = () => {
                 <OwnersAndCreators
                   creator={detailedNft?.creator}
                   owners={detailedNft?.owners}
-                  collection={detailedNft?.collection}
+                  collection={!detailedNft?.collection.isDefault ? detailedNft?.collection : null}
                 />
               )}
             </div>
