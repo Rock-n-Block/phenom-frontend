@@ -91,7 +91,15 @@
 
   transition: all 0.2s;
   transform: translateY(3px);
+
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
   // }
+}
+
+.button{
+  margin: 12px auto
 }
 
 .option {
