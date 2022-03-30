@@ -1,5 +1,6 @@
 import { URL } from 'appConstants';
 import {
+  RequestWithNetwork,
   SearchCollectionsReq,
   SearchNftReq,
   SearchTrendingsReq,
@@ -68,6 +69,13 @@ export const baseApi = {
       method: 'post',
       url: URL.trackTransaction,
       data,
+    });
+  },
+  getRates(params: RequestWithNetwork) {
+    return ajax({
+      method: 'get',
+      url: URL.rates,
+      params,
     });
   },
   ...createApiCalls,

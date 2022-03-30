@@ -151,6 +151,7 @@ interface IUserMobile {
 
 const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen }) => {
   const location = useLocation();
+  const { isWhitelisted } = useShallowSelector<State, UserState>(userSelector.getUser);
 
   const dropdownOptions = useMemo(
     () => [
@@ -245,14 +246,18 @@ const UserMobile: VFC<IUserMobile> = ({ user, close, disconnect, bodyRef, isOpen
             <Text color="blue">{user.balance} PHETA</Text>
           </div>
         </div>
-        <div className={styles.userItem}>
-          <Link to={routes.create.root} className={styles.createWrapper}>
-            <div className={styles.imageWrapper}>
-              <img src={iconCreate} alt="" className={styles.create} />
-            </div>
-            <Text>Create</Text>
-          </Link>
-        </div>
+        {isWhitelisted ? (
+          <div className={styles.userItem}>
+            <Link to={routes.create.root} className={styles.createWrapper}>
+              <div className={styles.imageWrapper}>
+                <img src={iconCreate} alt="" className={styles.create} />
+              </div>
+              <Text>Create</Text>
+            </Link>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <Button
         color="transparent"

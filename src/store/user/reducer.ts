@@ -13,6 +13,7 @@ const initialState: UserState = {
   collections: [],
   chain: Chains.bsc,
   isWhitelisted: false,
+  rate: '',
 };
 
 export const userReducer = createSlice({
@@ -43,6 +44,10 @@ export const userReducer = createSlice({
       ...state,
       ...action.payload,
     }),
+    updateRate: (state, action: PayloadAction<Partial<UserState>>) => ({
+      ...state,
+      ...action.payload,
+    }),
     disconnectWalletState: () => {
       localStorage.removeItem('phenom-wallet-connect');
       return {
@@ -59,7 +64,8 @@ export const {
   updateProvider,
   updateCollections,
   updateChain,
-  updateIsWhitelisted
+  updateIsWhitelisted,
+  updateRate,
 } = userReducer.actions;
 
 export default userReducer.reducer;
