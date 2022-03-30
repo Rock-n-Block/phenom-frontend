@@ -59,12 +59,16 @@ const WalletConnectContext: FC = ({ children }) => {
 
   const connect = useCallback(
     async (provider: WalletProviders, chain: Chains) => {
+      // debugger
       const connected = await WalletConnect.current.initWalletConnect(provider, chain);
       if (connected) {
         try {
-          const sub = WalletConnect.current
-            .eventSubscribe()
-            .subscribe(subscriberSuccess, subscriberError);
+          if (!currentSubscriber) {
+            const sub = WalletConnect.current
+              .eventSubscribe()
+              .subscribe(subscriberSuccess, subscriberError);
+            setCurrentSubscriber(sub);
+          }
           const accountInfo: any = await WalletConnect.current.getAccount();
           if (key?.length && address === accountInfo?.address) {
             dispatch(updateUserInfo({ web3Provider: WalletConnect.current.Web3() }));
@@ -83,7 +87,7 @@ const WalletConnectContext: FC = ({ children }) => {
             dispatch(checkWhitelist({ web3Provider: WalletConnect.current.Web3() }));
           }
 
-          setCurrentSubscriber(sub);
+          // setCurrentSubscriber(sub);
         } catch (error: any) {
           console.log(error);
           if (error.code === 4) {
@@ -96,7 +100,7 @@ const WalletConnectContext: FC = ({ children }) => {
         }
       }
     },
-    [WalletConnect, address, dispatch, key.length, subscriberError, subscriberSuccess],
+    [address, currentSubscriber, dispatch, key.length, subscriberError, subscriberSuccess],
   );
 
   const disconnect = useCallback(() => {
