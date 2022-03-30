@@ -140,6 +140,7 @@ const Trending: FC<Props> = ({ className }) => {
                       creator,
                       bids,
                       isAucSelling,
+                      isTimedAucSelling,
                       usdPrice,
                       highestBidUsd,
                       minimalBidUsd,
@@ -161,7 +162,7 @@ const Trending: FC<Props> = ({ className }) => {
                             authorAvatar={creator?.avatar || ''}
                             authorId={creator?.id || 0}
                             bids={bids}
-                            isAuction={isAucSelling}
+                            isAuction={isAucSelling || isTimedAucSelling}
                             USD_price={usdPrice || highestBidUsd || minimalBidUsd || 0}
                             likesNumber={likeCount}
                             isLiked={isLiked}
@@ -185,6 +186,7 @@ const Trending: FC<Props> = ({ className }) => {
                   creator,
                   bids,
                   isAucSelling,
+                  isTimedAucSelling,
                   usdPrice,
                   highestBidUsd,
                   minimalBidUsd,
@@ -205,7 +207,7 @@ const Trending: FC<Props> = ({ className }) => {
                       authorAvatar={creator?.avatar || ''}
                       authorId={creator?.id || 0}
                       bids={bids}
-                      isAuction={isAucSelling}
+                      isAuction={isAucSelling || isTimedAucSelling}
                       USD_price={usdPrice || highestBidUsd || minimalBidUsd || 0}
                       likesNumber={likeCount}
                       isLiked={isLiked}

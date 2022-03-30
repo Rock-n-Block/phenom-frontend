@@ -25,7 +25,7 @@
 }
 
 .footerLogo {
-  flex-basis: 25%;
+  flex-basis: 15%;
   @include flexbox(flex-start, flex-start);
   flex-direction: column;
 }
@@ -50,7 +50,7 @@
 
 .links {
   @include flexbox(flex-start, space-evenly);
-  width: 33.33%;
+  width: 40%;
 }
 
 .linkBlock {

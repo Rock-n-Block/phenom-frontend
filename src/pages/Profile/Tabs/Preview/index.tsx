@@ -55,6 +55,8 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           isLiked={card.isLiked}
           likesNumber={card.likeCount}
           inStockNumber={card.available}
+          isAuction={card.isAucSelling || card.isTimedAucSelling}
+          bids={card.bids}
         />
       )),
     [cardsData],

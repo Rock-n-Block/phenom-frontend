@@ -29,11 +29,9 @@ const LikeButton: VFC<ILikeButton> = ({ isLiked, likesNumber, artId }) => {
     if (isLike) {
       setLikesCount(isLiked ? likesNumber - 1 : likesNumber);
       setIsLike(false);
-      toast.success('Dislike submitted');
     } else {
       setLikesCount(isLiked ? likesNumber : likesNumber + 1);
       setIsLike(true);
-      toast.success('Like submitted');
     }
   }, [isLike, isLiked, likesNumber]);
 

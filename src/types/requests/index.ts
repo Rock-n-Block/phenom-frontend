@@ -17,7 +17,7 @@ export type ApiResponse<T = never> = {
 export type TrackTransactionReq = {
   tx_hash: string;
   token: number | string;
-  ownership: string | number;
+  ownership?: string | number;
   amount: number | string;
 };
 
@@ -127,7 +127,7 @@ export type GetTrendingNftsReq = {
 export type BuyReq = {
   id: number | string;
   amount: number | string;
-  sellerId: number | string;
+  sellerId?: number | string;
   web3Provider: Web3;
 };
 
@@ -217,7 +217,7 @@ export type SearchCollectionAction = {
 
 export type RejectAction = {
   id: number | string;
-  owner: number | string;
+  owner?: number | string;
 };
 
 export type getProfileByIdRequest = {

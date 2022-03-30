@@ -19,6 +19,7 @@
 
 .highest{
   @include flexbox(center, flex-start);
+  margin-bottom: 24px;
 
   &Name{
     margin-left: 16px;

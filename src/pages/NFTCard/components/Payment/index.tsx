@@ -42,6 +42,8 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
+import BigNumber from 'bignumber.js';
+import { sliceString, toFixed } from 'utils';
 
 interface IPayment {
   nft: TokenFull;
@@ -124,7 +126,7 @@ const Payment: VFC<IPayment> = ({
   );
 
   const handleBuy = useCallback(
-    (sellerId: string | number, amount?: string | number) => {
+    (sellerId?: string | number, amount?: string | number) => {
       if (nft) {
         dispatch(
           buy({
@@ -148,13 +150,13 @@ const Payment: VFC<IPayment> = ({
   const handlePreBuy = useCallback(
     (isSingle: boolean) => {
       if (isSingle) {
-        handleBuy(nft?.owners?.[0].url || 0);
+        handleBuy();
       }
       if (!isSingle) {
         changeModalType(Modals.ChooseSeller);
       }
     },
-    [handleBuy, changeModalType, nft.owners],
+    [handleBuy, changeModalType],
   );
 
   const handleEndAuction = useCallback(() => {
@@ -173,7 +175,7 @@ const Payment: VFC<IPayment> = ({
       if (nft) {
         dispatch(
           setModalProps({
-            onApprove: handleSetOnAuction(minimalBid, currency, auctionDuration),
+            onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
           }),
         );
         dispatch(
@@ -208,7 +210,7 @@ const Payment: VFC<IPayment> = ({
         );
         dispatch(
           setModalProps({
-            onApprove: handleSetOnSale(price, currency, amount),
+            onApprove: () => handleSetOnSale(price, currency, amount),
           }),
         );
       }
@@ -219,16 +221,17 @@ const Payment: VFC<IPayment> = ({
   const handleBid = useCallback(
     (amount: number | string, currency: string) => {
       dispatch(
+        setModalProps({
+          onApprove: () => handleBid(amount, currency),
+          onSendAgain: () => handleBid(amount, currency),
+        }),
+      );
+      dispatch(
         bid({
           id: nft?.id || 0,
           amount,
           currency,
           web3Provider: walletService.Web3(),
-        }),
-      );
-      dispatch(
-        setModalProps({
-          onApprove: handleBid(amount, currency),
         }),
       );
     },
@@ -277,10 +280,18 @@ const Payment: VFC<IPayment> = ({
     return () => clearInterval(timeInterval);
   }, [nft]);
 
-  const nftPrice = useMemo(() => nft?.price || nft?.highestBid?.amount || nft?.minimalBid, [nft]);
+  const nftPrice = useMemo(() => {
+    return (nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
+      ? toFixed(nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
+      : 0;
+  }, [nft]);
+  const isAuction = useMemo(
+    () => nft?.isAucSelling || nft?.isTimedAucSelling,
+    [nft.isAucSelling, nft.isTimedAucSelling],
+  );
   return (
     <>
-      {nftPrice && (
+      {nftPrice ? (
         <div className={styles.userBuy}>
           {nft?.isTimedAucSelling && (
             <div className={styles.timedAuc}>
@@ -312,7 +323,7 @@ const Payment: VFC<IPayment> = ({
               </div>
             </div>
           )}
-          {nft?.isAucSelling || nft?.isTimedAucSelling ? (
+          {isAuction ? (
             <div>
               {nft?.highestBid ? (
                 <Text color="yellow" size="m" weight="semibold">
@@ -341,9 +352,12 @@ const Payment: VFC<IPayment> = ({
           )}
           {nft?.highestBid && (
             <div className={styles.highest}>
-              <Avatar id={nft?.highestBid.id || 0} avatar={nft?.highestBid.bidder_avatar} />
+              <Avatar
+                id={nft?.highestBid.user?.url || 0}
+                avatar={nft?.highestBid.user?.avatar || ''}
+              />
               <Text className={styles.highestName}>
-                {nft?.highestBid.bidder}{' '}
+                {sliceString(nft?.highestBid.user?.displayName || nft?.highestBid.user?.name || '')}{' '}
                 <img alt="arrow" src={iconArrowUpGreen} className={styles.arrow} />{' '}
               </Text>
             </div>
@@ -353,7 +367,7 @@ const Payment: VFC<IPayment> = ({
         )} */}
           {(isUserCanBuyNft || isUserCanEnterInAuction) && (
             <div className={styles.priceBids}>
-              {(nft?.isAucSelling || nft?.isTimedAucSelling) && (
+              {isAuction && (
                 <DefaultInput
                   name="bid"
                   value={bidValue}
@@ -366,14 +380,21 @@ const Payment: VFC<IPayment> = ({
               <Button
                 className={styles.buy}
                 padding="extra-large"
-                suffixIcon={nft?.isAucSelling || nft?.isTimedAucSelling ? iconPlaceBid : ''}
+                suffixIcon={isAuction ? iconPlaceBid : ''}
+                disabled={
+                  isAuction
+                    ? new BigNumber(nft?.highestBid?.amount || nft?.minimalBid).isGreaterThan(
+                        new BigNumber(bidValue),
+                      )
+                    : false
+                }
                 onClick={
-                  nft?.isAucSelling || nft?.isTimedAucSelling
+                  isAuction
                     ? () => handleBid(bidValue, nft?.currency?.symbol || DEFAULT_CURRENCY)
                     : () => handlePreBuy(nft?.standart === 'ERC721')
                 }
               >
-                {nft?.isAucSelling || nft?.isTimedAucSelling ? 'Place a bid' : 'Buy'}
+                {isAuction ? 'Place a bid' : 'Buy'}
               </Button>
             </div>
           )}
@@ -429,7 +450,7 @@ const Payment: VFC<IPayment> = ({
               </div>
             )}
         </div>
-      )}
+      ) : <></>}
 
       {(isUserCanEndAuction ||
         isUserCanPutOnSale ||
