@@ -43,7 +43,7 @@ const Collections: VFC<ICollections> = ({
   }, [selected]);
 
   const isSelected = useCallback(
-    (url: number) => selected.findIndex((s) => s.url === url) !== -1,
+    (url: string) => selected.findIndex((s) => s.url === url) !== -1,
     [selected],
   );
 
@@ -59,7 +59,7 @@ const Collections: VFC<ICollections> = ({
 
   const setIsSelected = useCallback(
     (collection: Collection) => {
-      if (isSelected(collection.url)) {
+      if (isSelected(collection.url || '')) {
         const newSelected = selected.filter((c) => c.url !== collection.url);
         setSelected(newSelected);
       } else {
@@ -76,7 +76,7 @@ const Collections: VFC<ICollections> = ({
   useEffect(() => {
     const defaultCollection = collections.find((c) => c.isDefault);
     if (defaultCollection) {
-      if (!isCollectionsAdded && !isSelected(defaultCollection.url)) {
+      if (!isCollectionsAdded && !isSelected(defaultCollection.url || '')) {
         setIsSelected(defaultCollection);
       }
     }
@@ -119,7 +119,7 @@ const Collections: VFC<ICollections> = ({
               collection={c}
               selectable
               setIsSelected={setIsSelected}
-              isSelected={isSelected(+c.url)}
+              isSelected={isSelected(c.url || '')}
               onBlur={onBlur}
             />
           ))}

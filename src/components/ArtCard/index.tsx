@@ -32,7 +32,7 @@ type Props = {
   inStockNumber?: number | string;
   author: string;
   authorAvatar: string;
-  authorId: number;
+  authorId: string;
   likesNumber?: number;
   isCollection?: boolean;
   bids?: any[];

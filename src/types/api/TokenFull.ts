@@ -47,7 +47,7 @@ export interface TokenFull {
     network: Network;
     owners?: Ownership[];
     price: number;
-    properties?: string;
+    properties?: any;
     rankings: any;
     royalty: number;
     sellers?: Ownership[];

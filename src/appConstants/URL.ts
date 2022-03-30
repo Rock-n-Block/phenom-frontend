@@ -38,8 +38,13 @@ const activityURLs = {
   topCollections: '/activity/top-collections/',
 };
 
+const ratesURLs = {
+  rates: '/rates/',
+};
+
 export default {
   ...accountURLs,
   ...storeURLs,
   ...activityURLs,
+  ...ratesURLs,
 };

@@ -51,14 +51,14 @@ const CollectionCard: VFC<ICollectionCard> = ({
     >
       {selectable && (
         <Checkbox
-          id={collection.url.toString()}
+          id={collection?.url?.toString()}
           value={isSelected}
           onChange={onBlockClick}
           className={styles['collection-card__wrapper__checkbox']}
         />
       )}
       <Avatar
-        id={collection.url}
+        id={collection?.url || 0}
         avatar={collection.avatar || ''}
         isCollection
         size={56}
