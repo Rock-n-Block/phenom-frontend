@@ -33,7 +33,15 @@ export default (nft: TNullable<TokenFull>, userId: string | number) => {
 
   const isUserCanChangePrice = React.useMemo(() => {
     if (userId && nft) {
-      if (nft.isSelling && isOwner) {
+      if (nft.standart === 'ERC721' && nft.isSelling && isOwner) {
+        return true;
+      }
+
+      if (
+        nft.standart === 'ERC1155' &&
+        nft.sellers?.find((seller: Ownership) => seller.url === userId) &&
+        isOwner
+      ) {
         return true;
       }
     }

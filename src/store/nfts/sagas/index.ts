@@ -16,6 +16,7 @@ import getLiked from './setLikedNFTs';
 import setOnAuctionSaga from './setOnAuction';
 import setOnSaleSaga from './setOnSale';
 import transferSaga from './transfer';
+import endAuctionSaga from './endAuction';
 
 export default function* nftSagas() {
   yield fork(getDetailedNftSaga);
@@ -31,6 +32,7 @@ export default function* nftSagas() {
   yield fork(setOnSaleSaga);
   yield fork(setOnAuctionSaga);
   yield fork(transferSaga);
+  yield fork(endAuctionSaga);
   yield fork(burnSaga);
   yield fork(getLiked);
 }

@@ -40,6 +40,14 @@ export function* bidNftSaga({
       },
     });
 
+    yield put(
+      setActiveModal({
+        activeModal: Modals.SendPending,
+        open: true,
+        txHash: '',
+      }),
+    );
+
     yield call(baseApi.bid, {
       token_id: id,
       amount,

@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 
 import { Button, Logo, Text } from 'components';
 
+import { routes } from 'appConstants';
+import { CategoryName } from 'types';
+
 import styles from './styles.module.scss';
 
 const Footers: React.FC = () => {
@@ -58,7 +61,7 @@ const Footers: React.FC = () => {
               </a>
             </div>
             <div className={styles.linkBlock}>
-              <Link to="/">
+              <Link to={routes.explore.filter(CategoryName.allCategories)}>
                 <Button padding="0" className={styles.button} color="transparent">
                   <Text color="white">Explore</Text>
                 </Button>
