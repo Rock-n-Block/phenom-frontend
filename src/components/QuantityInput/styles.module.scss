@@ -1,7 +1,7 @@
 @import '/src/styles/helpers.scss';
 
 .buttons-wrapper {
-  @include flexbox(center, flex-start);
+  @include flexbox;
 }
 
 .add-remove-button {
@@ -21,6 +21,5 @@
 @include large-mobile {
   .buttons-wrapper {
     padding-right: 11px;
-    @include flexbox(center, flex-end);
   }
 }
