@@ -160,6 +160,7 @@ const NFTCard: VFC = () => {
                     isOwner={isOwner}
                     isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                     isUserCanChangePrice={isUserCanChangePrice}
+                    userId={userId}
                   />
                 )}
                 {detailedNft?.creator && detailedNft?.owners && (
@@ -212,6 +213,7 @@ const NFTCard: VFC = () => {
                   isOwner={isOwner}
                   isUserCanRemoveFromSale={isUserCanRemoveFromSale}
                   isUserCanChangePrice={isUserCanChangePrice}
+                  userId={userId}
                 />
               )}
               <PropsAndDescr

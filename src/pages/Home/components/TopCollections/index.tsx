@@ -17,6 +17,7 @@ import { CollectionCard } from './components';
 import { useShallowSelector } from 'hooks';
 
 import styles from './styles.module.scss';
+import { DEFAULT_CURRENCY } from 'appConstants';
 
 type Props = {
   className?: string;
@@ -64,16 +65,16 @@ const TopCollections: FC<Props> = ({ className }) => {
               gridTemplateRows: `repeat(${collections.length > 3 ? 3 : collections.length}, 1fr)`,
             }}
           >
-            {collections.map((collection, index) => (
+            {collections.map((collection: any, index: number) => (
               <CollectionCard
                 key={index}
-                avatar={collection?.avatar || ''}
-                id={collection?.url || 0}
+                avatar={collection.collection?.avatar || ''}
+                id={collection.collection?.url || 0}
                 index={index + 1}
-                name={collection?.name || ''}
+                name={collection.collection?.name || ''}
                 price={
                   new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
-                    ? '< $0.01'
+                    ? `< 0.01 ${DEFAULT_CURRENCY}`
                     : collection?.floorPrice || 0
                 }
               />

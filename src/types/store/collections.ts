@@ -4,7 +4,7 @@ import { Collection, TrendingCollection } from 'types/api';
 export type CollectionsState = {
   collections: Collection[];
   trendingCollections: TrendingCollection[];
-  topCollections: Collection[];
+  topCollections: any;
   totalPages: number;
   singleCollection: TNullable<Collection>;
 };
