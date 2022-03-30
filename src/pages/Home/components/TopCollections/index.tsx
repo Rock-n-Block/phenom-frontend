@@ -17,7 +17,6 @@ import { CollectionCard } from './components';
 import { useShallowSelector } from 'hooks';
 
 import styles from './styles.module.scss';
-import { DEFAULT_CURRENCY } from 'appConstants';
 
 type Props = {
   className?: string;
@@ -74,7 +73,7 @@ const TopCollections: FC<Props> = ({ className }) => {
                 name={collection.collection?.name || ''}
                 price={
                   new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
-                    ? `< 0.01 ${DEFAULT_CURRENCY}`
+                    ? `< 0.01`
                     : collection?.floorPrice || 0
                 }
               />
