@@ -17,6 +17,7 @@ import { CollectionCard } from './components';
 import { useShallowSelector } from 'hooks';
 
 import styles from './styles.module.scss';
+import { toFixed } from 'utils';
 
 type Props = {
   className?: string;
@@ -74,7 +75,7 @@ const TopCollections: FC<Props> = ({ className }) => {
                 price={
                   new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
                     ? `< 0.01`
-                    : collection?.floorPrice || 0
+                    : toFixed(collection?.floorPrice || 0, 6)
                 }
               />
             ))}
