@@ -37,6 +37,14 @@ export function* endAuctionSaga({
       });
     }
 
+    yield put(
+      setActiveModal({
+        activeModal: Modals.SendPending,
+        open: true,
+        txHash: '',
+      }),
+    );
+
     const { data } = yield call(baseApi.endAuction, { id });
 
     const { transactionHash } = yield call(web3Provider.eth.sendTransaction, {
@@ -61,6 +69,9 @@ export function* endAuctionSaga({
 
     yield put(apiActions.success(type));
   } catch (err: any) {
+    yield call(baseApi.buyReject, {
+      id,
+    });
     yield put(
       setActiveModal({
         activeModal: err.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,

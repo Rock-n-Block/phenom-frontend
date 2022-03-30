@@ -28,6 +28,7 @@ const ModalsComponent: VFC = () => {
       <ApproveErrorModal
         visible={modalType === Modals.ApproveError}
         onClose={() => closeModals()}
+        onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
 
       <ApproveRejectedModal
