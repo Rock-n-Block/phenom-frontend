@@ -1,10 +1,10 @@
 @import '/src/styles/helpers.scss';
 
 .nft-list__body {
+  margin: 40px 0 0 0;
   &.vertical {
     .nft-list__body {
       &__sort{
-        margin: 40px 0 0 0;
         @include flexbox(center, space-between);
       }
       &__content {

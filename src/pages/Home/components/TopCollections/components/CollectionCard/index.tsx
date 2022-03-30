@@ -10,9 +10,9 @@ import styles from './styles.module.scss';
 interface IProps {
   index?: number;
   avatar: string;
-  id: number;
+  id: number | string;
   name: string;
-  price: string | number;
+  price: string | number | null;
   profitIncrease?: string | number;
   className?: string;
 }
@@ -41,13 +41,15 @@ const CollectionCard: FC<IProps> = ({
             {name}
           </Text>
         </EllipsisText>
-        <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
-          {t('TopCollections.FloorPrice')}:
-          <Text size="xs" color="blue" weight="bold" className={styles.price}>
-            {' '}
-            {price} PHETA
+        {price && (
+          <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
+            {t('TopCollections.FloorPrice')}:
+            <Text size="xs" color="blue" weight="bold" className={styles.price}>
+              {' '}
+              {price} PHETA
+            </Text>
           </Text>
-        </Text>
+        )}
       </div>
       {profitIncrease && (
         <div className={styles.profitIncreaseWrapper}>
