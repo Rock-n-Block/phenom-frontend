@@ -5,6 +5,8 @@ import { sliceString } from 'utils';
 
 import { CollectionCard } from 'pages/Home/components/TopCollections/components';
 
+import { Ownership } from 'types';
+
 import styles from './styles.module.scss';
 
 type IOwnersAndCreators = {
@@ -26,9 +28,9 @@ const OwnersAndCreators: VFC<IOwnersAndCreators> = ({ creator, owners, collectio
         </div>
         <div className={styles.ownersWrapper}>
           <Text color="darkenGray">Owner</Text>
-          {owners.map((owner: any) => (
+          {owners.map((owner: Ownership) => (
             <div className={styles.owner}>
-              <Avatar id={owner.id} avatar={owner.avatar} className={styles.avatar} />
+              <Avatar id={owner.url || 0} avatar={owner.avatar || ''} className={styles.avatar} />
               <Text>{sliceString(owner.name || owner.address)}</Text>
             </div>
           ))}

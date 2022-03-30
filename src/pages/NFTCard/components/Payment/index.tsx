@@ -12,6 +12,7 @@ import {
   transfer,
 } from 'store/nfts/actions';
 
+import BigNumber from 'bignumber.js';
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
 import moment from 'moment';
@@ -27,6 +28,7 @@ import {
   Text,
   TransferModal,
 } from 'components';
+import { sliceString, toFixed } from 'utils';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { useModals } from 'hooks';
@@ -42,8 +44,6 @@ import {
 } from 'assets/img';
 
 import styles from './styles.module.scss';
-import BigNumber from 'bignumber.js';
-import { sliceString, toFixed } from 'utils';
 
 interface IPayment {
   nft: TokenFull;
@@ -167,6 +167,12 @@ const Payment: VFC<IPayment> = ({
           web3Provider: walletService.Web3(),
         }),
       );
+      dispatch(
+        setModalProps({
+          onApprove: () => handleEndAuction(),
+          onSendAgain: () => handleEndAuction(),
+        }),
+      );
     }
   }, [nft, dispatch, walletService]);
 
@@ -176,6 +182,7 @@ const Payment: VFC<IPayment> = ({
         dispatch(
           setModalProps({
             onApprove: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
+            onSendAgain: () => handleSetOnAuction(minimalBid, currency, auctionDuration),
           }),
         );
         dispatch(
@@ -281,8 +288,8 @@ const Payment: VFC<IPayment> = ({
   }, [nft]);
 
   const nftPrice = useMemo(() => {
-    return (nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
-      ? toFixed(nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
+    return nft?.price || nft?.highestBid?.amount || nft?.minimalBid
+      ? toFixed(nft?.price || nft?.highestBid?.amount || nft?.minimalBid, 6)
       : 0;
   }, [nft]);
   const isAuction = useMemo(
@@ -418,7 +425,7 @@ const Payment: VFC<IPayment> = ({
                   <Button
                     color="dark"
                     className={cx(styles.button, styles.remove)}
-                    onClick={() => handleEndAuction()}
+                    onClick={handleEndAuction}
                   >
                     Accept bid
                   </Button>
@@ -450,7 +457,9 @@ const Payment: VFC<IPayment> = ({
               </div>
             )}
         </div>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
 
       {(isUserCanEndAuction ||
         isUserCanPutOnSale ||
