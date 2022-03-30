@@ -31,6 +31,7 @@ export function* approveSaga({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const allowance = yield call(tokenContract.methods.allowance(myAddress, spender).call);
+    debugger
 
     if (+allowance < +amount) {
       yield put(
