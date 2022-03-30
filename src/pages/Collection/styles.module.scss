@@ -1,14 +1,19 @@
 @import '/src/styles/helpers.scss';
 
 .head {
+  width: 100%;
+  position: relative;
+  @include transition;
+}
+
+.detail{
   position: absolute;
   top: -80px;
   left: 0;
   width: 100vw;
   background: rgba($color-light-4, 0.5);
-  height: 240px;
+  height: 320px;
   z-index: -1;
-  @include transition;
 }
 
 .collection {
@@ -38,11 +43,4 @@
 
 .cards {
   @include container;
-  padding-top: 412px;
-}
-
-@include small-tablet {
-  .cards {
-    padding-top: 372px;
-  }
 }

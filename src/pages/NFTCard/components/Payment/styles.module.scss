@@ -159,8 +159,7 @@
 
   .price {
     font-size: 28px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin: 16px 0 4px;
 
     &Bids {
       @include flexbox(center, space-between);

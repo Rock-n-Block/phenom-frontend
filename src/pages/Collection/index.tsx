@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { searchSingleCollection } from 'store/collections/actions';
@@ -15,7 +15,7 @@ import userSelector from 'store/user/selectors';
 import { ArtCard, ArtCardSkeleton, NFTList, Text } from 'components';
 import { sliceString } from 'utils';
 
-import { DEFAULT_CURRENCY } from 'appConstants';
+import { DEFAULT_CURRENCY, routes } from 'appConstants';
 import { useShallowSelector } from 'hooks';
 import { RequestStatus, TokenFull } from 'types';
 import { GetSingleCollectionReq } from 'types/requests';
@@ -107,6 +107,7 @@ const Collection = () => {
   return (
     <>
       <div className={styles.head}>
+        <div className={styles.detail} />
         <div className={styles.collection}>
           <div className={styles.avatarWrapper}>
             <img src={collection?.avatar} alt="collection" className={styles.avatar} />
@@ -116,9 +117,11 @@ const Collection = () => {
           </Text>
           <Text tag="span" weight="medium" className={styles.creator}>
             Created by{' '}
-            <Text color="blue" tag="span">
-              {collection?.creator?.displayName || sliceString(collection?.creator?.name || '')}
-            </Text>
+            <Link to={routes.profile.link(collection?.creator.url || 0, 'about-me')}>
+              <Text color="blue" tag="span">
+                {collection?.creator?.displayName || sliceString(collection?.creator?.name || '')}
+              </Text>
+            </Link>
           </Text>
           <Text tag="span" weight="medium" className={styles.info}>
             Items
