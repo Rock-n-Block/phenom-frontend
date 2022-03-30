@@ -41,7 +41,7 @@
 .searchDropdown {
   width: 100%;
   box-sizing: border-box;
-  top: 100%;
+  top: calc(100% + 12px);
   position: absolute;
   background: $color-light-4;
   // box-shadow: $color-box-shadow;

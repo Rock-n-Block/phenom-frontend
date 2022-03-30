@@ -44,7 +44,7 @@ const OwnersAndCreators: VFC<IOwnersAndCreators> = ({ creator, owners, collectio
             avatar={collection.avatar || ''}
             id={collection.url || 0}
             name={collection.name || ''}
-            price={null}
+            price={collection.floorPrice || 0}
             className={styles.collectionCard}
           />
         </div>

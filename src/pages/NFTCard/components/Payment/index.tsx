@@ -101,17 +101,19 @@ const Payment: VFC<IPayment> = ({
   }, []);
 
   const handleSetSeller = useCallback(
-    (amount: string | number) => {
+    (tokenAmount: string | number) => {
       dispatch(
         buy({
           id: nft?.id || 0,
-          amount: amount || 0,
+          amount:
+            nft?.sellers?.filter((seller: any) => seller.url === modalSellerId)[0]?.price || 0,
+          tokenAmount,
           sellerId: modalSellerId,
           web3Provider: walletService.Web3(),
         }),
       );
     },
-    [dispatch, modalSellerId, nft.id, walletService],
+    [dispatch, modalSellerId, nft.id, nft.sellers, walletService],
   );
 
   const handleSetChooseQuantityModal = useCallback(() => {

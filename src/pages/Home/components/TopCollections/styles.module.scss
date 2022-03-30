@@ -29,7 +29,7 @@
   display: grid;
   grid-column-gap: 24px;
   grid-row-gap: 24px;
-  grid-auto-flow: column;
+  grid-auto-flow: row;
 
   @include default-screen {
     @include flexbox;
