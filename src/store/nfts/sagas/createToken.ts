@@ -43,8 +43,8 @@ export function* createTokenSaga({ type, payload }: ReturnType<typeof createToke
         yield put(apiActions.success(type));
       } catch (e: any) {
         yield call(baseApi.mintReject, {
-          id: token.id,
-          owner: token.creator.url,
+          id: token.id || 0,
+          owner: token.creator.url || 0,
         });
         yield put(
           setActiveModal({

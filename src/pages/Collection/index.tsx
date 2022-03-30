@@ -91,7 +91,7 @@ const Collection = () => {
           asset={card?.currency?.symbol || DEFAULT_CURRENCY}
           author={card.creator?.name || card.creator?.address || ''}
           authorAvatar={card.creator?.avatar || ''}
-          authorId={card.creator?.id}
+          authorId={card.creator?.url || '0'}
           bids={card.bids}
           isAuction={card.isAucSelling || card.isTimedAucSelling}
           USD_price={card.usdPrice || card.highestBidUsd || card.minimalBidUsd || 0}
