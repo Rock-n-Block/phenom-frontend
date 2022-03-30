@@ -281,7 +281,7 @@ const Payment: VFC<IPayment> = ({
   }, [nft]);
 
   const nftPrice = useMemo(() => {
-    return nft?.price || nft?.highestBid?.amount || nft?.minimalBid
+    return (nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
       ? toFixed(nft?.price || nft?.highestBid?.amount || nft?.minimalBid)
       : 0;
   }, [nft]);

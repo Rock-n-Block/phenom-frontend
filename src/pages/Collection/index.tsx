@@ -91,7 +91,7 @@ const Collection = () => {
           authorAvatar={card.creator?.avatar || ''}
           authorId={card.creator?.id}
           bids={card.bids}
-          isAuction={card.isAucSelling}
+          isAuction={card.isAucSelling || card.isTimedAucSelling}
           USD_price={card.usdPrice || card.highestBidUsd || card.minimalBidUsd || 0}
           inStockNumber={card.available}
         />
