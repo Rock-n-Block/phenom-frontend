@@ -220,7 +220,6 @@ const NFTCard: VFC = () => {
                 properties={detailedNft?.properties}
                 description={detailedNft?.description}
               />
-
               {detailedNft?.creator && detailedNft?.owners && (
                 <OwnersAndCreators
                   creator={detailedNft?.creator}

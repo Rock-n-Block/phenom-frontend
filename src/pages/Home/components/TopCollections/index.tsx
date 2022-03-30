@@ -15,9 +15,10 @@ import { Text } from 'components';
 import { CollectionCard } from './components';
 
 import { useShallowSelector } from 'hooks';
+import { Collection } from 'types';
 
 import styles from './styles.module.scss';
-import { toFixed } from 'utils';
+
 
 type Props = {
   className?: string;
@@ -26,7 +27,9 @@ type Props = {
 const TopCollections: FC<Props> = ({ className }) => {
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const dispatch = useDispatch();
-  const collections = useShallowSelector(collectionsSelector.getProp('topCollections'));
+  const collections: Collection[] = useShallowSelector(
+    collectionsSelector.getProp('topCollections'),
+  );
 
   const handleFetchTopCollections = useCallback(() => {
     dispatch(
@@ -57,7 +60,7 @@ const TopCollections: FC<Props> = ({ className }) => {
       >
         Top collections
       </Text>
-      {collections.length ? (
+      {collections.filter((c) => !c.isDefault).length ? (
         <div className={styles.collections}>
           <ol
             className={styles.collectionsWrapper}
@@ -65,20 +68,22 @@ const TopCollections: FC<Props> = ({ className }) => {
               gridTemplateRows: `repeat(${collections.length > 3 ? 3 : collections.length}, 1fr)`,
             }}
           >
-            {collections.map((collection: any, index: number) => (
-              <CollectionCard
-                key={index}
-                avatar={collection.collection?.avatar || ''}
-                id={collection.collection?.url || 0}
-                index={index + 1}
-                name={collection.collection?.name || ''}
-                price={
-                  new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
-                    ? `< 0.01`
-                    : toFixed(collection?.floorPrice || 0, 6)
-                }
-              />
-            ))}
+            {collections
+              .filter((c) => !c.isDefault)
+              .map((collection: any, index: number) => (
+                <CollectionCard
+                  key={index}
+                  avatar={collection.collection?.avatar || ''}
+                  id={collection.collection?.url || 0}
+                  index={index + 1}
+                  name={collection.collection?.name || ''}
+                  price={
+                    new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
+                      ? `< 0.01`
+                      : new BigNumber(collection?.floorPrice).toFixed(5) || 0
+                  }
+                />
+              ))}
           </ol>
         </div>
       ) : (
