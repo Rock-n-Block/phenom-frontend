@@ -23,22 +23,26 @@ export interface ICreateCollection {
   symbol: string;
 }
 
+interface ICreateCollectionProps {
+  type: string;
+}
+
 export type CreateCollectionFields = keyof ICreateCollection;
 
-const CreateFormContainer: VFC = () => {
+const CreateFormContainer: VFC<ICreateCollectionProps> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
 
   const properties = useMemo<ICreateCollection>(
     () => ({
-      isSingle: true,
+      isSingle: type === 'single',
       avatarFile: null,
       avatarURL: null,
       name: '',
       description: '',
       symbol: '',
     }),
-    [],
+    [type],
   );
   const FormWithFormik = withFormik<any, ICreateCollection>({
     enableReinitialize: true,

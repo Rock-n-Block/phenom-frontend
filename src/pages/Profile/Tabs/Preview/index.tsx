@@ -92,7 +92,7 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
                 owner: id,
                 type: 'items',
                 page,
-                on_any_sale: true,
+                on_any_sale: id,
                 on_auc_sale: auction || undefined,
                 order_by: mapSortToRequest(sortBy),
               },

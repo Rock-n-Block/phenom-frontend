@@ -1,4 +1,4 @@
-import { CategoryName } from "types";
+import { CategoryName } from 'types';
 
 export const routes = {
   home: {
@@ -21,7 +21,7 @@ export const routes = {
     root: '/create',
     single: '/create/single',
     multiple: '/create/multiple',
-    collection: '/create/collection',
+    collection: (type: string): string => `/create/collection/${type || 'single'}`,
   },
   profile: {
     link: (
