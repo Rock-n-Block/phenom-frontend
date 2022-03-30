@@ -17,7 +17,7 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
   onClose,
   withSteps = true,
   subtitleText = 'Please press "Send" button in MetaMask extension',
-  subMessageText = 'Your USDT will be transferred from your wallet to the contract address.',
+  subMessageText = '',
 }) => {
   const title = (
     <Text className={styles.title} align="center" size="xl" weight="bold">
