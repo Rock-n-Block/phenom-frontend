@@ -128,6 +128,11 @@ const UserBody: FC<IUserBody> = ({ user, disconnect }) => {
               <Text className={styles.text} weight="bold" size="m" align="center">
                 {option.title}
               </Text>
+              {option.icon ? (
+                <img src={option.icon} alt="exit" className={styles.itemIcon} />
+              ) : (
+                <></>
+              )}
             </div>
           );
         })}

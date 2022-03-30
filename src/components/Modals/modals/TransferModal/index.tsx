@@ -3,7 +3,7 @@ import { useCallback, useState, VFC } from 'react';
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
 
-import { Button, DefaultInput, Modal } from 'components';
+import { Button, DefaultInput, Modal, QuantityInput } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -12,11 +12,12 @@ type ITransferModal = {
   onClose: (value: boolean) => void;
   isMultiple?: boolean;
   onSend: (address: string, amount: string | number) => void;
+  max?: number;
 };
 
-const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultiple }) => {
+const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultiple, max = 1 }) => {
   const [inputValue, setInputValue] = useState('');
-  const [amountValue, setAmountValue] = useState('');
+  const [amountValue, setAmountValue] = useState('1');
   const dispatch = useDispatch();
 
   const handleInputChange = useCallback((value: string) => {
@@ -27,13 +28,13 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
     setAmountValue(value);
   }, []);
 
-
   const handleTransfer = useCallback(
     (name: string, amount: string) => {
       onSend(name, amount);
       dispatch(
         setModalProps({
           onSendAgain: () => onSend(name, amount),
+          subMessageText: '',
         }),
       );
     },
@@ -50,13 +51,15 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
         placeholder="Input address"
       />
       {isMultiple ? (
-        <DefaultInput
+        <QuantityInput
           name="amount"
           label="Amount"
           value={amountValue}
           setValue={handleAmountChange}
           placeholder="Input text"
-          type="number"
+          minAmount={1}
+          maxAmount={max}
+          inputClassName={styles.amount}
         />
       ) : (
         <></>

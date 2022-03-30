@@ -32,7 +32,7 @@ import { sliceString, toFixed } from 'utils';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
 import { useModals } from 'hooks';
-import { Modals, Standart, TokenFull } from 'types';
+import { Modals, Ownership, Standart, TokenFull } from 'types';
 
 import {
   DollarIcon,
@@ -54,6 +54,7 @@ interface IPayment {
   isOwner: boolean;
   isUserCanRemoveFromSale: boolean;
   isUserCanChangePrice: boolean;
+  userId: number | null;
 }
 
 const hours = [
@@ -71,6 +72,7 @@ const Payment: VFC<IPayment> = ({
   isOwner,
   isUserCanRemoveFromSale,
   isUserCanChangePrice,
+  userId,
 }) => {
   const dispatch = useDispatch();
   const { walletService } = useWalletConnectContext();
@@ -585,7 +587,13 @@ const Payment: VFC<IPayment> = ({
                           setValue={setQuantity}
                           name="quantity"
                           writeable
-                          maxAmount={nft?.totalSupply}
+                          maxAmount={
+                            +(
+                              nft?.owners?.filter(
+                                (owner: Ownership) => String(owner.url) === String(userId),
+                              )[0]?.quantity || 1
+                            )
+                          }
                           minAmount={1}
                           inputClassName={styles.quantityInput}
                         />
@@ -622,7 +630,13 @@ const Payment: VFC<IPayment> = ({
                           setValue={setQuantity}
                           name="quantity"
                           writeable
-                          maxAmount={nft?.totalSupply}
+                          maxAmount={
+                            +(
+                              nft?.owners?.filter(
+                                (owner: Ownership) => String(owner.url) === String(userId),
+                              )[0]?.quantity || 1
+                            )
+                          }
                           minAmount={1}
                           inputClassName={styles.quantityInput}
                         />
@@ -691,6 +705,12 @@ const Payment: VFC<IPayment> = ({
         onClose={() => closeModals()}
         isMultiple={nft?.standart === Standart.ERC1155}
         onSend={handleTransfer}
+        max={
+          +(
+            nft?.owners?.filter((owner: Ownership) => String(owner.url) === String(userId))[0]
+              ?.quantity || nft?.totalSupply
+          )
+        }
       />
 
       <SellersModal

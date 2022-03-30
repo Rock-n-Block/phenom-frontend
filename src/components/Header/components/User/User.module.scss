@@ -93,6 +93,7 @@
   padding: 15px 12px;
   border-radius: 10px;
   width: 100%;
+  @include flexbox;
 
   & + & {
     margin-top: 8px;
@@ -107,6 +108,10 @@
     height: 48px;
     @include flexbox(center, flex-start);
     background-color: $color-light-1;
+  }
+
+  &Icon{
+    margin-left: 12px; 
   }
 }
 

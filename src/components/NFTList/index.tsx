@@ -42,7 +42,7 @@ const isLoadMoreActive = (
  * @param {boolean} [auction] - initial auction selector
  * @param {string} [className] - wrapper class name
  * @param {string} [emptyMsg] - message which will be displayed when the count of the elements equals zero
- * @default 'There in no elements'
+ * @default 'There are no elements'
  * @param {(sort: TSort) => void} [onSortClick] - callback which will be called when sort element has been selected
  * @param {() => void} [onLoadMore] - callback which will be called when load button has been pushed
  * @param {() => void} [onAuctionClick] - callback which will be called when load auction checkbox has been clicked
@@ -54,7 +54,7 @@ const NFTList: VFC<INFTList> = ({
   sortBy,
   auction,
   className,
-  emptyMsg = 'There in no elements',
+  emptyMsg = 'There are no elements',
   pages,
   currentPage,
   isLoading = false,
