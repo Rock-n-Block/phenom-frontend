@@ -20,12 +20,12 @@ import { Subscription } from 'rxjs';
 
 import { useShallowSelector } from 'hooks';
 import { WalletService } from 'services';
-import { Chains, IWalletConnext, State, UserState, WalletProviders } from 'types';
+import { Chains, IWalletConnext, State, TNullable, UserState, WalletProviders } from 'types';
 
 const WCContext = createContext({} as IWalletConnext);
 
 const WalletConnectContext: FC = ({ children }) => {
-  const [currentSubscriber, setCurrentSubscriber] = useState<Subscription>();
+  const [currentSubscriber, setCurrentSubscriber] = useState<TNullable<Subscription>>();
   const WalletConnect = useRef<WalletService>(new WalletService());
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -107,6 +107,7 @@ const WalletConnectContext: FC = ({ children }) => {
     dispatch(disconnectWalletState());
     WalletConnect.current.resetConnect();
     currentSubscriber?.unsubscribe();
+    setCurrentSubscriber(null);
     navigate('/');
   }, [currentSubscriber, dispatch, navigate]);
 
