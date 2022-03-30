@@ -24,8 +24,8 @@ const SellersModal: VFC<ISellersModal> = ({ visible, onClose, sellers, handleCho
           sellers.map((seller: Ownership) => (
             <div className={styles.item} key={seller.url || 0}>
               <div className={styles.itemWrapper}>
-                <Avatar id={seller.url || 0} avatar={seller.avatar || mock.user} />
-                <div className="">
+                <Avatar id={seller.url || 0} avatar={seller.avatar || mock.user} size="32" />
+                <div className={styles.itemInfo}>
                   <div className={styles.itemName}>{seller?.name}</div>
                   <div className={styles.itemQuantity}>{`${seller.sellingQuantity} token`}</div>
                 </div>
