@@ -37,11 +37,6 @@ const ModalsComponent: VFC = () => {
         onApproveAgain={'onApprove' in modalProps ? modalProps.onApprove : undefined}
       />
       <SendPendingModal
-        subMessageText={
-          'subMessageText' in modalProps
-            ? modalProps.subMessageText
-            : 'Your USDT will be transferred from your wallet to the contract address.'
-        }
         subtitleText={
           'subtitleText' in modalProps
             ? modalProps.subtitleText

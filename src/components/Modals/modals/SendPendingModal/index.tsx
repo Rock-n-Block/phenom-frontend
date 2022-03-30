@@ -9,7 +9,6 @@ type ISendPendingModal = {
   onClose: (value: boolean) => void;
   withSteps?: boolean;
   subtitleText?: string;
-  subMessageText?: string;
 };
 
 const SendPendingModal: VFC<ISendPendingModal> = ({
@@ -17,7 +16,6 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
   onClose,
   withSteps = true,
   subtitleText = 'Please press "Send" button in MetaMask extension',
-  subMessageText = '',
 }) => {
   const title = (
     <Text className={styles.title} align="center" size="xl" weight="bold">
@@ -42,11 +40,6 @@ const SendPendingModal: VFC<ISendPendingModal> = ({
       {subtitleText && (
         <Text tag="h4" weight="semibold" align="center" className={styles.subtitle}>
           {subtitleText}
-        </Text>
-      )}
-      {subMessageText && (
-        <Text align="center" className={styles.text}>
-          {subMessageText}
         </Text>
       )}
     </Modal>

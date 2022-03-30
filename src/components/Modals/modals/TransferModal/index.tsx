@@ -34,7 +34,6 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
       dispatch(
         setModalProps({
           onSendAgain: () => onSend(name, amount),
-          subMessageText: '',
         }),
       );
     },
