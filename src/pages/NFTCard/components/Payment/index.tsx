@@ -532,7 +532,7 @@ const Payment: VFC<IPayment> = ({
                   className={styles.createLotPrice}
                 />
                 {nft?.usdPrice && (
-                  <Text color="middleGray" size="m">
+                  <Text color="middleGray" size="m" className={styles.usdPrice}>
                     ${nft?.usdPrice}
                   </Text>
                 )}
