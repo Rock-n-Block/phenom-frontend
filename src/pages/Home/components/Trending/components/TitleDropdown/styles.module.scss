@@ -59,6 +59,10 @@
   @include default-screen {
     left: -10%;
   }
+
+  @include small-tablet {
+    left: -100%;
+  }
 }
 
 .body {

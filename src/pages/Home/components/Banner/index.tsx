@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-// import cx from 'classnames';
 import { Button, Text } from 'components';
 
 import { routes } from 'appConstants';

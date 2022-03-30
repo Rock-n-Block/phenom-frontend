@@ -21,7 +21,7 @@
 
 .subtitle {
   max-width: 475px;
-  line-height: 24px;  
+  line-height: 24px;
 }
 
 .gradient {
@@ -40,11 +40,11 @@
   overflow: hidden;
   @include transition;
   transform: scale(1.1);
-  
-  .ellipse{
+
+  .ellipse {
     transform: translateY(-24%);
   }
-  .metaverse{
+  .metaverse {
     max-width: 100%;
   }
 }
@@ -54,24 +54,24 @@
   text-align: center;
 }
 
-@include large-mobile{
-  .banner{
-    .title{
+@include large-mobile {
+  .banner {
+    .title {
       font-size: 40px;
       margin-top: 60px;
       line-height: 48px;
     }
-    .subtitle{
+    .subtitle {
       font-size: 14px;
     }
-    .bannerBtn{
+    .bannerBtn {
       min-width: 212px;
-      .btn{
+      .btn {
         width: 100%;
       }
     }
   }
-  .gradient{
+  .gradient {
     top: 85px;
   }
 }
