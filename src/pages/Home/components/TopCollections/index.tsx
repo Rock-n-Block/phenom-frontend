@@ -19,7 +19,6 @@ import { Collection } from 'types';
 
 import styles from './styles.module.scss';
 
-
 type Props = {
   className?: string;
 };
@@ -80,7 +79,7 @@ const TopCollections: FC<Props> = ({ className }) => {
                   price={
                     new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
                       ? `< 0.01`
-                      : new BigNumber(collection?.floorPrice).toFixed(5) || 0
+                      : new BigNumber(collection?.floorPrice).toString() || 0
                   }
                 />
               ))}
