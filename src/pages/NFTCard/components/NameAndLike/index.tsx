@@ -1,14 +1,8 @@
-import { useCallback, useState, VFC } from 'react';
-
-import { useDispatch } from 'react-redux';
-import { like } from 'store/nfts/actions';
+import { VFC } from 'react';
 
 import cx from 'classnames';
 
-import { Button, EllipsisText, Text } from 'components';
-import { numberFormatter } from 'utils';
-
-import { HeartFilledIcon, HeartIcon } from 'assets/img';
+import { Button, EllipsisText, LikeButton, Text } from 'components';
 
 import styles from './styles.module.scss';
 
@@ -29,25 +23,6 @@ const NameAndLike: VFC<INameAndLike> = ({
   inStockNumber,
   youOwn,
 }) => {
-  const [isLike, setIsLike] = useState(isLiked);
-  const [likesNumber, setLikesNumber] = useState(likeCount);
-  const dispatch = useDispatch();
-
-  const handleLike = useCallback(() => {
-    if (isLike) {
-      setLikesNumber(likesNumber - 1);
-    }
-    if (!isLike) {
-      setLikesNumber(likesNumber + 1);
-    }
-    setIsLike(!isLike);
-    dispatch(
-      like({
-        id: artId,
-      }),
-    );
-  }, [artId, dispatch, isLike, likesNumber]);
-
   return (
     <div className={styles.nameAndLike}>
       <div className={styles.top}>
@@ -56,15 +31,13 @@ const NameAndLike: VFC<INameAndLike> = ({
             {name}
           </Text>
         </EllipsisText>
-        <Button
-          className={cx(styles.button, styles.likeButton)}
-          onClick={handleLike}
-          color="outline"
-        >
-          {isLike ? <HeartFilledIcon /> : <HeartIcon />}
-          <Text size="s" color="inherit">
-            {numberFormatter(likesNumber || 0, 1000)}
-          </Text>
+        <Button className={cx(styles.button, styles.likeButton)} color="outline">
+          <LikeButton
+            countClassName={styles.likeCount}
+            isLiked={isLiked}
+            likesNumber={likeCount}
+            artId={artId}
+          />
         </Button>
       </div>
       <div className={styles.bottom}>

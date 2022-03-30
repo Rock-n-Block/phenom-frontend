@@ -107,12 +107,23 @@ const RoutesPage = () => {
         }
       />
       <Route
-        path={routes.create.collection}
+        path={routes.create.collection('single')}
         element={
           <GuardRoute require={['logged']}>
             <Page
               classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
-              component={<CreateCollection />}
+              component={<CreateCollection type="single" />}
+            />
+          </GuardRoute>
+        }
+      />
+      <Route
+        path={routes.create.collection('multiple')}
+        element={
+          <GuardRoute require={['logged']}>
+            <Page
+              classes={['gradient-body-2', 'with-left-detail', 'with-right-detail']}
+              component={<CreateCollection type="multiple" />}
             />
           </GuardRoute>
         }

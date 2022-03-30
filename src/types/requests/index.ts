@@ -167,7 +167,7 @@ export type SearchNftReq = {
   max_price?: string | number;
   min_price?: string | number;
   on_sale?: boolean;
-  on_any_sale?: boolean;
+  on_any_sale?: string | number;
   sold_by?: string | number;
   bids_by?: string | number;
   liked_by?: string | number;

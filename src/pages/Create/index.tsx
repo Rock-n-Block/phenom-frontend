@@ -51,7 +51,7 @@ const CreatePage: VFC = () => {
             Create a collection
           </Text>
         ),
-        href: `${path}/collection`,
+        href: `${path}/collection/single`,
       },
     ],
     [path],

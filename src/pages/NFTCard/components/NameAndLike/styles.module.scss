@@ -22,6 +22,10 @@
   border-radius: 10px;
   border: none !important;
 
+  .likeCount{
+    top: 0;
+  }
+
   &:hover {
     color: $color-dark !important;
     svg {

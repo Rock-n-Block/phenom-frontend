@@ -20,6 +20,7 @@ interface ICollections {
   fetching?: boolean;
   onBlur?: (e: FormEvent<HTMLDivElement>) => void;
   isClearing?: boolean;
+  type: string;
 }
 
 const Collections: VFC<ICollections> = ({
@@ -31,6 +32,7 @@ const Collections: VFC<ICollections> = ({
   fetching = false,
   onBlur,
   isClearing,
+  type,
 }) => {
   const [collections, setCollections] = useState(initCollections);
   const [selected, setSelected] = useState<Collection[]>([]);
@@ -70,6 +72,15 @@ const Collections: VFC<ICollections> = ({
   useEffect(() => {
     setSelected([]);
   }, [isCollectionsAdded]);
+
+  useEffect(() => {
+    const defaultCollection = collections.find((c) => c.isDefault);
+    if (defaultCollection) {
+      if (!isCollectionsAdded && !isSelected(defaultCollection.url)) {
+        setIsSelected(defaultCollection);
+      }
+    }
+  }, [collections, isCollectionsAdded, isSelected, setIsSelected]);
 
   return (
     <section className={styles['collection-section__wrapper']}>
@@ -115,7 +126,7 @@ const Collections: VFC<ICollections> = ({
       </div>
       {isCollectionsAdded && (
         <Link
-          to="/create/collection"
+          to={`/create/collection/${type}`}
           className={cn(styles['collection-section__wrapper__add-body'])}
         >
           <Text weight="bold" size="s">

@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useMemo, VFC } from 'react';
+import { useEffect, useMemo, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 // import modalsSelector from 'store/modals/selectors';
 import { createToken, getCategories } from 'store/nfts/actions';
-import { getSelfCollections } from 'store/user/actions';
 import userSelector from 'store/user/selectors';
 
 import { useWalletConnectContext } from 'context';
@@ -51,16 +50,8 @@ export interface IMainForm extends ICreateForm {
 const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   const dispatch = useDispatch();
   const chain = useShallowSelector(userSelector.getProp('chain'));
-  const collections = useShallowSelector(userSelector.getProp('collections'));
-  // const modalProps = useShallowSelector(modalsSelector.getProp('modalProps'));
 
   const { walletService } = useWalletConnectContext();
-
-  const onReloadClick = useCallback(() => {
-    dispatch(getSelfCollections({ network: chain }));
-  }, [chain, dispatch]);
-
-  // const { modalType, closeModals } = useModals();
 
   const clearForm = useMemo<ICreateForm>(
     () => ({
@@ -79,20 +70,18 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
     [type],
   );
 
-  const properties = useMemo<IMainForm>(
+  const properties = useMemo<ICreateForm>(
     () => ({
       ...clearForm,
-      onReload: onReloadClick,
     }),
-    [clearForm, onReloadClick],
+    [clearForm],
   );
 
   useEffect(() => {
     dispatch(getCategories({}));
-    onReloadClick();
-  }, [chain, dispatch, onReloadClick]);
+  }, [chain, dispatch]);
 
-  const FormWithFormik = withFormik<any, IMainForm>({
+  const FormWithFormik = withFormik<any, ICreateForm>({
     enableReinitialize: true,
     mapPropsToValues: () => properties,
     validationSchema: Yup.object().shape({
@@ -154,11 +143,6 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
       newTokenForm.append('total_supply', values.type === 'Multiple' ? values.quantity : '1');
       if (values.collections && values.collections[0]) {
         newTokenForm.append('collection', String(values.collections[0].url));
-      } else {
-        const defaultCollection = collections.find((c) => c.isDefault);
-        if (defaultCollection) {
-          newTokenForm.append('collection', String(defaultCollection.url));
-        }
       }
       if (values.subcategory) {
         newTokenForm.append('tags', String(values.subcategory.id));
@@ -169,7 +153,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
   })(MainForm);
   return (
     <>
-      <FormWithFormik onRefresh={onReloadClick} type={type} />
+      <FormWithFormik type={type} />
     </>
   );
 };

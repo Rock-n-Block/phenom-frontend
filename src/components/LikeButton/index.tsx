@@ -17,9 +17,17 @@ interface ILikeButton {
   isLiked: boolean;
   likesNumber: number;
   artId: number | string;
+  likeClassName?: string;
+  countClassName?: string;
 }
 
-const LikeButton: VFC<ILikeButton> = ({ isLiked, likesNumber, artId }) => {
+const LikeButton: VFC<ILikeButton> = ({
+  isLiked,
+  likesNumber,
+  artId,
+  likeClassName,
+  countClassName,
+}) => {
   const [isLike, setIsLike] = useState(isLiked);
   const [likesCount, setLikesCount] = useState(likesNumber || (isLiked ? 1 : 0));
 
@@ -63,13 +71,13 @@ const LikeButton: VFC<ILikeButton> = ({ isLiked, likesNumber, artId }) => {
   return (
     <div className={cx(styles.likeWrapper)}>
       <Button
-        className={cx(styles.likeBtn)}
+        className={cx(styles.likeBtn, likeClassName)}
         onClick={handleLike}
         icon={<HeartIcon className={cx('heart-icon', { 'active-heart': isLike })} />}
         color="transparent"
         padding="0"
       />
-      <Text className={styles.likeCount} id="none" weight="bold">
+      <Text className={cx(styles.likeCount, countClassName)} id="none" weight="bold">
         {numberFormatter(likesCount, 3)}
       </Text>
     </div>
