@@ -15,8 +15,6 @@ import { Tag } from "./Tag";
 
 
 export interface TokenFull {
-    in_stock_number: number | undefined;
-    is_timed_auc_selling: boolean;
     animation?: string;
     available?: number;
     bids?: Bid[];
@@ -49,7 +47,7 @@ export interface TokenFull {
     network: Network;
     owners?: Ownership[];
     price: number;
-    properties?: any;
+    properties?: string;
     rankings: any;
     royalty: number;
     sellers?: Ownership[];

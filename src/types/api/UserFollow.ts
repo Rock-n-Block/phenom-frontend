@@ -16,6 +16,7 @@ export interface UserFollow {
     createdTokensCount?: number;
     customUrl?: string;
     displayName?: string;
+    email?: string;
     facebook?: string;
     followersCount?: number;
     id?: number;

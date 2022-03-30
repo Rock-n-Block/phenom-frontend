@@ -15,6 +15,7 @@ export interface CollectionSlim {
     cover?: string;
     description?: string;
     displayTheme?: Display_theme;
+    floorPrice?: number;
     isDefault?: boolean;
     isNsfw?: boolean;
     name?: string;

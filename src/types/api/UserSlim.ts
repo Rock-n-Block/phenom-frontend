@@ -14,12 +14,13 @@ export interface UserSlim {
     createdAt?: string;
     customUrl?: string;
     displayName?: string;
+    email?: string;
     facebook?: string;
-    id: number;
+    id?: number;
     instagram?: string;
     isVerificated?: boolean;
     name?: string;
     site?: string;
     twitter?: string;
-    url: number;
+    url?: string;
 }

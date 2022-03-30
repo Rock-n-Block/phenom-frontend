@@ -17,6 +17,7 @@ export interface CompositeCollection {
     creator: UserSlim;
     description?: string;
     displayTheme?: Display_theme;
+    floorPrice?: number;
     isDefault?: boolean;
     isNsfw?: boolean;
     likesCount?: number;
