@@ -11,7 +11,7 @@ export type UserState = {
   displayName: string;
   collections: Collection[];
   isWhitelisted: boolean,
-  // rates: 
+  rate: string,
 };
 
 export type LoginReq = {

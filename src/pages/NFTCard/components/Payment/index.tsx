@@ -11,6 +11,7 @@ import {
   setOnSale,
   transfer,
 } from 'store/nfts/actions';
+import userSelector from 'store/user/selectors';
 
 import BigNumber from 'bignumber.js';
 import cx from 'classnames';
@@ -31,7 +32,7 @@ import {
 import { sliceString, toFixed } from 'utils';
 
 import { DEFAULT_CURRENCY } from 'appConstants';
-import { useModals } from 'hooks';
+import { useModals, useShallowSelector } from 'hooks';
 import { Modals, Ownership, Standart, TokenFull } from 'types';
 
 import {
@@ -76,6 +77,8 @@ const Payment: VFC<IPayment> = ({
 }) => {
   const dispatch = useDispatch();
   const { walletService } = useWalletConnectContext();
+  const rate = useShallowSelector(userSelector.getProp('rate'));
+  console.log('rate', rate)
   const [quantity, setQuantity] = useState('1');
   const [bidValue, setBidValue] = useState('');
   const [time, setTime] = useState<any>();
@@ -534,9 +537,9 @@ const Payment: VFC<IPayment> = ({
                   placeholder="0.00"
                   className={styles.createLotPrice}
                 />
-                {nft?.usdPrice && (
+                {priceValue && (
                   <Text color="middleGray" size="m" className={styles.usdPrice}>
-                    ${nft?.usdPrice}
+                    ${new BigNumber(priceValue).times(new BigNumber(rate)).toFixed(2)}
                   </Text>
                 )}
                 {!isFixedPrice && (

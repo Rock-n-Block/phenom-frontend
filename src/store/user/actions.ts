@@ -16,3 +16,4 @@ export const updateUserInfo = createAction<UpdateUserInfoReq>(actionTypes.UPDATE
 export const getSelfCollections = createAction<RequestWithNetwork>(actionTypes.GET_SELF_COLLECTION);
 export const editProfileInfo = createAction<EditProfile>(actionTypes.EDIT_PROFILE_INFO);
 export const checkWhitelist = createAction<UpdateUserInfoReq>(actionTypes.CHECK_WHITELIST);
+export const getRates = createAction<RequestWithNetwork>(actionTypes.GET_RATES);

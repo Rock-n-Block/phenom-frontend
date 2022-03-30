@@ -2,6 +2,7 @@ import { fork } from 'redux-saga/effects';
 
 import checkWhitelist from './checkWhitelist';
 import editProfile from './editProfileInfo';
+import getRates from './getRates';
 import getCollections from './getSelfCollection';
 import getTokenBalance from './getTokenBalance';
 import login from './login';
@@ -14,4 +15,5 @@ export default function* userSagas() {
   yield fork(getCollections);
   yield fork(editProfile);
   yield fork(checkWhitelist);
+  yield fork(getRates);
 }
