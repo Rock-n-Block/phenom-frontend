@@ -61,7 +61,6 @@ const MainForm: VFC<FormikProps<IMainForm> & IMainForm> = ({
           onSendAgain: handleSubmit,
           onApprove: handleSubmit,
           withSteps: false,
-          subMessageText: '',
           subtitleText: 'In progress',
         }),
       );
