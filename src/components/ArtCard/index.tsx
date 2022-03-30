@@ -123,7 +123,7 @@ const ArtCard: FC<Props> = ({
                   </Text>
                 ) : (
                   <Text weight="bold" color="green" className={styles.minimal}>
-                    Minimal bid
+                    Minimum bid
                   </Text>
                 ))}
               <Text
