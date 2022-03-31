@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { VFC } from 'react';
+import { VFC } from 'react';
 
 import moment from 'moment';
 
