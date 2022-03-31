@@ -124,6 +124,7 @@ const Properties: VFC<IProperties> = ({
 
   const checkPropsValid = useCallback((props: TSingleProp[]) => {
     const res: PropError[] = [];
+    props.forEach((p) => p.type.trim().toLowerCase());
     props.forEach((p) => {
       const err: PropError = { id: null, type: '', name: '' };
       if (!p.name.length) {
@@ -135,8 +136,12 @@ const Properties: VFC<IProperties> = ({
         err.type = 'Field is required';
       }
       const sameProp = props.find(
-        (np) => np.name === p.name && np.type.toLowerCase() === p.type.toLowerCase() && np.id !== p.id,
+        (np) =>
+          np.name === p.name &&
+          np.type.toLowerCase().trim() === p.type.toLowerCase().trim() &&
+          np.id !== p.id,
       );
+
       if (sameProp) {
         err.id = sameProp.id;
         err.type = 'Type should be unique';
@@ -150,8 +155,7 @@ const Properties: VFC<IProperties> = ({
 
   useEffect(() => {
     if (initErrors) setErrors(checkPropsValid(properties));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [properties, initErrors]);
+  }, [properties, initErrors, checkPropsValid]);
 
   const getErrorById = useCallback((id: number) => errors.find((e) => e.id === id), [errors]);
 
