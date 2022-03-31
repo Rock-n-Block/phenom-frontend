@@ -105,7 +105,7 @@ const CreateFormContainer: VFC<ICreateFormContainer> = ({ type }) => {
           }).notRequired(),
         )
         .test('unique', 'all types must be unique', (val) => {
-          const setFields = new Set(val?.map((v) => `${v.name}${v.type}`));
+          const setFields = new Set(val?.map((v) => `${v.name}${v.type?.toLowerCase()}`));
           return setFields.size === val?.length;
         }),
       quantity: Yup.string()
