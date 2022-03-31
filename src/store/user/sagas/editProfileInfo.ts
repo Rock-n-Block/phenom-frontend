@@ -12,11 +12,14 @@ export function* editProfileInfoSaga({ type, payload }: ReturnType<typeof editPr
   yield put(request(type));
   try {
     const { data } = yield call(baseApi.editProfile, payload);
-    console.log(data);
+    if (data.display_name && data.display_name === 'this display_name is occupied') {
+      toast.error(`Error, this name is occupied`);
+      yield put(error(type, 'display_name Error'));
+      return;
+    }
     toast.success('Profile edit successfully');
     yield put(success(type));
   } catch (err) {
-    console.log(err);
     toast.error(`Error ${err}`);
     yield put(error(type, err));
   }

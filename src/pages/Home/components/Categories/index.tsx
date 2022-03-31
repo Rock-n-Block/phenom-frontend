@@ -35,7 +35,7 @@ const Categories: FC<Props> = ({ className }) => {
           tags.map((tag: any) => (
             <Link className={styles.tag} to={routes.explore.filter(tag.name)}>
               <img alt="category" className={styles.image} src={tag.image} />
-              <Text className={styles.text} weight="semibold">
+              <Text size="xl" className={styles.text} weight="semibold">
                 {tag.name}
               </Text>
             </Link>

@@ -11,6 +11,9 @@ import { Button } from 'components';
 import { convertFilterValuesForBackend } from 'utils';
 
 import { MenuFilter, PriceFilter } from './components';
+import { useDispatch } from 'react-redux';
+import { searchCollections } from 'store/collections/actions';
+import { clearCollections } from 'store/collections/reducer';
 
 import { useShallowSelector } from 'hooks';
 
@@ -30,11 +33,38 @@ type Props = {
 
 const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
   console.log(filterCategory);
+  const dispatch = useDispatch();
   const { t } = useTranslation('Explore');
   const collections = useShallowSelector(collectionsSelector.getProp('collections'));
+  const totalPages = useShallowSelector(collectionsSelector.getProp('totalPages'));
+  const [currentPage, setCurrentPage] = useState(1);
   const [checkedFilters, setCheckedFilters] = useState<any>({});
   const [appliedFilters, setAppliedFilters] = useState<any>({});
   const [isApplied, setIsApplied] = useState(false);
+
+  const handleSearchCollections = useCallback(
+    (page: number) => {
+      const requestData: any = { type: 'collections', page };
+      dispatch(searchCollections({ requestData }));
+    },
+    [dispatch],
+  );
+
+  const handleLoadMoreCollections = useCallback(() => {
+    handleSearchCollections(currentPage + 1);
+    setCurrentPage(currentPage + 1);
+  }, [currentPage, handleSearchCollections]);
+
+  useEffect(() => {
+    handleSearchCollections(1);
+  }, [handleSearchCollections]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearCollections());
+    },
+    [dispatch],
+  );
 
   const handleClearFIlters = useCallback(() => {
     setCheckedFilters({});
@@ -101,6 +131,8 @@ const Filters: FC<Props> = ({ filterCategory, onFiltersChange }) => {
             onFilterClick={handleFilterClick}
             placeholder="Choose a collection"
             backendLabel="collections"
+            hasLoadMore={currentPage < totalPages}
+            onLoadMoreClick={handleLoadMoreCollections}
           />
           <MenuFilter
             className={styles.dropdownSmall}

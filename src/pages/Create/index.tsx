@@ -29,7 +29,7 @@ const CreatePage: VFC = () => {
       {
         icon: <SingleAddSVG />,
         title: (
-          <Text tag="h4" color="gray" align="center" id="createOptions.Single">
+          <Text tag="h4" color="gray" align="center">
             Single NFT
           </Text>
         ),
@@ -38,7 +38,7 @@ const CreatePage: VFC = () => {
       {
         icon: <MultipleAddSVG />,
         title: (
-          <Text tag="h4" color="gray" align="center" id="createOptions.Multiple">
+          <Text tag="h4" color="gray" align="center">
             Multiple NFT
           </Text>
         ),
@@ -47,7 +47,7 @@ const CreatePage: VFC = () => {
       {
         icon: <CollectionAddSVG />,
         title: (
-          <Text tag="h4" color="gray" align="center" id="createOptions.CreateACollection">
+          <Text tag="h4" color="gray" align="center">
             Create a collection
           </Text>
         ),

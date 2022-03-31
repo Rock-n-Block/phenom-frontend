@@ -40,8 +40,11 @@ const Trending: FC<Props> = ({ className }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const slidesToShow = (widthValue: number) => {
-    if (widthValue < 1050) {
+    if (widthValue < 850) {
       return 1;
+    }
+    if (widthValue < 1050) {
+      return 2;
     }
     return 3;
   };
@@ -95,7 +98,7 @@ const Trending: FC<Props> = ({ className }) => {
         </H2>
         {nfts.length ? (
           <div className={cx(styles.drops, { [styles.row]: nfts.length <= 2 })}>
-            {nfts.length > 2 ? (
+            {nfts.length > numberOfSlide ? (
               <>
                 <div ref={prevRef} className="swiper-button-prev" />
                 <div ref={nextRef} className="swiper-button-next" />

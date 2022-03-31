@@ -3,7 +3,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import cn from 'classnames';
 
-import { Checkbox, EllipsisText, Text } from 'components';
+import { Button, Checkbox, EllipsisText, Text } from 'components';
 import { FILTER_DIVIDER } from 'utils';
 
 import { iconArrowDownGray } from 'assets/img';
@@ -20,6 +20,8 @@ interface IDropdownProps {
   onFilterClick: (filterName: string) => void;
   placeholder: string;
   backendLabel: string;
+  onLoadMoreClick?: () => void;
+  hasLoadMore?: boolean;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -32,6 +34,8 @@ const Dropdown: FC<IDropdownProps> = ({
   onFilterClick,
   placeholder,
   backendLabel,
+  onLoadMoreClick,
+  hasLoadMore = false,
 }) => {
   const [visible, setVisible] = useState(false);
   const handleClickOption = useCallback(
@@ -91,6 +95,11 @@ const Dropdown: FC<IDropdownProps> = ({
               </div>
             );
           })}
+          {hasLoadMore && (
+            <Button padding="small" onClick={onLoadMoreClick} className={styles.button}>
+              Load more
+            </Button>
+          )}
         </div>
       </div>
     </OutsideClickHandler>
