@@ -31,7 +31,6 @@ export function* approveSaga({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const allowance = yield call(tokenContract.methods.allowance(myAddress, spender).call);
-    debugger
 
     if (+allowance < +amount) {
       yield put(
@@ -60,7 +59,6 @@ export function* approveSaga({
         );
         yield put(apiActions.success(type));
       } catch (e: any) {
-        // debugger
         // yield put(
         //   setActiveModal({
         //     activeModal: e.code === 4001 ? Modals.ApproveRejected : Modals.ApproveError,

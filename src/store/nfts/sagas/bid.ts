@@ -2,7 +2,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
-import { setActiveModal } from 'store/modals/reducer';
+import { setActiveModal, setModalProps } from 'store/modals/reducer';
 
 import { contractsConfig, ContractsNames } from 'config';
 import { isMainnet } from 'config/constants';
@@ -39,6 +39,8 @@ export function* bidNftSaga({
         tokenAddress,
       },
     });
+
+    yield put(setModalProps({ subtitleText: 'In progress' }));
 
     yield put(
       setActiveModal({

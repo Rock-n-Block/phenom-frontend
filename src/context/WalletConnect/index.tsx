@@ -59,7 +59,6 @@ const WalletConnectContext: FC = ({ children }) => {
 
   const connect = useCallback(
     async (provider: WalletProviders, chain: Chains) => {
-      // debugger
       const connected = await WalletConnect.current.initWalletConnect(provider, chain);
       if (connected) {
         try {
