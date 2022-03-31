@@ -16,9 +16,9 @@ const Footers: React.FC = () => {
             <Logo className={styles.logo} color="light" />
           </div>
           <div className={styles.info}>
-            <Text color="white">Unit 173004, </Text>
-            <Text color="white">Second Floor, 6 Market Place, London, </Text>
-            <Text color="white">Fitzrovia, United Kingdom, W1W 8AF</Text>
+            <Text color="white">UAE, Dubai, Office 1233, </Text>
+            <Text color="white">Owned by RASHED MOHAMMED ABDULLA ALMAZROUEI,</Text>
+            <Text color="white">Al Thanyah 1</Text>
           </div>
           <div className={styles.links}>
             <div className={styles.linkBlock}>
