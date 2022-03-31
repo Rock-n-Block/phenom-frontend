@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { getTopCollections } from 'store/collections/actions';
@@ -15,7 +15,6 @@ import { Text } from 'components';
 import { CollectionCard } from './components';
 
 import { useShallowSelector } from 'hooks';
-import { Collection } from 'types';
 
 import styles from './styles.module.scss';
 
@@ -26,8 +25,11 @@ type Props = {
 const TopCollections: FC<Props> = ({ className }) => {
   const chain = useShallowSelector(userSelector.getProp('chain'));
   const dispatch = useDispatch();
-  const collections: Collection[] = useShallowSelector(
-    collectionsSelector.getProp('topCollections'),
+  const collections = useShallowSelector(collectionsSelector.getProp('topCollections'));
+
+  const withoutDefault = useMemo(
+    () => collections.filter((c: any) => !c.collection.isDefault),
+    [collections],
   );
 
   const handleFetchTopCollections = useCallback(() => {
@@ -48,6 +50,7 @@ const TopCollections: FC<Props> = ({ className }) => {
     },
     [dispatch],
   );
+
   return (
     <div className={cx(styles.topCollections, className)}>
       <Text
@@ -59,7 +62,7 @@ const TopCollections: FC<Props> = ({ className }) => {
       >
         Top collections
       </Text>
-      {collections.filter((c) => !c.isDefault).length ? (
+      {withoutDefault.length ? (
         <div className={styles.collections}>
           <ol
             className={styles.collectionsWrapper}
@@ -69,22 +72,20 @@ const TopCollections: FC<Props> = ({ className }) => {
               }, 1fr)`,
             }}
           >
-            {collections
-              .filter((c) => !c.isDefault)
-              .map((collection: any, index: number) => (
-                <CollectionCard
-                  key={index}
-                  avatar={collection.collection?.avatar || ''}
-                  id={collection.collection?.url || 0}
-                  index={index + 1}
-                  name={collection.collection?.name || ''}
-                  price={
-                    new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
-                      ? `< 0.01`
-                      : new BigNumber(collection?.floorPrice).toString() || 0
-                  }
-                />
-              ))}
+            {withoutDefault.map((collection: any, index: number) => (
+              <CollectionCard
+                key={index}
+                avatar={collection.collection?.avatar || ''}
+                id={collection.collection?.url || 0}
+                index={index + 1}
+                name={collection.collection?.name || ''}
+                price={
+                  new BigNumber(collection?.floorPrice || '0').isEqualTo(0)
+                    ? `< 0.01`
+                    : new BigNumber(collection?.floorPrice).toString() || 0
+                }
+              />
+            ))}
           </ol>
         </div>
       ) : (
