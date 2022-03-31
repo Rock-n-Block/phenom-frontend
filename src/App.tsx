@@ -1,5 +1,4 @@
 import { FC, useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 
 import { useDispatch } from 'react-redux';
@@ -38,10 +37,6 @@ export const App: FC = () => {
     };
   }, [chain, dispatch]);
 
-  const { ready } = useTranslation();
-  if (!ready) {
-    return <div>Loading</div>;
-  }
   return (
     <>
       <ToastContainer
