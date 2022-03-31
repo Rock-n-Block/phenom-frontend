@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, VFC } from 'react';
+import { useCallback, useMemo, useState, VFC } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setModalProps } from 'store/modals/reducer';
@@ -16,11 +16,11 @@ import userSelector from 'store/user/selectors';
 import BigNumber from 'bignumber.js';
 import cx from 'classnames';
 import { useWalletConnectContext } from 'context';
-import moment from 'moment';
 
 import {
   Avatar,
   Button,
+  Countdown,
   DefaultInput,
   QuantityInput,
   QuantityModal,
@@ -78,12 +78,9 @@ const Payment: VFC<IPayment> = ({
   const dispatch = useDispatch();
   const { walletService } = useWalletConnectContext();
   const rate = useShallowSelector(userSelector.getProp('rate'));
-  console.log('rate', rate)
   const [quantity, setQuantity] = useState('1');
   const [bidValue, setBidValue] = useState('');
-  const [time, setTime] = useState<any>();
   const [modalSellerId, setModalSellerId] = useState('0');
-  const [days, setDays] = useState(0);
   const [isListing, setIsListing] = useState(false);
   const [isFixedPrice, setIsFixedPrice] = useState(true);
   const [priceValue, setPriceValue] = useState('');
@@ -276,25 +273,6 @@ const Payment: VFC<IPayment> = ({
     [dispatch, nft.id, walletService],
   );
 
-  useEffect(() => {
-    let timeInterval: any;
-    if (nft?.endAuction) {
-      const eventTime = +(nft?.endAuction || 0) * 1000;
-      const date = new Date();
-      const currentTime = date.getTime() - date.getTimezoneOffset() * 60000;
-      const diffTime = eventTime - currentTime;
-      let duration = moment.duration(diffTime, 'milliseconds');
-      const interval = 1000;
-      timeInterval = setInterval(() => {
-        duration = moment.duration(+duration - interval, 'milliseconds');
-        setDays(Math.trunc(duration.asDays()));
-        setTime(moment(duration.asMilliseconds()));
-      }, interval);
-    }
-
-    return () => clearInterval(timeInterval);
-  }, [nft]);
-
   const nftPrice = useMemo(() => {
     return nft?.price || nft?.highestBid?.amount || nft?.minimalBid
       ? toFixed(nft?.price || nft?.highestBid?.amount || nft?.minimalBid, 6)
@@ -308,36 +286,7 @@ const Payment: VFC<IPayment> = ({
     <>
       {nftPrice ? (
         <div className={styles.userBuy}>
-          {nft?.isTimedAucSelling && (
-            <div className={styles.timedAuc}>
-              <div className={styles.timedAucTitle}>
-                <PlaceBidIcon className={styles.timedAucIcon} />
-                <Text size="m" weight="semibold">
-                  Sale ends at {moment(nft?.endAuction, 'X').format('MMMM Do YYYY, h:mma')}
-                </Text>
-              </div>
-              <div className={styles.time}>
-                <div className={styles.timeItem}>
-                  <Text size="xxl" color="blue" weight="semibold">
-                    {days ? 24 * days + moment(time).format('HH') : moment(time).format('HH')}
-                  </Text>
-                  <Text>Hours</Text>
-                </div>
-                <div className={styles.timeItem}>
-                  <Text size="xxl" color="blue" weight="semibold">
-                    {moment(time).format('mm')}
-                  </Text>
-                  <Text>Minutes</Text>
-                </div>
-                <div className={styles.timeItem}>
-                  <Text size="xxl" color="blue" weight="semibold">
-                    {moment(time).format('ss')}
-                  </Text>
-                  <Text>Seconds</Text>
-                </div>
-              </div>
-            </div>
-          )}
+          {nft?.isTimedAucSelling && <Countdown endAuction={nft?.endAuction || 0} />}
           {isAuction ? (
             <div>
               {nft?.highestBid ? (

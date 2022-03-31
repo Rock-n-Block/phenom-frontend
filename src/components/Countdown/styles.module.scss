@@ -1,0 +1,39 @@
+@import 'src/styles/helpers.scss';
+
+.timedAuc {
+  &Title {
+    @include flexbox(flex-start, flex-start);
+  }
+  &Icon {
+    margin-right: 16px;
+    path {
+      fill: $color-accent;
+    }
+  }
+}
+
+.time {
+  @include flexbox(flex-start, flex-start);
+
+  &Item {
+    @include flexbox(center, center);
+    @include shadow-1;
+    padding: 8px;
+    background: $color-light-4;
+    border-radius: 10px;
+    flex-direction: column;
+    width: 92px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+
+    & + & {
+      margin-left: 16px;
+    }
+  }
+}
+
+@include large-tablet{
+  .time{
+    justify-content: space-between;
+  }
+}
