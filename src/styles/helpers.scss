@@ -248,7 +248,7 @@ $transition-delay: 0s;
     width: 1500px;
     height: 1100px;
     content: '';
-    z-index: 2;
+    z-index: 0;
     pointer-events: none;
     background: left / contain no-repeat url('/assets/img/left-detail.png');
   }
