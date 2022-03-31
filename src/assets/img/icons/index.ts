@@ -1,4 +1,6 @@
 export { ReactComponent as LogoIcon } from './logo.svg';
+export { ReactComponent as PhenomIcon } from './phenom.svg';
+export { ReactComponent as MetaverseIcon } from './metaverse.svg';
 export { ReactComponent as CrossIcon } from './cross.svg';
 export { ReactComponent as AddSVG } from './add.svg';
 export { ReactComponent as RemoveSVG } from './remove.svg';
