@@ -13,6 +13,9 @@
         justify-content: center;
         grid-gap: 25px;
       }
+      &__loading{
+        @include flexbox;
+      }
       &__load-more{
         @include flexbox;
       }
