@@ -304,15 +304,19 @@ const Payment: VFC<IPayment> = ({
               Price
             </Text>
           )}
-          {nftPrice && (
+          {nftPrice ? (
             <Text weight="semibold" color="blue" className={styles.price}>
               {nftPrice} {nft?.currency?.symbol || DEFAULT_CURRENCY}
             </Text>
+          ) : (
+            <></>
           )}
-          {(nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd) && (
+          {nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd ? (
             <Text color="middleGray" size="m" className={styles.usdPrice}>
               ${nft?.usdPrice || nft?.highestBidUsd || nft?.minimalBidUsd}
             </Text>
+          ) : (
+            <></>
           )}
           {nft?.highestBid && (
             <div className={styles.highest}>
@@ -331,7 +335,7 @@ const Payment: VFC<IPayment> = ({
         )} */}
           {(isUserCanBuyNft || isUserCanEnterInAuction) && (
             <div className={styles.priceBids}>
-              {isAuction && (
+              {isAuction ? (
                 <DefaultInput
                   name="bid"
                   value={bidValue}
@@ -340,6 +344,8 @@ const Payment: VFC<IPayment> = ({
                   placeholder="0.00"
                   type="number"
                 />
+              ) : (
+                <></>
               )}
               <Button
                 className={styles.buy}
@@ -486,10 +492,12 @@ const Payment: VFC<IPayment> = ({
                   placeholder="0.00"
                   className={styles.createLotPrice}
                 />
-                {priceValue && (
+                {priceValue ? (
                   <Text color="middleGray" size="m" className={styles.usdPrice}>
                     ${new BigNumber(priceValue).times(new BigNumber(rate)).toFixed(2)}
                   </Text>
+                ) : (
+                  <></>
                 )}
                 {!isFixedPrice && (
                   <>
