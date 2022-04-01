@@ -9,6 +9,7 @@ import { Text } from 'components/Typography';
 import { TAvailableSorts, TSort } from 'types';
 
 import styles from './styles.module.scss';
+import Loader from 'components/Loader';
 
 interface INFTList {
   elements: ReactElement[];
@@ -96,20 +97,32 @@ const NFTList: VFC<INFTList> = ({
           />
         )}
       </div>
-      <div
-        className={styles['nft-list__body__content']}
-        style={{
-          gridTemplateColumns:
-            elements.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
-        }}
-      >
-        {elements.length !== 0 && elements.map((el) => el)}
-        {elements.length === 0 && (
-          <Text size="xl" align="center" weight="bold">
-            {emptyMsg}
-          </Text>
-        )}
-      </div>
+      {isLoading ? (
+        <div
+          className={styles['nft-list__body__loading']}
+          style={{
+            gridTemplateColumns:
+              elements.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+          }}
+        >
+          <Loader backgroundColor="purple" />
+        </div>
+      ) : (
+        <div
+          className={styles['nft-list__body__content']}
+          style={{
+            gridTemplateColumns:
+              elements.length !== 0 ? `repeat(auto-fill,minmax(${minSize}px,1fr))` : '1fr',
+          }}
+        >
+          {elements.length !== 0 && elements.map((el) => el)}
+          {elements.length === 0 && (
+            <Text size="xl" align="center" weight="bold">
+              {emptyMsg}
+            </Text>
+          )}
+        </div>
+      )}
       <div className={styles['nft-list__body__load-more']}>
         {isLoadMoreActive(currentPage, pages, onLoadMore) && (
           <Button
