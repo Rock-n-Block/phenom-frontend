@@ -177,13 +177,25 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
     [fetchNFTs, fetchName],
   );
   const onAuctionClick = useCallback(() => setAuction(!auction), [auction]);
+
+  const returnedElements = useMemo(() => {
+    let els;
+    if (fetchingNFT === RequestStatus.REQUEST) {
+      if (currentPage === 1) {
+        els = skeleton;
+      }
+      if (currentPage > 1) {
+        els = [...elements, ...skeleton];
+      }
+    }
+    if (fetchingNFT !== RequestStatus.REQUEST) {
+      els = elements;
+    }
+    return els;
+  }, [currentPage, elements, fetchingNFT, skeleton]);
   return (
     <NFTList
-      elements={
-        fetchingLiked === RequestStatus.REQUEST || fetchingNFT === RequestStatus.REQUEST
-          ? [...elements, ...skeleton]
-          : elements
-      }
+      elements={[...(returnedElements || skeleton)]}
       sortBy={sortBy}
       onSortClick={onSortClick}
       onLoadMore={onLoadMoreClick}
