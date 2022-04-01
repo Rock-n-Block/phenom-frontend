@@ -1,6 +1,22 @@
 @import '/src/styles/helpers.scss';
 
-.logo {
+.adaptive-logo{
+  max-width: 220px;
+  flex-wrap: wrap;
+  @include flexbox(flex-start);
+  .phenom-part{
+    margin-right: 8px;
+  }
+}
+
+@include middle-mobile{
+  .adaptive-logo{
+    max-width: 200px;
+    .phenom-part{
+      margin-right: 0px;
+      margin-bottom: 8px;
+    }
+  }
 }
 
 .dark {

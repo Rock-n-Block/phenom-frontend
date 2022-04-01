@@ -93,7 +93,6 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
           dispatch(
             searchNfts({
               requestData: {
-                owner: id,
                 type: 'items',
                 page,
                 on_any_sale: id,
@@ -163,6 +162,7 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
     fetchTimer.current = setInterval(() => {
       fetchNFTs(fetchName, 1);
     }, fetchDelay);
+
     return () => {
       if (fetchTimer.current) clearInterval(fetchTimer.current);
     };
@@ -177,7 +177,6 @@ const PreviewProfileNFTs: VFC<IPreviewProfileNFTs> = ({
     [fetchNFTs, fetchName],
   );
   const onAuctionClick = useCallback(() => setAuction(!auction), [auction]);
-
   return (
     <NFTList
       elements={
