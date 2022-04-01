@@ -494,7 +494,11 @@ const Payment: VFC<IPayment> = ({
                 />
                 {priceValue ? (
                   <Text color="middleGray" size="m" className={styles.usdPrice}>
-                    ${new BigNumber(priceValue).times(new BigNumber(rate)).toFixed(2)}
+                    $
+                    {new BigNumber(priceValue)
+                      .times(new BigNumber(rate))
+                      .times(new BigNumber(quantity))
+                      .toFixed(2)}
                   </Text>
                 ) : (
                   <></>

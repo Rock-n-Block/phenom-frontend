@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import * as apiActions from 'store/api/actions';
 import { baseApi } from 'store/api/apiRequestBuilder';
-import { setActiveModal } from 'store/modals/reducer';
+import { setActiveModal, setModalProps } from 'store/modals/reducer';
 import userSelector from 'store/user/selectors';
 
 import { createTokenResponse, Modals } from 'types';
@@ -12,6 +12,7 @@ import { createToken } from '../actions';
 import actionTypes from '../actionTypes';
 
 export function* createTokenSaga({ type, payload }: ReturnType<typeof createToken>) {
+  yield put(setModalProps({ subtitleText: 'Please press "Send" button in Metamask extension' }));
   yield put(
     setActiveModal({
       activeModal: Modals.SendPending,
