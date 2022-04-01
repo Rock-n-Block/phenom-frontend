@@ -76,7 +76,7 @@ const AboutMe: VFC<IAboutMe> = ({ socials, description, name }) => {
           </div>
           <div className={styles['about-me__wrapper__description']}>
             <Text color="dark" size="s">
-              {description.length ? description : `${name} doesn't left bio 😣`}
+              {description.length ? description : `${name} hasn't left bio 😣`}
             </Text>
           </div>
         </>
