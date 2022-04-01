@@ -11,6 +11,9 @@
     max-width: 550px;
     flex: 0 0 clamp(320px, 100%, 550px);
     line-height: 24px;
+    &-title{
+      margin-bottom: 14px;
+    }
     span,
     p {
       word-break: break-all;
