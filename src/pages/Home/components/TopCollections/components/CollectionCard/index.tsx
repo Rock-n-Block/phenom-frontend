@@ -41,7 +41,7 @@ const CollectionCard: FC<IProps> = ({
             {name}
           </Text>
         </EllipsisText>
-        {price && (
+        {price ? (
           <Text size="xs" weight="bold" color="middleGray" className={styles.price}>
             {t('TopCollections.FloorPrice')}:
             <Text size="xs" color="blue" weight="bold" className={styles.price}>
@@ -49,6 +49,8 @@ const CollectionCard: FC<IProps> = ({
               {price} PHETA
             </Text>
           </Text>
+        ) : (
+          <></>
         )}
       </div>
       {profitIncrease && (
