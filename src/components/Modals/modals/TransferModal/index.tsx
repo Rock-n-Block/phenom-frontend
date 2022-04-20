@@ -43,8 +43,8 @@ const TransferModal: VFC<ITransferModal> = ({ visible, onClose, onSend, isMultip
   return (
     <Modal visible={visible} onClose={onClose} title="Transfer">
       <DefaultInput
-        name="name"
-        label="Name"
+        name="address"
+        label="Address"
         value={inputValue}
         setValue={handleInputChange}
         placeholder="Input address"
